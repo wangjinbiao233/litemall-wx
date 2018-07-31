@@ -34,7 +34,8 @@
 
       <el-table-column align="center" min-width="100px" label="附件" prop="">
         <template slot-scope="scope">
-              <a v-for="item in scope.row.picUrls" :href="item" :download="item" >查看附件</a>
+              <a v-for="item in scope.row.picUrls" :href="item" >查看附件</a>
+              <a v-for="item in scope.row.picUrls"  :href="item"  :download="item"  >下载附件</a>
         </template>
       </el-table-column>
 
