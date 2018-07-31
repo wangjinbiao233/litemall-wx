@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallDistributionApplyMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="distribution_id" property="distributionId" jdbcType="INTEGER" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="pic_urls" jdbcType="CHAR" property="picUrls" typeHandler="org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler" />
+    <result column="distribution_type" property="distributionType" jdbcType="VARCHAR" />
+    <result column="audit_status" property="auditStatus" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_user_id" property="createUserId" jdbcType="INTEGER" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, distribution_id, nick_name, pic_urls, distribution_type, audit_status, remark, 
+    create_time, create_user_id, modify_time, modify_user_id, deleted
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    t.id, t.distribution_id, t.nick_name, t.pic_urls, t.distribution_type, t.audit_status, t.remark, 
+    t.create_time, t.create_user_id, t.modify_time, t.modify_user_id, t.deleted,
+    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp",
+    t1.username as "createUserName"
+    from litemall_distribution_apply t
+    left join litemall_user t1 on t.create_user_id = t1.id
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    t.id, t.distribution_id, t.nick_name, t.pic_urls, t.distribution_type, t.audit_status, t.remark, 
+    t.create_time, t.create_user_id, t.modify_time, t.modify_user_id, t.deleted,
+    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp",
+    t1.username as "createUserName"
+    from litemall_distribution_apply t
+    left join litemall_user t1 on t.create_user_id = t1.id
+    where create_user_id = #{createUserId,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectList" resultMap="BaseResultMap" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    select 
+    t.id, t.distribution_id, t.nick_name, t.pic_urls, t.distribution_type,
+    t.audit_status, t.remark, 
+    t.create_time, t.create_user_id, t.modify_time, t.modify_user_id, t.deleted,
+    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp",
+    t1.username as "createUserName"
+    from litemall_distribution_apply t
+    left join litemall_user t1 on t.create_user_id = t1.id
+    
+    where 1 = 1
+    
+      <if test="distributionType != null and distributionType != '' " >
+        and t.distribution_type = #{distributionType,jdbcType=VARCHAR}
+      </if>
+      
+       <if test="createUserName != null" >
+        and t1.username = #{createUserName,jdbcType=VARCHAR}
+      </if>
+
+  </select>
+  
+   <select id="countList" resultType="java.lang.Integer"  parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    select 
+    count(t.id)
+    from litemall_distribution_apply t
+    left join litemall_user t1 on t.create_user_id = t1.id
+    
+      
+    where 1 = 1
+    
+      <if test="distributionType != null" >
+        and t.distribution_type = #{distributionType,jdbcType=VARCHAR}
+      </if>
+      
+       <if test="createUserName != null" >
+        and t1.username = #{createUserName,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_distribution_apply
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    insert into litemall_distribution_apply (id, distribution_id, nick_name, 
+      pic_urls, distribution_type, audit_status, 
+      remark, create_time, create_user_id, 
+      modify_time, modify_user_id, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{distributionId,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, 
+      #{picUrls,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler}, #{distributionType,jdbcType=VARCHAR}, #{auditStatus,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    insert into litemall_distribution_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="distributionId != null" >
+        distribution_id,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="picUrls != null" >
+        pic_urls,
+      </if>
+      <if test="distributionType != null" >
+        distribution_type,
+      </if>
+      <if test="auditStatus != null" >
+        audit_status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="distributionId != null" >
+        #{distributionId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null" >
+        #{picUrls,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler},
+      </if>
+      <if test="distributionType != null" >
+        #{distributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    update litemall_distribution_apply
+    <set >
+      <if test="distributionId != null" >
+        distribution_id = #{distributionId,jdbcType=INTEGER},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrls != null" >
+        pic_urls = #{picUrls,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler},
+      </if>
+      <if test="distributionType != null" >
+        distribution_type = #{distributionType,jdbcType=VARCHAR},
+      </if>
+      <if test="auditStatus != null" >
+        audit_status = #{auditStatus,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
+    update litemall_distribution_apply
+    set distribution_id = #{distributionId,jdbcType=INTEGER},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      pic_urls = #{picUrls,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonStringArrayTypeHandler},
+      distribution_type = #{distributionType,jdbcType=VARCHAR},
+      audit_status = #{auditStatus,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user_id = #{createUserId,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

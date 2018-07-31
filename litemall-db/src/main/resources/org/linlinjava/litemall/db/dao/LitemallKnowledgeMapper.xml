@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallKnowledgeMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
+    <result column="title_pic_url" property="titlePicUrl" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
+    <result column="visit_count" property="visitCount" jdbcType="INTEGER" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="praise_count" property="praiseCount" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="knowledge_cls" property="knowledgeCls" jdbcType="INTEGER" />
+    <result column="knowledge_cls_name" property="knowledgeClsName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="org.linlinjava.litemall.db.domain.LitemallKnowledge" 
+  	extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    lk.id, lk.title, lk.title_pic_url,lk.banner_url,lk.introduction, 
+    lk.knowledge_cls, lkg.name knowledge_cls_name,
+    lk.visit_count, lk.comment_count, lk.praise_count, lk.create_date, 
+    lk.create_by, lk.update_date, lk.update_by,is_show
+  </sql>
+  <sql id="Blob_Column_List" >
+    lk.content
+  </sql>
+  <select id="selectknowledgeList" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from litemall_knowledge lk
+    left join litemall_knowledge_category lkg on lkg.id = lk.knowledge_cls
+    <where>
+    	1=1
+    	<if test = "id != null ">and lk.id = #{id,jdbcType=INTEGER}</if>
+    	<if test="knowledgeCls != null and knowledgeCls != ''">
+    		and lk.knowledge_cls = #{knowledgeCls,jdbcType=INTEGER}
+    	</if>
+    	<if test = "title != null ">and lk.title = #{titlePicUrl,jdbcType=VARCHAR}</if>
+    	<if test = "isShow != null ">and lk.is_show = #{isShow,jdbcType=VARCHAR}</if>
+    	
+    </where>
+  </select>
+
+  <select id="countKnowledge" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+  	select count(1) from litemall_knowledge 
+  	<where>
+    	1=1
+    	<if test = "id != null ">and id = #{id,jdbcType=INTEGER}</if>
+    	<if test="knowledgeCls != null and knowledgeCls != ''">
+    		and knowledge_cls = #{knowledgeCls,jdbcType=INTEGER}
+    	</if>
+    	<if test = "title != null ">and title = #{titlePicUrl,jdbcType=VARCHAR}</if>
+    </where>
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_knowledge
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
+    insert into litemall_knowledge (title, title_pic_url, 
+      banner_url, introduction, knowledge_cls,
+      visit_count, comment_count, praise_count, 
+      create_date, create_by, update_date, 
+      update_by,is_show, content)
+    values (#{title,jdbcType=VARCHAR}, #{titlePicUrl,jdbcType=VARCHAR}, 
+      #{bannerUrl,jdbcType=VARCHAR},#{introduction,jdbcType=VARCHAR},
+      #{knowledgeCls,jdbcType=INTEGER},#{visitCount,jdbcType=INTEGER},
+      #{commentCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, 
+      now(), #{createBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
+    insert into litemall_knowledge
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="titlePicUrl != null" >
+        title_pic_url,
+      </if>
+      <if test="bannerUrl != null" >
+        banner_url,
+      </if>
+      <if test="introduction != null" >
+        introduction,
+      </if>
+      <if test="knowledgeCls != null" >
+        knowledge_cls,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="visitCount != null" >
+        visit_count,
+      </if>
+      <if test="commentCount != null" >
+        comment_count,
+      </if>
+      <if test="praiseCount != null" >
+        praise_count,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+       create_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titlePicUrl != null" >
+        #{titlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null" >
+        #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeCls != null" >
+        #{knowledgeCls,jdbcType=INTEGER},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="visitCount != null" >
+        #{visitCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="praiseCount != null" >
+        #{praiseCount,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
+    update litemall_knowledge
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="titlePicUrl != null" >
+        title_pic_url = #{titlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null" >
+        banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
+      </if>
+      <if test="knowledgeCls != null" >
+        knowledge_cls = #{knowledgeCls,jdbcType=INTEGER},
+      </if>
+      <if test="visitCount != null" >
+        visit_count = #{visitCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentCount != null" >
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="praiseCount != null" >
+        praise_count = #{praiseCount,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = now(),
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <update id="updateCommentCountById">
+     update litemall_knowledge  set comment_count=comment_count+(#{one}) 
+     where id=#{id}
+      <![CDATA[ and comment_count>=0 ]]>  
+  </update>
+
+  <update id="updatePraiseCountById">
+     update litemall_knowledge  set praise_count=praise_count+(#{one}) 
+     where id=#{id}
+      <![CDATA[ and praise_count>=0 ]]>  
+  </update>
+
+</mapper>

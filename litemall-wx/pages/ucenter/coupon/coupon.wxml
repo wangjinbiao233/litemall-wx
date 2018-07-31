@@ -1,0 +1,33 @@
+<view class="container">
+  <form bindsubmit='search'>
+    <view class="coupon-form">
+      <view class="input-box">
+        <input class="coupon-sn" placeholder="请输入优惠券名称" name='searchInfo' />
+      </view>
+      <button class="add-btn disabled" form-type='submit'>查询</button>
+    </view>
+  </form>
+  <view class="help">使用说明</view>
+  <view class="coupon-list">
+    <block wx:for='{{myCouponList}}'>
+      <view class="{{item.isUse==0?'item':'item-use'}}">
+        <view class="tag">新人专享</view>
+        <view class="content">
+          <view class="left">
+            <view class="name">{{item.discountName}}</view>
+            <view class="time">{{item.startTime}} ~ {{item.endTime}}</view>
+          </view>
+          <view class="right">
+            <button wx-if="{{item.isUse==0}}" class="go">去使用</button>
+             <button wx-if="{{item.isUse==1}}" class="go">已使用</button>
+          </view>
+        </view>
+        <!-- <view class="condition">
+          <text class="txt">简约陶瓷马克杯专享；小米用户福利；限时购、三石福利价、礼品卡及详情页标注不可用券特殊商品除外</text>
+          <image src="https://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/couponArrow-71315b4145.png" class="icon"></image>
+        </view> -->
+      </view>
+    </block>
+  </view>
+  <view wx:if="{{myCouponList.length==0}}" class='nothing'>暂无结果</view>
+</view>

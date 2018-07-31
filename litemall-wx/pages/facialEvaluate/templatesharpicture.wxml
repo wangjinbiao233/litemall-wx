@@ -1,0 +1,50 @@
+<template name="tmp_shar" >
+
+<view class="goods">
+<view class="dn"><text>懂你的必购清单</text></view>
+
+<view class="one" wx:for="{{goods}}" wx:key="id" >
+        <navigator url="/pages/goods/goods?id={{item.id}}">
+            <view class="a"><image src="{{item.primaryPicUrl}}" /></view>
+            <view class="b">{{item.name}}</view>
+            <view class="c">
+                <text style="color:#8ac2d6;font-size:32rpx;">￥{{item.retailPrice}}</text>
+                <text style="text-decoration:line-through;display:block;font-size:28rpx;color:#D3D3D3;">￥{{item.counterPrice}}</text>
+            </view>
+        </navigator>
+</view>    
+
+<view style="height:60rpx"></view>
+</view>
+
+<view class="viewh" wx:if="{{sharpicture==1}}">
+    <view class="tp"><image class="tpimg" src="../../static/images/fkjy.png"/></view>
+    <view class="imgtxt">你毛孔粗大好过<text style="font-size:60rpx;">{{facedata.defaultdata.maokong}}%</text>的人
+    </view>
+   <button class="share" style="border:0;" plain="true"  open-type="share">
+   <image  src="../../static/images/share.png"/></button>
+</view>
+
+<view class="viewh" wx:if="{{sharpicture==2}}">
+    <view class="tp"><image class="tpimg" src="../../static/images/yqgdx.png"/></view>
+    <view class="imgtxt">你红色区块好过<text style="font-size:60rpx;">{{facedata.defaultdata.redArea}}%</text>的人</view>
+    <button class="share" style="border:0;" plain="true"  open-type="share">
+   <image  src="../../static/images/share.png"/></button>
+</view>
+
+<view class="viewh" wx:if="{{sharpicture==3}}">
+    <view class="tp"><image class="tpimg" src="../../static/images/syns.png"/></view>
+    <view class="imgtxt">你色素斑点好过<text style="font-size:60rpx;">{{facedata.defaultdata.sesu}}%</text>的人</view>
+     <button class="share" style="border:0;" plain="true"  open-type="share">
+   <image  src="../../static/images/share.png"/></button>
+</view>
+
+<view class="viewh" wx:if="{{sharpicture==4}}">
+    <view class="tp"><image class="tpimg" src="../../static/images/yqxg.png"/></view>
+    <view class="imgtxt">你粗糙纹理好过<text style="font-size:60rpx;">{{facedata.defaultdata.wenli}}%</text>的人
+    </view>
+    <button class="share" style="border:0;" plain="true"  open-type="share">
+   <image  src="../../static/images/share.png"/></button>
+</view>
+
+</template>

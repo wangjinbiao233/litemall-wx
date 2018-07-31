@@ -1,0 +1,29 @@
+.catelog-box{
+    background-color: #5a6465;
+    position: fixed;
+    bottom: 30rpx;
+    right: 50rpx;
+    padding: 18rpx 18rpx 13rpx 15rpx;
+    border-radius: 10px;
+  }
+  .catelog-box.category{
+    bottom: 141rpx;
+  }
+  .catelog-box-num{
+    position: relative;
+  }
+  .catelog-box-text{
+    background-color: #df3535;
+    color: #fff;
+    font-size: 25rpx;
+    position: absolute;
+    right: -10rpx;
+    top: -5rpx;
+    padding: 3rpx 8rpx;
+    border-radius: 50%;
+  }
+  .catelog-icon{
+    width: 60rpx;
+    height: 60rpx;
+  }
+  

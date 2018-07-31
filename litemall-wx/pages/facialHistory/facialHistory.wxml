@@ -1,0 +1,13 @@
+<wxs src="../tools.wxs" module="comtools" />
+<view class="history">
+<view class="tiao"   wx:for="{{allList}}" wx:key="id">
+<view bindtap="navigateToPage" data-text="{{item.id}}">
+    <view class="left">{{item.score}}分</view>
+    <view class="right">
+    <text style="font-size:38rpx;line-height:60px;margin-left:50rpx;">{{item.skintypename}}</text>
+    <text style="margin-left:50rpx;">{{comtools.toTimeT(item.createtime)}}</text>
+    </view>
+    </view>
+</view>
+
+</view>

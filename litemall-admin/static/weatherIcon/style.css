@@ -1,0 +1,74 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?dnody7');
+  src:  url('fonts/icomoon.eot?dnody7#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?dnody7') format('truetype'),
+    url('fonts/icomoon.woff?dnody7') format('woff'),
+    url('fonts/icomoon.svg?dnody7#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-blizzard:before {
+  content: "\e900";
+}
+.icon-Heavy-rains:before {
+  content: "\e901";
+}
+.icon-hail:before {
+  content: "\e902";
+}
+.icon-cloudy:before {
+  content: "\e903";
+}
+.icon-wind:before {
+  content: "\e904";
+}
+.icon-thunder:before {
+  content: "\e905";
+}
+.icon-haze:before {
+  content: "\e906";
+}
+.icon-sunny:before {
+  content: "\e907";
+}
+.icon-fog:before {
+  content: "\e909";
+}
+.icon-Light-snow:before {
+  content: "\e90a";
+}
+.icon-Light-rain:before {
+  content: "\e90b";
+}
+.icon-sleet:before {
+  content: "\e90d";
+}
+.icon-Snow-shower:before {
+  content: "\e90e";
+}
+.icon-shower:before {
+  content: "\e90f";
+}
+.icon-Moderate-snow:before {
+  content: "\e910";
+}
+.icon-Moderate-rain:before {
+  content: "\e911";
+}

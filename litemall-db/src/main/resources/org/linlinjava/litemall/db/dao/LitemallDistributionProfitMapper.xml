@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallDistributionProfitMapper">
+
+
+
+
+    <!-- ************************************************************************** 不可提取收益 ************************************************************************** -->
+
+
+    <!-- 下级消费所得不可提取收益金额 -->
+    <select id="selectSubByPId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        SELECT
+           IFNULL(SUM(info.order_goods_actual_price * go.`first_profit`),0) AS profit
+        FROM
+            litemall_order_goods_info info
+                LEFT JOIN
+            litemall_goods go ON info.`goods_id` = go.id
+        WHERE
+            1 = 1 AND info.is_extract = 0
+                AND info.order_goods_status IN ('201','301','302','401','402','403','501')
+                AND info.user_id IN (SELECT id FROM litemall_user WHERE p_id = #{user_id,jdbcType=INTEGER})
+    </select>
+
+
+    <!-- 下级的下级消费所得不可提取收益金额 -->
+    <select id="selectSubSubByPId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        SELECT
+          IFNULL(SUM(info.order_goods_actual_price * go.`second_profit`),0) AS profit
+        FROM
+          litemall_order_goods_info info
+        LEFT JOIN
+          litemall_goods go ON info.`goods_id` = go.id
+        WHERE
+        1 = 1 AND info.is_extract = 0
+        AND info.order_goods_status IN ('201','301','302','401','402','403','501')
+        AND info.user_id IN (SELECT id FROM litemall_user WHERE p_id IN (SELECT id FROM litemall_user WHERE p_id = #{user_id,jdbcType=INTEGER}))
+    </select>
+
+    <!-- 查询不可提取收益列表 -->
+    <select id="selectSubAllProfitListByPId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT
+            profit_list.profit, /* 收益金额 */
+            profit_list.order_id,
+            profit_list.order_sn,
+            profit_list.goods_id,
+            profit_list.goods_name,
+            profit_list.user_id,
+            u.`username`,
+            profit_list.`order_goods_actual_price`, /* 成交价格 */
+            DATE_FORMAT(profit_list.`add_time`, "%Y-%m-%d %H:%i:%S") AS add_time,
+            profit_type /* x为下级，xx为下下级*/
+        FROM (
+                SELECT
+                    info.order_goods_actual_price * go.`first_profit` AS profit,
+                    info.order_id,
+                    info.order_sn,
+                    info.goods_id,
+                    info.goods_name,
+                    info.user_id,
+                    info.`order_goods_actual_price`,
+                    info.add_time,
+                    'x' as profit_type
+                FROM
+                  litemall_order_goods_info info
+                LEFT JOIN
+                  litemall_goods go ON info.`goods_id` = go.id
+                WHERE
+                    1 = 1 AND info.is_extract = 0
+                    AND info.order_goods_status IN ('201','301','302','401','402','403','501')
+                    AND info.user_id IN (SELECT id FROM litemall_user WHERE p_id = #{user_id,jdbcType=INTEGER})
+                UNION ALL
+                SELECT
+                    info.order_goods_actual_price * go.`second_profit` AS profit,
+                    info.order_id,
+                    info.order_sn,
+                    info.goods_id,
+                    info.goods_name,
+                    info.user_id,
+                    info.`order_goods_actual_price`,
+                    info.add_time,
+                    'xx' as profit_type
+                FROM
+                  litemall_order_goods_info info
+                LEFT JOIN
+                  litemall_goods go ON info.`goods_id` = go.id
+                WHERE
+                    1 = 1 AND info.is_extract = 0
+                    AND info.order_goods_status IN ('201','301','302','401','402','403','501')
+                    AND info.user_id IN (SELECT id FROM litemall_user WHERE p_id IN (SELECT id FROM litemall_user WHERE p_id = #{user_id,jdbcType=INTEGER}))
+            ) profit_list LEFT JOIN litemall_user u ON u.id = profit_list.user_id
+        WHERE 1 = 1
+            <if test="orderId != null">
+                AND order_id = #{orderId,jdbcType=INTEGER}
+            </if>
+            <if test="orderSn != null">
+                AND order_sn = #{orderSn,jdbcType=INTEGER}
+            </if>
+        ORDER BY profit_list.`add_time` DESC
+
+    </select>
+
+
+
+
+
+
+    <!-- ************************************************************************** 可提取收益 ************************************************************************** -->
+
+
+    <!-- 查询可提取收益金额，用户表里 -->
+
+    <!-- 查询可提取收益列表 -->
+    <select id="selectProfitListByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT
+            e.order_id,
+            e.order_goods_info_id,
+            e.order_goods_id AS goods_id,
+            e.`profit_money`,
+            date_format(e.operation_time,"%Y-%m-%d %H:%i:%S") AS operation_time,/*操作时间*/
+            oi.goods_name,
+            date_format(oi.add_time,"%Y-%m-%d %H:%i:%S") AS add_time
+        FROM
+            `litemall_earnings` e
+        LEFT JOIN
+            litemall_order_goods_info oi ON e.`order_goods_info_id` = oi.order_goods_id
+        WHERE
+            1 = 1
+            AND e.operation = 1
+            AND e.profit_user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 提现明细列表-->
+    <select id="selectExtractMoneyByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT
+            e.id,
+            date_format(e.operation_time,"%Y-%m-%d %H:%i:%S") AS operation_time,
+            e.profit_user_id,
+            e.profit_money,
+            u.username,
+            u.avatar
+        FROM
+            litemall_earnings e
+        LEFT JOIN
+            litemall_user u ON e.profit_user_id = u.id
+        WHERE 1 = 1
+            AND e.operation = 2
+            AND e.profit_user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 查询可提取收益列表 +  提现明细列表 -->
+    <select id="selectEarningsMoneyListByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT
+            e.id,
+            e.order_id,
+            e.order_sn,
+            e.order_goods_info_id,
+            e.order_goods_id AS goods_id,
+            e.`profit_money`,
+            e.operation,/*操作类型：1：收益，2：提取*/
+            date_format(e.operation_time,"%Y-%m-%d %H:%i:%S") AS operation_time,/*操作时间*/
+            oi.goods_name,
+            date_format(oi.add_time,"%Y-%m-%d %H:%i:%S") AS add_time,/* 下单时间*/
+            oi.user_id,/*下单人*/
+            u.username/*下单人名称*/
+        FROM
+            `litemall_earnings` e
+            LEFT JOIN
+            litemall_order_goods_info oi ON e.`order_goods_info_id` = oi.order_goods_id
+            LEFT JOIN litemall_user u ON u.id = oi.user_id
+        WHERE
+            1 = 1
+            AND e.profit_user_id = #{user_id,jdbcType=INTEGER}
+    </select>
+
+    <!-- 提现金额汇总 -->
+    <select id="selectSumProfitMoney" parameterType="java.lang.Integer" resultType="java.lang.String">
+        SELECT ifnull(sum(profit_money),0) AS sum_profit_money
+        FROM litemall_earnings
+        WHERE operation = 2 AND profit_user_id = #{user_id,jdbcType=INTEGER};
+    </select>
+
+
+    <!-- ************************************************************************** 我的团队成员 ************************************************************************** -->
+
+
+    <!-- 我的下级 -->
+    <select id="selectSubUserInfoByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+        SELECT
+          u.id,
+          u.username,
+          u.avatar,
+          DATE_FORMAT(u.add_time,"%Y-%m-%d %H:%i:%S") AS add_time,
+          u.p_id,
+          (SELECT count(1) FROM litemall_user WHERE p_id = u.p_id) AS promotion_user,/* 我推广的人数 */
+          IFNULL(sum(e.profit_money),0)   AS sum_profit_money, /* 下级总消费收益 */
+          count(e.order_id)     AS order_count /* 下级消费订单数*/
+        FROM litemall_user u
+          LEFT JOIN (SELECT * FROM litemall_earnings WHERE profit_type = 'first') e ON e.customer_user_id = u.id
+        WHERE 1 = 1
+          AND p_id = #{user_id,jdbcType=INTEGER}
+        GROUP BY u.id,
+          u.username,
+          u.avatar,
+          u.p_id
+    </select>
+
+    <!-- 下级订单商品详情 -->
+    <select id="selectSubUserOrderGoodsInfoByUserId" parameterType="java.lang.Integer" resultType="java.util.Map">
+
+        SELECT
+          u.id,
+          u.username,
+          u.avatar,
+          e.profit_money , /* 收益 */
+          e.order_id    AS order_count, /* 下级消费订单数*/
+          DATE_FORMAT(gi.add_time, "%Y-%m-%d %H:%i:%S") AS add_time,/* 下单时间 */
+          gi.goods_name,/* 商品名称 */
+          gi.order_goods_actual_price /* 实际付款金额 */
+        FROM litemall_user u
+          LEFT JOIN litemall_earnings e ON e.customer_user_id = u.id
+          LEFT JOIN litemall_order_goods_info gi on gi.order_goods_id =e.order_goods_info_id
+        WHERE 1 = 1
+              AND e.profit_type = 'first'
+              AND p_id =  #{userId,jdbcType=INTEGER}
+    </select>
+
+    <!-- 我的下下级-->
+    <select id="selectSubSubUserInfoByUserId" parameterType="java.lang.Integer" resultType="java.util.Map" >
+        SELECT
+          u.id,
+          u.username,
+          u.avatar,
+          DATE_FORMAT(u.add_time, "%Y-%m-%d %H:%i:%S") AS add_time,
+          u.p_id,
+          (SELECT count(1)  FROM litemall_user WHERE p_id = u.p_id) AS promotion_user, /* 我推广的人数 */
+          IFNULL(sum(e.profit_money),0)                AS sum_profit_money, /* 下级总消费收益 */
+          count(e.order_id)                            AS order_count /* 下级消费订单数*/
+        FROM litemall_user u
+          LEFT JOIN (SELECT * FROM litemall_earnings WHERE profit_type = 'second') e ON e.customer_user_id = u.id
+        WHERE 1 = 1
+              AND p_id IN (SELECT id FROM litemall_user  WHERE p_id = #{user_id,jdbcType=INTEGER})
+        GROUP BY u.id,
+          u.username,
+          u.avatar,
+          u.p_id
+    </select>
+
+    <!-- 下下级订单商品详情 -->
+    <select id="selectSubSubUserOrderGoodsByUserId" parameterType="java.lang.Integer" resultType="java.util.Map" >
+        SELECT
+          u.id,
+          u.username,
+          u.avatar,
+          e.profit_money , /* 收益 */
+          e.order_id    AS order_count, /* 下级消费订单数*/
+          DATE_FORMAT(gi.add_time, "%Y-%m-%d %H:%i:%S") AS add_time,/* 下单时间 */
+          gi.goods_name,/* 商品名称 */
+          gi.order_goods_actual_price /* 实际付款金额 */
+        FROM litemall_user u
+          LEFT JOIN litemall_earnings e ON e.customer_user_id = u.id
+          LEFT JOIN litemall_order_goods_info gi on gi.order_goods_id =e.order_goods_info_id
+        WHERE 1 = 1
+              AND e.profit_type = 'second'
+              AND p_id IN (SELECT id FROM litemall_user  WHERE p_id = #{userId,jdbcType=INTEGER})
+    </select>
+
+    <!-- 提现 -->
+    <update id="getMoneyByUserId" parameterType="java.lang.Object" >
+        UPDATE `litemall_user`
+        SET `money` = `money` - #{money,jdbcType=DOUBLE}
+        WHERE `id` = #{user_id,jdbcType=INTEGER}
+    </update>
+
+    <update id="topUpMoneyByUserId" parameterType="java.lang.Object" >
+        UPDATE `litemall_user`
+        SET `money` = `money` + #{money,jdbcType=DOUBLE}
+        WHERE `id` = #{user_id,jdbcType=INTEGER}
+    </update>
+    <!-- 提现和充值记录 -->
+    <select id="selectTransactionRecord" parameterType="java.lang.Integer" resultType="java.util.Map">
+    	SELECT
+        e.id,
+        date_format(e.operation_time,"%Y-%m-%d %H:%i:%S") AS operationTime,
+        e.profit_money as profitMoney,
+		e.operation,
+		e.remark
+        FROM litemall_earnings e
+        WHERE 1 = 1
+        AND (e.operation = 2 or e.operation = 3)
+        AND e.profit_user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>

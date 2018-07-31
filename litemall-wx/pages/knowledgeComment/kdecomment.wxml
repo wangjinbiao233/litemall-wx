@@ -1,0 +1,77 @@
+<wxs src="./../tools.wxs" module="comtools" />
+<view class="comments">
+    <view class="h">
+        <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab">
+            <view class="txt">全部({{allCount}})</view>
+        </view>
+        <view class="item {{ showType == 0 ? '' : 'active'}}" bindtap="switchTab">
+            <view class="txt">有图({{hasPicCount}})</view>
+        </view>
+    </view>
+  <view class="b">
+   <view class="item" wx:for="{{comments}}" wx:key="id" wx:for-index="indexid">
+            <view class="info">
+                <view class="user">
+                    <image src="{{item.userInfo.avatarUrl}}"></image>
+                    <text>{{item.userInfo.nickName}} </text>
+                </view>
+                <view class="ding">
+                    <text wx:if="{{item.islike==true}}" data-text="{{indexid}}" style="font-size:33rpx;color:red; " bindtap="changehide">❤</text>
+                    <text wx:if="{{item.islike==false}}" data-text="{{indexid}}" style="font-size:40rpx;" bindtap="changehide">♡</text>
+                    <text style="font-size:32rpx;"> {{item.likenum}}</text>
+                </view>
+            </view>
+            <view class="content">{{item.content}}</view>
+            <view class="imgs" wx:if="{{item.picList.length > 0}}">
+                <image bindtap="imgYu" class="img" wx:for="{{item.picList}}" wx:key="*this" wx:for-item="iitem" src="{{iitem}}" data-src="{{iitem}}"></image>
+
+            </view>
+            <view class="time">
+                <navigator url="/pages/knowledgeCommentPost/kdectpost?valueId={{valueId}}&title=回复：{{item.userInfo.nickName}}&typeId=2&isImg=false&commentId={{item.commentId}}&replayId=">
+                {{comtools.toFormatTime(item.addTime)}}
+                <text>回复</text>
+                </navigator>
+            </view>
+
+            <view class="replay" wx:for="{{item.subcomment}}" wx:for-item="items" wx:key="id" wx:for-index="indexid2">
+                <view class="nm">
+                    <view class="name">{{items.nickname}} {{items.znickname}}</view>
+                    <view class="zding">
+                        <text data-text="{{indexid}}" data-textb="{{indexid2}}" wx:if="{{items.islike==true}}" style="font-size:33rpx;color:red; " bindtap="zchangehide">❤</text>
+                        <text data-text="{{indexid}}" data-textb="{{indexid2}}" wx:if="{{items.islike==false}}"  style="font-size:40rpx;" bindtap="zchangehide">♡</text>
+                        <text style="font-size:32rpx;"> {{items.likenum}}</text>
+                       
+                      </view>
+                </view>
+                <view class="cttext">
+                <navigator url="/pages/knowledgeCommentPost/kdectpost?valueId={{valueId}}&title=回复：{{items.nickname}}&typeId=2&isImg=false&commentId={{items.commentId}}&replayId={{items.replayId}}">
+                {{items.content}}
+                </navigator>
+                </view>
+            </view>
+            
+        </view>
+
+    <!-- <view class="item" wx:for="{{comments}}" wx:key="id">
+      <view class="info">
+        <view class="user">
+          <image src="{{item.userInfo.avatarUrl}}"></image>
+          <text>{{item.userInfo.nickname}}</text>
+        </view>
+        <view class="time">{{item.addTime}}</view>
+      </view>
+      <view class="comment">{{item.content}}</view>
+      <view class="imgs" wx:if="{{item.picList.length > 0}}">
+        <image class="img" wx:for="{{item.picList}}" wx:key="*this" wx:for-item="pitem" src="{{pitem}}"></image>
+      </view>
+      <view class="spec">
+        <!-- <text class="item">白色 2件</text> -->
+      <!-- </view> -->
+      <!--<view class="customer-service" wx:if="{{item.commentReplyVO}}">
+        <text class="u">小选回复：</text>
+        <text class="c">{{item.commentReplyVO.replyContent}}</text>
+      </view>-->
+    <!-- </view> -->
+
+  </view>
+</view>

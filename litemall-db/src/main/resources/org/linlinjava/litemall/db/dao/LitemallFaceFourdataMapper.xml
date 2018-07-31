@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallFaceFourdataMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallFaceFourdata" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="facetype" property="facetype" jdbcType="INTEGER" />
+    <result column="percentage_start" property="percentageStart" jdbcType="INTEGER" />
+    <result column="percentage_end" property="percentageEnd" jdbcType="INTEGER" />
+    <result column="level_describe" property="levelDescribe" jdbcType="VARCHAR" />
+    <result column="skin_problems" property="skinProblems" jdbcType="VARCHAR" />
+    <result column="suggest" property="suggest" jdbcType="VARCHAR" />
+    <result column="explainname" property="explainname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, facetype, percentage_start, percentage_end, level_describe, skin_problems, suggest
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_face_fourdata
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_face_fourdata
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallFaceFourdata" >
+    insert into litemall_face_fourdata (id, facetype, percentage_start, 
+      percentage_end, level_describe, skin_problems, 
+      suggest)
+    values (#{id,jdbcType=INTEGER}, #{facetype,jdbcType=INTEGER}, #{percentageStart,jdbcType=INTEGER}, 
+      #{percentageEnd,jdbcType=INTEGER}, #{levelDescribe,jdbcType=VARCHAR}, #{skinProblems,jdbcType=VARCHAR}, 
+      #{suggest,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallFaceFourdata" >
+    insert into litemall_face_fourdata
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="facetype != null" >
+        facetype,
+      </if>
+      <if test="percentageStart != null" >
+        percentage_start,
+      </if>
+      <if test="percentageEnd != null" >
+        percentage_end,
+      </if>
+      <if test="levelDescribe != null" >
+        level_describe,
+      </if>
+      <if test="skinProblems != null" >
+        skin_problems,
+      </if>
+      <if test="suggest != null" >
+        suggest,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="facetype != null" >
+        #{facetype,jdbcType=INTEGER},
+      </if>
+      <if test="percentageStart != null" >
+        #{percentageStart,jdbcType=INTEGER},
+      </if>
+      <if test="percentageEnd != null" >
+        #{percentageEnd,jdbcType=INTEGER},
+      </if>
+      <if test="levelDescribe != null" >
+        #{levelDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="skinProblems != null" >
+        #{skinProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="suggest != null" >
+        #{suggest,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallFaceFourdata" >
+    update litemall_face_fourdata
+    <set >
+      <if test="facetype != null" >
+        facetype = #{facetype,jdbcType=INTEGER},
+      </if>
+      <if test="percentageStart != null" >
+        percentage_start = #{percentageStart,jdbcType=INTEGER},
+      </if>
+      <if test="percentageEnd != null" >
+        percentage_end = #{percentageEnd,jdbcType=INTEGER},
+      </if>
+      <if test="levelDescribe != null" >
+        level_describe = #{levelDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="skinProblems != null" >
+        skin_problems = #{skinProblems,jdbcType=VARCHAR},
+      </if>
+      <if test="suggest != null" >
+        suggest = #{suggest,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.LitemallFaceFourdata" >
+    update litemall_face_fourdata
+    set facetype = #{facetype,jdbcType=INTEGER},
+      percentage_start = #{percentageStart,jdbcType=INTEGER},
+      percentage_end = #{percentageEnd,jdbcType=INTEGER},
+      level_describe = #{levelDescribe,jdbcType=VARCHAR},
+      skin_problems = #{skinProblems,jdbcType=VARCHAR},
+      suggest = #{suggest,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByTypePercentage" resultMap="BaseResultMap"  >
+    select (select fst.`explain` from litemall_face_skin_type fst where fst.id=facetype)as explainname,
+    <include refid="Base_Column_List" />
+    from litemall_face_fourdata
+    where facetype=#{facetype} 
+    <![CDATA[ and percentage_start<=#{percentage} and percentage_end>=#{percentage} ]]>
+  </select>
+  
+</mapper>

@@ -1,0 +1,40 @@
+<template name="tmp_ccwl" >
+
+<view class="viewe">
+    <view class="tu"><image class="textimg" src="../../static/images/mkcd.png"/></view>
+    <view class="wz">
+        <text class="texta">粗糙纹理</text>
+        <text class="textb">{{wenli.explainname}}</text>
+    </view>
+</view>
+
+<view class="ccwl">
+   <view class="tu"><image src="../../static/images/{{facedefault.wenli<=20?'ccwl_pg.png':'ccwl_nopg.png'}}"/>
+   <text style="color:black;">苹果</text>
+   </view>
+    <!-- <view class="tu"><image src="../../static/images/{{facedefault.wenli>=21&&facedefault.wenli<=40?'ccwl_xc.png':'ccwl_noxc.png'}}"/>
+    <text>香橙</text></view>
+     <view class="tu"><image src="../../static/images/{{facedefault.wenli>=41&&facedefault.wenli<=60?'ccwl_lz.png':'ccwl_nolz.png'}}"/>
+     <text>荔枝</text></view>
+      <view class="tu"><image src="../../static/images/{{facedefault.wenli>=61&&facedefault.wenli<=80?'ccwl_fl.png':'ccwl_nofl.png'}}"/>
+      <text>菠萝</text></view>
+      <view class="tu"><image src="../../static/images/{{facedefault.wenli>=81?'ccwl_ln.png':'ccwl_noln.png'}}"/>
+      <text>榴莲</text></view> -->
+
+      <view class="tu"><image src="../../static/images/{{facedefault.wenli>=81?'ccwl_xc.png':'ccwl_noxc.png'}}"/>
+    <text>香橙</text></view>
+     <view class="tu"><image src="../../static/images/{{facedefault.wenli>=61&&facedefault.wenli<=80?'ccwl_lz.png':'ccwl_nolz.png'}}"/>
+     <text>荔枝</text></view>
+      <view class="tu"><image src="../../static/images/{{facedefault.wenli>=41&&facedefault.wenli<=60?'ccwl_fl.png':'ccwl_nofl.png'}}"/>
+      <text>菠萝</text></view>
+      <view class="tu"><image src="../../static/images/{{facedefault.wenli>=21&&facedefault.wenli<=40?'ccwl_ln.png':'ccwl_noln.png'}}"/>
+      <text>榴莲</text></view>
+</view>
+
+
+<view class="msg">
+     <view class="d">{{wenli.skinProblems}}</view>
+    <view class="x">{{wenli.suggest}}</view>
+</view>
+
+</template>

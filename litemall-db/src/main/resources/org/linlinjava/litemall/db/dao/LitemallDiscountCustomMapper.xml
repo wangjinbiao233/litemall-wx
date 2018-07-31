@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallDiscountCustomMapper">
+
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallCustomDiscount">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="key" jdbcType="VARCHAR" property="key" />
+      <result column="discount_name" jdbcType="VARCHAR" property="discountName" />
+      <result column="discounts_price" jdbcType="INTEGER" property="discountsPrice" />
+      <result column="limit_price" jdbcType="INTEGER" property="limitPrice" />
+      <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+      <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+      <result column="is_get" jdbcType="INTEGER" property="isGet" />
+      <result column="is_use" jdbcType="INTEGER" property="isUse" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="order_sn" jdbcType="VARCHAR" property="orderSn" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+      <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+      <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
+
+      <result column="discount_count" jdbcType="VARCHAR" property="discountCount" />
+      <result column="get_count" jdbcType="VARCHAR" property="getCount" />
+      <result column="use_count" jdbcType="VARCHAR" property="useCount" />
+      <result column="is_user" jdbcType="VARCHAR" property="isUser" />
+  </resultMap>
+
+    <sql id="Base_Column_List">
+        id, `key`, discount_name, discounts_price, limit_price, start_time, end_time, is_get,
+        is_use, user_id, order_sn, create_time, create_user_id, modify_time, modify_user_id
+    </sql>
+
+
+  <select id="selectByDiscountNameGroypBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+        `key`,
+        discount_name,        
+        start_time as "startTimeStr",
+        end_time as "endTimeStr",
+        COUNT(is_get) AS discount_count,
+        SUM(is_get) AS get_count,
+        SUM(is_use) AS use_count
+    FROM
+        `litemall_discount`
+    WHERE
+        1 = 1
+        <if test="discountName != null">
+          AND discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
+        </if>
+    GROUP BY `key` , discount_name , start_time , end_time
+  </select>
+
+
+    <select id="selectByKeyAndNameGroypBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+            li.`key`,
+            li.discount_name,
+            li.start_time,
+            li.end_time,
+            COUNT(li.is_get) AS discount_count,
+            SUM(li.is_get)   AS get_count,
+            SUM(li.is_use)   AS use_count,
+            ifnull((SELECT '1' FROM litemall_discount WHERE `key` = li.`key` and user_id = #{userId,jdbcType=VARCHAR}),'0') AS is_user
+        FROM
+            `litemall_discount` AS li
+        WHERE
+        1 = 1
+        AND li.end_time >= curdate()
+        <if test="key != null">
+            AND `key` = #{key,jdbcType=VARCHAR}
+        </if>
+        <if test="discountName != null">
+            AND discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
+        </if>
+        GROUP BY `key` , discount_name , start_time , end_time
+    </select>
+
+    <!-- 获取未使用的优惠卷 -->
+    <select id="selectUnusedByKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM litemall_discount d
+        WHERE 1 = 1 AND d.is_get = '0' AND d.`key` = #{key,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 我的优惠卷 -->
+    <select id="selectByUserIdAndName" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM litemall_discount d
+        WHERE 1 = 1 AND user_id = #{userId,jdbcType=VARCHAR}
+        <if test="discountName != null">
+            AND discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
+        </if>
+    </select>
+
+
+    <!-- 我的可用优惠卷 -->
+    <select id="selectMyUseByUserIdAndName" parameterType="org.linlinjava.litemall.db.domain.LitemallCustomDiscount" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM litemall_discount d
+        WHERE 1 = 1 AND user_id = #{userId,jdbcType=VARCHAR}
+        AND d.is_get = '1' 
+        AND d.is_use = '0'
+        
+         <![CDATA[  
+         	AND limit_price <= #{goodsTotalPrice}
+  		 ]]>   
+       
+        <if test="discountName != null">
+            AND d.discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
+        </if>
+    </select>
+    
+    <!-- 我的可用优惠卷 -->
+    <select id="selectMyUseByUserId" parameterType="org.linlinjava.litemall.db.domain.LitemallCustomDiscount" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM litemall_discount d
+        WHERE 1 = 1 AND user_id = #{userId,jdbcType=VARCHAR}
+        AND d.is_get = '1' 
+        AND d.is_use = '0'
+        
+         <![CDATA[  
+         	AND limit_price <= #{goodsTotalPrice}
+  		 ]]>   
+    </select>
+
+
+
+</mapper>

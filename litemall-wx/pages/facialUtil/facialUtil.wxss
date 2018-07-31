@@ -1,0 +1,24 @@
+.course{
+    width: 100%;
+    height: auto;
+    padding-left:30rpx;
+    background: #fff;
+    margin: 20rpx 0;
+}
+text{
+    display: block;
+    font-size:36rpx;
+    line-height:70rpx;
+}
+.pz{
+width:345rpx;
+height:80rpx;
+font-size:36rpx;
+margin-left:210rpx;
+padding-left:65rpx;
+border-radius:48rpx;
+color:white;
+background-color:#8EE5EE;
+padding-top:15rpx;
+margin-bottom:30rpx;
+}

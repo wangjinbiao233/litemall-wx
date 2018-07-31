@@ -1,0 +1,13 @@
+<view class="container">
+   <view class="stores" style=''>
+      <view class="store-box" wx:for="{{storeList}}" wx:key="id" data-storeid="{{item.id}}" data-img="{{item.storeImg}}" data-name="{{item.storeName}}" data-address="{{item.storeAddress}}" bindtap='backGoodsDetail'>
+        <image class="store-img" src="{{item.storeImg}}" style="padding-left:15rpx;"></image>
+        <view class="store-main">
+          <text class="store-name store-text">{{item.storeName}}</text>
+          <text class="store-evaluate store-text">联系电话：{{item.storeTel}}</text>
+          <text class="store-address store-text">{{item.storeAddress}} 
+            <text class="store-distance">{{item.distant}}</text></text>
+        </view>
+      </view>
+    </view>
+</view>

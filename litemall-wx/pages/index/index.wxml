@@ -1,0 +1,284 @@
+<!--index.wxml-->
+<movable-area style="height: 1100rpx; width: 100%;">
+  <movable-view class='btn-gif' direction="all" x='1000rpx' y='1000rpx'>
+    <image src='/static/images/timg.gif' style='width:120rpx;height:120rpx;  border-radius: 100%;' bindtap='btngif'></image>
+  </movable-view>
+  <view class="container">
+    <view class='search'>
+      <image bindtap="windowchoose" data-statu="open" src='/static/images/code.png'></image>
+      <view bindtap="windowchoose" data-statu="open">测一测</view>
+    
+      <view class='search-btn' wx:if="{{isSearch==1}}">
+        <icon type='search' size='15' color='#dbdbdb'></icon>
+        <navigator url="/pages/searchGoods/searchGoods"><view style='color:#dbdbdb;margin-left:10rpx;'>大家都在搜</view></navigator>
+      </view>
+      
+      <view class='search-btn-o' wx:else>
+        <input placeholder='请输入...'></input>
+        <icon type='search' size='15' color='#dbdbdb'></icon>
+      </view>
+    </view>
+    <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+      <swiper-item wx:for="{{banner}}" wx:key="id">
+        <navigator url="{{item.link}}">
+          <image src="{{item.url}}" background-size="cover"></image>
+        </navigator>
+      </swiper-item>
+    </swiper>
+    <view class="{{isfirstlogin?'firstlogin':' '}}">
+    <view class="category" >
+      <view bindtap='goKnowledge' class="category-iconBox" wx:key="id" wx:for="{{kcategories}}" data-id="{{item.id}}" data-index='{{index}}'>
+        <image class="category-icon" src="/static/images/knCa_0{{index+1}}.png" background-size="cover"></image>
+        <text class="category-text">{{item.name}}</text>
+      </view>
+    </view>
+    </view>
+    <view bindtap="windowchoose" data-statu="open" class="{{isfirstlogin?'':'firstlogin'}}">
+        <image style="width:100%;height:420rpx;" src="{{picUrl}}image/2018/06/19/ukiep8yafziylpgct2iy.jpg" />
+    </view>
+    <!-- <view class="knowledge">
+    <navigator class="knowledge-box" wx:key = "id" wx:for="{{knowledges}}" 
+      url="/pages/knowledgeDetail/kdetail?id={{item.id}}">
+      <image class="knowledge-img" src="{{item.bannerUrl}}"></image>
+      <view class="knowledge-text">
+        <view class="knowledge-main">{{item.introduction}}</view>
+      </view>
+    </navigator>
+  </view> -->
+    <view class="title">
+      <view style='font-size:35rpx;'>当季推荐</view>
+      <view style='font-size:25rpx;color:#a2a2a2;' bindtap='goCategory'>更多精选 〉</view>
+    </view>
+    <swiper class="banner-o" autoplay="" interval="3000" duration="1000" previous-margin="20rpx" next-margin='370rpx' circular='true'>
+      <swiper-item wx:for="{{hotGoods}}" wx:key="id">
+        <navigator url="/pages/goods/goods?id={{item.id}}">
+          <view class='swiper-box'>
+            <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
+            <image src="{{item.primaryPicUrl}}" style='height:387rpx;width:330rpx;'></image>
+            <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;'>{{item.name}}</view>
+            <view style='padding:5rpx 15rpx 0rpx 15rpx;color:#6bb5dc;font-size:35rpx;'>￥{{item.retailPrice}}</view>
+            <view class='ellipsis' style='padding:5rpx 15rpx 10rpx 15rpx;font-size:24rpx;'>{{item.goodsBrief}}</view>
+          </view>
+        </navigator>
+      </swiper-item>
+    </swiper>
+    <!-- <view class="goods">
+      <navigator wx:for="{{hotGoods}}" url="/pages/goods/goods?id={{item.id}}">
+        <view class="goods-box">
+          <image class="goods-img" src="{{item.primaryPicUrl}}"></image>
+          <view class="goods-main">
+            <text class="goods-name goods-text">{{item.name}}</text>
+            <text class="goods-nameEn goods-text"></text>
+            <text class="goods-unit goods-text">￥ {{item.retailPrice}}</text>
+          </view>
+        </view>
+      </navigator>
+      <!--<view class="goods-box">
+      <image class="goods-img" src="http://att.bbs.duowan.com/forum/201803/04/1842143igi8xzga1pys6p7.jpg"></image>
+      <view class="goods-main">
+        <text class="goods-name goods-text">保湿补水</text>
+        <text class="goods-nameEn goods-text">JanDan Jewellery</text>
+        <text class="goods-unit goods-text">￥ 320.00</text>
+      </view>
+    </view>
+    <view class="goods-box">
+      <image class="goods-img" src="http://att.bbs.duowan.com/forum/201803/04/1842143igi8xzga1pys6p7.jpg"></image>
+      <view class="goods-main">
+        <text class="goods-name goods-text">保湿补水</text>
+        <text class="goods-nameEn goods-text">JanDan Jewellery</text>
+        <text class="goods-unit goods-text">￥ 320.00</text>
+      </view>
+    </view>
+    <view class="goods-box">
+      <image class="goods-img" src="http://att.bbs.duowan.com/forum/201803/04/1842143igi8xzga1pys6p7.jpg"></image>
+      <view class="goods-main">
+        <text class="goods-name goods-text">保湿补水</text>
+        <text class="goods-nameEn goods-text">JanDan Jewellery</text>
+        <text class="goods-unit goods-text">￥ 320.00</text>
+      </view>
+    </view>
+    </view> -->
+    <view class="title" style='font-size:35rpx;'>精选门店</view>
+    <swiper class="banner-store" interval="3000" duration="1000" previous-margin="" next-margin='220rpx' circular='true'>
+      <swiper-item wx:for="{{store}}" wx:key="id">
+        <view class='swiper-box-store' data-id="{{item.id}}" bindtap='toStoreDetail'>
+          <image src="{{item.storeImg}}"></image>
+          <view class='item-name'>
+            <view style='font-size:30rpx;color:#6bb5dc;'>{{item.storeName}}</view>
+            <view style='font-size:30rpx;'>{{item.storeTel}}</view>
+          </view>
+          <view class='item-name-o'>
+            <view style='font-size:24rpx;color:#dbdbdb;'>{{item.storeAddress}}</view>
+             <view style='font-size:24rpx;color:#dbdbdb;'>{{item.distant}}km</view> 
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+
+<!--content--><!--使用animation属性指定需要执行的动画 animation="{{animationData}}"-->
+<view  class="drawer_box" wx:if="{{showModalStatus}}"> 
+ <!--drawer content-->
+ 
+     <view class="drawer_title">肤质检测</view> 
+     <view class="drawer_content">
+        <view class="tiaozi"  bindtap="chooseImages"  data-statu="myself" >自己测</view>
+        <view class="xiaozi">肤质数据存入个人记录</view>
+         <view class="tiaozi2" bindtap="chooseImages" data-statu="friend" >帮朋友测</view>
+        <view class="xiaozi">肤质数据不会记录</view>
+        <navigator url="/pages/facialUtil/facialUtil">
+        <view class="tiaozi3">检测教程</view>
+        <view class="xiaozi">【护肤测试结果仅供参考，以线下服务顾问面诊为准】</view>
+        </navigator> 
+        <view class="yz_close"  bindtap="powerDrawer" data-statu="close"><image src="/static/images/yz_close.png"/></view>
+    </view> 
+
+
+</view>
+
+    <!-- <view class="stores">
+
+      <view class="store-box" wx:for="{{store}}" wx:key="id" data-id="{{item.id}}" bindtap='toStoreDetail'>
+        <image class="store-img" src="{{item.storeImg}}"></image>
+        <view class="store-main">
+          <text class="store-name store-text">{{item.storeName}}</text>
+          <text class="store-evaluate store-text">联系电话：{{item.storeTel}}</text>
+          <text class="store-address store-text">{{item.storeAddress}} <text                  class="store-distance">15.7km</text></text>
+        </view>
+      </view> -->
+
+    <!--  <navigator url="../store/index">
+      <view class="store-box">
+        <image class="store-img" src="https://yanxuan.nosdn.127.net/14918201901050274.jpg"></image>
+        <view class="store-main">
+          <text class="store-name store-text">长宁区6号店</text>
+          <text class="store-evaluate store-text">5分 | 9条评论</text>
+          <text class="store-address store-text">长宁区九号路11号 <text class="store-distance">15.7km</text></text>
+        </view>
+      </view>
+    </navigator>
+
+    <navigator url="../service/index">
+      <view class="store-box">
+        <image class="store-img" src="https://yanxuan.nosdn.127.net/14918201901050274.jpg"></image>
+        <view class="store-main">
+          <text class="store-name store-text">长宁区6号店</text>
+          <text class="store-evaluate store-text">5分 | 9条评论</text>
+          <text class="store-address store-text">长宁区九号路11号 <text class="store-distance">15.7km</text></text>
+        </view>
+      </view>
+    </navigator> -->
+  </view>
+  <!-- <view class="a-section a-brand">
+    <view class="h">
+      <navigator url="../brand/brand">
+        <text class="txt">品牌制造商直供</text>
+      </navigator>
+    </view>
+    <view class="b">
+      <view class="item item-1" wx:for="{{brands}}" wx:key="id">
+        <navigator url="/pages/brandDetail/brandDetail?id={{item.id}}">
+          <view class="wrap">
+            <image class="img" src="{{item.picUrl}}" mode="aspectFill"></image>
+            <view class="mt">
+              <text class="brand">{{item.name}}</text>
+              <text class="price">{{item.floorPrice}}</text>
+              <text class="unit">元起</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="a-section a-new" wx:if="{{newGoods.length > 0}}">
+    <view class="h">
+      <view>
+        <navigator url="../newGoods/newGoods">
+          <text class="txt">周一周四 · 新品首发</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item" wx:for="{{newGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <navigator url="../goods/goods?id={{item.id}}">
+          <image class="img" src="{{item.listPicUrl}}" background-size="cover"></image>
+          <text class="name">{{item.name}}</text>
+          <text class="price">￥{{item.retailPrice}}</text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="a-section a-popular" wx:if="{{hotGoods.length > 0}}">
+    <view class="h">
+      <view>
+        <navigator url="../hotGoods/hotGoods">
+          <text class="txt">人气推荐</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <view class="item" wx:for="{{hotGoods}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+        <navigator url="/pages/goods/goods?id={{item.id}}">
+          <image class="img" src="{{item.listPicUrl}}" background-size="cover"></image>
+          <view class="right">
+            <view class="text">
+              <text class="name">{{item.name}}</text>
+              <text class="desc">{{item.goods_brief}}</text>
+              <text class="price">￥{{item.retailPrice}}</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="a-section a-topic" wx:if="topics.length > 0">
+    <view class="h">
+      <view>
+      <navigator url="/pages/topic/topic">
+        <text class="txt">专题精选</text>
+        </navigator>
+      </view>
+    </view>
+    <view class="b">
+      <scroll-view scroll-x class="list">
+        <view class="item" wx:for="{{topics}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+          <navigator url="../topicDetail/topicDetail?id={{item.id}}">
+            <image class="img" src="{{item.scenePicUrl}}" background-size="cover"></image>
+            <view class="np">
+              <text class="name">{{item.title}}</text>
+              <text class="price">￥{{item.priceInfo}}元起</text>
+            </view>
+            <text class="desc">{{item.subtitle}}</text>
+          </navigator>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view class="good-grid" wx:for="{{floorGoods}}" wx:key="id">
+    <view class="h">
+      <view>
+        <text>{{item.name}}</text>
+      </view>
+    </view>
+    <view class="b">
+      <block wx:for="{{item.goodsList}}" wx:for-index="iindex" wx:for-item="iitem" wx:key="id">
+        <view class="item {{iindex % 2 == 0 ? '' : 'item-b'}}">
+          <navigator url="../goods/goods?id={{iitem.id}}" class="a">
+            <image class="img" src="{{iitem.listPicUrl}}" background-size="cover"></image>
+            <text class="name">{{iitem.name}}</text>
+            <text class="price">￥{{iitem.retailPrice}}</text>
+          </navigator>
+        </view>
+      </block>
+      <view class="item item-b item-more">
+          <navigator url="/pages/category/category?id={{item.id}}" class="more-a">
+            <view class="txt">{{'更多'+item.name+'好物'}}</view>
+            <image class="icon" src="../../static/images/icon_go_more.png" background-size="cover"></image>
+          </navigator>
+      </view>
+    </view>
+  </view> -->
+  <!-- </view> -->
+</movable-area>

@@ -1,0 +1,38 @@
+<view class="container">
+  <view class="cate-nav">
+    <scroll-view scroll-x="true" class="cate-nav-body" scroll-left="{{scrollLeft}}">
+      <view class="cate-nav-box">
+        <view wx:for="{{navList}}" class="item {{ id == item.id ? 'active' : ''}}" wx:key="id" data-id="{{item.id}}" data-index="{{index}}" bindtap="switchCate">
+          <view class="name">{{item.name}}</view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}};">
+    <view class="cate-item">
+      <view class="h">
+        <text class="name">{{currentCategory.name}}</text>
+        <text class="desc">{{currentCategory.frontName}}</text>
+      </view>
+      <view class="b">
+        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
+          <text class='serviceFlag' wx:if="{{iitem.flag == '2'}}">服务</text>
+          <image class="img" src="{{iitem.listPicUrl}}"></image>
+          <text class="name">{{iitem.name}}</text>
+          <text class="price">￥{{iitem.retailPrice}}</text>
+          <text class="ellipsis">{{iitem.goodsBrief}}</text>
+          <text class="ellipsis" wx:if="{{item.goodsBrief==''}}"></text>
+        </navigator>
+      </view>
+    </view>
+  </scroll-view>
+  <navigator url="/pages/cart/cart">
+    <view class="catelog-box category">
+      <view class="catelog-box-num">
+        <text class="catelog-box-text">{{cartGoodsCount}}</text>
+        <image class="catelog-icon" mode="widthFix" src="/static/images/ShoppingCart.png"></image>
+      </view>
+    </view>
+  </navigator>
+</view>

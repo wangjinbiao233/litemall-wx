@@ -1,0 +1,57 @@
+.top {
+  height: 300rpx;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  background-color: #8ac3d7;
+}
+
+.top .number {
+  font-size: 80rpx;
+  color: #ffffff;
+  margin-top: 90rpx;
+}
+
+.top .content{
+  font-size: 28rpx;
+  color: #eef2f2;
+  margin-top: 20rpx;
+}
+
+.list{
+  flex-direction: column;
+}
+
+.item{
+  flex-direction: column;
+  padding: 20rpx;
+  border-bottom: 1rpx #dbdbdb solid
+}
+
+.item .cash{
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item .cash .content{
+  font-size: 35rpx;
+  font-weight: bold;
+}
+
+.item .cash .number{
+  font-size: 55rpx;
+  font-weight: bold;  
+}
+
+.item .cash .date{
+  font-size: 30rpx;
+  color: #a6a6a6;
+}
+
+
+.item .cash .recommend{
+  font-size: 30rpx;
+  color: #a6a6a6;
+}

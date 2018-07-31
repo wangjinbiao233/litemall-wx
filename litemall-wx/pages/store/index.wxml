@@ -1,0 +1,34 @@
+<view class="store">
+  <view class="goodsimgs" wx:for="{{store}}" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+    <image src="{{item.storeImg}}" style='height:98%;width:98%; margin-left:8rpx; border-radius: 15rpx;'></image>
+
+  </view>
+  <view class="store-main">
+    <view class="store-name" wx:for="{{store}}" wx:key="id" data-id="{{item.id}}">
+      门店名称：
+      <text class="store-name ">{{item.storeName}}</text>
+      <!-- <text class="store-navigation" bindtap='toYuYue'>预约</text> -->
+      <view class="store-address" bindtap='toMap' data-storeAddress="{{item.storeAddress}}" data-storeName="{{item.storeName}}"> 
+        {{item.storeAddress}}
+        <text class="store-distance">{{distant}}km</text>
+      </view>
+    </view>
+    <view class="store-opening">
+      周一至周日
+      <text class="store-time">9:00 - 22:00</text>
+    </view>
+  </view>
+  <view>
+    <!-- <view class="store-product-title">项目选择</view> -->
+    <view class="store-parent">
+      <view wx:for="{{goods}}" wx:key="id" data-id="{{item.id}}" bindtap='toGoodsDetail' class="store-child">
+        <image class="goods-img" src="{{item.primaryPicUrl}}"></image>
+        <view class="goods-main">
+          <text class="goods-name">{{item.name}}</text>
+          <!--<text class="goods-nameEn goods-text">JanDan Jewellery</text>-->
+          <text class="goods-unit">￥ {{item.retailPrice}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

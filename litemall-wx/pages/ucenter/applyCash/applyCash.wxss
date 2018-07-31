@@ -1,0 +1,42 @@
+.first-item {
+  height: 100rpx;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx 15rpx 20rpx;
+  font-size: 35rpx;
+  border-bottom: 1rpx #dbdbdb solid;
+}
+
+.second-item {
+  height: 100rpx;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx 15rpx 20rpx;
+  font-size: 35rpx;
+  border-bottom: 1rpx #dbdbdb solid;
+}
+.second-item view {
+ color: 000;
+ font-size: 35rpx;
+}
+.second-item input {
+  margin-left: 10rpx;
+}
+
+.third-item {
+  height: 80rpx;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 15rpx 20rpx 15rpx 20rpx;
+  background-color: #dbdbdb;
+  font-size: 25rpx;
+}
+
+.apply-btn {
+  margin-top: 80rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+}

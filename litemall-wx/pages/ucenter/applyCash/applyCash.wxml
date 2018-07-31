@@ -1,0 +1,10 @@
+<!-- applyCash.wxml -->
+<view class='first-item'>
+  当前可提现余额：{{cashNum}}元
+</view>
+<view class='second-item'>
+  <view >￥</view>
+  <input type="number" placeholder='输入提现金额' placeholder-style='color:#a6a6a6;' bindinput="inputFunc"></input>
+</view>
+<view display="{{isShow}}" style='color:red;' class='third-item'>{{hint}}</view>
+<button bindtap="submit" class='apply-btn' type='primary' disabled="{{disabled}}">提交申请</button>

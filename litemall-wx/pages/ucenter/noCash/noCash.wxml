@@ -1,0 +1,33 @@
+<!-- noCash.wxml -->
+<view class='search' wx:if='{{isSearch == 0}}'>
+  <view class='search-btn' hover-class='search-btn-o' bindtap='toSearch'>
+    <icon type='search' size='15'></icon>
+    <view class='content'>搜索订单</view>
+  </view>
+</view>
+<form bindsubmit='search'>
+  <view class='search-o' wx:if='{{isSearch == 1}}'>
+    <input placeholder='输入订单编号' placeholder-style='color:#a6a6a6;' name='searchInfo'></input>
+    <view>
+      <button class='btn-search' hover-class='btn-search-o' form-type='submit'>搜索</button>
+    </view>
+  </view>
+</form>
+<view class='list'>
+  <view class='item' wx:for='{{orderList}}'>
+    <view class='order'>
+      <view class='order-left'>
+        <view class='code'>订单编号：</view>
+        <view class='num'>{{item.order_sn}}</view>
+      </view>
+      <view class='cash'>预计佣金：{{item.profit}}元</view>
+    </view>
+    <view class='name'>用户名: {{item.username}}</view>
+    <view class='name'>商品名称：{{item.goods_name}}</view>
+    <view class='date'>订单时间：{{item.add_time}}</view>
+  </view>
+</view>
+<view class='nothing' wx:if="{{orderList.length==0}}">
+  <image src='/static/images/sorry.png' class='img'></image>
+  <view class='content'>暂无记录</view>
+</view>

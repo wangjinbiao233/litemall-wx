@@ -1,0 +1,96 @@
+var util = require('../../utils/util.js');
+var api = require('../../config/api.js');
+
+var app = getApp();
+Page({
+  data: {
+    categoryList: [],
+    currentCategory: {},
+    currentSubCategoryList: {},
+    scrollLeft: 0,
+    scrollTop: 0,
+    goodsCount: 0,
+    scrollHeight: 0,
+    cartGoodsCount: 0   //购物车中的商品数量
+  },
+  onLoad: function (options) {
+    this.getCatalog();
+  },
+  //获取购物车中的商品数量
+  getCartGoodsCount: function(){
+    let that = this;
+    if (app.globalData.hasLogin) {
+      let userId = wx.getStorageSync('userId');
+      util.request(api.CartGoodsCount, { 'userId': userId }).then(function (res) {
+        that.setData({
+          cartGoodsCount: res.data,
+        });
+      });
+    } else {
+      that.setData({
+        cartGoodsCount: 0,
+      });
+    }
+  },
+  getCatalog: function () {
+    //CatalogList
+    let that = this;
+    wx.showLoading({
+      title: '加载中...',
+    });
+    util.request(api.CatalogList).then(function (res) {
+        that.setData({
+          categoryList: res.data.categoryList,
+          currentCategory: res.data.currentCategory,
+          currentSubCategoryList: res.data.currentSubCategory
+        });
+        wx.hideLoading();
+      });
+    // util.request(api.GoodsCount).then(function (res) {
+    //   that.setData({
+    //     goodsCount: res.data.goodsCount
+    //   });
+    // });
+  },
+  getCurrentCategory: function (id) {
+    let that = this;
+    util.request(api.CatalogCurrent, { id: id })
+      .then(function (res) {
+        that.setData({
+          currentCategory: res.data.currentCategory,
+          currentSubCategoryList: res.data.currentSubCategory
+        });
+      });
+  },
+  onReady: function () {
+    // 页面渲染完成
+  },
+  onShow: function () {
+    // 页面显示
+    this.getCartGoodsCount();
+  },
+  onHide: function () {
+    // 页面隐藏
+  },
+  onUnload: function () {
+    // 页面关闭
+  },
+  getList: function () {
+    var that = this;
+    util.request(api.ApiRootUrl + 'api/catalog/' + that.data.currentCategory.catId)
+      .then(function (res) {
+        that.setData({
+          categoryList: res.data,
+        });
+      });
+  },
+  switchCate: function (event) {
+    var that = this;
+    var currentTarget = event.currentTarget;
+    if (this.data.currentCategory.id == event.currentTarget.dataset.id) {
+      return false;
+    }
+
+    this.getCurrentCategory(event.currentTarget.dataset.id);
+  }
+})

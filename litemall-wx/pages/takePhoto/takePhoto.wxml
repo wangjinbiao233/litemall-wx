@@ -1,0 +1,29 @@
+<!-- <view class="viewcss">
+    <camera   device-position="{{position}}" flash="off" class="viewcss">
+       
+
+        <cover-image  src='/static/images/111.jpg'   style='opacity:0.3;height:1080rpx;'></cover-image>
+
+    </camera>
+</view>
+<view class="viewcssz">
+<image  class="takephoto" bindtap='takePhoto' style="margin-top:{{ishide?'9999rpx':'10rpx'}}" src="/static/images/pt_ico.png"/>
+
+<image  class="gun"  bindtap='fanzhuan' src="/static/images/fanzhuan.jpg"/>
+</view> -->
+
+
+<view class="pt" >
+     <camera device-position="{{position}}" flash="off"  >
+        <cover-image wx:if="{{!ishide}}"  src='/static/images/111.jpg'   style='opacity:0.3'></cover-image>
+         <cover-image wx:if="{{ishide}}"  src='{{imagePaths}}'  ></cover-image>
+    </camera>  
+</view>
+
+<view class="xia">
+<view class="z"><image bindtap='takePhoto' style="margin-left:{{ishide?'9999rpx':''}}" src="/static/images/pt_ico.png"/></view>
+<view class="y"><image bindtap='fanzhuan' style="margin-left:{{ishide?'9999rpx':''}}" src="/static/images/fanzhuan.jpg"/></view>
+</view>
+
+
+

@@ -1,0 +1,189 @@
+.detail{
+  padding: 20rpx 30rpx;
+  font-size: 20rpx;
+}
+.line{
+    width:100%;
+    height:10rpx;
+    background-color:#d9d9d9;
+}
+.comments{
+     width: 100%;
+    height: auto;
+    padding-left:30rpx;
+
+}
+.comments .h{
+    height: 102.5rpx;
+    line-height: 100.5rpx;
+    width: 700rpx;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.comments .h .t{
+    font-size: 34.5rpx;
+    display: block;
+    float: left;
+    width: 50%;
+    height: 90.5rpx;
+    line-height: 90.5rpx;
+    color: rgba(0,0,0,0.3);
+    letter-spacing:2.5rpx;
+}
+
+.comments .h .i{
+    display:block;
+    float:right;
+    width:130rpx;
+    height:100.5rpx;
+    line-height:102.5rpx;
+    background:url(http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/address-right-990628faa7.png) right center no-repeat;
+    background-size:52rpx;
+    font-size:30rpx;
+
+    /* font-size: 34.5rpx;
+    display: block;
+    float: right;
+    width: 115rpx;
+    height: 90.5rpx;
+    line-height: 90.5rpx;
+    color:#576b95;
+    letter-spacing:3rpx; */
+}
+.comments .b{
+    height: auto;
+    width: 720rpx;
+}
+
+.comments .item{
+    height: auto;
+    width: 720rpx;
+    overflow: hidden;
+    padding-bottom:15rpx;
+    border-bottom: 1px solid #d9d9d9;
+}
+
+.comments .info{
+    height: 127rpx;
+    width: 100%;
+    padding: 20rpx 0 27rpx 0;
+}
+
+.comments .user{
+    float: left;
+    width: auto;
+    height: 67rpx;
+    line-height: 67rpx;
+    font-size: 0;
+}
+
+.comments .user image{
+    float: left;
+    width: 67rpx;
+    height: 67rpx;
+    margin-right: 17rpx;
+    border-radius: 50%;
+}
+
+.comments .user text{
+    display: inline-block;
+    width: auto;
+    height: 66rpx;
+    overflow: hidden;
+    font-size: 29rpx;
+    line-height: 66rpx;
+}
+
+.comments .ding{
+    display: block;
+    float: right;
+    width: auto;
+    height: 67rpx;
+    line-height: 67rpx;
+    color: #7f7f7f;
+    font-size: 25rpx;
+    margin-right: 30rpx;
+}
+
+.comments .time{
+    display: block;
+    float: right;
+    width: auto;
+    height: 50rpx;
+    line-height: 37rpx;
+    color: #7f7f7f;
+    font-size: 25rpx;
+    margin-left: 400rpx;
+    margin-top:-30rpx;
+    position:absolute;
+}
+
+.comments .content{
+    width: 720rpx;
+    padding-right: 30rpx;
+    line-height: 50rpx;
+    font-size: 29rpx;
+    margin-bottom: 24rpx;
+}
+.comments .imgs{
+    width: 720rpx;
+    height: auto;
+    margin-bottom: 25rpx;
+}
+
+.comments .imgs .img{
+    height: 90rpx;
+    width: 90rpx;
+    margin-right: 28rpx;
+}
+
+
+.more{
+    width:  700rpx;
+    height: 140rpx;
+    display: flex;  
+    flex-direction: row;  
+    justify-content: center;  
+    padding-top:55rpx;
+     border-top: 0px solid #d9d9d9;
+     margin-left:22rpx;
+}
+.more .t{
+    font-size:35rpx;
+    color:#576b95;
+}
+
+
+ .replay{
+    width: 100%;
+    height: auto;
+    padding-top:15rpx;
+}
+.replay .nm{
+    height:40rpx;
+    width:100%;
+}
+.replay .name{
+    float: left;
+    width:auto;
+    height: 40rpx;
+   padding-left:70rpx;
+   color:green;
+   
+}
+.replay .zding{
+  display: block;
+    float: right;
+    width: auto;
+    height: 67rpx;
+    color: #7f7f7f;
+    font-size: 25rpx;
+    margin-right: 33rpx;
+}
+.replay .cttext{
+     padding-left:120rpx;
+    width:100%;
+    height:auto;
+    background-color: #F8F8FF;
+}
+

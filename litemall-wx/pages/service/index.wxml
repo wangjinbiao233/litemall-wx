@@ -1,0 +1,69 @@
+
+<view style='background-color:#fff' >
+      <!-- <view class='choice-store' bindtap='toSelectStore'  data-id="{                {goods.id}}" > -->
+      <view class='choice-store' bindtap='toSelectStore' data-id="{{goodsId}}">
+        <view style='font-size:35rpx;'>选择门店</view>
+        <view style='font-size:35rox;'>〉</view>
+      </view>
+</view>
+
+<view class='storeList' wx:if="{{storeid > 0}}">
+  <view class="store-box" style='margin-left:-22rpx;' >
+    <image class="store-img" src="{{img}}" style="margin-left:27rpx;"></image>
+    <view class="store-main">
+      <text class="store-name store-text">{{name}}</text>
+      <text class="store-address store-text">地址：{{address}}</text>
+     </view>
+  </view>
+</view>
+
+
+
+<view class="service">
+  <view class="service-header" style='margin-left:1rpx;'>
+    <view class="service-title">服务时间</view>
+    <view class="service-describe">请选择服务时间，以便我们更好的为您服务</view>
+  </view>
+  <view class="service-date">
+    <view class="service-date-left">
+      <text class="icon-left icon-text"></text>
+    </view>
+
+    <view class="service-date-list">
+      <view bindtap="changeDate" data-index="{{index}}" wx:key="{{index}}" wx:for="{{dateList}}" class="service-date-box  {{index == dateSubscript ? 'active' : ''}}" data-date="{{item.month}}-{{item.day}}">
+        <text class="service-date-time">{{item.month}}-{{item.day}}</text>
+        <text class="service-date-week">星期{{item.week}}</text>
+      </view>
+    </view>
+    <view class="service-date-right">
+      <text class="icon-right icon-text"></text>
+    </view>
+  </view>
+  <view class="service-time-list"  >
+    <view wx:for="{{dateDetailList}}">
+      <view class="service-time-box full" wx:if="{{item.count == item.maxSercePeo }}">
+        <!-- <text class="service-time-warn">已约满</text> -->
+         <text class="service-time-warn">繁忙</text>
+        <text class="service-time-text">{{item.time}}</text>
+      </view>
+      <view class="service-time-box {{index == timeSubscript ? 'active' : ''}}" data-index="{{index}}" wx:key="{{index}}" data-time="{{item.time}}"  wx:else="{{item.count < item.maxSercePeo }}" bindtap='toOrderTime'>
+        <text class="service-time-text">{{item.time}}</text>
+        <!-- <text style="font-size:17rpx;margin-left:14rpx;margin-top:3rpx;color:#88c2d7;">{{item.count}}         人</text>  -->
+      </view>
+    </view>
+    
+<!--   
+    <view class="service-time-box active">
+      <text class="service-time-text">9:00</text>
+    </view> -->
+
+  
+  </view>
+  <view class="service-main">
+    <!-- <text class="service-main-text">您已选择：04/29 17:40</text> -->
+     <text class="service-main-text">您已经选择：{{indexDate}} {{selectTime}}</text>
+    <view class="service-btn-box">
+      <text class="service-btn" bindtap='toConfirmTime'>确定选择</text>
+    </view>
+  </view>
+</view>

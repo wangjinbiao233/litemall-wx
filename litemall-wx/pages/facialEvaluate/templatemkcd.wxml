@@ -1,0 +1,32 @@
+<template name="tmp_mkcd" >
+
+<view class="viewe">
+    <view class="tu"><image class="textimg" src="../../static/images/mkcd.png"/></view>
+    <view class="wz">
+        <text class="texta">毛孔粗大</text>
+        <text class="textb">{{maokong.explainname}}</text>
+    </view>
+</view>
+
+<view class="viewf">
+    <image class="facial" src="../../static/images/facial.png"/>
+</view>
+
+<view class="viewg">
+     <view class="tiao">
+       <progress percent="{{facedefault.maokong}}" active="true" stroke-width="12" activeColor="pink" backgroundColor="#E0FFFF"/>
+     </view>
+     <view class="fl">
+        <view class="tx" style="color:{{facedefault.maokong<=20?'black':''}};">毛孔粗大</view>
+        <view class="tx" style="color:{{facedefault.maokong>=21&&facedefault.maokong<=40?'black':''}};">毛孔较粗</view>
+        <view class="tx" style="color:{{facedefault.maokong>=41&&facedefault.maokong<=60?'black':''}};">一般细腻</view>
+        <view class="tx" style="color:{{facedefault.maokong>=61&&facedefault.maokong<=80?'black':''}};">比较细腻</view>
+        <view class="tx" style="color:{{facedefault.maokong>=81?'black':''}};">零毛孔肌</view>
+     </view>
+</view>
+<view class="msg">
+    <view class="d">{{maokong.skinProblems}}</view>
+    <view class="x">{{maokong.suggest}}</view>
+</view>
+
+</template>

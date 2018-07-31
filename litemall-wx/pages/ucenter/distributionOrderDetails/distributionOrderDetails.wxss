@@ -1,0 +1,58 @@
+.list{
+  flex-direction: column;
+}
+
+.item{
+  flex-direction: column;
+  padding: 20rpx;
+  border-bottom: 1rpx #dbdbdb solid
+}
+
+.item .cash{
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item .cash .content{
+  font-size: 35rpx;
+  font-weight: bold;
+}
+
+.item .cash .number{
+  font-size: 55rpx;
+  font-weight: bold;  
+}
+
+.item .cash .date{
+  font-size: 30rpx;
+  color: #a6a6a6;
+}
+
+.item .cash .recommend{
+  font-size: 30rpx;
+  color: #a6a6a6;
+}
+
+.item .order{
+  margin-top: 10rpx;
+  color: #a6a6a6;
+  font-size: 30rpx;  
+}
+.nothing{
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx; 
+}
+.nothing .img{
+  width: 240rpx;
+  height: 210rpx;
+}
+.nothing .content{
+  font-size: 45rpx;
+  color: #8ac3d7;
+  font-family: STFangsong;
+}

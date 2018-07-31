@@ -1,0 +1,129 @@
+.order .order-sort{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 120rpx;
+  border-bottom: 20rpx solid #f5f5f5;
+}
+.order .order-sort-box{
+  width: 50%;
+  font-size: 35rpx;
+}
+
+.order .order-sort-text{
+  color: #929292;
+  font-size: 35rpx;
+  text-align: center;
+  padding-bottom: 20rpx;
+}
+.order .active .order-sort-text{
+  color: #8ac2d6;
+  border-bottom: 2px solid #8ac2d6;
+}
+
+.cart-view{
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+}
+
+.cart-view .list{
+    height: auto;
+}
+
+.cart-view .group-item{
+    height: auto;
+    width: 100%;
+    background: #fff;
+    margin-bottom: 18rpx;
+}
+
+.cart-view .item{
+    height: 250rpx;
+    width: 100%;
+    overflow: hidden;
+    border-bottom:10rpx solid #f5f5f5;
+}
+.cart-view .item .but{
+    float: left;
+    margin: 65rpx 18rpx 65rpx 26rpx;
+    background-size: 34rpx;
+}
+
+.cart-view .item .cart-s{
+    float: left;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.cart-view .item .cart-x{
+    float: left;
+    width: 672rpx;
+}
+
+.cart-view .item .img{
+    border-radius:50%;
+    float: left;
+    height:125rpx;
+    width: 125rpx;
+    background: #f4f4f4;
+    margin: 19.5rpx 18rpx 19.5rpx 0;
+}
+
+.cart-view .item .info{
+    float: left;
+    width: 503rpx;
+    margin: 10rpx 26rpx 19.5rpx 0;
+}
+
+.cart-view .item .t{
+    margin: 20rpx 10rpx;
+    font-size: 28rpx;
+    color: #333;
+}
+
+.cart-view .item .name{
+    font-size: 35rpx;
+    color: #333;
+}
+
+.cart-view .item .num{
+    float: right;
+    color: #8ac2d6;
+}
+
+.cart-view .item .order-num{
+  float: right;
+}
+.cart-view .item .b{
+  margin: 8rpx 10rpx;
+  font-size: 25rpx;
+  color: #333;
+}
+
+.cart-view .item .price{
+    float: left;
+    color: #CDCDC1;
+}
+
+.nothing{
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx; 
+}
+
+.nothing .img{
+  width: 240rpx;
+  height: 210rpx;
+}
+
+.nothing .content{
+  font-size: 45rpx;
+  color: #8ac3d7;
+  font-family: STFangsong;
+}
+
+
+
+
+

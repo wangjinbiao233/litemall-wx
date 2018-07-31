@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallReserveMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallReserve" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="order_goods_id" property="orderGoodsId" jdbcType="INTEGER" />
+    <result column="store_id" jdbcType="INTEGER" property="storeId" />
+  <!--   <result column="start_time" property="startTime" jdbcType="VARCHAR" /> -->
+    <!-- <result column="actual_price" jdbcType="DECIMAL" property="actualPrice" /> -->
+     <!--<result column="end_time" property="endTime" jdbcType="VARCHAR" />-->
+    <result column="reserve_date" property="reserveDate" jdbcType="VARCHAR" />
+    <result column="reserve_time" property="reserveTime" jdbcType="VARCHAR" />
+    <result column="use_date" property="useDate" jdbcType="VARCHAR" />
+    <result column="use_time" property="useTime" jdbcType="VARCHAR" />
+    <result column="deleted" property="deleted" jdbcType="BIT" />
+   	<result column="doctor_id" property="doctorId" jdbcType="INTEGER" />
+   	
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    id, user_id,order_goods_id, start_time, end_time, reserve_date,reserve_time,use_date,use_time, store_id,deleted
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_reserve
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByOrderGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+        t1.id,
+	    t1.reserve_date,   
+	    t1.reserve_time,	   
+	    t1.use_date, 
+	    t1.use_time,   
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t3.store_name as "storeName",
+	    t4.goods_name as "goodsName"
+	    
+    from litemall_reserve t1 
+    left join litemall_user t2 on t1.user_id = t2.id   
+    left join litemall_store t3 on t1.store_id = t3.id  
+    left join litemall_order_goods t4 on t1.order_goods_id = t4.id  
+      
+    where t1.order_goods_id = #{orderGoodsId,jdbcType=INTEGER}
+    and t1.deleted = false
+  </select>
+  
+  <select id="selectFinishByOrderGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+        t1.id,
+	    t1.reserve_date,   
+	    t1.reserve_time,	   
+	    t1.use_date, 
+	    t1.use_time,   
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t3.store_name as "storeName",
+	    t4.goods_name as "goodsName"
+	    
+    from litemall_reserve t1 
+    left join litemall_user t2 on t1.user_id = t2.id   
+    left join litemall_store t3 on t1.store_id = t3.id  
+    left join litemall_order_goods t4 on t1.order_goods_id = t4.id  
+      
+    where t1.order_goods_id = #{orderGoodsId,jdbcType=INTEGER}
+    and t1.deleted = false
+    and t1.reserve_status != 1
+  </select>
+  
+  <select id="selectReserveList" resultMap="BaseResultMap"  parameterType="org.linlinjava.litemall.db.domain.LitemallReserve"  >
+    select 
+	    t1.id,t1.user_id,t1.order_goods_id,    
+	    t1.reserve_date, 
+	    t1.reserve_status  as "reserveStatus" ,
+	    t1.start_time as "startTime",
+	    t1.end_time as "endTime",
+	    t1.reserve_time,
+     	t1.use_date,   
+	    t1.use_time,        
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t2.member_id as "memberId",
+	    t3.goods_name as "goodsName",
+	    t3.order_status as "orderStatus",
+	    t4.store_name as "storeName",
+	    t5.username as "doctorName"
+    from litemall_reserve t1 
+	    left join litemall_user t2 on t1.user_id = t2.id     
+	    left join litemall_order_goods t3 on t1.order_goods_id = t3.id 
+	    left join litemall_store t4 on t1.store_id = t4.id 
+	    left join litemall_admin t5 on t5.id = t1.doctor_id
+    where 1 = 1  and t1.deleted = false       
+    and t1.reserve_status != 2 
+    
+     <if test="userId != null">
+       and t1.user_id = #{userId,jdbcType=INTEGER}     
+     </if>   
+     
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=INTEGER}     
+     </if> 
+      
+     <if test="reserveStatus!=null and reserveStatus!='' ">
+     	and t1.reserve_status = #{reserveStatus,jdbcType=INTEGER}  
+     </if>
+     <if test="username != null and username != 'undefined' and  username != ''  ">
+       and t2.username  like CONCAT('%',#{username},'%')         
+     </if>
+     <if test="startTimeStart !=null and startTimeStart !='' ">
+     	and t1.start_time &gt;= #{startTimeStart,jdbcType=VARCHAR}  
+     </if>
+     <if test="startTimeEnd != null and startTimeEnd !='' ">
+     	and t1.end_time &lt; #{startTimeEnd,jdbcType=VARCHAR}  
+     </if>
+	ORDER BY t1.reserve_date desc
+         
+        
+  </select>
+  
+  <select id="countReserveList" resultType="java.lang.Integer"  parameterType="org.linlinjava.litemall.db.domain.LitemallReserve"  >
+    select count(t1.id)   from litemall_reserve t1 left join litemall_user t2 on t1.user_id = t2.id     
+    WHERE 1 = 1  AND t1.deleted = FALSE  and t1.reserve_status != 2 
+     <if test="userId != null">
+       and t1.user_id = #{userId,jdbcType=INTEGER}     
+     </if>   
+     
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=INTEGER}  
+     </if>   
+     
+     <if test="reserveStatus!=null ">
+     	and t1.reserve_status = #{reserveStatus,jdbcType=INTEGER}  
+     </if>
+     
+     <if test="username != null and username != 'undefined' and  username != ''  ">
+        and t2.username  like CONCAT('%',#{username},'%')
+     </if> 
+     <if test="startTimeStart !=null and startTimeStart !='' ">
+     	and t1.start_time &gt;= #{startTimeStart,jdbcType=VARCHAR}  
+     </if>
+     <if test="startTimeEnd != null and startTimeEnd !='' ">
+     	and t1.end_time &lt; #{startTimeEnd,jdbcType=VARCHAR}  
+     </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_reserve
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+ 
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallReserve" >
+    insert into litemall_reserve (id, user_id,order_goods_id,store_id, start_time, 
+      end_time,reserve_date, reserve_time,use_date, use_time, deleted
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{orderGoodsId,jdbcType=INTEGER},#{storeId,jdbcType=INTEGER},
+     #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP},#{reserveDate,jdbcType=VARCHAR}, #{reserveTime,jdbcType=VARCHAR},
+      #{useDate,jdbcType=VARCHAR}, #{useTime,jdbcType=VARCHAR}, #{deleted,jdbcType=BIT}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallReserve" >
+    insert into litemall_reserve
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="orderGoodsId != null" >
+        order_goods_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="useDate != null" >
+        use_date,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="useDate != null" >
+       	use_date,
+      </if>
+      <if test="deleted != null" >
+        deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="orderGoodsId != null" >
+        #{orderGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reserveDate != null" >
+        #{reserveDate,jdbcType=VARCHAR}
+      </if>
+      <if test="reserveTime != null" >
+        #{reserveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="useDate != null" >
+        #{useDate,jdbcType=VARCHAR}
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        #{deleted,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallReserve" >
+    update litemall_reserve
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+       <if test="orderGoodsId != null" >
+        order_goods_id =  #{orderGoodsId,jdbcType=INTEGER},
+      </if>
+       <if test="storeId != null" >
+        store_id =  #{storeId,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reserveDate != null" >
+        reserve_date = #{reserveDate,jdbcType=VARCHAR},
+      </if>
+      <if test="reserveTime != null" >
+        reserve_time = #{reserveTime,jdbcType=VARCHAR},
+      </if>
+        <if test="useDate != null" >
+        use_date = #{useDate,jdbcType=VARCHAR}
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=VARCHAR},
+      </if>
+      <if test="deleted != null" >
+        deleted = #{deleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.LitemallReserve" >
+    update litemall_reserve
+    set user_id = #{userId,jdbcType=INTEGER},
+    order_goods_id =  #{orderGoodsId,jdbcType=INTEGER},
+    store_id =  #{storeId,jdbcType=INTEGER},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      reserve_date = #{reserveDate,jdbcType=VARCHAR},
+      reserve_time = #{reserveTime,jdbcType=VARCHAR},
+       use_date = #{useDate,jdbcType=VARCHAR}
+       use_time = #{useTime,jdbcType=VARCHAR},
+      deleted = #{deleted,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!--pad门店预约数据查询  -->
+  
+   <select id="selectStoreReserve" resultMap="BaseResultMap"  parameterType="java.lang.String"  >
+    select 
+	    t1.id,t1.user_id,
+	    t1.order_goods_id,    
+	    t1.reserve_date, 
+	    t1.reserve_status  as "reserveStatus" ,
+	    t1.reserve_time,
+     	t1.use_date,   
+	    t1.use_time, 
+	    t1.doctor_id ,       
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t2.avatar as "avatar",
+	    t3.goods_name as "goodsName",
+	    t3.number as "number",
+	    t3.actual_Price as "actualPrice",
+	    t5.order_sn AS "orderSn", 
+	    t4.store_name as "storeName",
+	    t6.treatment_num as "treatmentNum"
+    from litemall_reserve t1 
+	    left join litemall_user t2 on t1.user_id = t2.id     
+	    left join litemall_order_goods t3 on t1.order_goods_id = t3.id 
+	    LEFT JOIN litemall_order t5 ON t5.id= t3.order_id 
+	    left join litemall_store t4 on t1.store_id = t4.id 
+	    left join litemall_goods t6 on t3.goods_id = t6.id
+    where 1 = 1       
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=VARCHAR}     
+     </if>
+     <if test="todayStr != null">
+       and t1.reserve_date = #{todayStr,jdbcType=VARCHAR}     
+     </if>     
+   
+	ORDER BY t1.reserve_time
+         
+        
+  </select>
+  
+  <!-- pad门店所属医生 -->
+  
+   <select id="selectStorePadDoctor" resultType="org.linlinjava.litemall.db.domain.LitemallUser" parameterType="java.lang.String"  >
+	SELECT 
+	     r.id,
+	     r.username,
+	     r.phone  AS "mobile",
+	     r.avatar
+    FROM litemall_store_user u LEFT JOIN  litemall_admin r  ON u.user_id =r.id
+    WHERE 
+ 	1=1 and r.deleted = 0
+ 	<!-- and u.user_flag='1' -->
+     <if test="storeId != null">
+       and u.store_id = #{storeId,jdbcType=VARCHAR}     
+     </if>       
+        
+  </select>
+  
+  <!-- updateReserveStatus 更新预定信息 -->
+	<update id="updateReserveStatus" parameterType="org.linlinjava.litemall.db.domain.LitemallReserveExample" >
+	   update litemall_reserve
+	   <set >
+	     <if test=" flag != null and flag ==0  " ><!-- flag=0  开始 -->
+	       start_time = now(),
+	     </if>
+	     <if test=" flag != null and flag ==1 " ><!-- flag=1 结束 -->
+	       end_time = now(),
+	     </if>
+	     <if test="useTime != null" >
+	       use_time = #{useTime,jdbcType=VARCHAR},
+	     </if>
+	      <if test="doctorId != null" >
+	       doctor_id = #{doctorId,jdbcType=VARCHAR},
+	     </if>
+	     <if test=" flag != null" >
+	       reserve_status = '1' ,<!-- 1：预定已使用 -->
+	      </if>
+	    
+	   </set>
+	   where id = #{reserveId,jdbcType=INTEGER}
+	</update>
+  
+  <!-- 操作医生和预约的关联表 -->
+  
+<!--   <insert id="inertDoctorRes" parameterType="org.linlinjava.litemall.db.domain.LitemallReserveExample">
+  
+    insert into litemall_doctor_reserve 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="reserveId != null" >
+        reserve_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="doctorId != null" >
+        doctor_id,
+      </if>
+    </trim>
+    
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="reserveId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="doctorId != null" >
+        #{doctorId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  
+  </insert> -->
+  
+  <!--查询收入   -->
+ 
+  <select id="selectStoreIncome" resultType="java.math.BigDecimal"   parameterType="java.lang.String">
+	  select
+	  	actual_price
+	  from litemall_order
+	  where 
+	  	order_sn = #{orderSn}
+  </select>
+ 
+ 
+  <!--查询到店客户   -->
+    <select id="selectTodCus" resultMap="BaseResultMap"  parameterType="java.lang.String"  >
+    select 
+	    t1.id,t1.user_id,
+	   
+	    t4.store_name as "storeName"
+    from litemall_reserve t1 
+	    left join litemall_user t2 on t1.user_id = t2.id     
+	    left join litemall_order_goods t3 on t1.order_goods_id = t3.id 
+	    LEFT JOIN litemall_order t5 ON t5.id= t3.order_id
+	    left join litemall_store t4 on t1.store_id = t4.id 
+    where 1 = 1       
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=VARCHAR}     
+     </if>
+     <if test="todayStr != null">
+       and t1.reserve_date = #{todayStr,jdbcType=VARCHAR}     
+     </if>
+     and t1.start_time is not null    
+        
+  </select>
+  
+  <!-- 医生登录 返回分配的预约信息 -->
+   <select id="selectStoreResByDoc" resultMap="BaseResultMap"  parameterType="java.lang.String"  >
+    select 
+	    t1.id,t1.user_id,
+	    t1.order_goods_id,    
+	    t1.reserve_date, 
+	    t1.reserve_status  as "reserveStatus" ,
+	    t1.reserve_time,
+     	t1.use_date,   
+	    t1.use_time, 
+	    t1.doctor_id ,   
+	    t1.start_time as "startTime",
+	    t1.end_time as "endTime" ,
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t2.avatar as "avatar",
+	    t3.goods_name as "goodsName",
+	     t5.order_sn AS "orderSn",
+	    t4.store_name as "storeName"
+    from litemall_reserve t1 
+	    left join litemall_user t2 on t1.user_id = t2.id     
+	    left join litemall_order_goods t3 on t1.order_goods_id = t3.id 
+	    LEFT JOIN litemall_order t5 ON t5.id= t3.order_id
+	    left join litemall_store t4 on t1.store_id = t4.id 
+    where 1 = 1       
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=VARCHAR}     
+     </if>
+     <if test="todayStr != null">
+       and t1.reserve_date = #{todayStr,jdbcType=VARCHAR}     
+     </if>  
+     and t1.doctor_id=#{doctorId,jdbcType=VARCHAR}   
+   
+	ORDER BY t1.reserve_date desc
+         
+        
+  </select>
+  
+  
+   <select id="selectStoreResSer" resultMap="BaseResultMap"  parameterType="java.lang.String"  >
+    select 
+	    t1.id,t1.user_id,
+	    t1.order_goods_id,    
+	    t1.reserve_date, 
+	    t1.reserve_status  as "reserveStatus" ,
+	    t1.reserve_time,
+     	t1.use_date,   
+	    t1.use_time, 
+	    t1.doctor_id ,       
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t2.avatar as "avatar",
+	    t3.goods_name as "goodsName",
+	     t5.order_sn AS "orderSn",
+	    t4.store_name as "storeName"
+    from litemall_reserve t1 
+	    left join litemall_user t2 on t1.user_id = t2.id     
+	    left join litemall_order_goods t3 on t1.order_goods_id = t3.id 
+	    LEFT JOIN litemall_order t5 ON t5.id= t3.order_id
+	    left join litemall_store t4 on t1.store_id = t4.id 
+    where 1 = 1       
+     <if test="storeId != null">
+       and t1.store_id = #{storeId,jdbcType=VARCHAR}     
+     </if>
+     <if test="todayStr != null">
+       and t1.reserve_date = #{todayStr,jdbcType=VARCHAR}     
+     </if>  
+     and t1.doctor_id=#{doctorId,jdbcType=VARCHAR}   
+     and t1.start_time is not null    
+	
+         
+        
+  </select>
+  
+  
+   <select id="selectUserRole" resultType="org.linlinjava.litemall.db.domain.LitemallRole"  parameterType="org.linlinjava.litemall.db.domain.LitemallUser"  >
+    select 
+	 t1.id,
+	 t1.role_name  as "roleName"
+    FROM   litemall_role t1  LEFT JOIN litemall_admin_role t2 ON t1.id = t2.role_id
+    WHERE t2.admin_id = #{id}
+        
+  </select>
+ 
+ 
+	<!-- 预约订单项目服务已完成，修改订单详情状态 -->
+	<update id="updateOrderGoodsStatus" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoods" >
+	   update litemall_order_goods
+	   <set >	
+	   		<if test="orderStatus != null">     
+	       order_status = #{orderStatus,jdbcType=SMALLINT}  
+	       </if>  
+	   </set>
+	   where id = #{id,jdbcType=INTEGER}
+	</update>
+  
+  
+</mapper>

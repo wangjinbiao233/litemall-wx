@@ -1,0 +1,76 @@
+.detailList{
+  flex-direction: column;
+}
+
+.detailList .detail{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 25rpx 25rpx 25rpx 25rpx;  
+  border-bottom: 1rpx #dbdbdb solid;
+}
+
+.detailList .detail .headImg{
+  width: 140rpx;
+  height: 120rpx;
+  border-radius: 100%;
+}
+
+.detailList .detail .right{
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  margin-left: 25rpx;
+}
+
+.detailList .detail .right .top{
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailList .detail .right .top .name{
+  font-size: 35rpx;
+}
+
+.detailList .detail .right .top .num{
+  font-size: 35rpx;
+}
+
+.detailList .detail .right .bottom .date{
+  font-size: 30rpx;
+  color: #a6a6a6;
+}
+
+.detailList .detail .right .bottom .status{
+  font-size: 35rpx;
+}
+
+.detailList .detail .right .bottom{
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15rpx;
+}
+
+.nothing{
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx; 
+}
+
+.nothing .img{
+  width: 240rpx;
+  height: 210rpx;
+}
+
+.nothing .content{
+  font-size: 45rpx;
+  color: #8ac3d7;
+  font-family: STFangsong;
+}

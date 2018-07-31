@@ -1,0 +1,28 @@
+<template name="tmp_ssbd" >
+
+<view class="viewe">
+    <view class="tu"><image class="textimg" src="../../static/images/ssbd.png"/></view>
+    <view class="wz">
+        <text class="texta">色素斑点</text>
+        <text class="textb">{{sesu.explainname}}</text>
+    </view>
+</view>
+
+<view class="ssbd">
+    <view class="a" style="margin-left:{{(6*facedefault.sesu+11)}}rpx;"><!--1.5倍数3*100+11-->
+        <text>{{sesu.levelDescribe}}</text>
+        <image src="../../static/images/ssbd_tos.png"/>
+    </view>
+    <view class="b"><image src="../../static/images/ssbd_tiao.png"/></view>
+    <view class="c">
+        <text style="margin-left:25rpx;">斑多</text>
+        <text style="float:right;margin-right:25rpx;">匀净</text>
+    </view>
+</view>
+
+<view class="msg">
+   <view class="d">{{sesu.skinProblems}}</view>
+    <view class="x">{{sesu.suggest}}</view>
+</view>
+
+</template>

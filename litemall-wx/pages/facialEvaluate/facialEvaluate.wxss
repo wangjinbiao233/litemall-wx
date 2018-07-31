@@ -1,0 +1,508 @@
+page {
+    width: 745rpx;
+    height: auto;
+    background: white;
+}
+
+.canvas {
+    width: 745rpx;
+    height: 400rpx;
+    margin-left: -200rpx;
+    margin-top: -30rpx;
+    z-index:1;
+}
+
+.viewa {
+    width: 745rpx;
+    height: 140rpx;
+}
+
+.viewa .sx {
+    width: 400rpx;
+    height: 100%;
+    float: left;
+}
+
+.viewa .sx text {
+    line-height: 150rpx;
+    font-size: 45rpx;
+    padding-left: 50rpx;
+}
+
+.viewa .xj {
+    width: 130rpx;
+    height: 100%;
+    float: right;
+}
+
+/* view 第2个view*/
+
+.viewb {
+    width: 745rpx;
+    height: 370rpx;
+    position:relative;
+}
+
+.viewb .a {
+    width: 79%;
+    height: 370rpx;
+    float: left;
+}
+
+.viewb .a .tx {
+    margin-top: -50rpx;
+    margin-left: 150rpx;
+    font-size: 28rpx;
+}
+
+.viewb .b {
+    width: 79%;
+    height: 370rpx;
+    float: right;
+    margin-right: -240rpx;
+    position: relative;
+    margin-top: -370rpx;
+}
+
+.viewb .b .tx {
+    margin-top: -50rpx;
+    margin-left: 150rpx;
+    font-size: 28rpx;
+}
+
+/* view 第三个view*/
+
+.viewc {
+    clear: both;
+    border: 0px solid red;
+    width: 745rpx;
+    height: 650rpx;
+    position:relative;
+
+}
+
+.viewc .center {
+    width: 100%;
+    height: 450rpx;
+    padding-top: 120rpx;
+    padding-left: 200rpx;
+}
+
+.viewc .s {
+    border: px solid green;
+    margin-left: 250rpx;
+    margin-top: -420rpx;
+    position: absolute;
+    width: 280rpx;
+    height: 110rpx;
+}
+
+.viewc .s image {
+    margin-left: 95rpx;
+}
+
+.viewc .x {
+    margin-left: 250rpx;
+    margin-top: 55rpx;
+    position: absolute;
+    width: 280rpx;
+    height: 110rpx;
+}
+
+.viewc .x image {
+    margin-left: 95rpx;
+}
+
+.viewc .z {
+    border: px solid green;
+    margin-left: 10rpx;
+    margin-top: -190rpx;
+    position: absolute;
+    width: 200rpx;
+    height: 110rpx;
+}
+
+.viewc .z image {
+    margin-top: -10rpx;
+}
+
+.viewc .y {
+    border: px solid green;
+    margin-left: 545rpx;
+    margin-top: -190rpx;
+    position: absolute;
+    width: 195rpx;
+    height: 110rpx;
+}
+
+.viewd {
+    width: 745rpx;
+    height: 100rpx;
+    border-bottom: 10rpx solid #f8f8f8;
+}
+
+.viewd .a {
+    width: 140rpx;
+    height: 80rpx;
+    float: left;
+    margin-left: 38rpx;
+    font-size: 34rpx;
+}
+
+.textcolor {
+    font-weight: bold;
+}
+
+.textimg {
+    width: 110rpx;
+    height: 15rpx;
+    margin-left: 13rpx;
+    margin-bottom: 10rpx;
+}
+
+.viewe {
+    width: 745rpx;
+    height: 170rpx;
+}
+
+.viewe .tu {
+    width: 130rpx;
+    height: 130rpx;
+    float: left;
+    margin-top: 15rpx;
+    margin-left: 30rpx;
+}
+
+.viewe .tu image {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.viewe .wz {
+    width: 540rpx;
+    height: 130rpx;
+    float: left;
+    margin-top: 20rpx;
+    margin-left: 25rpx;
+}
+
+.viewe .texta {
+    font-size: 40rpx;
+}
+
+.viewe .textb {
+    font-size: 32rpx;
+    display: block;
+}
+
+/*下面是模板分类的css*/
+
+.viewf {
+    width: 745rpx;
+    height: 580rpx;
+}
+
+.facial {
+    width: 570rpx;
+    height: 565rpx;
+    margin-left: 80rpx;
+}
+
+.viewg {
+    width: 745rpx;
+    height: 110rpx;
+}
+
+.viewg .tiao {
+    width: 700rpx;
+    height: 30rpx;
+    margin-left: 20rpx;
+}
+
+.viewg .fl {
+    width: 745rpx;
+    height: 70rpx;
+}
+
+.viewg .tx {
+    width: 146rpx;
+    float: left;
+    padding-left: 5px;
+    font-size: 30rpx;
+    border-left: 2px solid #f8f8f8;
+    color: #7a7a7a;
+}
+
+.msg {
+    width: 715rpx;
+    height: auto;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    margin-bottom:50rpx;
+}
+
+.msg .d {
+    font-size: 36rpx;
+    color: black;
+}
+
+.msg .x {
+    font-size: 34rpx;
+    color: #7a7a7a;
+}
+
+.viewh {
+    width: 745rpx;
+    height: 830rpx;
+}
+
+.viewh .tp {
+    width: 745rpx;
+    height: 780rpx;
+}
+
+.viewh .tp .tpimg {
+    width: 570rpx;
+    height: 780rpx;
+    margin-left: 95rpx;
+}
+
+.viewh .imgtxt {
+    width: 545rpx;
+    height: 90rpx;
+    color: #7a7a7a;
+    margin-top: -50px;
+    margin-left: 145rpx;
+    font-size: 36rpx;
+    position: absolut;
+}
+
+.hsqk {
+    width: 745rpx;
+    height: 580rpx;
+}
+
+.level {
+    width: 733rpx;
+    height: 510rpx;
+}
+
+.ssbd {
+    width: 745rpx;
+    height: 280rpx;
+}
+
+.ssbd .a {
+    width: 145rpx;
+    height: 100rpx;
+}
+
+.ssbd .b {
+    width: 745rpx;
+    height: 100rpx;
+}
+
+.ssbd .c {
+    width: 745rpx;
+    height: 70rpx;
+}
+
+.ssbd .c text {
+    font-size: 38rpx;
+}
+
+.ssbd .b image {
+    margin-left: 22rpx;
+    margin-right: 22rpx;
+    width: 705rpx;
+    height: 80rpx;
+    margin-top: 10rpx;
+}
+
+.ssbd .a text {
+    position: absolute;
+    margin-top: 38rpx;
+    color: white;
+    margin-left: 12rpx;
+}
+
+.ssbd .a image {
+    width: 140rpx;
+    height: 73rpx;
+    margin-top: 27rpx;
+}
+
+.ccwl {
+    width: 745rpx;
+    height: 260rpx;
+}
+
+.ccwl .tu {
+    width: 135rpx;
+    height: 250rpx;
+    float: left;
+    margin-left: 12rpx;
+}
+
+.ccwl .tu image {
+    width: 135rpx;
+    height: 130rpx;
+}
+
+.ccwl .tu text {
+    display: block;
+    margin-left: 40rpx;
+    margin-top: 30rpx;
+    color: #7a7a7a;
+}
+
+.share {
+    width: 110rpx;
+    height: 110rpx;
+    margin-top: -740rpx;
+    margin-left: 530rpx;
+}
+
+.share image {
+    width: 100rpx;
+    height: 100rpx;
+    margin-left:-24rpx;
+}
+
+.goods{
+    width:100%;
+    height:auto;
+    background-color:#f6f6f6;
+}
+.goods .dn{
+    width:680rpx;
+    height:150rpx;
+    margin-left:33rpx;
+}
+.goods .dn text{
+    font-size:36rpx;
+    line-height:210rpx;
+margin-left:200rpx;
+}
+
+.goods .one{
+    width:700rpx;
+    height:260rpx;
+    border:2px solid #f6f6f6;
+    margin-left:25rpx;
+    background-color:white;
+}
+.goods .a{
+    width:260rpx;
+    height:255rpx;
+    float:left;
+}
+.goods .a image{
+    width:240rpx;
+    height:255rpx;
+}
+.goods .b{
+    width:400rpx;
+    height:120rpx;
+    float:left;
+     /* margin-left:20rpx; */
+     font-size:32rpx;
+     padding-top:14rpx;
+}
+.goods .c{
+    width:400rpx;
+    height:125rpx;
+    float:left;
+    /* margin-left:20rpx; */
+}
+
+
+
+/*mask*/
+.drawer_screen { 
+ width: 100%; 
+ height: 100%; 
+ position: fixed; 
+ top: 0; 
+ left: 0; 
+ z-index: 1000; 
+ background: #000; 
+ opacity: 0.5; 
+ overflow: hidden; 
+} 
+  
+ 
+/*content*/
+.drawer_box { 
+ width: 500rpx; 
+ overflow: hidden; 
+ position: fixed; 
+ top: 50%; 
+ left: 0; 
+ z-index: 1001; 
+ background: white; 
+ margin: -300rpx 125rpx 0 125rpx; 
+ border-radius: 40rpx; 
+} 
+  
+.drawer_title{ 
+padding:30rpx;
+font:48rpx "microsoft yahei";
+text-align:center;
+color:white;
+background:#8EE5EE;
+} 
+
+.drawer_content { 
+ height:520rpx; 
+ overflow-y: scroll; /*超出父盒子高度可滚动*/
+} 
+
+.drawer_content .tiaozi{
+width:350rpx;
+height:80rpx;
+font-size:36rpx;
+text-align:center;
+padding:15rpx;
+margin:35rpx auto;
+background:#87CEFF;
+border-radius:40rpx;
+color:white;
+}
+.drawer_content .xiaozi{
+margin:0rpx auto;
+text-align:center;
+color:#999;
+margin-top:-35rpx;
+}
+.drawer_content .tiaozi2{
+width:350rpx;
+height:80rpx;
+font-size:36rpx;
+text-align:center;
+padding:13rpx;
+margin:35rpx auto;
+background:white;
+border-radius:40rpx;
+color:#8EE5EE;
+border:2px solid #8EE5EE;
+}
+.drawer_content .tiaozi3{
+width:150rpx;
+height:50rpx;
+font-size:32rpx;
+text-align:center;
+margin:35rpx auto;
+background:white;
+color:#8EE5EE;
+
+}
+  .yz_close{
+     width:80rpx;
+    height:80rpx;
+    margin:-10rpx auto;
+}
+.yz_close image{
+     width:80rpx;
+    height:80rpx;
+}

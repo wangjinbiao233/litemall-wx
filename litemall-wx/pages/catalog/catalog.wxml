@@ -1,0 +1,48 @@
+<view class="container">
+  <!-- <view class="search">
+    <navigator url="/pages/search/search" class="input">
+      <image class="icon"></image>
+      <text class="txt">商品搜索, 共{{goodsCount}}款好物</text>
+    </navigator>
+  </view> -->
+  <view class="catalog">
+     <!-- 
+     <scroll-view class="nav" scroll-y="true">
+        <view class="item {{ currentCategory.id == item.id ? 'active' : ''}}" 
+        wx:for="{{categoryList}}" wx:key="id"  data-id="{{item.id}}" data-index="{{index}}" 
+        bindtap="switchCate">{{item.name}}</view>
+    </scroll-view>  
+    -->
+
+    <scroll-view class="cate" scroll-y="true">
+      <view wx:for="{{categoryList}}" wx:for-index="index" wx:for-item="item">
+        <view class="hd">
+            <text class="line"></text>
+            <text class="txt">{{item.name}}</text>
+            <text class="line"></text>
+        </view>
+        <navigator url="/pages/category/category?id={{item.id}}" class="banner">
+            <image class="image" src="{{item.wapBannerUrl}}"></image>
+            <view class="txt">{{item.frontName}}</view>
+        </navigator>
+      </view>
+        
+        <!-- <view class="bd">
+            <navigator url="/pages/category/category?id={{item.id}}" 
+            class="item {{(index+1) % 3 == 0 ? 'last' : ''}}" 
+            wx:key="id" wx:for="{{currentSubCategoryList}}">
+                <image class="icon" src="{{item.wapBannerUrl}}"></image>
+                <text class="txt">{{item.name}}</text>
+            </navigator>
+        </view> -->
+    </scroll-view>
+  </view>
+  <navigator url="/pages/cart/cart">
+    <view class="catelog-box">
+      <view class="catelog-box-num">
+          <text class="catelog-box-text">{{cartGoodsCount}}</text>
+          <image class="catelog-icon" mode="widthFix" src="/static/images/ShoppingCart.png"></image>
+      </view>
+    </view>
+  </navigator>
+</view>

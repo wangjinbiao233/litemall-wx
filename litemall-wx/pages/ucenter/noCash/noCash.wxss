@@ -1,0 +1,139 @@
+.search-o{
+  width: 100%;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 15rpx 15rpx 15rpx 15rpx; 
+  position: fixed;
+  z-index: 8888;
+}
+
+.search-o input{
+  background-color: #ffffff;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  flex-grow: 1;
+  margin-right: 10rpx;
+}
+
+.search-o .btn-search{
+  font-size: 26rpx;
+  color: #ffffff;
+  background-color: #8ac3d7;
+}
+
+.search-o .btn-search-o{
+  font-size: 26rpx;
+  color: #ffffff;
+  background-color: #cde5ee;
+}
+
+.search{
+  width: 100%;
+  background-color: #f8f8f8;
+  padding: 15rpx 40rpx 15rpx 40rpx; 
+  position: fixed;
+  z-index: 8888;
+}
+
+.search-btn{
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  background-color: #ffffff;
+}
+
+.search-btn-o{
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10rpx;
+  border-radius: 10rpx;
+  background-color: #f8f8f8;
+}
+
+.search-btn .content{
+  font-size: 35rpx;
+  margin-left: 10rpx;  
+  color: #a6a6a6;
+}
+
+.list{
+  padding-top: 80rpx;
+  flex-direction: column;
+}
+
+.list .item{
+  flex-direction: column;
+  display: flex;
+  padding: 20rpx;
+  border-top: 15rpx #f8f8f8 solid;
+}
+
+.list .item .order{
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx #dbdbdb solid;
+}
+
+.list .item .order-left{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.list .item .order .code{
+  font-size: 35rpx;
+  font-weight: bold;
+}
+
+.list .item .order .num{
+  font-size: 35rpx;
+  color: #8ac3d7;
+}
+
+.list .item .order .cash{
+  font-size: 28rpx;
+  color: #8ac3d7;
+}
+
+.list .item .name{
+  font-size: 30rpx;
+  color: #a6a6a6;
+  margin-top: 30rpx;
+}
+
+.list .item .date{
+  font-size: 30rpx;
+  color: #a6a6a6;
+  margin-top: 20rpx;
+}
+
+.nothing{
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200rpx; 
+}
+
+.nothing .img{
+  width: 240rpx;
+  height: 210rpx;
+}
+
+.nothing .content{
+  font-size: 45rpx;
+  color: #8ac3d7;
+  font-family: STFangsong;
+}

@@ -1,0 +1,226 @@
+.order .order-sort{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  border-bottom: 20rpx solid #f5f5f5;
+}
+.order .order-sort-text{
+    display: inline-block;
+    height: 82rpx;
+    padding: 0 0rpx;
+    line-height: 82rpx;
+    color: #333;
+    font-size: 30rpx;
+    width: 100rpx;
+}
+.order .active .order-sort-text{
+  color: #8ac2d6;
+  border-bottom: 2px solid #8ac2d6;
+}
+.order .order-box{
+  padding: 20rpx 15px;
+}
+.order .order-serial{
+  padding: 20rpx 0;
+  position: relative;
+}
+.order .order-serial-text{
+  font-size: 28rpx;
+  color: #333;
+}
+.order .order-serial-sort {
+  position: absolute;
+  right: 0;
+  color: #8ac2d6;
+  font-size: 30rpx;
+}
+.order .order-serial-sort.green{
+  color: #00cc00;
+}
+.order .order-serial-sort.orange{
+  color: #ff9900;
+}
+.order .goods-box{
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  padding: 30rpx 0;
+}
+.order .goods-imgBox{
+  padding-left: 10rpx;
+}
+.order .goods-img{
+  width: 230rpx;
+  height: 250rpx;
+}
+.order .goods-content{
+  padding-left: 40rpx;
+  margin-right:10px;
+}
+.order .goods-name{
+  font-size: 35rpx;
+  color: #333;
+  padding-bottom: 15rpx;
+}
+.order .goods-abstract{
+  font-size: 26rpx;
+  color: #929292;
+  padding-bottom: 15rpx;
+}
+
+.order .goods-num1{
+  font-size: 26rpx;
+  color: #8ac2d6;
+}
+.order .goods-amount{
+  padding-top: 40rpx;
+  display: flex;
+}
+.order .goods-num{
+  font-size: 35rpx;
+  color: #8ac2d6;
+}
+
+.order .goods-price{
+  flex-direction: row;
+  display: flex;
+  border-radius: 3px;  
+  align-items: center;
+  justify-content: center;
+  width:100rpx;
+}
+
+.order .goods-operation{
+  display: inline-block;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 3px;
+  margin-left: 20rpx;
+  text-align:right;
+  width:80%;
+
+}
+.order .logistics-list .goods-operation{
+  margin-left: 50rpx;
+}
+.order .goods-nmb{
+  font-size: 32rpx;
+  color: #333;
+  padding: 8rpx 28rpx;
+}
+.order .goods-minus-icon{
+  font-size: 32rpx;
+  color: #333;
+  padding: 8rpx 10rpx;
+  display: inline-block;
+}
+.order .goods-minus-icon.disable{
+  color: rgb(221, 221, 221);
+}
+.order .goods-minus-icon:first-child {
+  border-right: 1px solid rgb(221, 221, 221);
+}
+.order .goods-minus-icon:last-child {
+  border-left: 1px solid rgb(221, 221, 221);
+}
+.order .goods-total{
+  border-top: 1px solid #ccc;
+  display: flex;
+  padding: 20rpx 0;
+}
+.order .logistics-list .goods-operation{
+  border: 0px none;
+}
+.order .goods-total-num{
+  color: #8ac2d6;
+  font-size: 35rpx;
+  flex: 1;
+}
+.order .logistics-list .goods-btnBox{
+  line-height: 55rpx;
+  align-items:center;
+}
+.goods-btnBox{
+  text-align: right;
+}
+.order .goods-btn{
+  background-color: #8ac2d6;
+  color: #fff;
+  padding: 18rpx 0;
+  margin-left: 20rpx;
+  width: 160rpx;
+  text-align: center;
+  display: inline-block;
+}
+.goods-logistics-text{
+  font-size: 30rpx;
+  color: #444;
+}
+.goods-evaluate-text{
+  font-size: 30rpx;
+  border: 1px solid #ff9900;
+  color: #ff9900;
+  padding: 10rpx 25rpx;
+  border-radius: 3px;
+}
+
+
+
+.no-order{
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.no-order .c{
+    width: 100%;
+    height: auto;
+    margin-top: 200rpx;
+}
+
+.no-order .c image{
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    width: 258rpx;
+    height: 258rpx;
+}
+
+.no-order .c text{
+    margin: 0 auto;
+    display: block;
+    width: 258rpx;
+    height: 29rpx;
+    line-height: 29rpx;
+    text-align: center;
+    font-size: 29rpx;
+    color: #999;
+}
+
+.goods-sort{
+  width: 60rpx;
+}
+
+/*  重写 checkbox 样式  */
+checkbox .wx-checkbox-input{
+   border-radius: 50%;
+   width: 50rpx;
+   height: 50rpx;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: #8ac2d6;
+}
+
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;
+   width: 50rpx;
+   height: 50rpx;
+   line-height: 50rpx;
+   text-align: center;
+   font-size:30rpx;
+   color:#fff;
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}

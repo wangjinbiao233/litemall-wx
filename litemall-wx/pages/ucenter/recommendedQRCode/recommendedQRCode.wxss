@@ -1,0 +1,20 @@
+.item-banner{
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30%;
+}
+
+.knowledge-img{
+  width: 350rpx;
+  height: 350rpx;
+}
+
+.item-text{
+flex-direction:row;
+display:flex;
+justify-content:center;
+align-items:center;
+margin-top:10px;
+}

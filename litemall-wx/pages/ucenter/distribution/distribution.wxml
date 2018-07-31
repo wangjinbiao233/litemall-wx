@@ -1,0 +1,50 @@
+<view class="order">
+  <view class="order-sort">
+    <view bindtap="changeTab" data-sort='1' data-flag='0' class="order-sort-box {{sort === 1 ? 'active' : ''}}">
+      <view class="order-sort-text">一级({{subCount}})</view>
+    </view>
+    <view bindtap="changeTab" data-sort='2' data-flag='1' class="order-sort-box {{sort === 2 ? 'active' : ''}}">
+      <view class="order-sort-text">二级({{subSubCount}})</view>
+    </view>
+  </view>
+
+  <view class='cart-view'>
+    <view class="list">
+      <view class="group-item">
+        <view class="goods">
+
+          <view class="item" wx:for='{{userList}}'>
+            <view class="but"></view>
+            <view class="cart-s">
+              <image class="img" src="{{item.avatar}}"></image>
+              <view class="info">
+                <view class="t">
+                  <text class="name">{{item.username}}</text>
+                  <text class="num" wx:if="{{sort === 1}}">推广{{item.promotion_user}}人</text>
+                </view>
+                <view class="b">
+                  <text class="price">注册时间：{{item.add_time}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="but"></view>
+            <view class='cart-x'>
+              <view class="t" bindtap='orderDetails'  data-id='{{item.id}}'>
+                <text class="name">佣金金额：{{item.sum_profit_money}}元</text>
+                <text class="order-num"> {{item.order_count}}个订单 </text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+  <view class='nothing' wx:if="{{userList.length==0}}">
+    <image src='/static/images/sorry.png' class='img'></image>
+    <view class='content'>暂无记录</view>
+  </view>
+
+
+
+</view>

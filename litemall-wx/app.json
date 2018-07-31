@@ -1,0 +1,110 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/store/index",
+    "pages/serviceStore/store",
+    "pages/ucenter/reservation/index",
+    "pages/ucenter/order/index",
+    "pages/service/index",
+    "pages/knowledge/index",
+    "pages/catalog/catalog",
+    "pages/newGoods/newGoods",
+    "pages/hotGoods/hotGoods",
+    "pages/ucenter/index/index",   
+    "pages/ucenter/address/address",
+    "pages/ucenter/addressAdd/addressAdd",
+    "pages/ucenter/footprint/footprint",
+    "pages/ucenter/order/order",
+    "pages/ucenter/orderDetail/orderDetail",
+    "pages/ucenter/coupon/coupon",
+    "pages/ucenter/applyCash/applyCash",
+    "pages/ucenter/receiveCoupon/receiveCoupon",
+    "pages/ucenter/collect/collect",
+    "pages/ucenter/distribution/distribution",
+    "pages/ucenter/distributionIndex/distributionIndex",
+    "pages/ucenter/distributionOrderDetails/distributionOrderDetails",
+    "pages/ucenter/cash/cash",
+    "pages/ucenter/noCash/noCash",
+    "pages/ucenter/cashDetail/cashDetail",
+    "pages/ucenter/recommendedQRCode/recommendedQRCode",
+    "pages/ucenter/checkout/checkout",
+    "pages/auth/login/login",
+    "pages/auth/register/register",
+    "pages/auth/reset/reset",
+    "pages/payResult/payResult",
+    "pages/comment/comment",
+    "pages/commentPost/commentPost",
+    "pages/topic/topic",        
+    "pages/topicComment/topicComment",
+    "pages/topicDetail/topicDetail",
+    "pages/topicCommentPost/topicCommentPost",    
+    "pages/brand/brand",
+    "pages/brandDetail/brandDetail",
+    "pages/search/search",
+    "pages/category/category",
+    "pages/cart/cart",
+    "pages/shopping/checkout/checkout",
+    "pages/shopping/address/address",
+    "pages/shopping/addressAdd/addressAdd",
+    "pages/goods/goods",
+    "pages/shopping/coupon/coupon",
+    "pages/knowledgeDetail/kdetail",
+    "pages/knowledgeCommentPost/kdectpost",
+    "pages/knowledgeComment/kdecomment",
+    "pages/ucenter/helpCenter/helpCenter",
+    "pages/shopping/store/store",
+    "pages/facialEvaluate/facialEvaluate",
+    "pages/facialHistory/facialHistory",
+    "pages/facialUtil/facialUtil",
+    "pages/takePhoto/takePhoto",
+    "pages/takePhoto/friend",
+    "pages/ucenter/rechargeIndex/rechargeIndex",
+    "pages/ucenter/distributionApply/distributionApply",
+    "pages/searchGoods/searchGoods"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "通誉微商",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "backgroundColor": "#fafafa",
+    "borderStyle": "white",
+    "selectedColor": "#b4282d",
+    "color": "#666",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/ic_menu_choice_nor.png",
+        "selectedIconPath": "static/images/ic_menu_choice_pressed.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/knowledge/index",
+        "iconPath": "static/images/ic_menu_sort_nor.png",
+        "selectedIconPath": "static/images/ic_menu_sort_pressed.png",
+        "text": "知识"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "iconPath": "static/images/ic_menu_sort_nor.png",
+        "selectedIconPath": "static/images/ic_menu_sort_pressed.png",
+        "text": "商城"
+      },
+      {
+        "pagePath": "pages/ucenter/index/index",
+        "iconPath": "static/images/ic_menu_me_nor.png",
+        "selectedIconPath": "static/images/ic_menu_me_pressed.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

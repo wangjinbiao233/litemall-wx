@@ -1,0 +1,16 @@
+
+<view class="course">
+ <text>1.摘眼睛，撩刘海，不要逆光</text>
+ <text style=" padding-right:30rpx;">2.请平视后置摄像头，调整至合适距离（参考下图）</text>
+<image style="width:690rpx;height:460rpx;" src="{{picUrl}}image/2018/06/19/fkrb308knk7s2lmu3ay9.png"/>
+
+ <text>3.按手机的音量减键拍照</text>
+ <image style="width:490rpx;height:320rpx;margin-left:100rpx;" src="{{picUrl}}image/2018/06/19/9tdi58dbw13oas8r8hyz.png"/>
+
+<text></text>
+ <text style="display:inline">4.注意：拍照时</text>
+ <text style="color:#8EE5EE;display:inline;">闪光灯会自动打开</text>
+ <text style="margin-left:140rpx">按键前请一定要闭上眼睛哦~</text>
+ <text></text>
+</view>
+<view class="pz" bindtap='toback'>开始手动拍照</view>

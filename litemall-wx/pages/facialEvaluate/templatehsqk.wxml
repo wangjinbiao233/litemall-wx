@@ -1,0 +1,26 @@
+<template name="tmp_hsqk" >
+
+<view class="viewe">
+    <view class="tu"><image class="textimg" src="../../static/images/hsqk.png"/></view>
+    <view class="wz">
+        <text class="texta">红色区块</text>
+        <text class="textb">{{redArea.explainname}}</text>
+    </view>
+</view>
+
+<view class="hsqk">
+<!--if判断选择图片-->
+    <image wx:if="{{facedefault.redArea<=20}}" class="level"  src="../../static/images/hsqk_1.png"/>
+    <image wx:if="{{facedefault.redArea>=21&&facedefault.redArea<=40}}" class="level"    src="../../static/images/hsqk_2.png"/>
+    <image wx:if="{{facedefault.redArea>=41&&facedefault.redArea<=60}}" class="level"    src="../../static/images/hsqk_3.png"/>
+    <image wx:if="{{facedefault.redArea>=61&&facedefault.redArea<=80}}" class="level"    src="../../static/images/hsqk_4.png"/>
+    <image wx:if="{{facedefault.redArea>=81}}" class="level"  src="../../static/images/hsqk_5.png"/>
+</view>
+
+
+<view class="msg">
+   <view class="d">{{redArea.skinProblems}}</view>
+    <view class="x">{{redArea.suggest}}</view>
+</view>
+
+</template>

@@ -1,0 +1,54 @@
+<!-- reservation.wxml -->
+<view class="reservation">
+  <image mode="widthFix" src="/static/images/reservation.png" style="height: 142.933px;width:100%"></image>
+  <view class='reservation-list'>
+    <view class='parent-item' wx:for="{{reserveList}}">
+      <view class='parent-l' wx:if="{{index<reserveList.length-1}}"></view>
+      <view class='title'>
+        <view class='left'>
+          <view class='parent-tag' wx:if="{{item.reserveStatus==0}}">预</view>
+          <view class='parent-tag' wx:if="{{item.reserveStatus==1}}">用</view>
+          <view class='parent-tag' wx:if="{{item.reserveStatus==2}}">退</view>
+          <view class='parent-content'>{{item.reserveDate}} {{item.goodsName}}</view>
+        </view>
+        <image src='/static/images/angle-top.png' class='img' bindtap='show' wx:if="{{item.isShow==true}}" data-index='{{index}}'>
+        </image>
+        <image src='/static/images/angle-bottom.png' class='img' bindtap='show' wx:else data-index='{{index}}'>
+        </image>
+      </view>
+      <view class='child-list' wx:if="{{item.isShow==true}}">
+        <view class='child-item'>
+          <view class='top'>
+            <view class='time'>
+              <view class='content'>{{item.reserveDate}}</view>
+              <view class='content'>{{item.reserveTime}}</view>
+            </view>
+            <view class='child-tag'>预</view>
+            <view class='content-o'>订购{{item.goodsName}}，使用店面{{item.storeName}}</view>
+          </view>
+           <view class='child-l' wx:if="{{item.reserveStatus!=0}}"></view> 
+        </view>
+        <view class='child-item' wx:if="{{item.reserveStatus==1}}">
+          <view class='top'>
+            <view class='time'>
+              <view class='content'>{{item.reserveDate}}</view>
+              <view class='content'>{{item.reserveTime}}</view>
+            </view>
+            <view class='child-tag'>用</view>
+            <view class='content-o'>{{item.goodsName}}在{{item.storeName}}已使用，感谢您的光临</view>
+          </view>
+        </view>
+        <view class='child-item' wx:if="{{item.reserveStatus==2}}">
+          <view class='top'>
+            <view class='time'>
+              <view class='content'>{{item.reserveDate}}</view>
+              <view class='content'>{{item.reserveTime}}</view>
+            </view>
+            <view class='child-tag'>退</view>
+            <view class='content-o'>{{item.goodsName}}在{{item.storeName}}已取消，欢迎再次光临</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

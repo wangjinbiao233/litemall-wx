@@ -1,0 +1,97 @@
+<import src="templatemkcd.wxml" />
+<import src="templatehsqk.wxml" />
+<import src="templatessbd.wxml" />
+<import src="templateccwl.wxml" />
+<import src="templatesharpicture.wxml" />
+
+<view class="viewa">
+    <view class="sx">
+        <text>你属于{{facedefault.skintypename}}</text>
+    </view>
+    <view class="xj"   bindtap="windowchoose" data-statu="open">
+        <image style="width:114rpx;height:130rpx" src="../../static/images/xiangji.png">
+        </image>
+    </view>
+</view>
+<view class="viewb" style="margin-left:{{showModalStatus?'1000':''}}rpx;">
+    <view class="a">
+        <canvas canvas-id="ringCanvasa" class="canvas" bindtouchstart="touchHandler"></canvas>
+        <view class="tx">肌龄</view>
+    </view>
+    <view class="b">
+        <canvas canvas-id="ringCanvasb" class="canvas" bindtouchstart="touchHandler"></canvas>
+         <view class="tx">总分</view>
+    </view>
+   
+</view>
+
+<view class="viewc" style="margin-left:{{showModalStatus?'1000':''}}rpx;">
+    <view class="center">
+     <canvas canvas-id="radarCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+    </view>
+    <view class="s">毛孔粗大好过{{facedefault.maokong}}%人
+        <image style="width:60rpx;height:60rpx" src="../../static/images/shang.png"/>
+    </view>
+    <view class="x">色素斑点好过{{facedefault.sesu}}%人
+     <image style="width:60rpx;height:60rpx" src="../../static/images/xia.png"/>
+     </view>
+    <view class="z"> 粗糙纹理
+     <image style="width:60rpx;height:60rpx" src="../../static/images/zuo.png"/>
+     好过{{facedefault.wenli}}%人
+    </view>
+    <view class="y">
+     <image style="width:60rpx;height:60rpx" src="../../static/images/you.png"/>
+     <text>红色区块好过{{facedefault.redArea}}%人</text>
+    </view>
+</view>
+
+<view class="viewd">
+    <view bindtap="choosetmp" data-text="{{1}}" class="a {{templatenum== 1 ? 'textcolor' : ''}}">毛孔粗大 <image class="textimg" wx:if="{{templatenum==1}}"  src="../../static/images/colorline.png"/>
+    </view>
+
+        <view bindtap="choosetmp" data-text="{{2}}" class="a {{templatenum== 2 ? 'textcolor' : ''}}">色素斑点<image class="textimg" wx:if="{{templatenum==2}}" src="../../static/images/colorline.png"/>
+    </view>
+
+    <view bindtap="choosetmp" data-text="{{3}}" class="a {{templatenum== 3 ? 'textcolor' : ''}}">粗糙纹理<image class="textimg" wx:if="{{templatenum==3}}" src="../../static/images/colorline.png"/>
+    </view>
+
+    <view bindtap="choosetmp" data-text="{{4}}" class="a {{templatenum== 4 ? 'textcolor' : ''}}">红色区块<image class="textimg" wx:if="{{templatenum==4}}" src="../../static/images/colorline.png"/>
+    </view>
+
+</view>
+
+
+<!--下面用模板-->
+<view>
+<template wx:if="{{templatenum==1}}" is="tmp_mkcd" data="{{maokong,facedefault}}" />
+<template wx:if="{{templatenum==2}}" is="tmp_ssbd" data="{{sesu,facedefault}}" />
+<template wx:if="{{templatenum==3}}" is="tmp_ccwl" data="{{wenli,facedefault}}" />
+<template wx:if="{{templatenum==4}}" is="tmp_hsqk" data="{{redArea,facedefault}}" />
+</view>
+<!--模板结束-->
+
+
+
+<!--下面只能显示必购清单，分享图只能是 其中一个  模板-->
+<template  is="tmp_shar" data="{{goods,sharpicture,facedata}}" />
+
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+
+<!--content--><!--使用animation属性指定需要执行的动画 animation="{{animationData}}"-->
+<view  class="drawer_box" wx:if="{{showModalStatus}}"> 
+ <!--drawer content-->
+    
+     <view class="drawer_title">肤质检测</view> 
+     <view class="drawer_content">
+        <view class="tiaozi"  bindtap="chooseImages"  data-statu="myself" >自己测</view>
+        <view class="xiaozi">肤质数据存入个人记录</view>
+         <view class="tiaozi2" bindtap="chooseImages" data-statu="friend" >帮朋友测</view>
+        <view class="xiaozi">肤质数据不会记录</view>
+        <navigator url="/pages/facialUtil/facialUtil">
+         <view class="tiaozi3">检测教程</view>
+        </navigator> 
+        <view class="yz_close"  bindtap="powerDrawer" data-statu="close"><image src="/static/images/yz_close.png"/></view>
+    </view> 
+</view>

@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="post-comment">
+   <view class="title">
+      <text class="title-text">{{title}}</text>
+    </view>
+    <view class="rater">
+      <text class="rater-title">评论</text>
+    </view>
+    
+    <view class="input-box">
+      <textarea class="content" focus="true" bindinput="bindInputValue" maxlength="140" placeholder="评论有几率得奖哦" />
+      <text class="count">{{140 - content.length}}</text>
+    </view>
+
+    <view class="weui-uploader" wx:if="{{isImg=='true'}}">
+      <view class="weui-uploader__hd">
+        <view class="weui-uploader__title">图片上传</view>
+        <view class="weui-uploader__info">{{picUrls.length}}/{{files.length}}</view>
+      </view>
+      <view class="weui-uploader__bd">
+        <view class="weui-uploader__files" id="uploaderFiles">
+          <block wx:for="{{files}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+              <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+            </view>
+          </block>
+          <view class="weui-uploader__input-box">
+            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="btns">
+      <view class="close" bindtap="onClose">取消</view>
+      <view class="post" bindtap="onPost">发表</view>
+    </view>
+  </view>
+</view>

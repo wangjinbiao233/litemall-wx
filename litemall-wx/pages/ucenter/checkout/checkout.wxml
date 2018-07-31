@@ -1,0 +1,43 @@
+<view class="container"> 
+  <view class="payType-box">
+    <view class="coupon-item">
+      <view class="l">
+        <text class="name">请选择支付方式</text>
+      </view>
+
+    </view>
+    <view class="content" data-discounts-price="{{item.discountsPrice}}">
+      <radio-group class="radio-item" bindchange="radioChange">
+        <radio  class="radio" value="1" checked="true">微信支付</radio>
+        <radio  class="radio" style='margin-top:15rpx;' value="2">会员账户支付 <text class='text'>可用余额{{money}}元</text> </radio>      
+ <radio  class="radio" style='margin-top:15rpx;' value="3">存储金支付 <text class='text'>可用余额{{rechargeMoney}}元</text> </radio>        
+      </radio-group>       
+    </view>   
+  </view>
+
+  <view class="order-total">
+    <view class="l">实付：￥{{actualPrice}}</view>
+    <view class="r" bindtap="submitOrder">去付款</view>
+  </view>
+</view>
+
+<!--mask-->
+<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
+<!--content-->
+<!--使用animation属性指定需要执行的动画-->
+<view animation="{{animationData}}" class="drawer_box" wx:if="{{showModalStatus}}">
+
+  <!--drawer content-->
+  <form bindsubmit='sendCode'>
+    <view class="drawer_title">手机验证</view>
+    <view class="drawer_content">
+      <input class="input_base" name="verificationCode" placeholder='请输入验证码'></input>
+      <button class='send-btn' bindtap='getVerificationCode' disabled='{{disabled}}' wx:if="{{isGetPhone==0}}">{{time}}</button>
+      <button class="send-btn" bindgetphonenumber="getNumber" open-type="getPhoneNumber" wx:else>获取验证码</button>
+    </view>
+    <view class='drawer_btn_view'>
+      <button class="btn_ok" bindtap="powerDrawer" data-statu="close">取消</button>
+      <button class="btn_ok" form-type='submit'>确定</button>
+    </view>
+  </form>
+</view>

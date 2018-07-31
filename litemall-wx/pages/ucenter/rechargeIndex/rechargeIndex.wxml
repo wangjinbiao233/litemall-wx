@@ -1,0 +1,26 @@
+<view>
+  <view class='top'>
+    <view class='number'>{{rechargeMoney}}</view>
+    <view class='content'>账户可用余额</view>
+  </view>
+
+   <view class='list'>
+    <view class='item' wx:for='{{rechargeList}}'>
+      <view class='cash'>
+        <view class='content' wx:if='{{item.operation==1}}'>充值</view>
+        <view class='content' wx:elif='{{item.operation==2}}'>消费</view>
+        <view class='content' wx:elif='{{item.operation==3}}'>退款</view>
+        <view class='number' style='color:#FFA500' wx:if="{{item.operation==2}}">-{{item.rechargeMoney}}</view>
+      <view class='number' style='color:#FF0000' wx:elif="{{item.operation==1}}">+{{item.rechargeMoney}}</view>
+      <view class='number' style='color:#74d8aa' wx:else>+{{item.rechargeMoney}}</view>
+    </view>
+    <view class='order' wx:if="{{item.operation==3 }}">订单编号：{{item.orderSn}}</view>
+    <view class='cash' style='margin-top:10rpx;'>
+      <view class='date'>{{item.operationTime}}</view>    
+      </view>
+    </view>
+  </view>
+
+
+ 
+</view>

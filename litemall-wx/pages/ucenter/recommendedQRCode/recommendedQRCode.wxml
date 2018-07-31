@@ -1,0 +1,6 @@
+<view class = "item-banner">  
+  <image class="knowledge-img" src="{{qrcodeUrl}}" bindtap="previewImage"></image> 
+</view>
+<view class="item-text">
+   <text>点击照片保存至相册</text>
+</view>

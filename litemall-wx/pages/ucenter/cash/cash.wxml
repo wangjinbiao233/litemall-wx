@@ -1,0 +1,25 @@
+<view style='height:10rpx;background-color:#f8f8f8;'></view>
+<view class='list'>
+  <view class='item' wx:for='{{cashList}}'>
+    <view class='cash'>
+      <view class='content' wx:if="{{item.operation==1}}">订单佣金</view>
+      <view class='content' wx:elif="{{item.operation==2}}">提现</view>
+      <view class='content' wx:elif="{{item.operation==3}}">充值</view>
+      <view class='content' wx:elif="{{item.operation==4}}">消费</view>
+      <view class='content' wx:elif="{{item.operation==5}}">退款</view>
+      <view class='content' wx:elif="{{item.operation==6}}">提现失败</view>
+      <view class='number' style='color:#FFA500' wx:if="{{item.operation==2 || item.operation== 4 }}">-{{item.profit_money}}</view>
+      <view class='number' style='color:#FF0000' wx:elif="{{item.operation==6 }}">{{item.profit_money}}</view>
+      <view class='number' style='color:#74d8aa' wx:else>+{{item.profit_money}}</view>
+    </view>
+    <view class='order' wx:if="{{item.operation==1 }}">订单编号：{{item.order_id}}</view>
+    <view class='cash' style='margin-top:10rpx;'>
+      <view class='date'>{{item.operation_time}}</view>
+      <view class='recommend' >{{item.username}}</view>
+    </view>
+  </view>
+</view>
+<view class='nothing' wx:if="{{cashList.length==0}}">
+  <image src='/static/images/sorry.png' class='img'></image>
+  <view class='content'>暂无记录</view>
+</view>

@@ -1,0 +1,5 @@
+<view class="container">
+  <view class="form-box">
+    <button type="primary" class="login-btn" bindgetuserinfo="wxLogin" open-type="getUserInfo">微信直接登录</button>
+  </view>
+</view>

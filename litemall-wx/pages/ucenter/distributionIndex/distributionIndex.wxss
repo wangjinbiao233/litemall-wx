@@ -1,0 +1,96 @@
+.top {
+  height: 300rpx;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  background-color: #8ac3d7;
+}
+
+.top .number {
+  font-size: 80rpx;
+  color: #ffffff;
+  margin-top: 90rpx;
+}
+
+.top .content{
+  font-size: 28rpx;
+  color: #eef2f2;
+  margin-top: 20rpx;
+}
+
+.center{
+  height: 100rpx;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 25rpx;
+  padding-right: 25rpx;
+  border-bottom: 1rpx #dbdbdb solid;
+}
+
+.center .content{
+  font-size: 35rpx;
+}
+
+.center .btn-cash{
+  font-size: 26rpx;
+  color: #ffffff;
+  background-color: #8ac3d7;
+}
+
+.center .btn-cash-o{
+  font-size: 26rpx;
+  color: #ffffff;
+  background-color: #cde5ee;
+}
+
+.bottom-first{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+}
+
+.bottom-first .item{
+  width: 50%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.bottom-first .rule{
+  width: 1rpx;
+  height: 100rpx;
+  background-color: #dbdbdb;
+}
+
+.bottom-first .rule-o{
+  width: 1rpx;
+  height: 195rpx;
+  background-color: #dbdbdb;
+}
+
+.bottom-first .item .img{
+  width: 65rpx;
+  height: 65rpx
+}
+
+.bottom-first .item .content{
+  font-size: 28rpx;
+}
+
+.bottom-first .item .number{
+  font-size: 28rpx;
+  color: #8ac3d7;
+  margin-top: 20rpx
+}
+button[plain]{ 
+  border:0;
+  padding: 0px;
+  font-size: 28rpx;
+  line-height: inherit
+}
+
+

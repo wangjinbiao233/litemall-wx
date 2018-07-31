@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallLikedetailsMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="value_id" property="valueId" jdbcType="INTEGER" />
+    <result column="value_type" property="valueType" jdbcType="INTEGER" />
+    <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, value_id, value_type, comment_id, status, createtime, updatetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_likedetails
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_likedetails
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    insert into litemall_likedetails (id, user_id, value_id, 
+      value_type, comment_id, status, 
+      createtime, updatetime)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, 
+      #{valueType,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    insert into litemall_likedetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="valueId != null" >
+        value_id,
+      </if>
+      <if test="valueType != null" >
+        value_type,
+      </if>
+      <if test="commentId != null" >
+        comment_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null" >
+        #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="valueType != null" >
+        #{valueType,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null" >
+        #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    update litemall_likedetails
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="valueId != null" >
+        value_id = #{valueId,jdbcType=INTEGER},
+      </if>
+      <if test="valueType != null" >
+        value_type = #{valueType,jdbcType=INTEGER},
+      </if>
+      <if test="commentId != null" >
+        comment_id = #{commentId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    update litemall_likedetails
+    set user_id = #{userId,jdbcType=INTEGER},
+      value_id = #{valueId,jdbcType=INTEGER},
+      value_type = #{valueType,jdbcType=INTEGER},
+      comment_id = #{commentId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByCommentIdUserId" resultMap="BaseResultMap">
+    select  
+  	<include refid="Base_Column_List" />
+	from litemall_likedetails
+    where comment_id = #{commentId} and user_id=#{userId}
+    <if test="status != null" >
+     and status=#{status} 
+     </if>
+  </select>
+  
+  <update id="updateByCommentIdUserId" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    update litemall_likedetails
+    set status = #{status,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and comment_id=#{commentId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByUserIdValueId" resultMap="BaseResultMap">
+    select  
+  	<include refid="Base_Column_List" />
+	from litemall_likedetails
+    where value_id = #{valueId} and user_id=#{userId} 
+    and value_type=2 and comment_id is null 
+    <if test="status != null" >
+     and status=#{status} 
+     </if>
+  </select>
+  
+</mapper>

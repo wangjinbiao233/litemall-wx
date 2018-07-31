@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallKCategoryMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallKCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, level,banner_url, is_deleted, create_date, create_by
+  </sql>
+  
+  <select id="selectLitemallKCategory" resultMap="BaseResultMap" parameterType="org.linlinjava.litemall.db.domain.LitemallKCategory" >
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_knowledge_category
+    <where>
+      1=1
+      <if test="id != null"> and id = #{id,jdbcType=INTEGER}</if>
+      <if test="name != null and name != ''"> and name like concat(#{name,jdbcType = VARCHAR},'%') </if>
+    </where>
+    order by id asc
+  </select>
+  
+  <select id="countSelective" resultType="java.lang.Integer" parameterType="org.linlinjava.litemall.db.domain.LitemallKCategory" >
+  	select count(1) from litemall_knowledge_category
+  	<where>
+      1=1
+      <if test="id != null"> and id = #{id,jdbcType=INTEGER}</if>
+      <if test="name != null and name != ''">and name like concat(#{name,jdbcType = VARCHAR},'%')</if>
+    </where>
+  </select>
+  
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallKCategory" >
+    insert into litemall_knowledge_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="bannerUrl != null" >
+        banner_url,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      create_date
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null" >
+        #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        #{isDeleted,jdbcType=BIT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      NOW()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallKCategory" >
+    update litemall_knowledge_category
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerUrl != null" >
+        banner_url = #{bannerUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null" >
+        is_deleted = #{isDeleted,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_knowledge_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+</mapper>

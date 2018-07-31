@@ -1,0 +1,56 @@
+<view>
+  <view class='top'>
+    <view class='number'>{{cashNum+noCashNum}}</view>
+    <view class='content'>账户可用余额</view>
+  </view>
+  <view class='center'>
+    <view class='content'>分销佣金</view>
+    <navigator url='../applyCash/applyCash'>
+      <button class='btn-cash' hover-class='btn-cash-o'>提现</button>
+    </navigator>
+  </view>
+  <view class='bottom-first'>
+    <navigator class='item' url='../cash/cash'>
+      <image src='/static/images/cash.png' class='img'></image>
+      <view class='content'>可提现</view>
+      <view class='number'>{{cashNum}}</view>
+    </navigator>
+    <view class='rule'></view>
+    <navigator class='item' url='../noCash/noCash'>
+      <image src='/static/images/no_cash.png' class='img'></image>  
+      <view class='content'>不可提现</view>
+      <view class='number'>{{noCashNum}}</view>
+    </navigator>
+  </view>
+  <view style='height:10rpx;background-color:#f8f8f8;'></view>
+  <view class='bottom-first' style='border-bottom:1rpx #dbdbdb solid'>
+    <navigator class='item' url='../distribution/distribution?userId={{userId}}'>
+      <image src='/static/images/my_team.png' class='img'></image>
+      <view class='content'>我的团队</view>
+      <view class='number'>{{subUserTotal}}人</view>
+    </navigator>
+    <view class='rule-o'></view>
+    <navigator class='item' url='../cashDetail/cashDetail'>
+      <image src='/static/images/cash_detail.png' class='img'></image>  
+      <view class='content'>提现明细</view>
+      <view class='number'>{{cashDetailNum}}</view>
+    </navigator>
+  </view>
+  <view class='bottom-first'>
+    <view class='item' style='justify-content: center;'>
+      <button plain="true" data-name="shareBtn" open-type="share">
+        <image src='/static/images/spread.png' class='img'></image>
+       
+        <view class='content'>店铺推广</view>
+      
+      </button>
+    </view>
+    <view class='rule-o'></view>
+    <navigator class='item' url='../recommendedQRCode/recommendedQRCode'>
+      <view class='item' style='justify-content: center;'>
+        <image src='/static/images/code.png' class='img'></image>  
+        <view class='content'>推广二维码</view>
+      </view>
+    </navigator>
+  </view>
+</view>

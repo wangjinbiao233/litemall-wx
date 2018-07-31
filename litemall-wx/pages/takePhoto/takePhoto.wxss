@@ -1,0 +1,52 @@
+
+page{
+    background: black;
+}
+camera{
+position:relative;
+width:100%;
+display:block;
+overflow:hidden;
+height:1000rpx;
+}
+cover-image{
+overflow:hidden;
+height:100%;
+width:100%;
+}
+.pt{
+width:750rpx;
+height:1000rpx;
+overflow: hidden;
+}
+.xia{
+    width:750rpx;
+   height:152rpx;
+    background:black;
+}
+.z{
+    width:120rpx;
+    height:120rpx;
+    float:left;
+    margin-left:310rpx;
+margin-top:15rpx;
+
+}
+.z image{
+    width:110rpx;
+height:105rpx;
+border-radius:999px;
+}
+.y{
+    width:120rpx;
+    height:120rpx;
+    float:right;
+    margin-right:80rpx;
+    margin-top:15rpx;
+
+}
+
+.y image{
+     width:110rpx;
+    height:105rpx;
+}

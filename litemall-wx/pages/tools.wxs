@@ -1,0 +1,33 @@
+
+var formatToTime = function(time) {
+  var date = getDate(time);  
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+}
+
+var formatNumber = function(n) {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
+
+var time = function(value){
+  return formatToTime(value);  
+}
+
+
+var toTimeT = function (time) {//2018-06-15T09:33:21.000+0000
+    var d = formatToTime(time.replace('.000+0000', ''));
+    return d;
+}
+
+module.exports = {
+    toFormatTime: time,//格式化页面上时间
+    toTimeT: toTimeT
+};
