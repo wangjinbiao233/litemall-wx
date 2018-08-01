@@ -169,7 +169,6 @@ export default {
     selectStoreList(){
       listStore({
       }).then(response => {
-        debugger
         this.storeList = response.data.data.allStoreList
       }).catch(() => {
         this.storeList = []

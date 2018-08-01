@@ -191,7 +191,7 @@ Page({
             console.log(ops.target)
         }
         return {
-            title: '通誉微商人脸检测分享',
+            title: 'PHILAB梵朗人脸检测分享',
             path: '/pages/facialEvaluate/facialEvaluate?faceFourdataId=' + this.data.faceFourdataId +'&userId='+this.data.userId,
            //path:'',
             success: function (res) {

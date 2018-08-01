@@ -5,12 +5,12 @@
 //var WxApiRoot = 'http://192.168.0.27:8082/wx/';
 
 //production must be in SSL
-var WxApiRoot = 'https://mall-wx.dgtis.com/wx/';
+var WxApiRoot = 'https://mall-wx.philab.net/wx/';
 
 //var WxApiRoot = 'http://10.32.2.69:8082/wx/';
 
 // 以下是图片存储服务器API地址
-var StorageApi = 'https://mall-wx.dgtis.com/wx/storage/create';
+var StorageApi = 'https://mall-wx.philab.net/wx/storage/create';
 
 //通誉
 var picUrl = 'http://mall.dgtis.com/images/';

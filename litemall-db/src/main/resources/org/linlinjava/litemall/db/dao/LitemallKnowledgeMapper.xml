@@ -44,7 +44,10 @@
     	<if test="knowledgeCls != null and knowledgeCls != ''">
     		and lk.knowledge_cls = #{knowledgeCls,jdbcType=INTEGER}
     	</if>
-    	<if test = "title != null ">and lk.title = #{titlePicUrl,jdbcType=VARCHAR}</if>
+   	   <if test="title != null and title != 'undefined' and  title != ''  ">
+        and lk.title  like CONCAT('%',#{title},'%')
+      </if>
+      
     	<if test = "isShow != null ">and lk.is_show = #{isShow,jdbcType=VARCHAR}</if>
     	
     </where>
@@ -58,7 +61,10 @@
     	<if test="knowledgeCls != null and knowledgeCls != ''">
     		and knowledge_cls = #{knowledgeCls,jdbcType=INTEGER}
     	</if>
-    	<if test = "title != null ">and title = #{titlePicUrl,jdbcType=VARCHAR}</if>
+    	<if test="title != null and title != 'undefined' and  title != ''  ">
+        and  title  like CONCAT('%',#{title},'%')
+      </if>
+      
     </where>
   </select>
 
