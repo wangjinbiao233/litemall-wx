@@ -94,6 +94,7 @@ export const asyncRouterMap = [
     },
     children: [
       { path: 'user', component: _import('user/user'), name: 'user', meta: { title: '会员管理', noCache: true }},
+      { path: 'userExport', component: _import('user/userExport'), name: 'userExport', meta: { title: '会员信息导出', noCache: true }},
       { path: 'userDetail', component: _import('user/userDetail'), name: 'userDetail', meta: { title: '会员详情', noCache: false, hideTag: true}},
       // { path: 'address', component: _import('user/address'), name: 'address', meta: { title: '收货地址', noCache: true, hideTag: true }},
       // { path: 'express', component: _import('user/express'), name: 'express', meta: { title: '快递公司', noCache: true, hideTag: true }},

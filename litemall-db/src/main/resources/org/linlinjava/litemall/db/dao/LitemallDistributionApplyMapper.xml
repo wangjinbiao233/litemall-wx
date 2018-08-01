@@ -48,20 +48,18 @@
     t.id, t.distribution_id, t.nick_name, t.pic_urls, t.distribution_type,
     t.audit_status, t.remark, 
     t.create_time, t.create_user_id, t.modify_time, t.modify_user_id, t.deleted,
-    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp",
-    t1.username as "createUserName"
+    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp"
     from litemall_distribution_apply t
-    left join litemall_user t1 on t.create_user_id = t1.id
-    
     where 1 = 1
     
       <if test="distributionType != null and distributionType != '' " >
         and t.distribution_type = #{distributionType,jdbcType=VARCHAR}
       </if>
       
-       <if test="createUserName != null" >
-        and t1.username = #{createUserName,jdbcType=VARCHAR}
+       <if test="createUserName != null and createUserName != 'undefined' and  createUserName != ''  ">
+        and t.nick_name  like CONCAT('%',#{createUserName},'%')
       </if>
+     
 
   </select>
   
@@ -69,18 +67,17 @@
     select 
     count(t.id)
     from litemall_distribution_apply t
-    left join litemall_user t1 on t.create_user_id = t1.id
-    
-      
+        
     where 1 = 1
     
-      <if test="distributionType != null" >
+      <if test="distributionType != null and distributionType != '' " >
         and t.distribution_type = #{distributionType,jdbcType=VARCHAR}
       </if>
       
-       <if test="createUserName != null" >
-        and t1.username = #{createUserName,jdbcType=VARCHAR}
+       <if test="createUserName != null and createUserName != 'undefined' and  createUserName != ''  ">
+        and t.nick_name  like CONCAT('%',#{createUserName},'%')
       </if>
+     
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >

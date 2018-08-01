@@ -53,7 +53,7 @@ public class LitemallUserService {
             criteria.andUsernameLike("%" + username + "%");
         }
         if(!StringUtils.isEmpty(mobile)){
-            criteria.andMobileEqualTo(mobile);
+            criteria.andMobileLike("%" +mobile+ "%");
         }
         if(!StringUtils.isEmpty(userLevel)){
             criteria.andUserLevelEqualTo(userLevel);
@@ -74,7 +74,7 @@ public class LitemallUserService {
             criteria.andUsernameLike("%" + username + "%");
         }
         if(!StringUtils.isEmpty(mobile)){
-            criteria.andMobileEqualTo(mobile);
+        	criteria.andMobileLike("%" +mobile+ "%");
         }
         if(!StringUtils.isEmpty(userLevel)){
             criteria.andUserLevelEqualTo(userLevel);

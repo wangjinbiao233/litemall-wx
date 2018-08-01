@@ -1,9 +1,19 @@
 .order .order-sort{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 0 30rpx;
   border-bottom: 20rpx solid #f5f5f5;
 }
+
+.order .order-sort-box{
+  padding:10rpx;
+  line-height:50rpx;
+  text-align:center;
+  display:inline-block;
+  font-size:30rpx;
+}
+
+
 .order .order-sort-text{
     display: inline-block;
     height: 82rpx;
@@ -223,4 +233,16 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
    background: transparent;
    transform:translate(-50%, -50%) scale(1);
    -webkit-transform:translate(-50%, -50%) scale(1);
+}
+
+.scroll-view{	
+	top: 0;
+	left: 0;
+	background: #fff;
+	border-bottom: 1rpx solid #e5e5e5;
+	overflow: auto;
+	text-overflow: ellipsis;
+	white-space: nowrap; 
+	display: flex;
+	height: 100rpx;
 }

@@ -305,8 +305,6 @@ public class WxOrderController {
 			showType = 0;
 		}
 
-		
-		
 		List<Map<String, Object>> orderGoodsVoList = new ArrayList<>(orderGoodsList.size());
 		for (LitemallOrderGoods orderGoods : orderGoodsList) {
 			if (!flag.equals(0) && orderGoods.getFlag().equals(flag)) {
@@ -317,7 +315,7 @@ public class WxOrderController {
 				orderGoodsVo.put("number", orderGoods.getNumber());
 				orderGoodsVo.put("picUrl", orderGoods.getPicUrl());
 				orderGoodsVo.put("reserveFlag", orderGoods.getReserveFlag());
-				orderGoodsVo.put("orderStatus", OrderUtil.STATUS_PAY);
+				orderGoodsVo.put("orderStatus", orderGoods.getOrderStatus());
 				orderGoodsVo.put("goodsSpecifitionValues", orderGoods.getGoodsSpecificationValues());
 				orderGoodsVoList.add(orderGoodsVo);
 			}

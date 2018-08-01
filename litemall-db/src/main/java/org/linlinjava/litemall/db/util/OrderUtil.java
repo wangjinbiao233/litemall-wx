@@ -327,6 +327,16 @@ public class OrderUtil {
             status.add((short)401);
             status.add((short)403);
         }
+        
+        else if (showType.equals(5)) {
+            // 已完成订单
+            status.add((short)501);
+        }
+        else if (showType.equals(6)) {
+        	// 已完成订单
+        	status.add((short)202);
+        	status.add((short)304);
+        }
         else {
             Assert.state(false, "showType不支持");
         }
@@ -360,6 +370,15 @@ public class OrderUtil {
     		// 待评价订单
     		status.add((short)401);
     	}
+    	else if (showType.equals(5)) {
+    		// 待评价订单
+    		status.add((short)501);
+    	}
+    	else if (showType.equals(6)) {
+        	// 已完成订单
+        	status.add((short)202);
+        	status.add((short)304);
+        }
     	else {
     		Assert.state(false, "showType不支持");
     	}
