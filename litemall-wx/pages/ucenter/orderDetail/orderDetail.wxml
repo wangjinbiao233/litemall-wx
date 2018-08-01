@@ -42,6 +42,14 @@
         </view>
     </view>
 
+     <view class="order-goods"  wx:if="{{litemallReserve != null}}">       
+         <view class="order-info">
+            <view class="item-a">预约日期：{{litemallReserve.reserveDate}}</view>
+            <view class="item-b">预约时间：{{litemallReserve.reserveTime}}</view>           
+            <view class="item-b">预约门店：{{litemallReserve.storeName}}</view>           
+        </view>
+    </view>
+
     <view class="order-bottom">
         <view class="address">
             <view class="t">
