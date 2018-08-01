@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <movable-area style="height: 1100rpx; width: 100%;">
-  <movable-view class='btn-gif' direction="all" x='1000rpx' y='1000rpx'>
+  <!-- <movable-view class='btn-gif' direction="all" x='1000rpx' y='1000rpx'>
     <image src='/static/images/timg.gif' style='width:120rpx;height:120rpx;  border-radius: 100%;' bindtap='btngif'></image>
-  </movable-view>
+  </movable-view> -->
   <view class="container">
     <view class='search'>
       <image bindtap="windowchoose" data-statu="open" src='/static/images/code.png'></image>
@@ -10,7 +10,7 @@
     
       <view class='search-btn' wx:if="{{isSearch==1}}">
         <icon type='search' size='15' color='#dbdbdb'></icon>
-        <navigator url="/pages/search/search"><view style='color:#dbdbdb;margin-left:10rpx;'>大家都在搜</view></navigator>
+        <navigator url="/pages/searchGoods/searchGoods"><view style='color:#dbdbdb;margin-left:10rpx;'>大家都在搜</view></navigator>
       </view>
       
       <view class='search-btn-o' wx:else>

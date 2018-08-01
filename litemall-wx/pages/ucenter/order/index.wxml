@@ -1,25 +1,33 @@
 <view class="order">
-  <view class="order-sort">
-    <view bindtap="changeTab" data-sort='1' data-flag='0' class="order-sort-box {{sort === 1 ? 'active' : ''}}">
-      <view class="order-sort-text">待付款</view>
-    </view>
-    <view bindtap="changeTab" data-sort='2' data-flag='1' class="order-sort-box {{sort === 2 && flag == 1? 'active' : ''}}">
-      <view class="order-sort-text">待发货</view>
-    </view>
-    <view bindtap="changeTab" data-sort='2' data-flag='2' class="order-sort-box {{sort === 2  && flag == 2? 'active' : ''}}">
-      <view class="order-sort-text">待预约</view>
-    </view>
-    <view bindtap="changeTab" data-sort='3' data-flag='1' class="order-sort-box {{sort === 3  && flag == 1? 'active' : ''}}">
-      <view class="order-sort-text">待收货</view>
-    </view>
+  <view class="order-sort">   
+    <scroll-view class="scroll-view" scroll-x="true">
+      <view bindtap="changeTab" data-sort='1' data-flag='0' class="order-sort-box {{sort === 1 ? 'active' : ''}}">
+        <view class="order-sort-text">待付款</view>
+      </view>
+      <view bindtap="changeTab" data-sort='2' data-flag='1' class="order-sort-box {{sort === 2 && flag == 1? 'active' : ''}}">
+        <view class="order-sort-text">待发货</view>
+      </view>
+      <view bindtap="changeTab" data-sort='2' data-flag='2' class="order-sort-box {{sort === 2  && flag == 2? 'active' : ''}}">
+        <view class="order-sort-text">待预约</view>
+      </view>
+      <view bindtap="changeTab" data-sort='3' data-flag='1' class="order-sort-box {{sort === 3  && flag == 1? 'active' : ''}}">
+        <view class="order-sort-text">待收货</view>
+      </view>
 
-    <view bindtap="changeTab" data-sort='3' data-flag='2' class="order-sort-box {{sort === 3  && flag == 2? 'active' : ''}}">
-      <view class="order-sort-text">已预约</view>
-    </view>
+      <view bindtap="changeTab" data-sort='3' data-flag='2' class="order-sort-box {{sort === 3  && flag == 2? 'active' : ''}}">
+        <view class="order-sort-text">已预约</view>
+      </view>
 
-    <view bindtap="changeTab" data-sort='4' data-flag='0' class="order-sort-box {{sort === 4? 'active' : ''}}">
-      <view class="order-sort-text">待评价</view>
-    </view>
+      <view bindtap="changeTab" data-sort='4' data-flag='0' class="order-sort-box {{sort === 4? 'active' : ''}}">
+        <view class="order-sort-text">待评价</view>
+      </view>
+      <view bindtap="changeTab" data-sort='5' data-flag='1' class="order-sort-box {{sort === 5? 'active' : ''}}">
+        <view class="order-sort-text">已完成</view>
+      </view>
+         <view bindtap="changeTab" data-sort='6' data-flag='1' class="order-sort-box {{sort === 6? 'active' : ''}}">
+        <view class="order-sort-text">已退款</view>
+      </view>
+    </scroll-view>
   </view>
   <view class="order-list">
     <view class="no-order" wx:if="{{orderList.length <= 0}}">
@@ -29,35 +37,35 @@
       </view>
     </view>
     <view wx:if="{{sort === 1}}" class="order-box">
-      <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">      
-          <view class="order-serial">
-            <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
-            <text class="order-serial-sort">待付款</text>
-          </view>
-          <view class="order-goodsList">
-            <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-              <view class="goods-box" >
-                <view class="goods-sort">
-                  <checkbox value="1" checked="false"/>
-                </view>
-                <view class="goods-imgBox">
-                  <image class="goods-img" src="{{good.picUrl}}"></image>
-                </view>
-                <view class="goods-content"  data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
-                  <view class="goods-name">{{good.goodsName}}</view>
-                  <view class="goods-abstract">{{good.goodsName}}</view>
-                  <view class="goods-amount">
-                    <view class="goods-price">
-                      <text class="goods-num">{{good.retailPrice}}</text>
-                    </view>
-                    <view class="goods-operation">
-                      <text class="goods-minus goods-minus-icon icon-minus disable"></text>
-                      <text class="goods-nmb">{{good.number}}</text>
-                      <text class="goods-add goods-minus-icon icon-add"></text>
-                    </view>
+      <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">待付款</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view class="goods-box">
+              <view class="goods-sort">
+                <checkbox value="1" checked="false" />
+              </view>
+              <view class="goods-imgBox">
+                <image class="goods-img" src="{{good.picUrl}}"></image>
+              </view>
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+                <view class="goods-name">{{good.goodsName}}</view>
+                <view class="goods-abstract">{{good.goodsName}}</view>
+                <view class="goods-amount">
+                  <view class="goods-price">
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
+                  <view class="goods-operation">
+                    <text class="goods-minus goods-minus-icon icon-minus disable"></text>
+                    <text class="goods-nmb">{{good.number}}</text>
+                    <text class="goods-add goods-minus-icon icon-add"></text>
                   </view>
                 </view>
-              </view>           
+              </view>
+            </view>
           </view>
         </view>
         <view class="goods-total">
@@ -72,34 +80,34 @@
 
     <view wx:if="{{sort === 2 && flag == 1}}" class="order-box">
       <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
-          <view class="order-serial">
-            <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
-            <text class="order-serial-sort">已付款</text>
-          </view>
-          <view class="order-goodsList">
-            <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-              <view class="goods-box" >
-                <view class="goods-sort">
-                  <checkbox value="1" checked="false" />
-                </view>
-                <view class="goods-imgBox">
-                  <image class="goods-img" src="{{good.picUrl}}"></image>
-                </view>
-                <view class="goods-content"  data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
-                  <view class="goods-name">{{good.goodsName}}</view>
-                  <view class="goods-abstract">{{good.goodsName}}</view>
-                  <view class="goods-amount">
-                   <view class="goods-price">
-                      <text class="goods-num">{{good.retailPrice}}</text>
-                    </view>
-                    <view class="goods-operation">
-                      <text class="goods-minus goods-minus-icon icon-minus disable"></text>
-                      <text class="goods-nmb">{{good.number}}</text>
-                      <text class="goods-add goods-minus-icon icon-add"></text>
-                    </view>
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">已付款</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view class="goods-box">
+              <view class="goods-sort">
+                <checkbox value="1" checked="false" />
+              </view>
+              <view class="goods-imgBox">
+                <image class="goods-img" src="{{good.picUrl}}"></image>
+              </view>
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+                <view class="goods-name">{{good.goodsName}}</view>
+                <view class="goods-abstract">{{good.goodsName}}</view>
+                <view class="goods-amount">
+                  <view class="goods-price">
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
+                  <view class="goods-operation">
+                    <text class="goods-minus goods-minus-icon icon-minus disable"></text>
+                    <text class="goods-nmb">{{good.number}}</text>
+                    <text class="goods-add goods-minus-icon icon-add"></text>
                   </view>
                 </view>
-              </view>            
+              </view>
+            </view>
           </view>
           <view class="goods-total">
             <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
@@ -119,21 +127,21 @@
         </view>
         <view class="order-goodsList">
           <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-            <view class="goods-box" >
+            <view class="goods-box">
               <view class="goods-sort">
                 <checkbox value="1" checked="false" />
               </view>
               <view class="goods-imgBox">
                 <image class="goods-img" src="{{good.picUrl}}"></image>
               </view>
-              <view class="goods-content"  data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
                 <view class="goods-name">{{good.goodsName}}</view>
                 <view class="goods-abstract">{{good.goodsName}}</view>
-                <view class="goods-num1">剩余疗程数：{{good.treatmentNum}}/{{good.goodsTreatmentNum}}</view>                
+                <view class="goods-num1">剩余疗程数：{{good.treatmentNum}}/{{good.goodsTreatmentNum}}</view>
                 <view class="goods-amount">
                   <view class="goods-price">
-                      <text class="goods-num">{{good.retailPrice}}</text>
-                    </view>
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
                   <view class="goods-operation">
                     <text class="goods-minus goods-minus-icon icon-minus disable"></text>
                     <text class="goods-nmb">{{good.number}}</text>
@@ -151,7 +159,7 @@
           </view>
           <view class="goods-total">
             <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
-            <view class="goods-btnBox">            
+            <view class="goods-btnBox">
             </view>
           </view>
         </view>
@@ -161,35 +169,35 @@
 
     <view wx:if="{{sort === 3  && flag == 1 }}" class="order-box">
       <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
-        
-          <view class="order-serial">
-            <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
-            <text class="order-serial-sort">待收货</text>
-          </view>
-          <view class="order-goodsList">
-            <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-              <view class="goods-box" >
-                <view class="goods-sort">
-                  <checkbox value="1" checked="false" />
-                </view>
-                <view class="goods-imgBox">
-                  <image class="goods-img" src="{{good.picUrl}}"></image>
-                </view>
-                <view class="goods-content"  data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
-                  <view class="goods-name">{{good.goodsName}}</view>
-                  <view class="goods-abstract">{{good.goodsName}}</view>
-                  <view class="goods-amount">
-                    <view class="goods-price">
-                      <text class="goods-num">{{good.retailPrice}}</text>
-                    </view>
-                    <view class="goods-operation">
-                      <text class="goods-minus goods-minus-icon icon-minus disable"></text>
-                      <text class="goods-nmb">{{good.number}}</text>
-                      <text class="goods-add goods-minus-icon icon-add"></text>
-                    </view>
+
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">待收货</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view class="goods-box">
+              <view class="goods-sort">
+                <checkbox value="1" checked="false" />
+              </view>
+              <view class="goods-imgBox">
+                <image class="goods-img" src="{{good.picUrl}}"></image>
+              </view>
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+                <view class="goods-name">{{good.goodsName}}</view>
+                <view class="goods-abstract">{{good.goodsName}}</view>
+                <view class="goods-amount">
+                  <view class="goods-price">
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
+                  <view class="goods-operation">
+                    <text class="goods-minus goods-minus-icon icon-minus disable"></text>
+                    <text class="goods-nmb">{{good.number}}</text>
+                    <text class="goods-add goods-minus-icon icon-add"></text>
                   </view>
                 </view>
-             
+              </view>
+
             </view>
           </view>
           <view class="goods-total">
@@ -205,13 +213,13 @@
 
     <view wx:if="{{sort === 3  && flag == 2}}" class="order-box">
       <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
-          <view class="order-serial">
-            <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
-            <text class="order-serial-sort">已预约</text>
-          </view>
-          <view class="order-goodsList">
-            <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-              <view wx:for="{{good.litemallReserveList}}" wx:for-item="reserve">
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">已预约</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view wx:for="{{good.litemallReserveList}}" wx:for-item="reserve">
               <view class="goods-box">
                 <view class="goods-sort">
                   <checkbox value="1" checked="false" />
@@ -233,14 +241,14 @@
                     </view>
                   </view>
                 </view>
-              </view> 
-            <view class="goods-btnBox"  style="padding-bottom:15px">
-               <text class="goods-btn" data-reserveId='{{reserve.id}}' bindtap="cancelReserve">取消预约</text>      
-            </view>
+              </view>
+              <view class="goods-btnBox" style="padding-bottom:15px">
+                <text class="goods-btn" data-reserveId='{{reserve.id}}' bindtap="cancelReserve">取消预约</text>
+              </view>
             </view>
           </view>
           <view class="goods-total">
-            <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>            
+            <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
           </view>
         </view>
       </view>
@@ -255,20 +263,20 @@
 
         <view class="order-goodsList">
           <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
-            <view class="goods-box" >
+            <view class="goods-box">
               <view class="goods-sort">
                 <checkbox value="1" checked="false" />
               </view>
               <view class="goods-imgBox">
                 <image class="goods-img" src="{{good.picUrl}}"></image>
               </view>
-              <view class="goods-content"  data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
                 <view class="goods-name">{{good.goodsName}}</view>
                 <view class="goods-abstract">{{good.goodsName}}</view>
                 <view class="goods-amount">
                   <view class="goods-price">
-                      <text class="goods-num">{{good.retailPrice}}</text>
-                    </view>
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
                   <view class="goods-operation">
                     <text class="goods-minus goods-minus-icon icon-minus disable"></text>
                     <text class="goods-nmb">{{good.number}}</text>
@@ -292,5 +300,88 @@
         </view>
       </view>
     </view>
+
+    <view wx:if="{{sort === 5  && flag == 1}}" class="order-box">
+      <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">已完成</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view class="goods-box">
+              <view class="goods-sort">
+                <checkbox value="1" checked="false" />
+              </view>
+              <view class="goods-imgBox">
+                <image class="goods-img" src="{{good.picUrl}}"></image>
+              </view>
+              <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+                <view class="goods-name">{{good.goodsName}}</view>
+                <view class="goods-abstract">{{good.goodsName}}</view>
+                <view class="goods-amount">
+                  <view class="goods-price">
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
+                  <view class="goods-operation">
+                    <text class="goods-minus goods-minus-icon icon-minus disable"></text>
+                    <text class="goods-nmb">{{good.number}}</text>
+                    <text class="goods-add goods-minus-icon icon-add"></text>
+                  </view>
+                </view>
+              </view>
+              <!-- <view class="goods-btnBox"  style="padding-bottom:15px">
+               <text class="goods-btn" data-reserveId='{{reserve.id}}' bindtap="cancelReserve">取消预约</text>      
+            </view> -->
+            </view>
+          </view>
+          <view class="goods-total">
+            <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:if="{{sort === 6  && flag == 1}}" class="order-box">
+      <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
+        <view class="order-serial">
+          <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
+          <text class="order-serial-sort">已退款</text>
+        </view>
+        <view class="order-goodsList">
+          <view wx:for="{{order.goodsList}}" wx:for-item="good" wx:for-index="idx">
+            <view class="goods-box">
+              <view class="goods-sort">
+                <checkbox value="1" checked="false" />
+              </view>
+              <view class="goods-imgBox">
+                <image class="goods-img" src="{{good.picUrl}}"></image>
+              </view>
+               <view class="goods-content" data-orderId='{{order.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
+                <view class="goods-name">{{good.goodsName}}</view>
+                <view class="goods-abstract">{{good.goodsName}}</view>
+                <view class="goods-amount">
+                  <view class="goods-price">
+                    <text class="goods-num">{{good.retailPrice}}</text>
+                  </view>
+                  <view class="goods-operation">
+                    <text class="goods-minus goods-minus-icon icon-minus disable"></text>
+                    <text class="goods-nmb">{{good.number}}</text>
+                    <text class="goods-add goods-minus-icon icon-add"></text>
+                  </view>
+                </view>
+              </view>
+              <!-- <view class="goods-btnBox"  style="padding-bottom:15px">
+               <text class="goods-btn" data-reserveId='{{reserve.id}}' bindtap="cancelReserve">取消预约</text>      
+            </view> -->
+            </view>
+          </view>
+          <view class="goods-total">
+            <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
   </view>
 </view>

@@ -165,11 +165,26 @@ Page({
     }, 'POST').then(function (res) {
       if (res.errno === 0) {
         phoneNumber = res.data[0].value;
-        wx.makePhoneCall({
-          phoneNumber: phoneNumber,
+        wx.showActionSheet({
+          itemList: [phoneNumber, '呼叫'],
+          success: function (res) {
+            if (res.tapIndex === 0) {
+
+            } else if (res.tapIndex === 1) {
+              wx.makePhoneCall({
+                phoneNumber: phoneNumber,
+              })
+            }
+          },
+          fail: function (res) {
+            console.log(res.errMsg)
+          }
         })
       }
-    });       
+    });    
+
+
+   
   },
   exitLogin: function () {
     var that = this;
