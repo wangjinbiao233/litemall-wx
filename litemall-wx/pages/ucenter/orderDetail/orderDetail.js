@@ -4,16 +4,19 @@ var api = require('../../../config/api.js');
 Page({
   data: {
     orderId: 0,
+    reserveId:0,
     showType:0,
     flag:0,
     orderInfo: {},
     orderGoods: [],
+    litemallReserve:[],
     handleOption: {}
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
       orderId: options.id,
+      reserveId: options.reserveId,
       showType: options.showType,
       flag: options.flag,
     });
@@ -23,15 +26,17 @@ Page({
     let that = this;
     util.request(api.OrderDetail, {
       orderId: that.data.orderId,
+      reserveId: that.data.reserveId,
       showType: that.data.showType,
       flag: that.data.flag,
       userId:wx.getStorageSync('userId')
     },'POST').then(function (res) {
       if (res.errno === 0) {
-        console.log(res.data);
+        console.log(res.data);    
         that.setData({
-          orderInfo: res.data.orderInfo,
+          orderInfo: res.data.orderInfo,        
           orderGoods: res.data.orderGoods,
+          litemallReserve: res.data.litemallReserve,
           handleOption: res.data.orderInfo.handleOption
         });
       }

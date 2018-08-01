@@ -227,7 +227,7 @@
                 <view class="goods-imgBox">
                   <image class="goods-img" src="{{good.picUrl}}"></image>
                 </view>
-                <view class="goods-content">
+                <view class="goods-content" data-orderId='{{order.id}}' data-reserveId='{{reserve.id}}' data-sort='{{sort}}' data-flag='{{flag}}' bindtap="orderDetail">
                   <view class="goods-name">{{good.goodsName}}</view>
                   <view class="goods-abstract">{{good.goodsName}}</view>
                   <view class="goods-amount">

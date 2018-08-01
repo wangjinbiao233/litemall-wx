@@ -2,7 +2,7 @@ var util = require('../../utils/util.js');
 var api = require('../../config/api.js');
 
 var app = getApp();
-Page({
+Page({ 
   data: {
     navList: [],
     goodsList: [],
@@ -49,6 +49,12 @@ Page({
 
     // that.getGoodsList();
   },
+
+  onPullDownRefresh: function () {
+    this.getCategoryInfo();
+    wx.stopPullDownRefresh();
+  },
+
   getCategoryInfo: function () {
     let that = this;
     util.request(api.GoodsCategory, { id: this.data.id })

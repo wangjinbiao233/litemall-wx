@@ -141,9 +141,9 @@ Page({
   },
 
   // 订单详情点击效果
-  orderDetail: function (e) {     
+  orderDetail: function (e) {   
     wx.navigateTo({
-      url: "../orderDetail/orderDetail?id=" + e.currentTarget.dataset.orderid + "&showType=" + e.currentTarget.dataset.sort + "&flag=" + e.currentTarget.dataset.flag
+      url: "../orderDetail/orderDetail?id=" + e.currentTarget.dataset.orderid + "&showType=" + e.currentTarget.dataset.sort + "&flag=" + e.currentTarget.dataset.flag + "&reserveId=" + e.currentTarget.dataset.reserveid
     });
 
   },
