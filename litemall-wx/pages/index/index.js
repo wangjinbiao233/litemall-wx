@@ -33,8 +33,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: 'PHILAB梵朗',
-      desc: '微信小程序商城',
+      title: '通誉微商',
+      desc: '仿网易严选微信小程序商城',
       path: '/pages/index/index'
     }
   },
