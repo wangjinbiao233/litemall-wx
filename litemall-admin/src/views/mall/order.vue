@@ -122,6 +122,9 @@
         </template>
       </el-table-column>
 
+      <el-table-column align="center" min-width="100px" label="会员编号" prop="memberId">
+      </el-table-column>
+
       <el-table-column align="center" min-width="100px" label="客户名称" prop="username">
       </el-table-column>
 
