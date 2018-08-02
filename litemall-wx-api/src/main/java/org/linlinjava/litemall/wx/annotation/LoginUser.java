@@ -8,8 +8,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-
-//test22
 public @interface LoginUser {
 
 }
