@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan("org.linlinjava.litemall.db.dao")
 public class Application {
 
+	//test
     public static void main(String[] args) {
     	
         SpringApplication.run(Application.class, args);
