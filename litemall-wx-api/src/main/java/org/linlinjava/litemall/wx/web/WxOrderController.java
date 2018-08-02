@@ -242,6 +242,7 @@ public class WxOrderController {
 		Integer userId = JacksonUtil.parseInteger(body, "userId");
 		Integer orderId = JacksonUtil.parseInteger(body, "orderId");
 		Integer showType = JacksonUtil.parseInteger(body, "showType");
+		Integer reserveId = JacksonUtil.parseInteger(body, "reserveId");
 		String flag = JacksonUtil.parseString(body, "flag");
 
 		if (userId == null) {
@@ -320,8 +321,13 @@ public class WxOrderController {
 				orderGoodsVoList.add(orderGoodsVo);
 			}
 		}
+		LitemallReserve litemallReserve = null;
+		if(reserveId != null) {
+			litemallReserve = litemallReserveService.selectById(reserveId);
+		}
 		Map<String, Object> result = new HashMap<>();
 		result.put("orderInfo", orderVo);
+		result.put("litemallReserve", litemallReserve);
 		result.put("orderGoods", orderGoodsVoList);
 		return ResponseUtil.ok(result);
 	}

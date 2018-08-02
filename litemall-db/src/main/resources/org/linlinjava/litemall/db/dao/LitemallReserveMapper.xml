@@ -23,10 +23,18 @@
   </sql>
  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from litemall_reserve
-    where id = #{id,jdbcType=INTEGER}
+      select 
+        t1.*,
+	    t2.username as "username",
+	    t2.mobile as "mobile",
+	    t3.store_name as "storeName",
+	    t4.goods_name as "goodsName"
+	    
+    from litemall_reserve t1 
+    left join litemall_user t2 on t1.user_id = t2.id   
+    left join litemall_store t3 on t1.store_id = t3.id  
+    left join litemall_order_goods t4 on t1.order_goods_id = t4.id  
+    where t1.id = #{id,jdbcType=INTEGER}
   </select>
   
   <select id="selectByOrderGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
