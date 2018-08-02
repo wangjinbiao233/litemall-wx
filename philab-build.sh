@@ -5,7 +5,7 @@
 # 2. litemall-admin解压目录是 /home/ubuntu/deploy/litemall-admin/dist，
 #    而这个目录也正是tomcat配置静态文件目录的路径（见1.5.3.5节）
 
-svn update
+#svn update
 
 mvn clean
 mvn package
