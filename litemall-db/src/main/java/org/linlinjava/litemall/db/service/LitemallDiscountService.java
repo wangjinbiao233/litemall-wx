@@ -33,9 +33,9 @@ public class LitemallDiscountService {
      * @param discountName 优惠卷名称
      * @return
      */
-    public Map<String,Object> selectByDiscountNameGroypBy(String discountName, Integer page, Integer size) {
+    public Map<String,Object> selectByDiscountNameGroypBy(LitemallCustomDiscount discount, Integer page, Integer size) {
         PageHelper.startPage(page, size);
-        List<LitemallCustomDiscount> list = litemallDiscountCustomMapper.selectByDiscountNameGroypBy(discountName);
+        List<LitemallCustomDiscount> list = litemallDiscountCustomMapper.selectByDiscountNameGroypBy(discount);
         PageInfo pageinfo = new PageInfo(list);
         Map<String, Object> resMap = new HashMap<String, Object>();
         resMap.put("items", list);
