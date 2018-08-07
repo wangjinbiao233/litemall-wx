@@ -5,6 +5,14 @@
     <div class="filter-container">
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入优惠券名称" v-model="listQuery.discountName">
       </el-input>
+      <el-select clearable class="filter-item" v-model="listQuery.discountType" placeholder="请选择优惠券类别" >
+        <el-option
+          v-for="item in couponsTypeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
@@ -16,6 +24,9 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="名称" prop="discountName">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="优惠券类别" prop="discountTypeStr">
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="剩余/总数" prop="">
@@ -47,10 +58,20 @@
     </div>
 
     <!-- 添加对话框 -->
-    <el-dialog title="上传对象" :visible.sync="createDialogVisible">
+    <el-dialog title="添加优惠券信息" :visible.sync="createDialogVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="优惠卷名称" prop="">
           <el-input v-model="dataForm.discountName"></el-input>
+        </el-form-item>
+        <el-form-item label="优惠卷类别" prop="">
+          <el-select clearable v-model="dataForm.discountType" placeholder="请选择优惠券类别" style = "top: -4px;">
+            <el-option
+              v-for="item in couponsTypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="优惠金额" prop="" >
           <el-input-number v-model="dataForm.discountsPrice" controls-position="right" :min="0" :max="10000"></el-input-number>
@@ -80,7 +101,7 @@
     </el-dialog>
 
     <!-- 修改对话框 -->
-    <el-dialog title="修改对象名称" :visible.sync="updateDialogVisible">
+    <el-dialog title="修改优惠券信息" :visible.sync="updateDialogVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="名称" prop="">
           <el-input v-model="dataForm.discountName" readonly></el-input>
@@ -107,7 +128,7 @@
 </template>
 
 <script>
-  import { couponList ,CreateCoupon , updateCoupon } from '@/api/coupon'
+  import { couponList ,CreateCoupon , updateCoupon , getDictionaryTypeList } from '@/api/coupon'
   import waves from '@/directive/waves' // 水波纹指令
   import axios from 'axios'
 
@@ -126,6 +147,7 @@
           limit: 20,
           key: undefined,
           name: undefined,
+          discountType: undefined,
           sort: '+id'
         },
         createDialogVisible: false,
@@ -137,7 +159,8 @@
           limitPrice: undefined,
           startTimeStr: undefined,
           endTimeStr: undefined,
-          discountCount: undefined
+          discountCount: undefined,
+          discountType: undefined
         },
         updateDialogVisible: false,
         rules: {
@@ -145,11 +168,13 @@
           discountsPrice: [{ required: true,type: 'number', message: '年龄必须为数字值' }],
           limitPrice: [{ required: true,type: 'number', message: '年龄必须为数字值' }]
         },
-        downloadLoading: false
+        downloadLoading: false,
+        couponsTypeList: undefined
       }
     },
     created() {
       this.getList()
+      this.getCouponsTypeList()
     },
     methods: {
       getList() {
@@ -164,6 +189,17 @@
         this.listLoading = false
       })
       },
+
+      getCouponsTypeList(){
+        getDictionaryTypeList({
+          groupCode: 'coupons_type'
+        }).then(response => {
+          this.couponsTypeList = response.data.data
+        }).catch(() => {
+          this.couponsTypeList = []
+        })
+      },
+
       handleFilter() {
         this.listQuery.page = 1
         this.getList()

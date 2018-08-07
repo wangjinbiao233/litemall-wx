@@ -3,7 +3,7 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入id" v-model="listQuery.id">
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入知识编号" v-model="listQuery.id">
       </el-input>
       <el-input clearable  class="filter-item" style="width: 200px;" placeholder="请输入标题" v-model="listQuery.title">
       </el-input>
@@ -23,7 +23,7 @@
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" width="100px" label="知识ID" prop="id" sortable>
+      <el-table-column align="center" width="100px" label="知识编号" prop="id" sortable>
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="标题" prop="title">

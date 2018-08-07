@@ -27,3 +27,10 @@ export function updateCoupon(data) {
   })
 }
 
+export function getDictionaryTypeList(query) {
+  return request({
+    url: '/dictionary/selectDictionaryTypeList',
+    method: 'post',
+    params: query
+  })
+}
