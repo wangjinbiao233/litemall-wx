@@ -1,0 +1,320 @@
+<template xmlns:c="http://www.w3.org/1999/html">
+  <div class="app-container calendar-list-container">
+
+    <!-- 查询和其他操作 -->
+    <div class="filter-container">
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入" v-model="listQuery.username">
+      </el-input>
+
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
+    </div>
+
+    <!-- 查询结果 -->
+    <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+
+      <el-table-column align="center" min-width="100px" label="时间" prop="createDate">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="来源" prop="shopName">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="手机号" prop="mobile">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="微信昵称" prop="wxNickName">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="头像" prop="icon">
+        <template slot-scope="scope">
+          <img :src= "scope.row.icon"  width="100px" height="80px"/>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="性别" prop="gender" :formatter="showGender" >
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="出生日期" prop="birthday">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="朝向" prop="faceType"  :formatter="showFaceType" >
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="自然光" prop="zeroZrg">
+        <template slot-scope="scope">
+          <img :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="表皮" prop="zeroBp">
+        <template slot-scope="scope">
+          <img :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="真皮" prop="zeroZp">
+        <template slot-scope="scope">
+          <img :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="荧光" prop="zeroYg">
+        <template slot-scope="scope">
+          <img :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="毛孔粗大" prop="score0">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg0" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score0}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="卟啉油脂" prop="score2">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg2" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score2}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="肤色白皙(L)" prop="score4">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg4" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score4}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="UV色斑" prop="score3">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg3" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score3}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="水份保湿" prop="score5">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg5" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score5}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="棕色斑点" prop="score6">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg5" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score6}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="色素斑点" prop="score9">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg8" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score9}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="细纹皱纹" prop="score10">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg9" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score10}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="粗糙纹理" prop="score11">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg10" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score11}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="红色区块" prop="score12">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg11" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score12}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+    </el-table>
+
+    <!-- 分页 -->
+    <div class="pagination-container">
+      <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page"
+        :page-sizes="[10,20,30,50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      </el-pagination>
+    </div>
+  </div>
+</template>
+
+<style>
+  .demo-table-expand {
+    font-size: 0;
+  }
+  .demo-table-expand label {
+    width: 130px;
+    color: #99a9bf;
+  }
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
+  }
+
+</style>
+
+<script>
+import { listAnalyseDetail } from '@/api/analyse'
+import waves from '@/directive/waves' // 水波纹指令
+
+export default {
+  name: 'analyse',
+  directives: {
+    waves
+  },
+  data() {
+    return {
+      list: undefined,
+      detailList: undefined,
+      total: undefined,
+      listLoading: true,
+      detailListLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        userId: undefined,
+        sort: '+id'
+      },
+      downloadLoading: false,
+      detailDialogFormVisible: false
+    }
+  },
+  created() {
+    // var userId = this.$route.query.userId;
+    // this.listQuery.userId = userId
+    // this.getList()
+  },
+  watch: {
+    '$route' (to, from) {
+      var userId = this.$route.query.userId
+      debugger
+      this.listQuery.userId = userId
+      this.getList()
+    }
+  },
+  methods: {
+    getList() {
+      this.listLoading = true
+      listAnalyseDetail(this.listQuery).then(response => {
+        this.list = response.data.data.items
+        this.total = response.data.data.total
+        this.listLoading = false
+      }).catch(() => {
+        this.list = []
+        this.total = 0
+        this.listLoading = false
+      })
+    },
+
+    getStatus (urlStr) {
+      var urlStrArr = urlStr.split('/')
+      return urlStrArr[urlStrArr.length - 1]
+    },
+
+    showGender(data){
+      if(data.gender == 'M'){
+        return "男"
+      }
+      if(data.gender == 'F'){
+        return "女"
+      }
+    },
+
+    showFaceType(data){
+      if(data.faceType == '0'){
+        return "正脸"
+      }else if(data.faceType == '-1'){
+        return "左脸"
+      }else{
+        return "右脸"
+      }
+    },
+
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
+    handleSizeChange(val) {
+      this.listQuery.limit = val
+      this.getList()
+    },
+    handleCurrentChange(val) {
+      this.listQuery.page = val
+      this.getList()
+    },
+
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = ['预约人', '预约日期', '预约时间', '门店名称', '项目名称']
+        const filterVal = ['username', 'reserveDate', 'reserveTime', 'storeName', 'goodsName']
+        excel.export_json_to_excel2(tHeader, this.list, filterVal, '预约信息')
+        this.downloadLoading = false
+      })
+    }
+  }
+}
+</script>

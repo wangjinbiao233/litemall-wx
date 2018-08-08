@@ -11,23 +11,23 @@ import Layout from '../views/layout/Layout'
 import padLayout from '../views/layout/padLayout'
 
 /** note: submenu only apppear when children.length>=1
-*   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
-**/
+ *   detail see  https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav?id=sidebar
+ **/
 
 /**
-* hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
-* alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
-*                                if not set alwaysShow, only more than one route under the children
-*                                it will becomes nested mode, otherwise not show the root menu
-* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
-* name:'router-name'             the name is used by <keep-alive> (must set!!!)
-* meta : {
+ * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
+ * alwaysShow: true               if set true, will always show the root menu, whatever its child routes length
+ *                                if not set alwaysShow, only more than one route under the children
+ *                                it will becomes nested mode, otherwise not show the root menu
+ * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
+ * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * meta : {
     roles: ['admin','editor']     will control the page roles (you can set multiple roles)
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
     noCache: true                if fasle ,the page will no be cached(default is false)
   }
-**/
+ **/
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
@@ -137,7 +137,7 @@ export const asyncRouterMap = [
       { path: 'specification', component: _import('goods/specification'), name: 'specification', meta: { title: '商品规格', noCache: true, hideTag: true }},
       { path: 'product', component: _import('goods/product'), name: 'product', meta: { title: '货品管理', noCache: true, hideTag: true }},
       { path: 'comment', component: _import('goods/comment'), name: 'comment', meta: { title: '用户评论', noCache: true, hideTag: true }}
-      
+
     ]
   },
   {
@@ -185,7 +185,10 @@ export const asyncRouterMap = [
       { path: 'ad', component: _import('promotion/ad'), name: 'ad', meta: { title: '广告列表', noCache: true }},
       { path: 'topic', component: _import('promotion/topic'), name: 'topic', meta: { title: '专题管理', noCache: true, hideTag: true }},
       { path: 'kCategory', component: _import('promotion/kCategory'), name: 'kCategory', meta: { title: '知识类别', noCache: true }},
-      { path: 'knowledge', component: _import('promotion/knowledge'), name: 'knowledge', meta: { title: '知识管理', noCache: true }}
+      { path: 'knowledge', component: _import('promotion/knowledge'), name: 'knowledge', meta: { title: '知识管理', noCache: true }},
+      { path: 'analyse', component: _import('promotion/analyse'), name: 'analyse', meta: { title: '用户10D数据管理', noCache: true }},
+      { path: 'analyseDetail', component: _import('promotion/analyseDetail'), name: 'analyseDetail', meta: { title: '用户10D数据管理详情', noCache: true, hideTag: true }}
+
     ]
   },
   {

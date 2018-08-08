@@ -7,9 +7,9 @@
 //production must be in SSL
 //var WxApiRoot = 'https://mall-wx.dgtis.com/wx/';
 //production must be in SSL philab
-//var WxApiRoot = 'https://mall-wx.philab.net/wx/';
+var WxApiRoot = 'https://mall-wx.philab.net/wx/';
 
-var WxApiRoot = 'http://10.32.2.69:8082/wx/';
+//var WxApiRoot = 'http://10.32.2.69:8082/wx/';
 
 // 以下是图片存储服务器API地址
 var StorageApi = 'https://mall-wx.philab.net/wx/storage/create';

@@ -38,33 +38,33 @@
     <!-- 分页 -->
     <div class="pagination-container">
       <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="listQuery.page"
-        :page-sizes="[10,20,30,50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+                     :page-sizes="[10,20,30,50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
 
     <!-- 添加或修改对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
-         
+
         <el-form-item label="分类名称" prop="name">
           <el-input v-model="dataForm.name"></el-input>
         </el-form-item>
 
         <el-form-item label="首页横幅" prop = "bannerUrl" >
-          <el-tooltip content="建议图片宽高250*250，或宽高比:1" placement="top-start" style= "width:178px">
+          <el-tooltip content="建议图片宽高122*115" placement="top-start" style= "width:178px">
             <el-upload v-model="dataForm.bannerUrl"
-              class="kc-avatar-uploader"
-              :action="fileImgUrl"
-              :show-file-list="false"
-              :on-success="handleBannerUrlSuccess"
-              :before-upload="beforeAvatarUpload">
+                       class="kc-avatar-uploader"
+                       :action="fileImgUrl"
+                       :show-file-list="false"
+                       :on-success="handleBannerUrlSuccess"
+                       :before-upload="beforeAvatarUpload">
               <template v-if="dataForm.bannerUrl" >
                 <img :src="dataForm.bannerUrl" class="kc-avatar" width="178px" height="178px">
               </template>
               <i v-else class="el-icon-plus kc-avatar-uploader-icon"></i>
             </el-upload>
           </el-tooltip>
-        </el-form-item>   
+        </el-form-item>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -92,181 +92,176 @@
 </style>
 
 <script>
-import { listCategory, createCategory, updateCategory, deleteCategory } from '@/api/kCategory'
-import waves from '@/directive/waves' // 水波纹指令
+  import { listCategory, createCategory, updateCategory, deleteCategory } from '@/api/kCategory'
+  import waves from '@/directive/waves' // 水波纹指令
 
-export default {
-  name: 'kCategory',
-  directives: {
-    waves
-  },
-  data() {
-    return {
-      list: undefined,
-      total: undefined,
-      listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 20,
-        id: undefined,
-        name: undefined,
-        sort: '+id'
-      },
-      catL1: {},
-      dataForm: {
-        id: undefined,
-        name: '',
-        bannerUrl: undefined
-      },
-      dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑',
-        create: '创建'
-      },
-      rules: {
-        name: [{ required: true, message: '分类名称不能为空', trigger: 'blur' }],
-        bannerUrl: [{ required: true, message: '首页横幅不能为空', trigger: 'blur' }]
-      },
-      downloadLoading: false,
-      fileImgUrl: process.env.BASE_API + '/storage/uploadPic'
-    }
-  },
-  created() {
-    this.getList()
-  },
-  methods: {
-    getList() {
-      this.listLoading = true
-      listCategory(this.listQuery).then(response => {
-        this.list = response.data.data.items
-        this.total = response.data.data.total
-        this.listLoading = false
-      }).catch(() => {
-        this.list = []
-        this.total = 0
-        this.listLoading = false
-      })
+  export default {
+    name: 'kCategory',
+    directives: {
+      waves
     },
-    handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
-    resetForm() {
-      this.dataForm = {
-        id: undefined,
-        name: '',
-        bannerUrl: undefined
+    data() {
+      return {
+        list: undefined,
+        total: undefined,
+        listLoading: true,
+        listQuery: {
+          page: 1,
+          limit: 20,
+          id: undefined,
+          name: undefined,
+          sort: '+id'
+        },
+        catL1: {},
+        dataForm: {
+          id: undefined,
+          name: '',
+          bannerUrl: undefined
+        },
+        dialogFormVisible: false,
+        dialogStatus: '',
+        textMap: {
+          update: '编辑',
+          create: '创建'
+        },
+        rules: {
+          name: [{ required: true, message: '分类名称不能为空', trigger: 'blur' }],
+          bannerUrl: [{ required: true, message: '首页横幅不能为空', trigger: 'blur' }]
+        },
+        downloadLoading: false,
+        fileImgUrl: process.env.BASE_API + '/storage/uploadPic'
       }
     },
-    filterLevel(value, row) {
-      return row.level === value
+    created() {
+      this.getList()
     },
-    handleCreate() {
-      this.resetForm()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          createCategory(this.dataForm).then(response => {
-            this.list.unshift(response.data.data)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
-    },
-    handleUpdate(row) {
-      this.dataForm = Object.assign({}, row)
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
-    },
-    updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          updateCategory(this.dataForm).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.dataForm.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.dataForm)
-                break
-              }
-            }
-            this.dialogFormVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
-    },
-    handleDelete(row) {
-      deleteCategory(row).then(response => {
-        this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
+    methods: {
+      getList() {
+        this.listLoading = true
+        listCategory(this.listQuery).then(response => {
+          this.list = response.data.data.items
+          this.total = response.data.data.total
+          this.listLoading = false
+        }).catch(() => {
+          this.list = []
+          this.total = 0
+          this.listLoading = false
         })
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      })
-    },
-    handleDownload() {
-      this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['分类ID', '名称']
-        const filterVal = ['id', 'name']
-        excel.export_json_to_excel2(tHeader, this.list, filterVal, '知识分类信息')
-        this.downloadLoading = false
-      })
-    },
-    // 图片上传
-    uploadBannerImg(file) {
-      const isJPGs = file.type === 'image/jpeg'
-      console.log(isJPGs)
-    },
-    handleBannerUrlSuccess(res) {
-      this.dataForm.bannerUrl = res.data.url
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
-      const isLt2M = file.size / 1024 / 1024 < 2
-
-      if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+      },
+      handleFilter() {
+        this.listQuery.page = 1
+        this.getList()
+      },
+      handleSizeChange(val) {
+        this.listQuery.limit = val
+        this.getList()
+      },
+      handleCurrentChange(val) {
+        this.listQuery.page = val
+        this.getList()
+      },
+      resetForm() {
+        this.dataForm = {
+          id: undefined,
+          name: '',
+          bannerUrl: undefined
+        }
+      },
+      filterLevel(value, row) {
+        return row.level === value
+      },
+      handleCreate() {
+        this.resetForm()
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+      },
+      createData() {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            createCategory(this.dataForm).then(response => {
+              this.list.unshift(response.data.data)
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }
+        })
+      },
+      handleUpdate(row) {
+        this.dataForm = Object.assign({}, row)
+        this.dialogStatus = 'update'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+      },
+      updateData() {
+        this.$refs['dataForm'].validate((valid) => {
+          if (valid) {
+            updateCategory(this.dataForm).then(() => {
+              for (const v of this.list) {
+                if (v.id === this.dataForm.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.dataForm)
+                  break
+                }
+              }
+              this.dialogFormVisible = false
+              this.$notify({
+                title: '成功',
+                message: '更新成功',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }
+        })
+      },
+      handleDelete(row) {
+        deleteCategory(row).then(response => {
+          this.$notify({
+            title: '成功',
+            message: '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
+        })
+      },
+      handleDownload() {
+        this.downloadLoading = true
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['分类ID', '名称']
+          const filterVal = ['id', 'name']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '知识分类信息')
+          this.downloadLoading = false
+        })
+      },
+      // 图片上传
+      uploadBannerImg(file) {
+        const isJPGs = file.type === 'image/jpeg'
+        console.log(isJPGs)
+      },
+      handleBannerUrlSuccess(res) {
+        this.dataForm.bannerUrl = res.data.url
+      },
+      beforeAvatarUpload(file) {
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!')
+        }
+        return isLt2M
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 2MB!')
-      }
-      return isJPG && isLt2M
     }
   }
-}
 </script>
 <style>
   .kc-avatar-uploader .el-upload {
@@ -290,4 +285,4 @@ export default {
   .kc-avatar {
     display: block;
   }
-  </style>
+</style>
