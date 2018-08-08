@@ -19,6 +19,7 @@ Vue.use(Element, {
 })
 
 Vue.config.productionTip = false
+window.router=router
 
 new Vue({
   el: '#app',

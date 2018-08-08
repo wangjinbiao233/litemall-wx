@@ -14,17 +14,17 @@
     </view>
   </view>
   <view class="user user-facial">
+   <view class="right" bindtap="windowchoose" data-statu="open">
+        <image  class="img" src="../../../static/images/pfjc.png"></image>
+        <text class="text" >基础检测</text>
+    </view>
    <view class="left" bindtap="navigateToPages">
         <image class="img" src="../../../static/images/pfjl.png"></image>
-        <text class="text" >皮肤记录</text>
-   </view>
-    <view class="right" bindtap="windowchoose" data-statu="open">
-        <image  class="img" src="../../../static/images/pfjc.png"></image>
-        <text class="text" >4D娱乐检测</text>
-    </view>
+        <text class="text" >基础检测记录</text>
+   </view>   
     <view class="right" bindtap="windowchooseProfessional" data-statu="open">
-        <image  class="img" src="../../../static/images/pfjc.png"></image>
-        <text class="text" >10D专业检测</text>
+        <image  class="img" src="../../../static/images/pfjl.png"></image>
+        <text class="text" >专业检测记录</text>
     </view>
   </view>
 

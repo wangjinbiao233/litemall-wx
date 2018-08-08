@@ -48,9 +48,9 @@
     justify-content:center;
 }
 .knowledge-nav .item .knowledge-icon{
-  height: 120rpx;
-  width: 110rpx;
-  margin: 0rpx 35rpx;
+    height:100rpx;
+    width:100rpx;
+    margin:0rpx 40rpx
 }
 .knowledge-nav .item .name{
     display: block;    
