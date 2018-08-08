@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.admin.web;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
@@ -36,7 +37,7 @@ public class LitemallDiscountController {
 
     @PostMapping("/selectDiscountList")
     public Object selectDiscountList(@LoginAdmin Integer adminId,
-                                     String discountName,
+                                     String discountName,Integer discountType,
                                      @RequestParam(value = "page", defaultValue = "1") Integer page,
                                      @RequestParam(value = "limit", defaultValue = "10") Integer limit) {
         if(adminId == null){
@@ -44,7 +45,10 @@ public class LitemallDiscountController {
         }
         Map<String, Object> map = null;
         try {
-            map = litemallDiscountService.selectByDiscountNameGroypBy(discountName, page, limit);
+        	LitemallCustomDiscount discount = new LitemallCustomDiscount();
+        	if(StringUtils.isNotBlank(discountName))discount.setDiscountName(discountName);
+        	if(discountType!=null)discount.setDiscountType(discountType);        	
+            map = litemallDiscountService.selectByDiscountNameGroypBy(discount, page, limit);
         } catch (Exception e) {
             e.printStackTrace();
             ResponseUtil.fail();
@@ -61,6 +65,7 @@ public class LitemallDiscountController {
         LitemallDiscount discount = new LitemallDiscount();
         discount.setKey(UUID.randomUUID().toString());
         discount.setDiscountName(litemallDiscount.getDiscountName());
+        discount.setDiscountType(litemallDiscount.getDiscountType());
         discount.setDiscountsPrice(litemallDiscount.getDiscountsPrice());
         discount.setLimitPrice(litemallDiscount.getLimitPrice());
         discount.setStartTime(LocalDate.parse(litemallDiscount.getStartTimeStr()));

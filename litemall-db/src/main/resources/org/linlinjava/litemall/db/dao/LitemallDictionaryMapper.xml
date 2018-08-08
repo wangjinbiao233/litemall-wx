@@ -18,7 +18,7 @@
   
   <sql id="Base_Column_List" >
     id, group_code, group_name, name, value, seq_no, remark, create_time, create_user_id, 
-    modify_time, modify_user_id, deleted
+    modify_time, modify_user_id, deleted , id as "codeid"
   </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

@@ -30,24 +30,29 @@
         is_use, user_id, order_sn, create_time, create_user_id, modify_time, modify_user_id
     </sql>
 
-
-  <select id="selectByDiscountNameGroypBy" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<!-- 优惠券管理 查询列表功能 -->
+  <select id="selectByDiscountNameGroypBy" parameterType="org.linlinjava.litemall.db.domain.LitemallCustomDiscount" resultMap="BaseResultMap">
     SELECT
         `key`,
         discount_name,        
+        dn.`name` as "discountTypeStr",
         start_time as "startTimeStr",
         end_time as "endTimeStr",
         COUNT(is_get) AS discount_count,
         SUM(is_get) AS get_count,
         SUM(is_use) AS use_count
     FROM
-        `litemall_discount`
+        `litemall_discount` dc
+        left JOIN litemall_dictionary dn on dc.discount_type = dn.id        
     WHERE
         1 = 1
         <if test="discountName != null">
           AND discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
         </if>
-    GROUP BY `key` , discount_name , start_time , end_time
+        <if test="discountType != null">
+          AND dc.discount_type = #{discountType,jdbcType=INTEGER}
+        </if>
+    GROUP BY `key` , discount_name , start_time , end_time , discountTypeStr
   </select>
 
 

@@ -39,3 +39,11 @@ export function deleteAd(data) {
     data
   })
 }
+
+export function getDictionaryTypeList(query) {
+  return request({
+    url: '/dictionary/selectDictionaryTypeList',
+    method: 'post',
+    params: query
+  })
+}

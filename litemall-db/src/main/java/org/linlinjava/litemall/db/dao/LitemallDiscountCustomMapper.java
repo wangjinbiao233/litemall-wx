@@ -2,6 +2,7 @@ package org.linlinjava.litemall.db.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.linlinjava.litemall.db.domain.LitemallCustomDiscount;
+import org.linlinjava.litemall.db.domain.LitemallDiscount;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface LitemallDiscountCustomMapper {
 
 
-    List<LitemallCustomDiscount> selectByDiscountNameGroypBy(@Param("discountName") String discountName);
+    List<LitemallCustomDiscount> selectByDiscountNameGroypBy(LitemallCustomDiscount discount);
 
     List<LitemallCustomDiscount> selectByKeyAndNameGroypBy(@Param("key") String key,@Param("discountName") String discountName,@Param("userId") String userId);
 

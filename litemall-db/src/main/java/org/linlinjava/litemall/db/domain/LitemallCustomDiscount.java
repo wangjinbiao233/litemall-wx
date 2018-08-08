@@ -12,6 +12,7 @@ public class LitemallCustomDiscount extends LitemallDiscount {
 	private String endTimeStr;
 
 	private BigDecimal goodsTotalPrice;
+	private String discountTypeStr;
 
 	public String getDiscountCount() {
 		return discountCount;
@@ -61,7 +62,15 @@ public class LitemallCustomDiscount extends LitemallDiscount {
 		this.goodsTotalPrice = goodsTotalPrice;
 	}
 
-    public String getIsUser() {
+    public String getDiscountTypeStr() {
+		return discountTypeStr;
+	}
+
+	public void setDiscountTypeStr(String discountTypeStr) {
+		this.discountTypeStr = discountTypeStr;
+	}
+
+	public String getIsUser() {
         return isUser;
     }
 

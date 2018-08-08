@@ -59,13 +59,14 @@
         </template>
       </el-table-column>
 
+      <!--
       <el-table-column align="center" width="100px" label="商品ID" prop="id" sortable>
       </el-table-column>
-
-      <!--
-      <el-table-column align="center" min-width="100px" label="商品编号" prop="goodsSn">
+       -->     
+      
+      <el-table-column align="center" min-width="100px" label="商品编号" prop="goodsSn" sortable>
       </el-table-column>
-      -->
+         
 
       <el-table-column align="center" min-width="150px" label="名称" prop="name">
       </el-table-column>

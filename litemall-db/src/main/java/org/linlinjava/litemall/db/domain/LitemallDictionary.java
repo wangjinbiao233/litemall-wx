@@ -26,6 +26,8 @@ public class LitemallDictionary {
     private Integer modifyUserId;
 
     private Boolean deleted;
+    
+    private String codeid;
 
     public Integer getId() {
         return id;
@@ -122,4 +124,12 @@ public class LitemallDictionary {
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
     }
+
+	public String getCodeid() {
+		return codeid;
+	}
+
+	public void setCodeid(String codeid) {
+		this.codeid = codeid;
+	}
 }

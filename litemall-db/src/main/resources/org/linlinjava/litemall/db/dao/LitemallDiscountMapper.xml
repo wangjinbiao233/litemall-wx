@@ -257,6 +257,9 @@
       <if test="modifyUserId != null">
         modify_user_id,
       </if>
+      <if test="discountType != null">
+        discount_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="key != null">
@@ -301,6 +304,9 @@
       <if test="modifyUserId != null">
         #{modifyUserId,jdbcType=VARCHAR},
       </if>
+      <if test="discountType != null">
+        #{discountType,jdbcType=INTEGER},
+      </if>
     </trim>
   </insert>
   
@@ -312,7 +318,10 @@
       </if>
       <if test="endTimeStr != null and endTimeStr !='' ">
         end_time = #{endTimeStr,jdbcType=DATE},
-      </if>           
+      </if> 
+      <if test="discountType != null">
+        discount_type = #{discountType,jdbcType=INTEGER},
+      </if>          
     </set>
     where `key` = #{key,jdbcType=VARCHAR}
   </update>
