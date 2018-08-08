@@ -31,6 +31,7 @@
     <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
     <result column="member_id" jdbcType="VARCHAR" property="memberId" />
     <result column="form_id" jdbcType="VARCHAR" property="formId" />
+    <result column="unionid" jdbcType="VARCHAR" property="unionid" />
     
     
   </resultMap>
@@ -110,7 +111,7 @@
     -->
     id, username, `password`, gender, birthday, last_login_time, last_login_ip, user_level, 
     nickname, mobile, register_ip, avatar, weixin_openid, `status`, add_time, deleted, point,
-    distribution_partner, p_id, money, recharge_money,qrcode_url, member_id,form_id
+    distribution_partner, p_id, money, recharge_money,qrcode_url, member_id,form_id,unionid
   </sql>
   
   <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallUserExample" resultMap="BaseResultMap">
@@ -216,7 +217,7 @@ on ue.id = oe.useroid
       user_level, nickname, mobile, 
       register_ip, avatar, weixin_openid, 
       `status`, add_time, deleted, point, distribution_partner, p_id, money,recharge_money, qrcode_url 
-      , member_id,form_id
+      , member_id,form_id,unionid
       )
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=DATE}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, 
@@ -224,7 +225,7 @@ on ue.id = oe.useroid
       #{registerIp,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{weixinOpenid,jdbcType=VARCHAR}, 
       #{status,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT}, #{point,jdbcType=INTEGER},
       #{distributionPartner,jdbcType=BIT}, #{pId,jdbcType=INTEGER}, #{money,jdbcType=INTEGER}, #{rechargeMoney,jdbcType=DECIMAL}, 
-      #{qrcodeUrl,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{formId,jdbcType=VARCHAR}
+      #{qrcodeUrl,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{formId,jdbcType=VARCHAR}, #{unionid,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallUser">
@@ -302,6 +303,9 @@ on ue.id = oe.useroid
       <if test="formId != null">
         form_id,
       </if>
+      <if test="unionid != null">
+        unionid,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="username != null">
@@ -372,6 +376,9 @@ on ue.id = oe.useroid
       </if>
       <if test="formId != null">
         #{formId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionid != null">
+        #{unionid,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -447,6 +454,9 @@ on ue.id = oe.useroid
       <if test="record.formId != null">
         `form_id` = #{record.formId,jdbcType=VARCHAR},
       </if>
+      <if test="record.unionid != null">
+        `unionid` = #{record.unionid,jdbcType=VARCHAR},
+      </if>
       <if test="record.addTime != null">
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
       </if>
@@ -480,6 +490,7 @@ on ue.id = oe.useroid
       weixin_openid = #{record.weixinOpenid,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=VARCHAR},
       `form_id` = #{record.formId,jdbcType=VARCHAR},
+      `unionid` = #{record.unionid,jdbcType=VARCHAR},
       add_time = #{record.addTime,jdbcType=TIMESTAMP},
       deleted = #{record.deleted,jdbcType=BIT}
     <if test="_parameter != null">
@@ -563,6 +574,9 @@ on ue.id = oe.useroid
       <if test="formId != null">
         form_id = #{formId,jdbcType=VARCHAR},
       </if>
+      <if test="unionid != null">
+        unionid = #{unionid,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -597,6 +611,7 @@ on ue.id = oe.useroid
       qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
       member_id = #{memberId,jdbcType=VARCHAR},
       form_id = #{formId,jdbcType=VARCHAR},
+      unionid = #{unionid,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectOneByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallUserExample" resultMap="BaseResultMap">

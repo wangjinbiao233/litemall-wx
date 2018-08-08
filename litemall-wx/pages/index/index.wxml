@@ -5,7 +5,7 @@
   </movable-view> -->
   <view class="container">
     <view class='search'>
-      <image bindtap="windowchoose" data-statu="open" src='/static/images/code.png'></image>
+      <image mode='aspectFill' bindtap="windowchoose" data-statu="open" src='/static/images/code.png'></image>
       <view bindtap="windowchoose" data-statu="open">测一测</view>
     
       <view class='search-btn' wx:if="{{isSearch==1}}">
@@ -21,14 +21,14 @@
     <swiper class="banner" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
       <swiper-item wx:for="{{banner}}" wx:key="id">
         <navigator url="{{item.link}}">
-          <image src="{{item.url}}" background-size="cover"></image>
+          <image mode='aspectFill' src="{{item.url}}" background-size="cover"></image>
         </navigator>
       </swiper-item>
     </swiper>
     <view class="{{isfirstlogin?'firstlogin':' '}}">
     <view class="category" >
       <view bindtap='goKnowledge' class="category-iconBox" wx:key="id" wx:for="{{kcategories}}" data-id="{{item.id}}" data-index='{{index}}'>
-        <image class="category-icon" src="/static/images/knCa_0{{index+1}}.png" background-size="cover"></image>
+        <image mode='aspectFill' class="category-icon" src="{{item.bannerUrl}}" background-size="cover"></image>
         <text class="category-text">{{item.name}}</text>
       </view>
     </view>
@@ -54,7 +54,7 @@
         <navigator url="/pages/goods/goods?id={{item.id}}">
           <view class='swiper-box'>
             <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
-            <image src="{{item.primaryPicUrl}}" style='height:387rpx;width:330rpx;'></image>
+            <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:387rpx;width:330rpx;'></image>
             <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;'>{{item.name}}</view>
             <view style='padding:5rpx 15rpx 0rpx 15rpx;color:#6bb5dc;font-size:35rpx;'>￥{{item.retailPrice}}</view>
             <view class='ellipsis' style='padding:5rpx 15rpx 10rpx 15rpx;font-size:24rpx;'>{{item.goodsBrief}}</view>
@@ -102,7 +102,7 @@
     <swiper class="banner-store" interval="3000" duration="1000" previous-margin="" next-margin='220rpx' circular='true'>
       <swiper-item wx:for="{{store}}" wx:key="id">
         <view class='swiper-box-store' data-id="{{item.id}}" bindtap='toStoreDetail'>
-          <image src="{{item.storeImg}}"></image>
+          <image mode='aspectFill' src="{{item.storeImg}}"></image>
           <view class='item-name'>
             <view style='font-size:30rpx;color:#6bb5dc;'>{{item.storeName}}</view>
             <view style='font-size:30rpx;'>{{item.storeTel}}</view>

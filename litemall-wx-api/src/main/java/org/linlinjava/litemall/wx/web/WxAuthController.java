@@ -18,6 +18,8 @@ import org.linlinjava.litemall.wx.dao.UserToken;
 import org.linlinjava.litemall.wx.service.UserTokenManager;
 import org.linlinjava.litemall.wx.util.IpUtil;
 import org.linlinjava.litemall.wx.util.bcrypt.BCryptPasswordEncoder;
+import org.linlinjava.litemall.wx.util.weixin.OpenIdUtil;
+import org.linlinjava.litemall.wx.util.weixin.WXBizDataCrypt;
 import org.linlinjava.litemall.wx.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import net.sf.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -103,78 +106,90 @@ public class WxAuthController {
     public Object loginByWeixin(@RequestBody String body, HttpServletRequest request) {
     	try {
     		String code = JacksonUtil.parseString(body, "code");
+    		String iv = JacksonUtil.parseString(body, "iv");
+    		String encryptedData = JacksonUtil.parseString(body, "encryptedData");
     		String referrerId = JacksonUtil.parseString(body, "pId");
     		UserInfo userInfo = JacksonUtil.parseObject(body, "userInfo", UserInfo.class);
-
+    		
     		if(code == null || userInfo == null){
  	            return ResponseUtil.badArgument();
  	        }
-    		String sessionKey = null;
-    		String openId = null;
-			WxMaJscode2SessionResult resultData = this.wxService.getUserService().getSessionInfo(code);
-			sessionKey = resultData.getSessionKey();
-			openId = resultData.getOpenid();
-    		
-    		if(sessionKey == null || openId == null){
-    			return ResponseUtil.fail();
-    		}
-    		
-    		String userName = userInfo.getNickName();
-			if(StringUtils.isNotBlank(userName))
-				userName = weixinUtil.filterEmoji(userName);
-			else 
-				userName = "";
-			
-    		LitemallUser user = userService.queryByOid(openId);
-    		if(user == null){
-    			user = new LitemallUser();
+    		if(StringUtils.isNotBlank(code) && StringUtils.isNotBlank(iv) && StringUtils.isNotBlank(encryptedData)){
+    			String res = OpenIdUtil.oauth2GetOpenid(code);
+    			JSONObject jsonObject = JSONObject.fromObject(res);
+    			if(jsonObject.containsKey("session_key") && jsonObject.containsKey("openid")){
+    				String sessionKey = (String) jsonObject.get("session_key");
+    				String openid = (String) jsonObject.get("openid");
     			
-    			user.setUsername(userName);  // 其实没有用，因为用户没有真正注册
-    			user.setPassword(openId);                  // 其实没有用，因为用户没有真正注册
-    			user.setWeixinOpenid(openId);
-    			user.setAvatar(userInfo.getAvatarUrl());
-    			user.setNickname(userName);
-    			user.setGender(userInfo.getGender() == 1 ? "男" : "女");
-    			user.setUserLevel("普通用户");
-    			user.setStatus("可用");
-    			user.setAddTime(LocalDateTime.now());
-    			user.setLastLoginTime(LocalDateTime.now());
-    			user.setLastLoginIp(IpUtil.client(request));
-    			user.setDistributionPartner(false);
-    			
-    			user.setMemberId(getSerialNumber());
-    			//我的推荐人
-    			if(referrerId != null && !referrerId.equals("")) {
-    				LitemallUser litemallUser = userService.findById(Integer.valueOf(referrerId));
-    				if(litemallUser != null)
-    					user.setpId(litemallUser.getId());
-    			}
-    			userService.add(user);
-    		} else {
-    			if(StringUtils.isBlank(user.getMemberId())) {
-    				user.setMemberId(getSerialNumber());
-    			}
-    			user.setAvatar(userInfo.getAvatarUrl());
-    			user.setUsername(userName);
-    			user.setNickname(userName);
-    			user.setLastLoginTime(LocalDateTime.now());
-    			user.setLastLoginIp(IpUtil.client(request));
-    			userService.update(user);
-    			if("禁用".equals(user.getStatus())) {
-    				return ResponseUtil.fail(-2, "该用户已被禁用！");
+    				String deString = WXBizDataCrypt.getInstance().decrypt(encryptedData, sessionKey, iv, "utf-8");
+    				JSONObject jsonObject1 = JSONObject.fromObject(deString);
+    				String unionid = (String) jsonObject1.get("unionId");
+    				
+    				String userName = userInfo.getNickName();
+    				if(StringUtils.isNotBlank(userName))
+    					userName = weixinUtil.filterEmoji(userName);
+    				else 
+    					userName = "";
+    				
+    	    		LitemallUser user = userService.queryByOid(openid);
+    	    		if(user == null){
+    	    			user = new LitemallUser();
+    	    			
+    	    			user.setUsername(userName);  // 其实没有用，因为用户没有真正注册
+    	    			user.setPassword(openid);                  // 其实没有用，因为用户没有真正注册
+    	    			user.setWeixinOpenid(openid);
+    	    			user.setUnionid(unionid);
+    	    			user.setAvatar(userInfo.getAvatarUrl());
+    	    			user.setNickname(userName);
+    	    			user.setGender(userInfo.getGender() == 1 ? "男" : "女");
+    	    			user.setUserLevel("普通用户");
+    	    			user.setStatus("可用");
+    	    			user.setAddTime(LocalDateTime.now());
+    	    			user.setLastLoginTime(LocalDateTime.now());
+    	    			user.setLastLoginIp(IpUtil.client(request));
+    	    			user.setDistributionPartner(false);
+    	    			
+    	    			user.setMemberId(getSerialNumber());
+    	    			//我的推荐人
+    	    			if(referrerId != null && !referrerId.equals("")) {
+    	    				LitemallUser litemallUser = userService.findById(Integer.valueOf(referrerId));
+    	    				if(litemallUser != null)
+    	    					user.setpId(litemallUser.getId());
+    	    			}
+    	    			userService.add(user);
+    	    		} else {
+    	    			if(StringUtils.isBlank(user.getMemberId())) {
+    	    				user.setMemberId(getSerialNumber());
+    	    			}
+    	    			user.setAvatar(userInfo.getAvatarUrl());
+    	    			user.setUsername(userName);
+    	    			user.setNickname(userName);
+    	    			user.setUnionid(unionid);
+    	    			user.setLastLoginTime(LocalDateTime.now());
+    	    			user.setLastLoginIp(IpUtil.client(request));
+    	    			userService.update(user);
+    	    			if("禁用".equals(user.getStatus())) {
+    	    				return ResponseUtil.fail(-2, "该用户已被禁用！");
+    	    			}
+    	    		}
+    	    		
+    	    		// token
+    	    		UserToken userToken = UserTokenManager.generateToken(user.getId());
+    	    		
+    	    		Map<Object, Object> result = new HashMap<Object, Object>();
+    	    		result.put("isDistributionPartner", user.getDistributionPartner());
+    	    		result.put("userId", user.getId());
+    	    		result.put("token", userToken.getToken());
+    	    		result.put("tokenExpire", userToken.getExpireTime().toString());
+    	    		result.put("userInfo", user);
+    	    		return ResponseUtil.ok(result);
+    				
     			}
     		}
+
+    	
     		
-    		// token
-    		UserToken userToken = UserTokenManager.generateToken(user.getId());
-    		
-    		Map<Object, Object> result = new HashMap<Object, Object>();
-    		result.put("isDistributionPartner", user.getDistributionPartner());
-    		result.put("userId", user.getId());
-    		result.put("token", userToken.getToken());
-    		result.put("tokenExpire", userToken.getExpireTime().toString());
-    		result.put("userInfo", user);
-    		return ResponseUtil.ok(result);
+    	
     	} catch (Exception e) {
     		logger.error("error : loginByWeixin --》  ");
     		logger.error(e);

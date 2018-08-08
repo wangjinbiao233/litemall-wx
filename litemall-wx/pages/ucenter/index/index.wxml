@@ -20,7 +20,11 @@
    </view>
     <view class="right" bindtap="windowchoose" data-statu="open">
         <image  class="img" src="../../../static/images/pfjc.png"></image>
-        <text class="text" >皮肤检测</text>
+        <text class="text" >4D娱乐检测</text>
+    </view>
+    <view class="right" bindtap="windowchooseProfessional" data-statu="open">
+        <image  class="img" src="../../../static/images/pfjc.png"></image>
+        <text class="text" >10D专业检测</text>
     </view>
   </view>
 

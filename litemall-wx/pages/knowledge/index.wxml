@@ -1,14 +1,14 @@
 <view class="knowledgeList">
   <view class="banner">
     <!-- <text class="banner-title">知识就是力量</text> -->
-    <image class="banner-img" src="/static/images/knowledgeBanner.png"></image>
+    <image mode='aspectFill' class="banner-img" src="/static/images/knowledgeBanner.png"></image>
   </view>
 
   <view class="knowledge-nav">
     <scroll-view scroll-x="true" class="knowledge-nav-body" scroll-left="{{scrollLeft}}">
       <view class="knowledge-nav-box">
         <view wx:for="{{kCategoryList}}" class="item {{item.id == kCategory ? 'active' : ''}}" wx:key="id" data-kcategoryid="{{item.id}}" data-index="{{index}}" bindtap="switchKnowledge">
-          <image class="knowledge-icon" src="/static/images/knCa_0{{index+1}}.png" background-size="cover"></image>
+          <image mode='aspectFill' class="knowledge-icon" src="{{item.bannerUrl}}"  background-size="cover"></image>
           <text class="name">{{item.name}}</text>
         </view>
       </view>
@@ -20,18 +20,18 @@
       <view class="knowledge-biati">
         <view class="knowledge-detailTitle">{{item.title}}</view>
         <view class="knowledge-detailcounts">
-          <image class="knpl" src="/static/images/pinglun.png"></image>
+          <image mode='aspectFill' class="knpl" src="/static/images/pinglun.png"></image>
           <text class="knowledge-plcount">{{item.commentCount}}</text>
-          <image wx:if="{{item.isShow==false}}" data-text="{{indexkid}}" class="knpl" src="/static/images/dianzan.png" bindtap="touchChange"></image>
-          <image wx:if="{{item.isShow==true}}" data-text="{{indexkid}}" class="knpl" src="/static/images/heart.png" bindtap="touchChange"></image>
+          <image mode='aspectFill' wx:if="{{item.isShow==false}}" data-text="{{indexkid}}" class="knpl" src="/static/images/dianzan.png" bindtap="touchChange"></image>
+          <image mode='aspectFill' wx:if="{{item.isShow==true}}" data-text="{{indexkid}}" class="knpl" src="/static/images/heart.png" bindtap="touchChange"></image>
           <text class="knowledge-plcount">{{item.praiseCount}}</text>
         </view>
       </view>
       <!-- <view class="knowledge-detailTitle">{{item.title}}</view> -->
       <navigator class="knowledge-item" url="/pages/knowledgeDetail/kdetail?id={{item.id}}">
         <view class="item-banner">
-          <image class="knowledge-img" src="{{item.titlePicUrl}}"></image>
-          <view class="konwledge-title">{{item.title}}</view>
+          <image mode='aspectFill' class="knowledge-img" src="{{item.titlePicUrl}}"></image>
+          <!-- <view class="konwledge-title">{{item.title}}</view> -->
         </view>
         <view class="knowledge-text">{{item.introduction}}</view>
       </navigator>

@@ -34,6 +34,7 @@ import org.linlinjava.litemall.db.service.LitemallRechargeService;
 import org.linlinjava.litemall.db.service.LitemallRegionService;
 import org.linlinjava.litemall.db.service.LitemallReserveService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
+import org.linlinjava.litemall.db.service.WmwImgMedicalAnalyseService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
 import org.linlinjava.litemall.db.util.OrderHandleOption;
 import org.linlinjava.litemall.db.util.OrderUtil;
@@ -111,6 +112,11 @@ public class WxOrderController {
     
 	@Autowired
 	private LitemallRechargeService litemallRechargeService;
+	
+	@Autowired
+	private WmwImgMedicalAnalyseService wmwimgMedicalAanalyseService;
+	
+	
 	
 	public WxOrderController() {
 	}
@@ -325,6 +331,7 @@ public class WxOrderController {
 		if(reserveId != null) {
 			litemallReserve = litemallReserveService.selectById(reserveId);
 		}
+		
 		Map<String, Object> result = new HashMap<>();
 		result.put("orderInfo", orderVo);
 		result.put("litemallReserve", litemallReserve);

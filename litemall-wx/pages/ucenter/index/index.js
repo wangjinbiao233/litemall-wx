@@ -220,6 +220,11 @@ Page({
       let currentStatu = e.currentTarget.dataset.statu;
       that.yz_util(currentStatu);
   },
+  windowchooseProfessional:function(e){
+    wx.navigateTo({
+      url: '../windowchooseProfessional/windowchooseProfessional',
+    })
+  },
   chooseImages: function (e) {
       let that = this;
       that.yz_util('close');

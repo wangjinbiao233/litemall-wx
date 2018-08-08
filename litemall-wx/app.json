@@ -60,7 +60,8 @@
     "pages/takePhoto/friend",
     "pages/ucenter/rechargeIndex/rechargeIndex",
     "pages/ucenter/distributionApply/distributionApply",
-    "pages/searchGoods/searchGoods"
+    "pages/searchGoods/searchGoods",
+    "pages/ucenter/windowchooseProfessional/windowchooseProfessional"
   ],
   "window": {
     "backgroundTextStyle": "dark",

@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.WmwImgMedicalAnalyseMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.WmwImgMedicalAnalyse" >
+    <id column="analyse_id" property="analyseId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="phone_version" property="phoneVersion" jdbcType="VARCHAR" />
+    <result column="platform_analyse_id" property="platformAnalyseId" jdbcType="INTEGER" />
+    <result column="face_type" property="faceType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    analyse_id, user_id, shop_id, merchant_id, create_time, status, type, phone_version, 
+    platform_analyse_id, face_type
+  </sql>
+  
+  <select id="selectWmwByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from wmw_img_medical_analyse
+    where analyse_id = #{analyseId,jdbcType=INTEGER}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from wmw_img_medical_analyse
+    where analyse_id = #{analyseId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.WmwImgMedicalAnalyse" >
+    insert into wmw_img_medical_analyse (analyse_id, user_id, shop_id, 
+      merchant_id, create_time, status, 
+      type, phone_version, platform_analyse_id, 
+      face_type)
+    values (#{analyseId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, 
+      #{merchantId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{phoneVersion,jdbcType=VARCHAR}, #{platformAnalyseId,jdbcType=INTEGER}, 
+      #{faceType,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.WmwImgMedicalAnalyse" >
+    insert into wmw_img_medical_analyse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="analyseId != null" >
+        analyse_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="phoneVersion != null" >
+        phone_version,
+      </if>
+      <if test="platformAnalyseId != null" >
+        platform_analyse_id,
+      </if>
+      <if test="faceType != null" >
+        face_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="analyseId != null" >
+        #{analyseId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="phoneVersion != null" >
+        #{phoneVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platformAnalyseId != null" >
+        #{platformAnalyseId,jdbcType=INTEGER},
+      </if>
+      <if test="faceType != null" >
+        #{faceType,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.WmwImgMedicalAnalyse" >
+    update wmw_img_medical_analyse
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="phoneVersion != null" >
+        phone_version = #{phoneVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="platformAnalyseId != null" >
+        platform_analyse_id = #{platformAnalyseId,jdbcType=INTEGER},
+      </if>
+      <if test="faceType != null" >
+        face_type = #{faceType,jdbcType=INTEGER},
+      </if>
+    </set>
+    where analyse_id = #{analyseId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.WmwImgMedicalAnalyse" >
+    update wmw_img_medical_analyse
+    set user_id = #{userId,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      merchant_id = #{merchantId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      phone_version = #{phoneVersion,jdbcType=VARCHAR},
+      platform_analyse_id = #{platformAnalyseId,jdbcType=INTEGER},
+      face_type = #{faceType,jdbcType=INTEGER}
+    where analyse_id = #{analyseId,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="selectWmwImgMedicalAnalyList" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT * FROM (
+		SELECT
+		aus.create_time createDate,
+		aus.face_type faceType,
+		ws.shop_name shopName,
+		wcu.open_id wxOpenId,
+		wcu.mobile mobile,
+		wcu.weixin_nick_name wxNickName,
+		wcu.gender gender,
+		wcu.birthday birthday,
+		wcu.icon icon,
+		aus.user_id userId,
+		aus.analyse_id analyseId,
+		wias.score0 score0,
+		wias.score1 score1,
+		wias.score2 score2,
+		wias.score3 score3,
+		wias.score4 score4,
+		wias.score5 score5,
+		wias.score6 score6,
+		wias.score7 score7,
+		wias.score8 score8,
+		wias.score9 score9,
+		wias.score10 score10,
+		wias.score11 score11,
+		wias.score12 score12,
+		wias.score13 score13,
+		wias.score14 score14,
+		imas.source_img0 sourceImg0,
+		imas.source_img1 sourceImg1,
+		imas.source_img2 sourceImg2,
+		imas.source_img3 sourceImg3,
+		imas.source_img4 sourceImg4,
+		imas.source_img5 sourceImg5,
+		imas.source_img6 sourceImg6,
+		imas.source_img7 sourceImg7,
+		imas.source_img8 sourceImg8,
+		imas.source_img9 sourceImg9,
+		imas.source_img10 sourceImg10,
+		imas.source_img11 sourceImg11,
+		iao.original_zrg_img originalZrg,
+		iao.original_bp_img originalBp,
+		iao.original_zp_img originalZp,
+		iao.original_yg_img originalYg,
+		zo.zero_zrg_img zeroZrg,
+		zo.zero_bp_img zeroBp,
+		zo.zero_zp_img zeroZp,
+		zo.zero_yg_img zeroYg,
+		zo.zero_brown_img zeroBrown,
+		zo.zero_red_img zeroRed,
+		zo.zero_uv_img zeroUv,
+		 <!--mk.image_red imageRed,
+		mk.image_green imageGreen,
+		mk.image_blue imageBlue,
+		mk.image_black imageBlack,
+		mk.image_white imageWhite,
+		mk.image_gray imageGray, -->
+		ias.small_zrg_img AS thumbZrg,
+		ias.small_bp_img AS thumbBp,
+		ias.small_zp_img AS thumbZp,
+		ias.small_yg_img AS thumbYg,
+		ss.source_small_img3 AS thumbUv,
+		ss.source_small_img11 AS thumbRed,
+		ss.source_small_img5 AS thumbBrown
+		FROM
+		(
+		SELECT * FROM(
+		    SELECT
+		    wia.analyse_id,
+		    wia.user_id,
+		    wia.shop_id,
+		    wia.create_time,
+		    wia.face_type
+		    FROM
+		    (
+		    SELECT DISTINCT
+		    ia.user_id
+		    FROM
+		    wmw_shop sh
+		    INNER JOIN wmw_img_medical_analyse ia ON sh.id = ia.shop_id
+		    <!--WHERE  sh.merchant_id =  #{merchantId}  -->
+		    ) dia
+		    INNER JOIN wmw_img_medical_analyse wia ON dia.user_id = wia.user_id
+		    INNER JOIN wmw_shop ws ON ws.id = wia.shop_id
+		    AND wia. STATUS = 0 AND wia.type = 3
+		     <!--AND ws.merchant_id = #{merchantId}-->
+		    ORDER BY wia.create_time DESC
+		    ) ausc GROUP BY ausc.user_id
+		) aus
+		LEFT JOIN wmw_img_medical_analyse_score wias ON aus.analyse_id = wias.analyse_id
+		LEFT JOIN wmw_client_user wcu ON aus.user_id = wcu.id
+		LEFT JOIN wmw_shop ws ON aus.shop_id = ws.id
+		LEFT JOIN wmw_img_medical_analyse_zero zo ON zo.analyse_id = aus.analyse_id
+		 <!-- LEFT JOIN wmw_img_medical_analyse_mark mk ON mk.analyse_id = aus.analyse_id -->
+		LEFT JOIN wmw_img_medical_analyse_small ias ON ias.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+		
+		where  1 = 1
+		
+	   <if test="mobile != null" >
+         and wcu.mobile = #{mobile,jdbcType=INTEGER}
+       </if>
+		
+	) aaa ORDER BY createDate DESC
+
+  </select>
+  
+  <select id="selectWmwImgMedicalAnalyDetailList" resultType="java.util.Map" parameterType="java.util.Map" >
+	SELECT * FROM (
+		SELECT
+		aus.create_time createDate,
+		aus.face_type faceType,
+		ws.shop_name shopName,
+		wcu.open_id wxOpenId,
+		wcu.mobile mobile,
+		wcu.weixin_nick_name wxNickName,
+		wcu.gender gender,
+		wcu.birthday birthday,
+		wcu.icon icon,
+		aus.user_id userId,
+		aus.analyse_id analyseId,
+		wias.score0 score0,
+		wias.score1 score1,
+		wias.score2 score2,
+		wias.score3 score3,
+		wias.score4 score4,
+		wias.score5 score5,
+		wias.score6 score6,
+		wias.score7 score7,
+		wias.score8 score8,
+		wias.score9 score9,
+		wias.score10 score10,
+		wias.score11 score11,
+		wias.score12 score12,
+		wias.score13 score13,
+		wias.score14 score14,
+		imas.source_img0 sourceImg0,
+		imas.source_img1 sourceImg1,
+		imas.source_img2 sourceImg2,
+		imas.source_img3 sourceImg3,
+		imas.source_img4 sourceImg4,
+		imas.source_img5 sourceImg5,
+		imas.source_img6 sourceImg6,
+		imas.source_img7 sourceImg7,
+		imas.source_img8 sourceImg8,
+		imas.source_img9 sourceImg9,
+		imas.source_img10 sourceImg10,
+		imas.source_img11 sourceImg11,
+		iao.original_zrg_img originalZrg,
+		iao.original_bp_img originalBp,
+		iao.original_zp_img originalZp,
+		iao.original_yg_img originalYg,
+		zo.zero_zrg_img zeroZrg,
+		zo.zero_bp_img zeroBp,
+		zo.zero_zp_img zeroZp,
+		zo.zero_yg_img zeroYg,
+		zo.zero_brown_img zeroBrown,
+		zo.zero_red_img zeroRed,
+		zo.zero_uv_img zeroUv,	
+		ias.small_zrg_img AS thumbZrg,
+		ias.small_bp_img AS thumbBp,
+		ias.small_zp_img AS thumbZp,
+		ias.small_yg_img AS thumbYg,
+		ss.source_small_img3 AS thumbUv,
+		ss.source_small_img11 AS thumbRed,
+		ss.source_small_img5 AS thumbBrown
+		FROM
+		(
+		SELECT * FROM(
+		    SELECT
+		    wia.analyse_id,
+		    wia.user_id,
+		    wia.shop_id,
+		    wia.create_time,
+		    wia.face_type
+		    FROM
+		    (
+		    SELECT DISTINCT
+		    ia.user_id
+		    FROM
+		    wmw_shop sh
+		    INNER JOIN wmw_img_medical_analyse ia ON sh.id = ia.shop_id		 	  
+		    ) dia
+		    INNER JOIN wmw_img_medical_analyse wia ON dia.user_id = wia.user_id
+		    INNER JOIN wmw_shop ws ON ws.id = wia.shop_id
+		    AND wia. STATUS = 0 AND wia.type = 3
+		    
+		    ORDER BY wia.create_time DESC
+		    ) ausc 
+		) aus
+		LEFT JOIN wmw_img_medical_analyse_score wias ON aus.analyse_id = wias.analyse_id
+		LEFT JOIN wmw_client_user wcu ON aus.user_id = wcu.id
+		LEFT JOIN wmw_shop ws ON aus.shop_id = ws.id
+		LEFT JOIN wmw_img_medical_analyse_zero zo ON zo.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_small ias ON ias.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+		
+		where  1 = 1
+		
+	   <if test="userId != null" >
+         and wcu.id = #{userId,jdbcType=INTEGER}
+       </if>
+		
+	) aaa ORDER BY createDate DESC
+
+  </select>
+  
+  <select id="selectWmwImgMedicalAnalyCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+	SELECT count(*) FROM (
+		SELECT
+		aus.create_time createDate,
+		aus.face_type faceType,
+		ws.shop_name shopName,
+		wcu.open_id wxOpenId,
+		wcu.mobile mobile,
+		wcu.weixin_nick_name wxNickName,
+		wcu.gender gender,
+		wcu.birthday birthday,
+		wcu.icon icon,
+		aus.user_id userId,
+		aus.analyse_id analyseId,
+		wias.score0 score0,
+		wias.score1 score1,
+		wias.score2 score2,
+		wias.score3 score3,
+		wias.score4 score4,
+		wias.score5 score5,
+		wias.score6 score6,
+		wias.score7 score7,
+		wias.score8 score8,
+		wias.score9 score9,
+		wias.score10 score10,
+		wias.score11 score11,
+		wias.score12 score12,
+		wias.score13 score13,
+		wias.score14 score14,
+		imas.source_img0 sourceImg0,
+		imas.source_img1 sourceImg1,
+		imas.source_img2 sourceImg2,
+		imas.source_img3 sourceImg3,
+		imas.source_img4 sourceImg4,
+		imas.source_img5 sourceImg5,
+		imas.source_img6 sourceImg6,
+		imas.source_img7 sourceImg7,
+		imas.source_img8 sourceImg8,
+		imas.source_img9 sourceImg9,
+		imas.source_img10 sourceImg10,
+		imas.source_img11 sourceImg11,
+		iao.original_zrg_img originalZrg,
+		iao.original_bp_img originalBp,
+		iao.original_zp_img originalZp,
+		iao.original_yg_img originalYg,
+		zo.zero_zrg_img zeroZrg,
+		zo.zero_bp_img zeroBp,
+		zo.zero_zp_img zeroZp,
+		zo.zero_yg_img zeroYg,
+		zo.zero_brown_img zeroBrown,
+		zo.zero_red_img zeroRed,
+		zo.zero_uv_img zeroUv,
+		 <!--mk.image_red imageRed,
+		mk.image_green imageGreen,
+		mk.image_blue imageBlue,
+		mk.image_black imageBlack,
+		mk.image_white imageWhite,
+		mk.image_gray imageGray, -->
+		ias.small_zrg_img AS thumbZrg,
+		ias.small_bp_img AS thumbBp,
+		ias.small_zp_img AS thumbZp,
+		ias.small_yg_img AS thumbYg,
+		ss.source_small_img3 AS thumbUv,
+		ss.source_small_img11 AS thumbRed,
+		ss.source_small_img5 AS thumbBrown
+		FROM
+		(
+		SELECT * FROM(
+		    SELECT
+		    wia.analyse_id,
+		    wia.user_id,
+		    wia.shop_id,
+		    wia.create_time,
+		    wia.face_type
+		    FROM
+		    (
+		    SELECT DISTINCT
+		    ia.user_id
+		    FROM
+		    wmw_shop sh
+		    INNER JOIN wmw_img_medical_analyse ia ON sh.id = ia.shop_id
+		    <!--WHERE  sh.merchant_id =  #{merchantId}  -->
+		    ) dia
+		    INNER JOIN wmw_img_medical_analyse wia ON dia.user_id = wia.user_id
+		    INNER JOIN wmw_shop ws ON ws.id = wia.shop_id
+		    AND wia. STATUS = 0 AND wia.type = 3
+		     <!-- AND ws.merchant_id = #{merchantId} -->
+		    ORDER BY wia.create_time DESC
+		    ) ausc GROUP BY ausc.user_id
+		) aus
+		LEFT JOIN wmw_img_medical_analyse_score wias ON aus.analyse_id = wias.analyse_id
+		LEFT JOIN wmw_client_user wcu ON aus.user_id = wcu.id
+		LEFT JOIN wmw_shop ws ON aus.shop_id = ws.id
+		LEFT JOIN wmw_img_medical_analyse_zero zo ON zo.analyse_id = aus.analyse_id
+		 <!-- LEFT JOIN wmw_img_medical_analyse_mark mk ON mk.analyse_id = aus.analyse_id -->
+		LEFT JOIN wmw_img_medical_analyse_small ias ON ias.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+		
+		
+		where  1 = 1
+		
+	   <if test="mobile != null" >
+         and wcu.mobile = #{mobile,jdbcType=INTEGER}
+       </if>
+		
+	) aaa ORDER BY createDate DESC
+
+  </select>
+  
+   <select id="selectWmwImgMedicalAnalyDetailCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+	SELECT count(*) FROM (
+		SELECT
+		aus.create_time createDate,
+		aus.face_type faceType,
+		ws.shop_name shopName,
+		wcu.open_id wxOpenId,
+		wcu.mobile mobile,
+		wcu.weixin_nick_name wxNickName,
+		wcu.gender gender,
+		wcu.birthday birthday,
+		wcu.icon icon,
+		aus.user_id userId,
+		aus.analyse_id analyseId,
+		wias.score0 score0,
+		wias.score1 score1,
+		wias.score2 score2,
+		wias.score3 score3,
+		wias.score4 score4,
+		wias.score5 score5,
+		wias.score6 score6,
+		wias.score7 score7,
+		wias.score8 score8,
+		wias.score9 score9,
+		wias.score10 score10,
+		wias.score11 score11,
+		wias.score12 score12,
+		wias.score13 score13,
+		wias.score14 score14,
+		imas.source_img0 sourceImg0,
+		imas.source_img1 sourceImg1,
+		imas.source_img2 sourceImg2,
+		imas.source_img3 sourceImg3,
+		imas.source_img4 sourceImg4,
+		imas.source_img5 sourceImg5,
+		imas.source_img6 sourceImg6,
+		imas.source_img7 sourceImg7,
+		imas.source_img8 sourceImg8,
+		imas.source_img9 sourceImg9,
+		imas.source_img10 sourceImg10,
+		imas.source_img11 sourceImg11,
+		iao.original_zrg_img originalZrg,
+		iao.original_bp_img originalBp,
+		iao.original_zp_img originalZp,
+		iao.original_yg_img originalYg,
+		zo.zero_zrg_img zeroZrg,
+		zo.zero_bp_img zeroBp,
+		zo.zero_zp_img zeroZp,
+		zo.zero_yg_img zeroYg,
+		zo.zero_brown_img zeroBrown,
+		zo.zero_red_img zeroRed,
+		zo.zero_uv_img zeroUv,	
+		ias.small_zrg_img AS thumbZrg,
+		ias.small_bp_img AS thumbBp,
+		ias.small_zp_img AS thumbZp,
+		ias.small_yg_img AS thumbYg,
+		ss.source_small_img3 AS thumbUv,
+		ss.source_small_img11 AS thumbRed,
+		ss.source_small_img5 AS thumbBrown
+		FROM
+		(
+		SELECT * FROM(
+		    SELECT
+		    wia.analyse_id,
+		    wia.user_id,
+		    wia.shop_id,
+		    wia.create_time,
+		    wia.face_type
+		    FROM
+		    (
+		    SELECT DISTINCT
+		    ia.user_id
+		    FROM
+		    wmw_shop sh
+		    INNER JOIN wmw_img_medical_analyse ia ON sh.id = ia.shop_id		 	  
+		    ) dia
+		    INNER JOIN wmw_img_medical_analyse wia ON dia.user_id = wia.user_id
+		    INNER JOIN wmw_shop ws ON ws.id = wia.shop_id
+		    AND wia. STATUS = 0 AND wia.type = 3
+		    
+		    ORDER BY wia.create_time DESC
+		    ) ausc 
+		) aus
+		LEFT JOIN wmw_img_medical_analyse_score wias ON aus.analyse_id = wias.analyse_id
+		LEFT JOIN wmw_client_user wcu ON aus.user_id = wcu.id
+		LEFT JOIN wmw_shop ws ON aus.shop_id = ws.id
+		LEFT JOIN wmw_img_medical_analyse_zero zo ON zo.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_small ias ON ias.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+		
+		where  1 = 1
+		
+	   <if test="userId != null" >
+         and wcu.id = #{userId,jdbcType=INTEGER}
+       </if>
+		
+	) aaa ORDER BY createDate DESC
+
+  </select>
+  
+</mapper>

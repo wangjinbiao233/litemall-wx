@@ -32,7 +32,7 @@ Page({
       userId:wx.getStorageSync('userId')
     },'POST').then(function (res) {
       if (res.errno === 0) {
-        console.log(res.data);    
+        console.log(res.data);       
         that.setData({
           orderInfo: res.data.orderInfo,        
           orderGoods: res.data.orderGoods,
