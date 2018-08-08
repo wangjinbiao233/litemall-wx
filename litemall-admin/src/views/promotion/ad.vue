@@ -92,8 +92,31 @@
           </el-select>
         </el-form-item>        
         <el-form-item label="活动链接" prop="link">
-          <el-input v-model="dataForm.link"></el-input>
+          <!--<el-input v-model="dataForm.link"></el-input>-->
+          <el-select clearable v-model="dataForm.link" placeholder="请选择活动链接"  @change="onSelectedLinkFlag($event, item)">
+            <el-option
+              v-for="item in advertisingLinkList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
+
+        <el-form-item label="优惠券类别" v-show="discountVisible">
+          <el-select clearable v-model="dataForm.linkDetailid" placeholder="请选择优惠券类别" >
+            <el-option
+              v-for="item in couponsTypeList"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="活动内容编号" v-show="nocodeVisible">
+          <el-input v-model="dataForm.linkDetailid"  placeholder="请填写活动链接对用的内容编号" ></el-input>
+        </el-form-item>
+        
         <el-form-item label="是否启用" prop="enabled">
           <el-select v-model="dataForm.enabled" placeholder="请选择">
             <el-option label="启用" :value="true">
@@ -129,7 +152,7 @@
 </style>
 
 <script>
-import { listAd, createAd, updateAd, deleteAd } from '@/api/ad'
+import { listAd, createAd, updateAd, deleteAd, getDictionaryTypeList } from '@/api/ad'
 import { createStorage } from '@/api/storage'
 import waves from '@/directive/waves' // 水波纹指令
 
@@ -157,7 +180,8 @@ export default {
         url: undefined,
         link: undefined,
         position: 1,
-        enabled: true
+        enabled: true,
+        linkDetailid: undefined
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -171,11 +195,17 @@ export default {
         url: [{ required: true, message: '广告链接不能为空', trigger: 'blur' }]
       },
       fileImgUrl: process.env.BASE_API + '/storage/uploadPic',
-      downloadLoading: false
+      downloadLoading: false,
+      advertisingLinkList: undefined,
+      couponsTypeList: undefined,
+      discountVisible: false,
+      nocodeVisible: false
     }
   },
   created() {
     this.getList()
+    this.getAdvertisingLinkList()
+    this.getCouponsTypeList()
   },
   methods: {
     getList() {
@@ -190,6 +220,37 @@ export default {
         this.listLoading = false
       })
     },
+
+    getAdvertisingLinkList(){
+      getDictionaryTypeList({
+        groupCode: 'advertising_link'
+      }).then(response => {
+        this.advertisingLinkList = response.data.data
+      }).catch(() => {
+        this.advertisingLinkList = []
+      })
+    },
+    
+    getCouponsTypeList(){
+      getDictionaryTypeList({
+        groupCode: 'coupons_type'
+      }).then(response => {
+        this.couponsTypeList = response.data.data
+      }).catch(() => {
+        this.couponsTypeList = []
+      })
+    },
+
+    onSelectedLinkFlag(val) {
+      if(val == 5){//优惠券类别
+        this.discountVisible = true;
+        this.nocodeVisible = false;
+      }else{//编号类型
+        this.discountVisible = false;
+        this.nocodeVisible = true;
+      }
+    },
+
     handleFilter() {
       this.listQuery.page = 1
       this.getList()
