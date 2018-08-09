@@ -173,7 +173,7 @@ export const asyncRouterMap = [
     ]
   },
   {
-    path: '/promotion ',
+    path: '/promotion',
     component: Layout,
     redirect: 'noredirect',
     name: 'promotionManage',
