@@ -5,13 +5,13 @@ import java.util.Date;
 public class LitemallDictionary {
     private Integer id;
 
-    private String groupCode;
+    private String groupCode;//组编号
 
-    private String groupName;
+    private String groupName;//组名称
 
-    private String name;
+    private String name;//名称
 
-    private String value;
+    private String value;//值
 
     private String seqNo;
 

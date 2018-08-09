@@ -34,7 +34,7 @@
       <el-table-column align="center" min-width="50px" label="广告位置" prop="position">
       </el-table-column>
 
-      <el-table-column align="center" min-width="200px" label="活动链接" prop="link">
+      <el-table-column align="center" min-width="200px" label="活动链接" prop="linkName">
       </el-table-column>
 
       <el-table-column align="center" min-width="80px" label="是否启用" prop="enabled">
@@ -69,7 +69,7 @@
         </el-form-item>
 
         <el-form-item label="广告图片" prop="url">
-          <el-tooltip content="建议图片规格：750*490 宽高比2:1" placement="top-start">
+          <el-tooltip content="建议图片规格：375*208" placement="top-start">
             <el-upload 
               class="ad-avatar-uploader"
               v-model="dataForm.url"
@@ -95,10 +95,10 @@
           <!--<el-input v-model="dataForm.link"></el-input>-->
           <el-select clearable v-model="dataForm.link" placeholder="请选择活动链接"  @change="onSelectedLinkFlag($event, item)">
             <el-option
-              v-for="item in advertisingLinkList"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
+              v-for="infos in advertisingLinkList"
+              :key="infos.codeid"
+              :label="infos.name"
+              :value="infos.codeid">
             </el-option>
           </el-select>
         </el-form-item>
@@ -107,14 +107,14 @@
           <el-select clearable v-model="dataForm.linkDetailid" placeholder="请选择优惠券类别" >
             <el-option
               v-for="item in couponsTypeList"
-              :key="item.id"
+              :key="item.codeid"
               :label="item.name"
-              :value="item.id">
+              :value="item.codeid">
             </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="活动内容编号" v-show="nocodeVisible">
-          <el-input v-model="dataForm.linkDetailid"  placeholder="请填写活动链接对用的内容编号" ></el-input>
+          <el-input v-model="dataForm.linkDetailid"  placeholder="请填写活动链接所选的链接内容编号" ></el-input>
         </el-form-item>
         
         <el-form-item label="是否启用" prop="enabled">
@@ -242,13 +242,19 @@ export default {
     },
 
     onSelectedLinkFlag(val) {
-      if(val == 5){//优惠券类别
-        this.discountVisible = true;
-        this.nocodeVisible = false;
-      }else{//编号类型
-        this.discountVisible = false;
-        this.nocodeVisible = true;
+      if(val!=""){
+          if(val == 5){//优惠券类别
+            this.discountVisible = true;
+            this.nocodeVisible = false;
+          }else{//编号类型
+            this.discountVisible = false;
+            this.nocodeVisible = true;
+          }
+      }else{
+          this.discountVisible = false;
+          this.nocodeVisible = false;
       }
+      
     },
 
     handleFilter() {
@@ -276,6 +282,8 @@ export default {
     },
     handleCreate() {
       this.resetForm()
+      this.discountVisible = false;
+      this.nocodeVisible = false;
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
@@ -307,8 +315,16 @@ export default {
         }
       })
     },
-    handleUpdate(row) {
+    handleUpdate(row) {//修改页面
       this.dataForm = Object.assign({}, row)
+      if(this.dataForm.link == '5'){//优惠券类别
+        this.discountVisible = true;
+        this.nocodeVisible = false;
+      }else{//编号类型
+        this.discountVisible = false;
+        this.nocodeVisible = true;
+      }
+      
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
