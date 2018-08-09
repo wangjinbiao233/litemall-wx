@@ -51,6 +51,7 @@
     height:100rpx;
     width:100rpx;
     margin:0rpx 40rpx
+    
 }
 .knowledge-nav .item .name{
     display: block;    
