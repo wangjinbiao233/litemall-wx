@@ -1,6 +1,6 @@
 <wxs src="../tools.wxs" module="comtools" />
 <view class='tenD' bindtap='toTenD'>
-  <text>10D专业检测</text>
+  <text>因环境差异，线下门店可体验更精准的10D测肤</text>
   <text>></text>
 </view>
 <view class="history">
