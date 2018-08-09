@@ -30,10 +30,10 @@ public class WxDiscountController {
      * @return
      */
     @RequestMapping("selectByKeyAndNameGroypBy")
-    public Object selectByKeyAndNameGroypBy(String key, String discountName, String userId,@RequestParam(value = "page", defaultValue = "1") Integer page,
+    public Object selectByKeyAndNameGroypBy(String key, String discountName, String userId,String discountType,@RequestParam(value = "page", defaultValue = "1") Integer page,
                                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
 
-        Map<String, Object> map = litemallDiscountService.selectByKeyAndNameGroypBy(key, discountName, userId,page, size);
+        Map<String, Object> map = litemallDiscountService.selectByKeyAndNameGroypBy(key, discountName, userId,page, size,discountType);
 
         return ResponseUtil.ok(map);
     }

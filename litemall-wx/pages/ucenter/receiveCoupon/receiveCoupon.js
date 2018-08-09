@@ -11,7 +11,7 @@ Page({
   data: {
     allCouponList: '',
     userId: wx.getStorageSync('userId'),
-    currentIndex: 1
+    currentIndex: 1,
   },
   receiveCoupon: function (e) {
     var that = this
@@ -70,7 +70,8 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    getAllCoupon(this.data.userId).then((res) => {
+    var discountType = options.id;   
+    getAllCoupon(this.data.userId, discountType).then((res) => {
       console.log(res)
       var tiems = res.data.items;
       that.setData({
@@ -159,10 +160,11 @@ Page({
     })
   }
 })
-function getAllCoupon(userId) {
+function getAllCoupon(userId,discountType) {
   return new Promise(function (resolve, reject) {
     var data = {
       userId: userId,
+      discountType:discountType,
       page: 1,
       size: 10
     }

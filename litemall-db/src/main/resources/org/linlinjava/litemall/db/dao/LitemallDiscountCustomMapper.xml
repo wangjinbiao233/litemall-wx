@@ -74,6 +74,11 @@
         <if test="key != null">
             AND `key` = #{key,jdbcType=VARCHAR}
         </if>
+        
+        <if test="discountType != null">
+            AND `li.discount_type` = #{discountType,jdbcType=VARCHAR}
+        </if>
+        
         <if test="discountName != null">
             AND discount_name LIKE concat(concat('%',#{discountName,jdbcType=VARCHAR}),'%')
         </if>

@@ -53,6 +53,11 @@ Page({
     // 页面关闭
 
   },
+  toTenD:function(e){
+    wx.navigateTo({
+      url: '../ucenter/windowchooseProfessional/windowchooseProfessional',
+    })
+  },
   navigateToPage: function (e) {
       let id = e.currentTarget.dataset.text;
       wx.navigateTo({

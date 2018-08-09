@@ -1,4 +1,8 @@
 <wxs src="../tools.wxs" module="comtools" />
+<view class='tenD' bindtap='toTenD'>
+  <text>10D专业检测</text>
+  <text>></text>
+</view>
 <view class="history">
 <view class="tiao"   wx:for="{{allList}}" wx:key="id">
 <view bindtap="navigateToPage" data-text="{{item.id}}">

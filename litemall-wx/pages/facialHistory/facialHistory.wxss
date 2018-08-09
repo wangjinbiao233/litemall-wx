@@ -1,3 +1,18 @@
+.tenD{
+  height: 80rpx;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+
+.tenD text{
+  font-size: 30rpx;
+  color: #999999;
+}
+
 .history{
     width: 100%;
     height: auto;

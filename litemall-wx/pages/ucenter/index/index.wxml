@@ -20,12 +20,12 @@
     </view>
    <view class="left" bindtap="navigateToPages">
         <image class="img" src="../../../static/images/pfjl.png"></image>
-        <text class="text" >基础检测记录</text>
+        <text class="text" >检测记录</text>
    </view>   
-    <view class="right" bindtap="windowchooseProfessional" data-statu="open">
+    <!-- <view class="right" bindtap="windowchooseProfessional" data-statu="open">
         <image  class="img" src="../../../static/images/pfjl.png"></image>
         <text class="text" >专业检测记录</text>
-    </view>
+    </view> -->
   </view>
 
   <view class="order user-bb">

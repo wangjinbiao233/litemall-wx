@@ -109,6 +109,7 @@
     </if>
     <include refid="Base_Column_List" />
     ,(select dn.`name` from litemall_dictionary dn where dn.group_code='advertising_link' and dn.id=link) as "linkName"
+    ,(select dn.`value` from litemall_dictionary dn where dn.group_code='advertising_link' and dn.id=link) as "linkValue"
     from litemall_ad 
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />

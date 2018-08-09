@@ -1,18 +1,17 @@
 package org.linlinjava.litemall.db.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.linlinjava.litemall.db.domain.LitemallCustomDiscount;
-import org.linlinjava.litemall.db.domain.LitemallDiscount;
-
-import java.math.BigDecimal;
-import java.util.List;
 
 public interface LitemallDiscountCustomMapper {
 
 
     List<LitemallCustomDiscount> selectByDiscountNameGroypBy(LitemallCustomDiscount discount);
 
-    List<LitemallCustomDiscount> selectByKeyAndNameGroypBy(@Param("key") String key,@Param("discountName") String discountName,@Param("userId") String userId);
+    List<LitemallCustomDiscount> selectByKeyAndNameGroypBy(@Param("key") String key,@Param("discountName") String discountName,@Param("userId") String userId
+    		,@Param("discountType") String discountType);
 
     List<LitemallCustomDiscount> selectUnusedByKey(@Param("key") String key);
 
