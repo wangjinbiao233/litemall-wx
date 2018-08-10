@@ -14,14 +14,16 @@
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <router-link ref='tag' :to="{path:'/mall/dictionaryCreate'}">
+      <!--
+      <router-link ref='tag' :to="{path:'/sys/dictionarysCreate'}">
         <el-button class="filter-item" type="primary" icon="el-icon-edit">添加</el-button>  
-      </router-link>    
+      </router-link> 
+      -->   
     </div>
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" width="100px" label="字典ID" prop="id" sortable>
+      <el-table-column align="center" width="50px" label="字典ID" prop="id" sortable>
       </el-table-column>
 
       <el-table-column align="center" min-width="200px" label="组编号" prop="groupCode">
@@ -32,10 +34,10 @@
       <el-table-column align="center" min-width="200px" label="字典名称" prop="name">
       </el-table-column>
 
-      <el-table-column align="center" min-width="400px" label="字典值" prop="value">
+      <el-table-column align="center" min-width="200px" label="字典值" prop="value">
       </el-table-column>      
 
-      <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
+      <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button type="danger" size="mini"  @click="handleDelete(scope.row)">删除</el-button>
@@ -81,7 +83,7 @@
 </template>
 
 <script>
-import { listDictionary } from '@/api/dictionary'
+import { listDictionary } from '@/api/dictionarys'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -129,7 +131,11 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
-      listIssue(this.listQuery).then(response => {
+      this.list = []
+        this.total = 0
+        this.listLoading = false
+    return;
+      listDictionary(this.listQuery).then(response => {
         this.list = response.data.data.items
         this.total = response.data.data.total
         this.listLoading = false
