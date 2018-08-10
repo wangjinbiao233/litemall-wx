@@ -43,8 +43,8 @@
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
       <template slot-scope="scope">
-      <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-      <el-button type="primary" size="mini" @click="downloadImg(scope.row)">下载二维码</el-button>
+      <el-button type="primary" @click="handleUpdate(scope.row)">编辑</el-button>
+      <el-button type="primary" @click="downloadImg(scope.row)">下载二维码</el-button>
       <!--<el-button type="danger" size="mini"  @click="handleDelete(scope.row)">删除</el-button>-->
       </template>
       </el-table-column>
