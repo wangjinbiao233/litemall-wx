@@ -69,7 +69,7 @@
         </el-form-item>
 
         <el-form-item label="广告图片" prop="url">
-          <el-tooltip content="建议图片规格：375*208" placement="top-start">
+          <el-tooltip content="建议图片规格：375*208 图片宽度扩大两倍，高度等比例扩大" placement="top-start">
             <el-upload 
               class="ad-avatar-uploader"
               v-model="dataForm.url"

@@ -139,7 +139,7 @@
         </el-form-item>-->
 
         <el-form-item label="分类页横幅" prop = "titlePicUrl" >
-          <el-tooltip content="建议图片宽高345*150" placement="top-start" style= "width:178px">
+          <el-tooltip content="建议图片宽高345*150 图片宽度扩大两倍，高度等比例扩大" placement="top-start" style= "width:178px">
             <el-upload v-model="dataForm.titlePicUrl"
               class="k-avatar-uploader"
               :action="fileImgUrl"

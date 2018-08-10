@@ -70,7 +70,7 @@
             </el-form-item>
 
             <el-form-item label="类目">
-              <el-select v-model="dataForm.categoryId" filterable placeholder="请选择">
+              <el-select clearable v-model="dataForm.categoryId" filterable placeholder="请选择">                
                 <el-option
                   v-for="item in categoryOptions"
                   :key="item.value"
@@ -121,7 +121,7 @@
                 <img v-if="dataForm.primaryPicUrl" :src="dataForm.primaryPicUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-              <span class="imgspefi">上传图片规格：356*450 </span>
+              <span class="imgspefi">上传图片规格：165*192 图片宽度扩大两倍，高度等比例扩大 </span>
               <span class="imgspefi">说明：首页中的商品图片</span>
             </el-form-item>
 
@@ -135,7 +135,7 @@
                 <img v-if="dataForm.listPicUrl" :src="dataForm.listPicUrl" class="avatar">
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-              <span class="imgspefi">上传图片规格：356*450 </span>
+              <span class="imgspefi">上传图片规格：165*192 图片宽度扩大两倍，高度等比例扩大 </span>
               <span class="imgspefi">说明：商城中的商品图片</span>
             </el-form-item>
       
@@ -155,7 +155,7 @@
                 :on-remove="handleRemove">
                 <i class="el-icon-plus"></i>
               </el-upload>
-              <span class="imgspefi">上传图片规格：750*430 </span>
+              <span class="imgspefi">上传图片规格：375*225 图片宽度扩大两倍，高度等比例扩大 </span>
             </el-form-item>
 
           </el-form>
@@ -386,6 +386,7 @@
         this.categoryOptions = response.data.data.items.map((item) => {
           return {value : item.id, label : item.name}
         })
+        this.categoryOptions.push({value: 0, label : '全部'});
       }).catch(() => {
         this.categoryOptions = []
       })
@@ -431,6 +432,7 @@
             this.categoryOptions = response.data.data.items.map((item) => {
               return {value : item.id, label : item.name}
             })
+            this.categoryOptions.push({value: 0, label : '全部'});
           }).catch(() => {
             this.categoryOptions = []
           })
