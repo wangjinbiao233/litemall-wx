@@ -64,7 +64,10 @@ public class LitemallGoodsService {
         LitemallGoodsExample.Criteria criteria = example.createCriteria();
 
         if(catId != null && catId != 0){
-            criteria.andCategoryIdEqualTo(catId);
+        	List<Integer> cavals = new ArrayList<Integer>();
+        	cavals.add(catId);
+        	cavals.add(0);
+        	criteria.andCategoryIdIn(cavals);
         }
         if(brandId != null){
             criteria.andBrandIdEqualTo(brandId);
@@ -95,9 +98,13 @@ public class LitemallGoodsService {
         LitemallGoodsExample example = new LitemallGoodsExample();
         LitemallGoodsExample.Criteria criteria = example.createCriteria();
 
-        if(catId != null){
-            criteria.andCategoryIdEqualTo(catId);
+        if(catId != null && catId != 0){
+        	List<Integer> cavals = new ArrayList<Integer>();
+        	cavals.add(catId);
+        	cavals.add(0);
+        	criteria.andCategoryIdIn(cavals);
         }
+        
         if(brandId != null){
             criteria.andBrandIdEqualTo(brandId);
         }
