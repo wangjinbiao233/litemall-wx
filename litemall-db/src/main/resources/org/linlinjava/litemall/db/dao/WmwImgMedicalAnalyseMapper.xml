@@ -163,7 +163,7 @@
   <select id="selectWmwImgMedicalAnalyList" resultType="java.util.Map" parameterType="java.util.Map" >
 	SELECT * FROM (
 		SELECT
-		aus.create_time createDate,
+	    date_format(aus.create_time,'%Y-%m-%d %H:%i:%s')  AS "createDate",
 		aus.face_type faceType,
 		ws.shop_name shopName,
 		wcu.open_id wxOpenId,
@@ -273,7 +273,7 @@
   <select id="selectWmwImgMedicalAnalyDetailList" resultType="java.util.Map" parameterType="java.util.Map" >
 	SELECT * FROM (
 		SELECT
-		aus.create_time createDate,
+		DATE_FORMAT(aus.create_time,'%Y-%m-%d %H:%i:%s')  AS "createDate",
 		aus.face_type faceType,
 		ws.shop_name shopName,
 		wcu.open_id wxOpenId,

@@ -43,31 +43,53 @@
       <el-table-column align="center" min-width="100px" label="朝向" prop="faceType"  :formatter="showFaceType" >
       </el-table-column>
 
-
       <el-table-column align="center" min-width="100px" label="自然光" prop="zeroZrg">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroZrg" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
-
       <el-table-column align="center" min-width="100px" label="表皮" prop="zeroBp">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroBp" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" min-width="100px" label="真皮" prop="zeroZp">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroZp" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" min-width="100px" label="荧光" prop="zeroYg">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroYg" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
