@@ -7,3 +7,5 @@ export function listDictionary(query) {
     params: query
   })
 }
+
+
