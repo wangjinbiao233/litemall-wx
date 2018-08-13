@@ -1,17 +1,21 @@
 <wxs src="../tools.wxs" module="comtools" />
 <view class='tenD' bindtap='toTenD'>
-  <text>因环境差异，线下门店可体验更精准的10D测肤</text>
-  <text>></text>
-</view>
+  <view class="Dleft">
+    <text style="font-size:30rpx;line-height:60px">更专业的10D测试，请关注线下门店 </text>     
+  </view>
+   <view  class="Dright">
+      <text class="goods-btn">报告查看</text>
+  </view>
+  </view>
 <view class="history">
-<view class="tiao"   wx:for="{{allList}}" wx:key="id">
-<view bindtap="navigateToPage" data-text="{{item.id}}">
-    <view class="left">{{item.score}}分</view>
-    <view class="right">
-    <text style="font-size:38rpx;line-height:60px;margin-left:50rpx;">{{item.skintypename}}</text>
-    <text style="margin-left:50rpx;">{{comtools.toTimeT(item.createtime)}}</text>
+  <view class="tiao" wx:for="{{allList}}" wx:key="id">
+    <view bindtap="navigateToPage" data-text="{{item.id}}">
+      <view class="left">{{item.score}}分</view>
+      <view class="right">
+        <text style="font-size:38rpx;line-height:60px;margin-left:50rpx;">{{item.skintypename}}</text>
+        <text style="margin-left:50rpx;">{{comtools.toTimeT(item.createtime)}}</text>
+      </view>
     </view>
-    </view>
-</view>
+  </view>
 
 </view>
