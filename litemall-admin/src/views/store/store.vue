@@ -153,7 +153,7 @@
             </template>
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <span class="imgspefi">上传图片规格：575*380 </span>
+          <span class="imgspefi">上传图片规格：245*143 图片宽度扩大两倍，高度等比例扩大</span>
         </el-form-item>
 
 

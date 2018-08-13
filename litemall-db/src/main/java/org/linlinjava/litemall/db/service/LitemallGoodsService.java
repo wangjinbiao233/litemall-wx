@@ -150,8 +150,12 @@ public class LitemallGoodsService {
         if(!StringUtils.isEmpty(name)){
             criteria.andNameLike("%" + name + "%");
         }
-        if(!StringUtils.isEmpty(categoryId)) {
-        	criteria.andCategoryIdEqualTo(categoryId);
+        if(!StringUtils.isEmpty(categoryId)) {        	
+        	//criteria.andCategoryIdEqualTo(categoryId);
+        	List<Integer> cavals = new ArrayList<Integer>();
+        	cavals.add(categoryId);
+        	cavals.add(0);
+        	criteria.andCategoryIdIn(cavals);
         }        
         criteria.andDeletedEqualTo(false);
 
@@ -171,7 +175,11 @@ public class LitemallGoodsService {
             criteria.andNameLike("%" + name + "%");
         }
         if(!StringUtils.isEmpty(categoryId)) {
-        	criteria.andCategoryIdEqualTo(categoryId);
+        	//criteria.andCategoryIdEqualTo(categoryId);
+        	List<Integer> cavals = new ArrayList<Integer>();
+        	cavals.add(categoryId);
+        	cavals.add(0);
+        	criteria.andCategoryIdIn(cavals);
         }
         criteria.andDeletedEqualTo(false);
 

@@ -205,7 +205,9 @@ export const asyncRouterMap = [
       { path: 'role', component: _import('sys/role'), name: 'role', meta: { title: '角色管理', noCache: true }},
       { path: 'os', component: _import('sys/os'), name: 'os', meta: { title: '对象存储', noCache: true, hideTag: true }},
       { path: 'region', component: _import('mall/region'), name: 'region', meta: { title: '行政区域管理', noCache: true }},
-      { path: 'issue', component: _import('mall/issue'), name: 'issue', meta: { title: '通用问题管理', noCache: true }}
+      { path: 'issue', component: _import('mall/issue'), name: 'issue', meta: { title: '通用问题管理', noCache: true }},
+      { path: 'dictionarys', component: _import('sys/dictionarys'), name: 'dictionarys', meta: { title: '字典管理', noCache: true }},
+      { path: 'dictionarysCreate', component: _import('sys/dictionarysCreate'), name: 'dictionarysCreate', meta: { title: '字典添加', noCache: true, hideTag: true }}
     ]
   },{
     path: '/pad',

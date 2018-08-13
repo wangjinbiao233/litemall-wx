@@ -395,6 +395,7 @@ export default {
       this.options = response.data.data.items.map((item) => {
         return {value : item.id, label : item.name}
       })
+      //this.options.push({value: '', label : '所有的'});
     }).catch(() => {
       this.options = []
     })

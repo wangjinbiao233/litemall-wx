@@ -74,6 +74,7 @@
         </el-form-item>
          -->
         <el-form-item label="品牌商图片" style="display: block !important; margin-left: 10px">
+          <el-tooltip content="建议图片规格：375*145 图片宽度扩大两倍，高度等比例扩大" placement="top-start">
           <el-upload
             class="avatar-uploader"
             :action="fileImgUrl"
@@ -83,7 +84,8 @@
             <img v-if="dataForm.picUrl" :src="dataForm.picUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <span class="imgspefi">上传图片规格：120*300 </span>
+          </el-tooltip>
+          <!--<span class="imgspefi">上传图片规格：375*145 图片宽度扩大两倍，高度等比例扩大</span>-->
         </el-form-item>
         
         <!--
@@ -95,6 +97,7 @@
         </el-form-item> 
         -->
         <el-form-item label="宣传图片" style="display: block !important; margin-left: 10px">
+          <el-tooltip content="建议图片规格：375*145 图片宽度扩大两倍，高度等比例扩大" placement="top-start">
           <el-upload
             class="avatar-uploader"
             :action="fileImgUrl"
@@ -104,7 +107,8 @@
             <img v-if="dataForm.listPicUrl" :src="dataForm.listPicUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <span class="imgspefi">上传图片规格：120*300 </span>
+          </el-tooltip>
+          <!--<span class="imgspefi">上传图片规格：375*145 图片宽度扩大两倍，高度等比例扩大</span>-->
         </el-form-item>
 
         <!--
@@ -116,6 +120,7 @@
         </el-form-item> 
         -->
         <el-form-item label="APP宣传图片" style="display: block !important; margin-left: 10px">
+          <el-tooltip content="建议图片规格：375*145 图片宽度扩大两倍，高度等比例扩大" placement="top-start">
           <el-upload
             class="avatar-uploader"
             :action="fileImgUrl"
@@ -125,7 +130,8 @@
             <img v-if="dataForm.appListPicUrl" :src="dataForm.appListPicUrl" class="avatar">
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <span class="imgspefi">上传图片规格：120*300 </span>
+          </el-tooltip>
+          <!--<span class="imgspefi">上传图片规格：375*145 图片宽度扩大两倍，高度等比例扩大</span>-->
         </el-form-item>
 
 
