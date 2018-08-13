@@ -5,36 +5,35 @@
     <div class="filter-container">
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入字典名称" v-model="listQuery.name">
       </el-input>
-      <el-select clearable v-model="listQuery.groupCode" placeholder="请选择组名称"  >
+      <el-select clearable class="filter-item"  v-model="listQuery.groupCode" placeholder="请选择组名称"  >
         <el-option
           v-for="infos in dictionaryGoupList"
-          :key="infos.codeid"
-          :label="infos.name"
-          :value="infos.codeid">
+          :key="infos.groupCode"
+          :label="infos.groupName"
+          :value="infos.groupCode">
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <!--
       <router-link ref='tag' :to="{path:'/sys/dictionarysCreate'}">
         <el-button class="filter-item" type="primary" icon="el-icon-edit">添加</el-button>  
-      </router-link> 
-      -->   
+      </router-link>
+         
     </div>
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" width="50px" label="字典ID" prop="id" sortable>
+      <el-table-column align="center" width="100px" label="字典ID" prop="id" sortable>
       </el-table-column>
 
-      <el-table-column align="center" min-width="200px" label="组编号" prop="groupCode">
+      <el-table-column align="center" min-width="180px" label="组编号" prop="groupCode">
       </el-table-column>
-      <el-table-column align="center" min-width="200px" label="组名称" prop="groupName">
+      <el-table-column align="center" min-width="180px" label="组名称" prop="groupName">
       </el-table-column>
 
       <el-table-column align="center" min-width="200px" label="字典名称" prop="name">
       </el-table-column>
 
-      <el-table-column align="center" min-width="200px" label="字典值" prop="value">
+      <el-table-column align="center" min-width="260px" label="字典值" prop="value">
       </el-table-column>      
 
       <el-table-column align="center" label="操作" width="200" class-name="small-padding fixed-width">
@@ -57,18 +56,17 @@
     <!-- 添加或修改对话框 -->
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="帮助类别" prop="questionType">
-          <el-select v-model="dataForm.questionType" placeholder="请选择">
-              <el-option label = "商品帮助" :value="0"></el-option>
-              <el-option label = "帮助中心" :value="1"></el-option>
-              </el-option>
-          </el-select>
+        <el-form-item label="组编号" prop="groupCode">
+          <el-input v-model="dataForm.groupCode" readonly="readonly" ></el-input>
         </el-form-item>
-        <el-form-item label="问题" prop="question">
-          <el-input v-model="dataForm.question"></el-input>
+        <el-form-item label="组名称" prop="groupName">
+          <el-input v-model="dataForm.groupName" readonly="readonly" ></el-input>
+        </el-form-item>        
+        <el-form-item label="字典名称" prop="name">
+          <el-input v-model="dataForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="回复" prop="answer">
-          <el-input v-model="dataForm.answer" type="textarea" :rows="8" placeholder="请输入内容"></el-input>
+        <el-form-item label="字典值" prop="value">
+          <el-input v-model="dataForm.value" type="textarea" :rows="1" ></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -83,7 +81,7 @@
 </template>
 
 <script>
-import { listDictionary } from '@/api/dictionarys'
+import { listDictionary, getDictionaryGoupList, deleteDictionary, updateDictionary } from '@/api/dictionarys'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -107,9 +105,11 @@ export default {
 
       dataForm: {
         id: undefined,
-        questionType : undefined,
-        question: '',
-        answer: ''
+        groupCode : undefined,
+        groupName: undefined,
+        name: undefined,
+        value: undefined,
+        seqNo: undefined
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -118,23 +118,19 @@ export default {
         create: '创建'
       },
       rules: {
-        questionType: [{ required: true, message: '帮助类别不能为空', trigger: 'blur' }],
-        question: [{ required: true, message: '问题不能为空', trigger: 'blur' }],
-        answer: [{ required: true, message: '回复不能为空', trigger: 'blur' }]
+        name: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
+        value: [{ required: true, message: '字典值不能为空', trigger: 'blur' }]
       }
       
     }
   },
   created() {
     this.getList()
+    this.getDictionaryGoupList()
   },
   methods: {
+
     getList() {
-      this.listLoading = true
-      this.list = []
-        this.total = 0
-        this.listLoading = false
-    return;
       listDictionary(this.listQuery).then(response => {
         this.list = response.data.data.items
         this.total = response.data.data.total
@@ -143,6 +139,13 @@ export default {
         this.list = []
         this.total = 0
         this.listLoading = false
+      })
+    },
+    getDictionaryGoupList() {
+      getDictionaryGoupList().then(response => {
+        this.dictionaryGoupList = response.data.data.items        
+      }).catch(() => {
+        this.list = []       
       })
     },
     handleFilter() {
@@ -193,7 +196,7 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          updateIssue(this.dataForm).then(() => {
+          updateDictionary(this.dataForm).then(() => {
             for (const v of this.list) {
               if (v.id === this.dataForm.id) {
                 const index = this.list.indexOf(v)
@@ -213,7 +216,7 @@ export default {
       })
     },
     handleDelete(row) {
-      deleteIssue(row).then(response => {
+      deleteDictionary(row).then(response => {
         this.$notify({
           title: '成功',
           message: '删除成功',

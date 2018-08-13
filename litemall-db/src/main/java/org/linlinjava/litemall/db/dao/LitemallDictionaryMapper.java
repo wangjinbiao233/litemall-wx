@@ -19,4 +19,8 @@ public interface LitemallDictionaryMapper {
     int updateByPrimaryKeySelective(LitemallDictionary record);
 
     int updateByPrimaryKey(LitemallDictionary record);
+
+	int countDictionary(LitemallDictionary dicObj);
+
+	List<LitemallDictionary> getDicGroupList();
 }
