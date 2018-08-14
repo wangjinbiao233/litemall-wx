@@ -2,11 +2,9 @@ package org.linlinjava.litemall.admin.web;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -74,7 +72,7 @@ public class GoodsController {
          //服务商品	
         	prefix = "S";
         }
-        goods.setGoodsSn(prefix+goods.getCategoryId()+getSerialNumber());
+        goods.setGoodsSn(prefix+getSerialNumber());
         goodsService.add(goods);
         
         //商品和所属门店id关联数据的保存操作
@@ -181,7 +179,7 @@ public class GoodsController {
     public String getSerialNumber() {
 		LitemallSerialNumber serialNumber = serialNumberService.findSerialNumberByType("GOODS_ID");
 		Integer number = serialNumber.getSerialNumber();
-		if(number < 999999) {
+		if(number < 9999) {
 			serialNumber.setSerialNumber(number + 1);
 		} else {
 			serialNumber.setSerialNumber(1);
@@ -189,19 +187,15 @@ public class GoodsController {
 		int length = number.toString().length();
 		String sort = "";
 		if(length == 1) {
-			sort = "00000"+number;
-		} else if(length == 2) {
-			sort = "0000"+number;
-		} else if(length == 3) {
 			sort = "000"+number;
-		} else if(length == 4) {
+		} else if(length == 2) {
 			sort = "00"+number;
-		} else if(length == 5) {
+		} else if(length == 3) {
 			sort = "0"+number;
-		}else if(length == 6) {
+		} else if(length == 4) {
 			sort = ""+number;
-		} else {
-			sort = "000000";
+		}  else {
+			sort = "0000";
 		}
 		
 		serialNumberService.updateSerialNumber(serialNumber);

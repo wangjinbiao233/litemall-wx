@@ -20,7 +20,7 @@
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" width="200px" label="优惠卷key" prop="key" sortable>
+      <el-table-column align="center" width="200px" label="优惠券key" prop="key" sortable>
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="名称" prop="discountName">
@@ -60,10 +60,10 @@
     <!-- 添加对话框 -->
     <el-dialog title="添加优惠券信息" :visible.sync="createDialogVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
-        <el-form-item label="优惠卷名称" prop="">
+        <el-form-item label="优惠券名称" prop="">
           <el-input v-model="dataForm.discountName"></el-input>
         </el-form-item>
-        <el-form-item label="优惠卷类别" prop="">
+        <el-form-item label="优惠券类别" prop="">
           <el-select clearable v-model="dataForm.discountType" placeholder="请选择优惠券类别" style = "top: -4px;">
             <el-option
               v-for="item in couponsTypeList"
@@ -89,7 +89,7 @@
           <el-date-picker v-model="dataForm.endTimeStr" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="优惠卷数量" prop="">
+        <el-form-item label="优惠券数量" prop="">
           <el-input-number v-model="dataForm.discountCount" controls-position="right" :min="1" :max="10000"></el-input-number>
           <!--<el-input v-model="dataForm.discountCount"></el-input>-->
         </el-form-item>
