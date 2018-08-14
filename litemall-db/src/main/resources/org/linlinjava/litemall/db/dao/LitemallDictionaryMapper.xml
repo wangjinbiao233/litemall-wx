@@ -33,14 +33,30 @@
     <include refid="Base_Column_List" />
     from litemall_dictionary
     where 1 =1 
-    
-     <if test="groupCode != null" >
+     and deleted=0 
+     <if test="groupCode != null and groupCode !='' " >
         and group_code = #{groupCode,jdbcType=VARCHAR}
       </if>
-      <if test="groupName != null" >
+      <if test="groupName != null and groupName !='' " >
         and group_name = #{groupName,jdbcType=VARCHAR}
       </if>
-      
+      <if test="name != null and name !='' " >
+        and name like concat('%', #{name,jdbcType=VARCHAR},'%')
+      </if>
+  </select>
+  
+  <select id="countDictionary" resultType="java.lang.Integer" parameterType="org.linlinjava.litemall.db.domain.LitemallDictionary" >
+    select count(1) from litemall_dictionary
+    where 1 =1   and deleted=0   
+     <if test="groupCode != null  and groupCode !=''  ">
+        and group_code = #{groupCode,jdbcType=VARCHAR}
+      </if>
+      <if test="groupName != null and groupName !='' " >
+        and group_name = #{groupName,jdbcType=VARCHAR}
+      </if>   
+      <if test="name != null and name !='' " >
+        and name like concat('%', #{name,jdbcType=VARCHAR},'%')
+      </if>   
   </select>
   
   
@@ -198,4 +214,13 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getDicGroupList" resultType="org.linlinjava.litemall.db.domain.LitemallDictionary" >
+    select 
+    	group_code as "groupCode",group_name as "groupName"
+    from litemall_dictionary
+    where 1 =1    
+    group by group_code,group_name       
+  </select>
+  
 </mapper>
