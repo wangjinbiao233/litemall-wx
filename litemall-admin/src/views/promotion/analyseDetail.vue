@@ -20,6 +20,9 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="手机号" prop="mobile">
+        <template scope="scope">
+          <div style="color:red;text-decoration:underline;cursor:pointer;" @click="showDetail(scope.row)">{{ scope.row.mobile }}</div>
+        </template>
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="微信昵称" prop="wxNickName">
@@ -40,31 +43,170 @@
       <el-table-column align="center" min-width="100px" label="朝向" prop="faceType"  :formatter="showFaceType" >
       </el-table-column>
 
-
-      <el-table-column align="center" min-width="100px" label="自然光" prop="zeroZrg">
-        <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
-        </template>
+      <el-table-column align="center" min-width="100px" label="朝向" prop="zeroZrg"   >
       </el-table-column>
 
 
+      <el-table-column align="center" min-width="100px" label="自然光" prop="zeroZrg">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroZrg" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
       <el-table-column align="center" min-width="100px" label="表皮" prop="zeroBp">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroBp" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" min-width="100px" label="真皮" prop="zeroZp">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroZp" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
 
       <el-table-column align="center" min-width="100px" label="荧光" prop="zeroYg">
         <template slot-scope="scope">
-          <img :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroYg" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="UV色斑" prop="zeroUv">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroUv" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroUv" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="棕色斑点" prop="zeroBrown">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroBrown" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroBrown" width="180px" height="90px"/>
+          </el-popover>
+        </template>  zeroUv
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="红色区块" prop="zeroRed">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.zeroRed" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.zeroRed" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="红色打标" prop="imageRed">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageRed" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageRed" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="绿色打标" prop="imageGreen">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageGreen" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageGreen" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="绿色打标" prop="imageBlue">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageBlue" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageBlue" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="黑色打标" prop="imageBlack">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageBlack" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageBlack" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="白色打标" prop="imageWhite">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageWhite" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageWhite" width="180px" height="90px"/>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+
+      <el-table-column align="center" min-width="100px" label="灰色打标" prop="imageGray">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.imageGray" style="max-height: 500px;max-width: 500px"/>
+            <img :src= "'http://img.philab.net/'+scope.row.imageGray" width="180px" height="90px"/>
+          </el-popover>
         </template>
       </el-table-column>
 
@@ -178,6 +320,18 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="红色区块" prop="score12">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            title=""
+            trigger="click">
+            <img :src="'http://img.philab.net/'+scope.row.sourceImg11" style="max-height: 500px;max-width: 500px"/>
+            <span slot="reference">{{scope.row.score12}}</span>
+          </el-popover>
+        </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="红色区块" prop="imageRed">
         <template slot-scope="scope">
           <el-popover
             placement="right"
