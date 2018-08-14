@@ -14,10 +14,12 @@
         </el-option>
       </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
+      <!--
       <router-link ref='tag' :to="{path:'/sys/dictionarysCreate'}">
         <el-button class="filter-item" type="primary" icon="el-icon-edit">添加</el-button>  
       </router-link>
-         
+      -->
+      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
     </div>
 
     <!-- 查询结果 -->
@@ -57,10 +59,10 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="组编号" prop="groupCode">
-          <el-input v-model="dataForm.groupCode" readonly="readonly" ></el-input>
+          <el-input v-model="dataForm.groupCode" ></el-input>
         </el-form-item>
         <el-form-item label="组名称" prop="groupName">
-          <el-input v-model="dataForm.groupName" readonly="readonly" ></el-input>
+          <el-input v-model="dataForm.groupName" ></el-input>
         </el-form-item>        
         <el-form-item label="字典名称" prop="name">
           <el-input v-model="dataForm.name"></el-input>
@@ -76,12 +78,11 @@
       </div>
     </el-dialog>
 
-
   </div>
 </template>
 
 <script>
-import { listDictionary, getDictionaryGoupList, deleteDictionary, updateDictionary } from '@/api/dictionarys'
+import { listDictionary, getDictionaryGoupList, deleteDictionary, updateDictionary, createDictionary } from '@/api/dictionarys'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -118,6 +119,8 @@ export default {
         create: '创建'
       },
       rules: {
+        groupCode: [{ required: true, message: '组编号不能为空', trigger: 'blur' }],
+        groupName: [{ required: true, message: '组名称不能为空', trigger: 'blur' }],
         name: [{ required: true, message: '字典名称不能为空', trigger: 'blur' }],
         value: [{ required: true, message: '字典值不能为空', trigger: 'blur' }]
       }
@@ -145,7 +148,7 @@ export default {
       getDictionaryGoupList().then(response => {
         this.dictionaryGoupList = response.data.data.items        
       }).catch(() => {
-        this.list = []       
+        this.dictionaryGoupList = []       
       })
     },
     handleFilter() {
@@ -163,17 +166,26 @@ export default {
     resetForm() {
       this.dataForm = {
         id: undefined,
-        questionType: undefined,
-        question: '',
-        answer: ''
+        groupCode : undefined,
+        groupName: undefined,
+        name: undefined,
+        value: undefined,
+        seqNo: undefined
       }
     },
-    
+    handleCreate() {
+        this.resetForm()
+        this.dialogStatus = 'create'
+        this.dialogFormVisible = true
+        this.$nextTick(() => {
+          this.$refs['dataForm'].clearValidate()
+        })
+    },
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createIssue(this.dataForm).then(response => {
-            this.list.unshift(response.data.data)
+          createDictionary(this.dataForm).then(response => {
+            //this.list.unshift(response.data.data)
             this.dialogFormVisible = false
             this.$notify({
               title: '成功',
@@ -181,6 +193,8 @@ export default {
               type: 'success',
               duration: 2000
             })
+            this.getList()
+            this.getDictionaryGoupList()
           })
         }
       })
@@ -211,6 +225,8 @@ export default {
               type: 'success',
               duration: 2000
             })
+            //this.getList()
+            this.getDictionaryGoupList()
           })
         }
       })
@@ -225,6 +241,7 @@ export default {
         })
         const index = this.list.indexOf(row)
         this.list.splice(index, 1)
+        this.getDictionaryGoupList()
       })
     }
 

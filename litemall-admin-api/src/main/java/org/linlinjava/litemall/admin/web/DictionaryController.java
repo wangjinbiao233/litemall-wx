@@ -105,7 +105,6 @@ public class DictionaryController {
 	public Object getDictionaryGoupList() {
 		Map<String, Object> data = new HashMap<>();
 		List<LitemallDictionary> list = litemallDictionaryService.getDicGroupList();
-		Map<Integer,String> map = new HashMap<>();
 		
 		data.put("items", list);		
 		return ResponseUtil.ok(data);
