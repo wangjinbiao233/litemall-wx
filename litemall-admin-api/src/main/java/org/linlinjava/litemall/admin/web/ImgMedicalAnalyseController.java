@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
 import org.linlinjava.litemall.db.service.WmwImgMedicalAnalyseService;
 import org.linlinjava.litemall.db.util.ResponseUtil;
@@ -21,7 +23,7 @@ public class ImgMedicalAnalyseController {
     private WmwImgMedicalAnalyseService wmwImgMedicalAnalyseService;
     
     @RequestMapping(value = "/analyseList", method = RequestMethod.POST)  
-    public Object analyseList(@LoginAdmin Integer adminId,  @RequestParam(value = "page", defaultValue = "1") Integer page,
+    public Object analyseList(HttpServletResponse response,  @LoginAdmin Integer adminId,  @RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "limit", defaultValue = "10") Integer limit,String sort, String order){
         if(adminId == null){
             return ResponseUtil.fail401();
@@ -38,12 +40,11 @@ public class ImgMedicalAnalyseController {
     }    
     
     @RequestMapping(value = "/analyseDetailList", method = RequestMethod.POST)  
-    public Object analyseDetailList(@LoginAdmin Integer adminId,  @RequestParam(value = "page", defaultValue = "1") Integer page,
+    public Object analyseDetailList(HttpServletResponse response,@LoginAdmin Integer adminId,  @RequestParam(value = "page", defaultValue = "1") Integer page,
     		@RequestParam(value = "limit", defaultValue = "10") Integer limit,String sort, String order,String userId){
     	if(adminId == null){
     		return ResponseUtil.fail401();
     	}
-    	
     	Map<String,Object> map = new HashMap<String,Object>();
     	map.put("userId", userId);
     	List<Map<String,Object>> imgMedicalAanalyseList = wmwImgMedicalAnalyseService.selectWmwImgMedicalAnalyDetailList(map, page, limit, sort, order);        

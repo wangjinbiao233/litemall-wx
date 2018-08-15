@@ -125,6 +125,12 @@
   padding: 0 20rpx;
   font-size: 30rpx;
   color: #333;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
 }
 
 .cate-item .item .price {

@@ -173,13 +173,30 @@
 		wcu.birthday birthday,
 		wcu.icon icon,
 		aus.user_id userId,
-		aus.analyse_id analyseId,
+		aus.analyse_id analyseId,		
+		wias.score0 sco0,
+        wias.score1 sco1,
+        wias.score2 sco2,       
+        wias.score3 sco3,
+        wias.score4 sco4,
+        wias.score5 sco5,
+        wias.score6 sco6,
+        wias.score7 sco7,
+        wias.score8 sco8,
+        wias.score9 sco9,
+        wias.score10 sco10,
+        wias.score11 sco11,
+        wias.score12 sco12,
+        wias.score13 sco13,
+        wias.score14 sco14,
 		CONCAT(CAST(ROUND(wias.score0 * 100,2) AS CHAR(8) ),'%') AS "score0",
 		CONCAT(CAST(ROUND(wias.score1 * 100,2) AS CHAR(8) ),'%') AS "score1",
 		CONCAT(CAST(ROUND(wias.score2 * 100,2) AS CHAR(8) ),'%') AS "score2",
 		CONCAT(CAST(ROUND(wias.score3 * 100,2) AS CHAR(8) ),'%') AS "score3",
 		ROUND(wias.score4,0) score4,
-		CONCAT(CAST(ROUND(wias.score5 * 100,2) AS CHAR(8) ),'%') AS "score5",
+	 	CASE wias.score5 
+		WHEN -1  THEN '未检测'   
+		ELSE CONCAT(CAST(ROUND(wias.score5) AS CHAR(8) ),'%') END AS "score5",
 		CONCAT(CAST(ROUND(wias.score6 * 100,2) AS CHAR(8) ),'%') AS "score6",
 		CONCAT(CAST(ROUND(wias.score7 * 100,2) AS CHAR(8) ),'%') AS "score7",
 		CONCAT(CAST(ROUND(wias.score8 * 100,2) AS CHAR(8) ),'%') AS "score8",
@@ -222,7 +239,8 @@
 		ias.small_yg_img AS thumbYg,
 		ss.source_small_img3 AS thumbUv,
 		ss.source_small_img11 AS thumbRed,
-		ss.source_small_img5 AS thumbBrown
+		ss.source_small_img5 AS thumbBrown,
+        mess.message AS message
 		FROM
 		(
 		SELECT * FROM(
@@ -257,6 +275,7 @@
 		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+	 	LEFT JOIN wmw_img_medical_analyse_message mess ON mess.analyse_id = aus.analyse_id
 		
 		where  1 = 1
 		
@@ -282,12 +301,29 @@
 		wcu.icon icon,
 		aus.user_id userId,
 		aus.analyse_id analyseId,
+		wias.score0 sco0,
+        wias.score1 sco1,
+        wias.score2 sco2,       
+        wias.score3 sco3,
+        wias.score4 sco4,
+        wias.score5 sco5,
+        wias.score6 sco6,
+        wias.score7 sco7,
+        wias.score8 sco8,
+        wias.score9 sco9,
+        wias.score10 sco10,
+        wias.score11 sco11,
+        wias.score12 sco12,
+        wias.score13 sco13,
+        wias.score14 sco14,
 		CONCAT(CAST(ROUND(wias.score0 * 100,2) AS CHAR(8) ),'%') AS "score0",
 		CONCAT(CAST(ROUND(wias.score1 * 100,2) AS CHAR(8) ),'%') AS "score1",
 		CONCAT(CAST(ROUND(wias.score2 * 100,2) AS CHAR(8) ),'%') AS "score2",
 		CONCAT(CAST(ROUND(wias.score3 * 100,2) AS CHAR(8) ),'%') AS "score3",
 		ROUND(wias.score4,0) score4,
-		CONCAT(CAST(ROUND(wias.score5 * 100,2) AS CHAR(8) ),'%') AS "score5",
+		CASE wias.score5 
+		WHEN -1  THEN '未检测'   
+		ELSE CONCAT(CAST(ROUND(wias.score5) AS CHAR(8) ),'%') END AS "score5",
 		CONCAT(CAST(ROUND(wias.score6 * 100,2) AS CHAR(8) ),'%') AS "score6",
 		CONCAT(CAST(ROUND(wias.score7 * 100,2) AS CHAR(8) ),'%') AS "score7",
 		CONCAT(CAST(ROUND(wias.score8 * 100,2) AS CHAR(8) ),'%') AS "score8",
@@ -330,7 +366,8 @@
 		ias.small_yg_img AS thumbYg,
 		ss.source_small_img3 AS thumbUv,
 		ss.source_small_img11 AS thumbRed,
-		ss.source_small_img5 AS thumbBrown
+		ss.source_small_img5 AS thumbBrown,
+        mess.message AS message
 		FROM
 		(
 		SELECT * FROM(
@@ -364,6 +401,7 @@
 		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+	 	LEFT JOIN wmw_img_medical_analyse_message mess ON mess.analyse_id = aus.analyse_id
 		
 		where  1 = 1
 		
@@ -437,7 +475,8 @@
 		ias.small_yg_img AS thumbYg,
 		ss.source_small_img3 AS thumbUv,
 		ss.source_small_img11 AS thumbRed,
-		ss.source_small_img5 AS thumbBrown
+		ss.source_small_img5 AS thumbBrown,
+        mess.message AS message
 		FROM
 		(
 		SELECT * FROM(
@@ -472,7 +511,7 @@
 		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
-		
+	 	LEFT JOIN wmw_img_medical_analyse_message mess ON mess.analyse_id = aus.analyse_id
 		
 		where  1 = 1
 		
@@ -540,7 +579,8 @@
 		ias.small_yg_img AS thumbYg,
 		ss.source_small_img3 AS thumbUv,
 		ss.source_small_img11 AS thumbRed,
-		ss.source_small_img5 AS thumbBrown
+		ss.source_small_img5 AS thumbBrown,
+        mess.message AS message
 		FROM
 		(
 		SELECT * FROM(
@@ -573,6 +613,7 @@
 		LEFT JOIN wmw_img_medical_analyse_source imas  ON imas.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_original iao  ON iao.analyse_id = aus.analyse_id
 		LEFT JOIN wmw_img_medical_analyse_source_small ss  ON ss.analyse_id = aus.analyse_id
+		LEFT JOIN wmw_img_medical_analyse_message mess ON mess.analyse_id = aus.analyse_id
 		
 		where  1 = 1
 		

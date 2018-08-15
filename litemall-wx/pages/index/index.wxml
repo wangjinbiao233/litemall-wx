@@ -53,9 +53,12 @@
       <swiper-item wx:for="{{hotGoods}}" wx:key="id">
         <navigator url="/pages/goods/goods?id={{item.id}}">
           <view class='swiper-box'>
+            <view style='height:384rpx;width:330rpx;'>
             <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
-            <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:387rpx;width:330rpx;'></image>
-            <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;'>{{item.name}}</view>
+            <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:384rpx;width:330rpx;'></image>
+            </view>
+            
+            <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.name}}</view>
             <view style='padding:5rpx 15rpx 0rpx 15rpx;color:#6bb5dc;font-size:35rpx;'>￥{{item.retailPrice}}</view>
             <view class='ellipsis' style='padding:5rpx 15rpx 10rpx 15rpx;font-size:24rpx;'>{{item.goodsBrief}}</view>
           </view>
@@ -104,12 +107,12 @@
         <view class='swiper-box-store' data-id="{{item.id}}" bindtap='toStoreDetail'>
           <image mode='aspectFill' src="{{item.storeImg}}"></image>
           <view class='item-name'>
-            <view style='font-size:30rpx;color:#6bb5dc;'>{{item.storeName}}</view>
+            <view style='font-size:30rpx;color:#6bb5dc;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.storeName}}</view>
             <view style='font-size:30rpx;'>{{item.storeTel}}</view>
           </view>
           <view class='item-name-o'>
-            <view style='font-size:24rpx;color:#dbdbdb;'>{{item.storeAddress}}</view>
-             <view style='font-size:24rpx;color:#dbdbdb;'>{{item.distant}}km</view> 
+            <view style='font-size:24rpx;color:#dbdbdb;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.storeAddress}}</view>
+             <view style='font-size:24rpx;color:#dbdbdb;'>{{item.distant!=null?item.distant:0}}km</view> 
           </view>
         </view>
       </swiper-item>

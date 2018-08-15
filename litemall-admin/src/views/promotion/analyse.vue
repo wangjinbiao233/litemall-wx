@@ -50,7 +50,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroZrg" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroZrg" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -62,7 +62,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroBp" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroBp" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroBp" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -75,7 +75,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroZp" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroZp" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroZp" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -88,7 +88,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroYg" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroYg" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroYg" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -100,7 +100,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroUv" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroUv" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroUv" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -113,7 +113,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroBrown" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroBrown" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroBrown" width="auto" height="90px"/>
           </el-popover>
         </template>  zeroUv
       </el-table-column>
@@ -126,7 +126,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.zeroRed" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroRed" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.zeroRed" width="auto" height="90px"/>
           </el-popover>
         </template>
       </el-table-column>
@@ -139,7 +139,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageRed" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageRed" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageRed" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
@@ -152,7 +152,7 @@
                       title=""
                       trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageGreen" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageGreen" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageGreen" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
@@ -166,7 +166,7 @@
                       title=""
                       trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageBlue" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageBlue" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageBlue" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
@@ -179,7 +179,7 @@
                       title=""
                       trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageBlack" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageBlack" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageBlack" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
@@ -192,7 +192,7 @@
                       title=""
                       trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageWhite" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageWhite" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageWhite" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
@@ -206,10 +206,14 @@
                       title=""
                       trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.imageGray" style="max-height: 500px;max-width: 500px"/>
-            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageGray" width="180px" height="90px"/>
+            <img slot="reference" :src= "'http://img.philab.net/'+scope.row.imageGray" width="auto" height="90px"/>
           </el-popover>
           <span else slot="reference">未打标</span>
         </template>
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="医生建议" prop="message">
+
       </el-table-column>
 
 
@@ -220,9 +224,11 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg0" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score0}}</span>
+            <span slot="reference">{{scope.row.score0}}<br>{{scope.row.score0jibai}}</span>
+
           </el-popover>
         </template>
+
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="卟啉油脂" prop="score2">
@@ -232,7 +238,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg2" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score2}}</span>
+            <span slot="reference">{{scope.row.score2}}<br>{{scope.row.score2jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -244,7 +250,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg4" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score4}}</span>
+            <span slot="reference">{{scope.row.score4}}<br>{{scope.row.score4jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -256,20 +262,14 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg3" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score3}}</span>
+            <span slot="reference">{{scope.row.score3}}<br>{{scope.row.score3jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="水份保湿" prop="score5">
         <template slot-scope="scope">
-          <el-popover
-            placement="right"
-            title=""
-            trigger="click">
-            <img :src="'http://img.philab.net/'+scope.row.sourceImg5" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score5}}</span>
-          </el-popover>
+            <span>{{scope.row.score5}}<br>{{scope.row.score5jibai}}</span>
         </template>
       </el-table-column>
 
@@ -280,7 +280,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg5" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score6}}</span>
+            <span slot="reference">{{scope.row.score6}}<br>{{scope.row.score6jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -292,7 +292,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg8" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score9}}</span>
+            <span slot="reference">{{scope.row.score9}}<br>{{scope.row.score9jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -304,7 +304,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg9" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score10}}</span>
+            <span slot="reference">{{scope.row.score10}}<br>{{scope.row.score10jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -316,7 +316,7 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg10" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score11}}</span>
+            <span slot="reference">{{scope.row.score11}}<br>{{scope.row.score11jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
@@ -328,23 +328,10 @@
             title=""
             trigger="click">
             <img :src="'http://img.philab.net/'+scope.row.sourceImg11" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score12}}</span>
+            <span slot="reference">{{scope.row.score12}}<br>{{scope.row.score12jibai}}</span>
           </el-popover>
         </template>
       </el-table-column>
-
-      <el-table-column align="center" min-width="100px" label="红色区块" prop="imageRed">
-        <template slot-scope="scope">
-          <el-popover
-            placement="right"
-            title=""
-            trigger="click">
-            <img :src="'http://img.philab.net/'+scope.row.sourceImg11" style="max-height: 500px;max-width: 500px"/>
-            <span slot="reference">{{scope.row.score12}}</span>
-          </el-popover>
-        </template>
-      </el-table-column>
-
 
     </el-table>
     <!-- 分页 -->

@@ -9,8 +9,8 @@
       <text class="store-name ">{{item.storeName}}</text>
       <!-- <text class="store-navigation" bindtap='toYuYue'>预约</text> -->
       <view class="store-address" bindtap='toMap' data-storeAddress="{{item.storeAddress}}" data-storeName="{{item.storeName}}"> 
-        {{item.storeAddress}}
-        <text class="store-distance">{{distant}}km</text>
+        {{item.storeAddress}}  {{distant!=null?distant:0}}km
+       
       </view>
     </view>
     <view class="store-opening">
