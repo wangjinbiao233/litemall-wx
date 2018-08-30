@@ -12,7 +12,7 @@
         <module name="litemall-wx-api" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="litemall" target="1.5" />
       <module name="litemall-admin-api" target="1.8" />
       <module name="litemall-db" target="1.8" />
