@@ -85,23 +85,23 @@ public class WxGoodsController {
      * 用户也是可选登录，如果登录了，则查询是否收藏，以及记录用户的足迹
      */
     @RequestMapping("detail")
-    public Object detail(@LoginUser Integer userId, Integer id) {
+    public Object detail(@LoginUser Integer userId, String id) {
         if(id == null){
             return ResponseUtil.fail402();
         }
 
         // 商品信息
-        LitemallGoods info = goodsService.findById(id);
+        LitemallGoods info = goodsService.findByGoodsSn(id);
 
         // 商品属性
-        List<LitemallGoodsAttribute> goodsAttributeList = goodsAttributeService.queryByGid(id);
+        List<LitemallGoodsAttribute> goodsAttributeList = goodsAttributeService.queryByGid(info.getId());
 
         // 商品规格
         // 返回的是定制的GoodsSpecificationVo
-        Object specificationList = goodsSpecificationService.getSpecificationVoList(id);
+        Object specificationList = goodsSpecificationService.getSpecificationVoList(info.getId());
 
         // 商品规格对应的数量和价格
-        List<LitemallProduct> productList = productService.queryByGid(id);
+        List<LitemallProduct> productList = productService.queryByGid(info.getId());
 
         // 商品问题，这里是一些通用问题
         List<LitemallIssue> issue = goodsIssueService.query(0);
@@ -115,9 +115,9 @@ public class WxGoodsController {
         	
         }
         // 评论
-        List<LitemallComment> comments = commentService.queryGoodsByGid(id, 0, 3);
+        List<LitemallComment> comments = commentService.queryGoodsByGid(info.getId(), 0, 3);
         List<Map<String, Object>> commentsVo = new ArrayList<>(comments.size());
-        int commentCount = commentService.countGoodsByGid(id, 0, 3);
+        int commentCount = commentService.countGoodsByGid(info.getId(), 0, 3);
         for(LitemallComment comment : comments){
             Map<String, Object> c = new HashMap<>();
             c.put("id", comment.getId());
@@ -138,7 +138,7 @@ public class WxGoodsController {
         // 用户收藏
         int userHasCollect = 0;
         if(userId != null) {
-            userHasCollect = collectService.count(userId, id);
+            userHasCollect = collectService.count(userId, info.getId());
         }
 
         // 记录用户的足迹
@@ -146,7 +146,7 @@ public class WxGoodsController {
             LitemallFootprint footprint = new LitemallFootprint();
             footprint.setAddTime(LocalDateTime.now());
             footprint.setUserId(userId);
-            footprint.setGoodsId(id);
+            footprint.setGoodsId(info.getId());
             footprintService.add(footprint);
         }
 
