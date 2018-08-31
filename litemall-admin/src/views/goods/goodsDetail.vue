@@ -70,7 +70,7 @@
             </el-form-item>
 
             <el-form-item label="类目">
-              <el-select clearable v-model="dataForm.categoryId" filterable placeholder="请选择">                
+              <el-select clearable v-model="dataForm.categoryId" filterable placeholder="请选择">
                 <el-option
                   v-for="item in categoryOptions"
                   :key="item.value"
@@ -138,7 +138,7 @@
               <span class="imgspefi">上传图片规格：165*192 图片宽度扩大两倍，高度等比例扩大 </span>
               <span class="imgspefi">说明：商城中的商品图片</span>
             </el-form-item>
-      
+
 
             <el-form-item style="width: 800px;" label="宣传画廊">
               <el-upload
@@ -260,7 +260,7 @@
                     <el-option label="否" :value="0">
                     </el-option>
                     <el-option label="是" :value="1">
-                    </el-option>                    
+                    </el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
@@ -406,10 +406,10 @@
         this.goodsSpecOptions = response.data.data.items
       }).catch(() => {
         this.goodsSpecOptions = []
-      })      
+      })
 
       this.getAllStoreList();//查询所有的门店信息
-      
+
       this.getGoodsAttribute()
       this.getGoodsSpecification()
       this.getGoodsProduct()
@@ -455,7 +455,7 @@
           })
 
           this.getAllStoreList();//查询所有的门店信息
-          
+
           this.getGoodsAttribute()
           this.getGoodsSpecification()
           this.getGoodsProduct()
@@ -495,18 +495,18 @@
         })
       },
 
-      //获取所有的门店信息 
-      getAllStoreList(){    
-        let goodsId = this.id     
+      //获取所有的门店信息
+      getAllStoreList(){
+        let goodsId = this.id
         storeDataList({goodsId: goodsId}).then(response => {
           this.storeList = response.data.data.allStoreList.map((item) => {
             return { id: item.id+"", storeName : item.storeName}
-          }) 
-          let listdatas = response.data.data.goodStoreList                
+          })
+          let listdatas = response.data.data.goodStoreList
           this.dataForm.storeIds = listdatas.map((item) => {
               return item.storeId+""
-          })  
-          
+          })
+
         }).catch(() => {
           this.storeList = []
         })
@@ -518,6 +518,14 @@
           let items = response.data.data.items
           if(items.length > 0) {
             this.goodsAttributes = items
+          }else{
+            this.goodsAttributes =  [{
+              id: undefined,
+              goodsId: undefined,
+              attribute: undefined,
+              value: undefined
+            }]
+
           }
         }).catch(() => {
 
@@ -530,6 +538,14 @@
           let items = response.data.data.items
           if(items.length > 0) {
             this.goodsSpecifications = items
+          }else{
+            this.goodsSpecifications =  [{
+              id: undefined,
+              goodsId: undefined,
+              specification: undefined,
+              value: undefined
+            }]
+
           }
         }).catch(() => {
 
@@ -542,6 +558,14 @@
           let items = response.data.data.items
           if(items.length > 0) {
             this.goodsProducts = items
+          }else{
+            this.goodsProducts =  [{
+              id: undefined,
+              goodsId: undefined,
+              goodsSpecificationIds: [],
+              goodsNumber: 0,
+              retailPrice: 0
+            }]
           }
 
 
@@ -556,12 +580,12 @@
             // 获取规格列表
           this.goodsSpecOptions = []
           listSpecGroup({goodsId : this.id}).then(response => {
-            this.goodsSpecOptions = response.data.data.items            
+            this.goodsSpecOptions = response.data.data.items
           }).catch(() => {
             this.goodsSpecOptions = []
           })
         }
-        
+
       },
 
       handleSave() {
@@ -820,7 +844,7 @@
         }else{
           //选中该CheckBox
           _this.dataForm.storeIds.push(storeidval);
-        }       
+        }
         //alert("get storeIds =="+_this.dataForm.storeIds);
       }
 
@@ -878,5 +902,5 @@
   .goodsDetail .avatar-uploader{
     display: inline-block;
   }
-  
+
 </style>
