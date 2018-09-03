@@ -90,7 +90,7 @@ public class LitemallGoodsService {
             PageHelper.startPage(offset, limit);
         }
 
-        Column[] columns = new Column[]{Column.id, Column.name, Column.listPicUrl, Column.retailPrice, Column.flag, Column.goodsBrief};
+        Column[] columns = new Column[]{Column.id,Column.goodsSn, Column.name, Column.listPicUrl, Column.retailPrice, Column.flag, Column.goodsBrief};
         return goodsMapper.selectByExampleSelective(example ,columns);
     }
 
