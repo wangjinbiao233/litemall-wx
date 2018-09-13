@@ -102,13 +102,16 @@ function loginByWeixin(pId, userInfo) {
             encryptedData: res.encryptedData
           }, 'POST').then(res => {
             if (res.errno === 0) {
-              //存储用户信息
-              wx.setStorageSync('userInfo', res.data.userInfo);
-              wx.setStorageSync('token', res.data.token);
+              //如果电话号码不为空则存储用户信息
+              var mobile = res.data.userInfo.mobile;
+              if (mobile != undefined && mobile !=''){
+                //存储用户信息
+                wx.setStorageSync('userInfo', res.data.userInfo);
+                wx.setStorageSync('token', res.data.token); 
+                //是否是分销合作伙伴
+                wx.setStorageSync('isDistributionPartner', res.data.isDistributionPartner);
+              }
               wx.setStorageSync('userId', res.data.userId);
-              //是否是分销合作伙伴
-              wx.setStorageSync('isDistributionPartner', res.data.isDistributionPartner);
-
               resolve(res);
             } else {
               reject(res);

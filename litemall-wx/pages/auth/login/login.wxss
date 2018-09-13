@@ -87,3 +87,81 @@
     font-size: 28rpx;
     color: #999;
 }
+
+
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 998;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 600rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 20%;
+  left: 0;
+  z-index: 999;
+  background: #fff;
+  margin: 0 80rpx;
+  border-radius: 36rpx;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  font-size: 50rpx;
+  font-weight:bold;
+  text-align: center;
+}
+
+.modal-content {
+  justify-content:space-around;
+  padding: 10px 50rpx 50rpx;
+}
+
+.modal-footer {
+  font-size: 40rpx;
+}
+
+.modal-other-input{
+  flex-direction: row;
+  margin-top: 30rpx;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100rpx;
+  border: 1px solid #dedede;
+}
+
+.modal-other-view{
+  width: 30%;
+  font-size:30rpx;
+  margin-left: 5%;
+}
+
+.modal-inputview{
+  width: 45%;
+  font-size:30rpx;
+}
+
+.sendMsg{
+  width:15%;
+}
+
+.model-login-btn{
+    height: 96rpx;
+    line-height: 96rpx;
+    color: #fff;
+    font-size: 30rpx;
+    width: 100%;
+    background: #b4282d;
+    border-radius: 6rpx;
+    padding: 0px 100rpx 100rpx;
+}

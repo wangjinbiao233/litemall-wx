@@ -2,4 +2,27 @@
   <view class="form-box">
     <button type="primary" class="login-btn" bindgetuserinfo="wxLogin" open-type="getUserInfo">微信直接登录</button>
   </view>
+  <view class="modal-mask" bindtap="hideModal" wx:if="{{showNameModal}}">  
+  </view>
+  <view class="modal-dialog" wx:if="{{showNameModal}}">
+     <view class="modal-title">请验证手机号</view>
+     <view class="modal-content">
+      <view class="modal-other-input">
+      <text class="modal-other-view">手机号码</text>
+      <input class="modal-inputview" placeholder="请输入手机号码" type="number" maxlength="11" bindinput="inputPhoneNum" auto-focus />
+      <text wx:if="{{send}}" class="sendMsg" bindtap="sendMsg">发送</text>
+      <text wx:if="{{alreadySend}}" class="sendMsg" bindtap="sendMsg">{{second+"s"}}</text>
+      </view> 
+      <view class="modal-other-input">
+      <text class="modal-other-view">短信验证</text>
+      <input class="modal-inputview" placeholder="短信验证码" type="number" bindinput="addCode" />
+      </view>
+    </view>
+    <view class="modal-content">
+      <button type="primary"  disabled="{{disabled}}"class="model-login-btn" bindtap='verifyCodeSubmit'>
+          保存 </button>
+    </view>
+  </view>
+    
+  
 </view>
