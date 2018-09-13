@@ -252,7 +252,7 @@ Page({
     console.log(wx.setStorageSync('address', ''))
     
     this.setData({
-      id: parseInt(options.id),
+      id: options.id,
       storeid: wx.getStorageSync('storeid')
     });
     this.getGoodsInfo();

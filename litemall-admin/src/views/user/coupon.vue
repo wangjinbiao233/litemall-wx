@@ -258,6 +258,11 @@
       updateData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            if(this.dataForm.endTimeStr < this.dataForm.startTimeStr){
+              this.$message.error('结束时间不能小于开始时间')
+              return;
+            }
+
             updateCoupon(this.dataForm).then(() => {
               for (const v of this.list) {
               if (v.id === this.dataForm.id) {
@@ -283,6 +288,11 @@
       createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+
+            if(this.dataForm.endTimeStr < this.dataForm.startTimeStr){
+              this.$message.error('结束时间不能小于开始时间')
+              return;
+            }
             CreateCoupon(this.dataForm).then(response => {
               //this.list.unshift(response.data.data)
               this.createDialogVisible = false
@@ -319,13 +329,13 @@
         this.downloadLoading = false
       })
       },
-      
-      downloadImg(row){    
-        //alert(process.env.BASE_API) 
+
+      downloadImg(row){
+        //alert(process.env.BASE_API)
         let baseurl =  process.env.BASE_API
         let url = baseurl+'/discount/downloadCodeImg?id=&keys='+row.key;
-        window.location.href = url       
-        
+        window.location.href = url
+
       }
     }
   }
