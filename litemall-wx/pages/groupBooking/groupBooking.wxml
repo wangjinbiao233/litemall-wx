@@ -1,0 +1,80 @@
+<view class="store">
+  <view class="page-main">
+    <image src="/static/images/ccwl_xc.png"style="width:50%;height:400rpx;"></image>
+    <view class="page-text">
+      <text class="page-text-content">床上4件套</text>
+      <text class="page-text-num">￥2.0<text style="text-decoration:line-through"> ￥5.0</text></text>
+      <text class="page-text-foot">
+        <text class="page-text-color">5人团</text>
+        <text class="page-text-color">拼团省3.00</text>
+      </text>
+    </view>
+  </view>
+    
+  <view class="store-main">
+    <view class="store-main-first">
+      <view>
+        <text>还剩<text style="color:red">4</text>人，仅剩<text style="color:red">00:00:01:00</text>失效</text>
+      </view>
+      <view class="store-main-secend">
+        <view class="free-cell">
+          <image src="/static/images/ccwl_xc.png" class="image-circle"></image>
+          <text class="free-cell-color">团长</text>
+        </view>
+        <view class="free-cell"></view>
+        <view class="free-cell"></view>
+        <view class="free-cell"></view>
+        <view class="free-cell"></view>
+      </view>
+    </view>
+    <view>
+      <button type="primary" style="background-color:#8ac2d6" >邀请好友</button>
+    </view>
+    
+  </view>
+  <view>
+    <!-- <view class="store-product-title">项目选择</view> -->
+    <view style="background-color:#f4f4f4">
+    <view class="page-advise">拼团须知<text class="page-detail">好友参团.人满发货 ></text></view>
+    <view class="page-advise">更多拼团<text class="page-detail">更多 ></text></view>
+    </view>
+    <view class="store-parent">
+        <!--此处写下面的循环数据-->
+      <view class="page-loop">
+        <view class="page-main">
+        <image src="/static/images/ccwl_xc.png"style="width:30%;height:300rpx;"></image>
+        <view class="page-text">
+          <text class="page-text-content">床上4件套</text>
+          <text class="page-text-color-two">已团1件</text>
+          <text class="page-text-num-two">
+            ￥1.00<text style="text-decoration:line-through;margin-left:10rpx"> ￥5.00</text>
+          </text>
+        </view>
+        <view style="width:30%;height:100%">
+          <button class="button-style">去开团</button>
+        </view>
+        </view>
+      </view>
+
+
+      <view class="page-loop">
+        <view class="page-main">
+        <image src="/static/images/ccwl_xc.png"style="width:30%;height:300rpx;"></image>
+        <view class="page-text">
+          <text class="page-text-content">床上4件套</text>
+          <text class="page-text-color-two">已团1件</text>
+          <text class="page-text-num-two">
+            ￥1.00<text style="text-decoration:line-through;margin-left:10rpx"> ￥5.00</text>
+          </text>
+        </view>
+        <view style="width:30%;height:100%">
+          <button class="button-style">去开团</button>
+        </view>
+        </view>
+      </view>
+    </view>
+
+   
+
+  </view>
+</view>
