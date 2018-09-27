@@ -31,7 +31,7 @@ import padLayout from '../views/layout/padLayout'
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/authredirect', component: _import('login/authredirect'), hidden: true },
-  { path: '/oauthredirect', component: _import('login/oauthredirect'), hidden: true},
+  { path: '/oauthredirect', component: _import('login/oauthredirect'), hidden: true },
   { path: '/404', component: _import('error/404'), hidden: true },
   { path: '/401', component: _import('error/401'), hidden: true },
   { path: '*', component: _import('error/404'), hidden: true },
@@ -61,12 +61,12 @@ export const padRouterMap = [
         component: _import('pad/index'),
         name: 'pad',
         meta: { title: '首页', icon: 'dashboard', noCache: true }
-      },{
+      }, {
         path: 'doctor',
         component: _import('pad/doctor'),
         name: 'doctor',
         meta: { icon: 'chart', title: '医生', noCache: true }
-      },{
+      }, {
         path: 'cosmetologist',
         component: _import('pad/cosmetologist'),
         name: 'cosmetologist',
@@ -95,7 +95,7 @@ export const asyncRouterMap = [
     children: [
       { path: 'user', component: _import('user/user'), name: 'user', meta: { title: '会员管理', noCache: true }},
       { path: 'userExport', component: _import('user/userExport'), name: 'userExport', meta: { title: '会员信息导出', noCache: true }},
-      { path: 'userDetail', component: _import('user/userDetail'), name: 'userDetail', meta: { title: '会员详情', noCache: false, hideTag: true}},
+      { path: 'userDetail', component: _import('user/userDetail'), name: 'userDetail', meta: { title: '会员详情', noCache: false, hideTag: true }}
       // { path: 'address', component: _import('user/address'), name: 'address', meta: { title: '收货地址', noCache: true, hideTag: true }},
       // { path: 'express', component: _import('user/express'), name: 'express', meta: { title: '快递公司', noCache: true, hideTag: true }},
       // { path: 'collect', component: _import('user/collect'), name: 'collect', meta: { title: '会员收藏', noCache: true, hideTag: true }},
@@ -156,7 +156,7 @@ export const asyncRouterMap = [
       { path: 'keyword', component: _import('mall/keyword'), name: 'keyword', meta: { title: '关键词', noCache: true, hideTag: true }},
       { path: 'coupon', component: _import('user/coupon'), name: 'coupon', meta: { title: '优惠券管理', noCache: true }},
       { path: 'stock', component: _import('mall/stock'), name: 'stock', meta: { title: '库存管理', noCache: true }},
-      { path: 'express', component: _import('user/express'), name: 'express', meta: { title: '快递公司管理', noCache: true, }}
+      { path: 'express', component: _import('user/express'), name: 'express', meta: { title: '快递公司管理', noCache: true }}
     ]
   },
   {
@@ -192,6 +192,23 @@ export const asyncRouterMap = [
     ]
   },
   {
+    path: '/report',
+    component: Layout,
+    redirect: 'noredirect',
+    name: 'reportmanage',
+    meta: {
+      title: '报表管理',
+      icon: 'chart'
+    },
+    children: [
+      { path: 'saleorder', component: _import('report/saleOrder'), name: 'saleOrder', meta: { title: '销售订单统计', noCache: true }},
+      // { path: 'saleexecute', component: _import('report/saleExecute'), name: 'saleExecute', meta: { title: '销售执行统计', noCache: true }},
+      // { path: 'customeraccountbalance', component: _import('report/customerAccountBalance'), name: 'customerAccountBalance', meta: { title: '用户账户余额', noCache: true }},
+      // { path: 'customeraccountcheck', component: _import('report/customerAccountCheck'), name: 'timesale', meta: { title: '用户对账明细', noCache: true }}
+
+    ]
+  },
+  {
     path: '/sys',
     component: Layout,
     redirect: 'noredirect',
@@ -209,7 +226,7 @@ export const asyncRouterMap = [
       { path: 'dictionarys', component: _import('sys/dictionarys'), name: 'dictionarys', meta: { title: '字典管理', noCache: true }},
       { path: 'dictionarysCreate', component: _import('sys/dictionarysCreate'), name: 'dictionarysCreate', meta: { title: '字典添加', noCache: true, hideTag: true }}
     ]
-  },{
+  }, {
     path: '/pad',
     component: padLayout,
     redirect: 'redirect',

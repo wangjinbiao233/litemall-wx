@@ -2,3 +2,5 @@
 /target/
 /.classpath
 /.project
+/src/main/java/org/linlinjava/litemall/wx/test/
+/litemall-wx-api.iml
