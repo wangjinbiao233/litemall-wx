@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-// 销售统计（产品）列表
-export function listSaleProduct(query) {
+// 销售订单统计列表
+export function listSaleOrder(query) {
   return request({
-    url: '/report/saleProductList',
-    method: 'get',
+    url: '/report/saleOrderList',
+    method: 'post',
     params: query
   })
 }

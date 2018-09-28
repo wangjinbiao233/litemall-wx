@@ -16,6 +16,10 @@ public class SaleOrderReportDTO {
      */
     private String storeName;
     /**
+     * 订单日期
+     */
+    private String orderDate;
+    /**
      * 订单编号
      */
     private String orderSn;
@@ -226,5 +230,13 @@ public class SaleOrderReportDTO {
 
     public void setActualPrice(BigDecimal actualPrice) {
         this.actualPrice = actualPrice;
+    }
+
+    public String getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(String orderDate) {
+        this.orderDate = orderDate;
     }
 }

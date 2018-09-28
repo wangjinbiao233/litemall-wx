@@ -3,76 +3,98 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-select v-model="value8" filterable placeholder="请选择产品名称">
+      <el-select v-model="listQuery.storeId" clearable placeholder="请选择门店" style="top: -4px;">
         <el-option
-          v-for="item in options"
+          v-for="item in storeList"
+          :key="item.id"
+          :label="item.storeName"
+          :value="item.id">
+        </el-option>
+      </el-select>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入会员编号" v-model="listQuery.memberId">
+      </el-input>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入会员名称" v-model="listQuery.username">
+      </el-input>
+      <el-select v-model="listQuery.goodsFlag" clearable placeholder="商品归属" style="top: -4px;">
+        <el-option label="实物商品" :key="'1'" :value="'1'">
+        </el-option>
+        <el-option label="服务类商品" :key="'2'" :value="'2'">
+        </el-option>
+      </el-select>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入商品名称" v-model="listQuery.goodsName">
+      </el-input>
+      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态" >
+        <el-option
+          v-for="item in orderStatusList"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入广告标题" v-model="listQuery.name">
-      </el-input>
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入广告内容" v-model="listQuery.content">
-      </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading">导出</el-button>
+      <el-date-picker
+        v-model="listQuery.beginDate"
+        type="date"
+        placeholder="开始日期">
+      </el-date-picker>
+      <el-date-picker
+        v-model="listQuery.endDate"
+        type="date"
+        placeholder="结束日期">
+      </el-date-picker>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter" style="margin-top: 7px;">查找</el-button>
+      <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading" style="margin-top: 7px;">导出</el-button>
     </div>
 
     <!-- 查询结果 -->
-    <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
+    <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row style="width: 100%">
 
 
-      <el-table-column align="center" width="100px" label="门店名称" prop="id" sortable>
+      <el-table-column align="center" width="200" label="门店名称" prop="storeName">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="日期" prop="position">
+      <el-table-column align="center" width="100" label="日期" prop="orderDate">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="订单号" prop="position">
+      <el-table-column align="center" width="150" label="订单号" prop="orderSn">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="订单状态" prop="position">
+      <el-table-column align="center" width="120" label="订单状态" prop="orderStatusName">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="商品名称" prop="position">
+      <el-table-column align="center" width="200" label="商品名称" prop="goodsName">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="数量" prop="position">
+      <el-table-column align="center" width="80" label="数量" prop="goodsNumber">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="单价" prop="position">
+      <el-table-column align="center" width="80" label="单价" prop="unitPrice">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="金额" prop="position">
+      <el-table-column align="center" width="80" label="金额" prop="totalPrices">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="疗程数" prop="position">
+      <el-table-column align="center" width="80" label="疗程数" prop="treatmentNum">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="商品归属" prop="position">
+      <el-table-column align="center" width="100" label="商品归属" prop="goodsFlagName">
       </el-table-column>
 
-      <el-table-column align="center" min-width="50px" label="疗程总数" prop="position">
+      <el-table-column align="center" width="80" label="疗程总数" prop="treatmentNumCount">
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="会员编号" prop="name">
+      <el-table-column align="center" width="150" label="会员编号" prop="memberId">
       </el-table-column>
 
-      <el-table-column align="center" min-width="180px" label="会员名称" prop="content">
+      <el-table-column align="center" width="150" label="会员名称" prop="username">
       </el-table-column>
 
-      <el-table-column align="center" min-width="180px" label="订单金额" prop="content">
+      <el-table-column align="center" width="80" label="订单金额" prop="orderPrice">
       </el-table-column>
 
-      <el-table-column align="center" min-width="180px" label="券抵扣" prop="content">
+      <el-table-column align="center" width="80" label="券抵扣" prop="couponPrice">
       </el-table-column>
 
-      <el-table-column align="center" min-width="180px" label="折扣" prop="content">
-      </el-table-column>
-
-      <el-table-column align="center" min-width="180px" label="实付金额" prop="content">
+      <el-table-column align="center" width="80" label="实付金额" prop="actualPrice">
       </el-table-column>
 
     </el-table>
@@ -104,67 +126,66 @@
 </style>
 
 <script>
-  import { listAd, createAd, updateAd, deleteAd, getDictionaryTypeList } from '@/api/ad'
-  import { createStorage } from '@/api/storage'
+  import { listStore } from '@/api/reserve'
+  import { listSaleOrder } from '@/api/report'
   import waves from '@/directive/waves' // 水波纹指令
 
   export default {
-    name: 'Ad',
+    name: 'saleOrder',
     directives: {
       waves
     },
     data() {
       return {
-        list: undefined,
-        total: undefined,
+        list: [],
+        total: 0,
         listLoading: true,
+        storeList: [],
+        orderStatusList: [
+          { label: '未付款', value: 101 },
+          { label: '已取消', value: 102 },
+          { label: '已付款', value: 201 },
+          { label: '已退款', value: 202 },
+          { label: '已发货', value: 301 },
+          { label: '部分发货', value: 302 },
+          { label: '退款中', value: 303 },
+          { label: '已退款', value: 304 },
+          { label: '已收货', value: 401 },
+          { label: '已收货(系统)', value: 402 },
+          { label: '部分收货', value: 403 },
+          { label: '已完成', value: 501 }
+        ],
         listQuery: {
           page: 1,
           limit: 20,
-          name: undefined,
-          content: undefined,
-          sort: '+id'
+          storeId: '',
+          memberId: '',
+          username: '',
+          goodsFlag: '',
+          goodsName: '',
+          orderStatus: '',
+          beginDate: '',
+          endDate: ''
         },
-        // 产品下拉选项
-        goodsList: [],
-        dataForm: {
-          id: undefined,
-          name: undefined,
-          content: undefined,
-          url: undefined,
-          link: undefined,
-          position: 1,
-          enabled: true,
-          linkDetailid: undefined
-        },
-        dialogFormVisible: false,
-        dialogStatus: '',
-        textMap: {
-          update: '编辑',
-          create: '创建'
-        },
-        rules: {
-          name: [{ required: true, message: '广告标题不能为空', trigger: 'blur' }],
-          content: [{ required: true, message: '广告内容不能为空', trigger: 'blur' }],
-          url: [{ required: true, message: '广告链接不能为空', trigger: 'blur' }]
-        },
-        fileImgUrl: process.env.BASE_API + '/storage/uploadPic',
-        downloadLoading: false,
-        advertisingLinkList: undefined,
-        couponsTypeList: undefined,
-        discountVisible: false,
-        nocodeVisible: false
+        downloadLoading: false
       }
     },
     created() {
+      this.queryStoreList()
       this.getList()
-      this.getAdvertisingLinkList()
-      this.getGoodsList()
     },
     methods: {
+      // 获取门店列表
+      queryStoreList() {
+        listStore({}).then(response => {
+          this.storeList = response.data.data.allStoreList
+        }).catch(() => {
+          this.storeList = []
+        })
+      },
       getList() {
         this.listLoading = true
-        listAd(this.listQuery).then(response => {
+        listSaleOrder(this.listQuery).then(response => {
           this.list = response.data.data.items
           this.total = response.data.data.total
           this.listLoading = false
@@ -173,41 +194,6 @@
           this.total = 0
           this.listLoading = false
         })
-      },
-
-      getAdvertisingLinkList() {
-        getDictionaryTypeList({
-          groupCode: 'advertising_link'
-        }).then(response => {
-          this.advertisingLinkList = response.data.data
-        }).catch(() => {
-          this.advertisingLinkList = []
-        })
-      },
-
-      getGoodsList() {
-        getDictionaryTypeList({
-          groupCode: 'coupons_type'
-        }).then(response => {
-          this.couponsTypeList = response.data.data
-        }).catch(() => {
-          this.couponsTypeList = []
-        })
-      },
-
-      onSelectedLinkFlag(val) {
-        if (val != '') {
-          if (val == 5) { // 优惠券类别
-            this.discountVisible = true
-            this.nocodeVisible = false
-          } else { // 编号类型
-            this.discountVisible = false
-            this.nocodeVisible = true
-          }
-        } else {
-          this.discountVisible = false
-          this.nocodeVisible = false
-        }
       },
 
       handleFilter() {
@@ -222,130 +208,14 @@
         this.listQuery.page = val
         this.getList()
       },
-      resetForm() {
-        this.dataForm = {
-          id: undefined,
-          name: undefined,
-          content: undefined,
-          url: undefined,
-          link: undefined,
-          position: 1,
-          enabled: true
-        }
-      },
-      handleCreate() {
-        this.resetForm()
-        this.discountVisible = false
-        this.nocodeVisible = false
-        this.dialogStatus = 'create'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      uploadUrl(item) {
-        const formData = new FormData()
-        formData.append('file', item.file)
-        createStorage(formData).then(res => {
-          this.dataForm.url = res.data.data.url
-        }).catch(() => {
-          this.$message.error('上传失败，请重新上传')
-        })
-      },
-      createData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            createAd(this.dataForm).then(response => {
-              this.list.unshift(response.data.data)
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '创建成功',
-                type: 'success',
-                duration: 2000
-              })
-            })
-          }
-        })
-      },
-      handleUpdate(row) { // 修改页面
-        this.dataForm = Object.assign({}, row)
-        if (this.dataForm.link == '5') { // 优惠券类别
-          this.discountVisible = true
-          this.nocodeVisible = false
-        } else { // 编号类型
-          this.discountVisible = false
-          this.nocodeVisible = true
-        }
-
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
-        })
-      },
-      updateData() {
-        this.$refs['dataForm'].validate((valid) => {
-          if (valid) {
-            updateAd(this.dataForm).then(() => {
-              for (const v of this.list) {
-                if (v.id === this.dataForm.id) {
-                  const index = this.list.indexOf(v)
-                  this.list.splice(index, 1, this.dataForm)
-                  break
-                }
-              }
-              this.dialogFormVisible = false
-              this.$notify({
-                title: '成功',
-                message: '更新成功',
-                type: 'success',
-                duration: 2000
-              })
-            })
-          }
-        })
-      },
-      handleDelete(row) {
-        deleteAd(row).then(response => {
-          this.$notify({
-            title: '成功',
-            message: '删除成功',
-            type: 'success',
-            duration: 2000
-          })
-          const index = this.list.indexOf(row)
-          this.list.splice(index, 1)
-        })
-      },
       handleDownload() {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['广告ID', '广告标题', '广告内容', '广告图片', '广告位置', '活动链接', '是否启用']
-          const filterVal = ['id', 'name', 'content', 'url', 'postion', 'link', 'enabled']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '广告信息')
+          const tHeader = ['门店名称', '日期', '订单号', '订单状态', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
+          const filterVal = ['storeName', 'orderDate', 'orderSn', 'orderStatusName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice', 'couponPrice', 'actualPrice']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '销售订单统计')
           this.downloadLoading = false
         })
-      },
-      // 图片上传
-      uploadBannerImg(file) {
-        const isJPGs = file.type === 'image/jpeg'
-        console.log(isJPGs)
-      },
-      handleAvatarSuccess(res) {
-        this.dataForm.url = res.data.url
-      },
-      beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg'
-        const isLt2M = file.size / 1024 / 1024 < 2
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!')
-        }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!')
-        }
-        return isJPG && isLt2M
       }
     }
   }

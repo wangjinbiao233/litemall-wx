@@ -750,7 +750,7 @@
     </select>
 
     <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%y-%m-%d'), lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
         (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice
         FROM litemall_order_goods  log
@@ -778,10 +778,10 @@
             <if test="orderStatus != null">
                 and lo.order_status =#{orderStatus}
             </if>
-            <if test="beginDate != null">
+            <if test="beginDate != null and beginDate.trim() != ''">
                 and lo.add_time &gt;=#{beginDate}
             </if>
-            <if test="endDate != null">
+            <if test="endDate != null and endDate.trim() != ''">
                 and lo.add_time &lt;=#{endDate}
             </if>
         </where>

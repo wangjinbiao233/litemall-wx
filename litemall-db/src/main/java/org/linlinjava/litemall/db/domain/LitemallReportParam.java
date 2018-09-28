@@ -1,14 +1,15 @@
 package org.linlinjava.litemall.db.domain;
 
-import java.time.LocalDate;
+
+import org.springframework.util.StringUtils;
 
 /**
- *  报表查询参数
+ * 报表查询参数
  *
- * @version 1.0
- * @since JDK1.8
  * @author huanghaoqi
+ * @version 1.0
  * @date 2018年09月27日 14:53:49
+ * @since JDK1.8
  */
 public class LitemallReportParam {
     /**
@@ -38,11 +39,11 @@ public class LitemallReportParam {
     /**
      * 开始日期
      */
-    private LocalDate beginDate;
+    private String beginDate;
     /**
      * 结束日期
      */
-    private LocalDate endDate;
+    private String endDate;
     /**
      * 开始的索引
      */
@@ -50,17 +51,17 @@ public class LitemallReportParam {
     /**
      * 页码
      */
-    private Integer page;
+    private Integer page = 1;
     /**
      * 每页显示个数
      */
-    private Integer limit;
+    private Integer limit = 20;
     /**
      * 排序字段
      */
     private String sort;
     /**
-     *  升序或降序
+     * 升序或降序
      */
     private String order;
 
@@ -112,22 +113,6 @@ public class LitemallReportParam {
         this.orderStatus = orderStatus;
     }
 
-    public LocalDate getBeginDate() {
-        return beginDate;
-    }
-
-    public void setBeginDate(LocalDate beginDate) {
-        this.beginDate = beginDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
-
     public Integer getPage() {
         return page;
     }
@@ -162,12 +147,34 @@ public class LitemallReportParam {
 
     public Integer getOffset() {
         if (page != null && limit != null) {
-            return  (page - 1) * limit;
+            return (page - 1) * limit;
         }
         return offset;
     }
 
     public void setOffset(Integer offset) {
         this.offset = offset;
+    }
+
+    public String getBeginDate() {
+        if(StringUtils.isEmpty(beginDate)){
+            return null;
+        }
+        return beginDate;
+    }
+
+    public void setBeginDate(String beginDate) {
+        this.beginDate = beginDate;
+    }
+
+    public String getEndDate() {
+        if(StringUtils.isEmpty(endDate)){
+            return null;
+        }
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

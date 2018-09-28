@@ -39,18 +39,11 @@ public class ReportController {
      */
     @PostMapping("/saleOrderList")
     public Object saleOrderList(@LoginAdmin Integer adminId,
-                                @RequestBody LitemallReportParam param,
-                                @RequestParam(value = "page", defaultValue = "1") Integer page,
-                                @RequestParam(value = "limit", defaultValue = "10") Integer limit,
-                                String sort, String order) {
+                                LitemallReportParam param) {
         if (adminId == null) {
             return ResponseUtil.unlogin();
         }
         Map<String, Object> data = new HashMap<>();
-        param.setPage(page);
-        param.setLimit(limit);
-        param.setSort(sort);
-        param.setOrder(order);
         int total = (int) reportService.saleOrderCount(param);
         if (total == 0) {
             data.put("total", total);
