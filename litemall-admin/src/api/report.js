@@ -8,14 +8,16 @@ export function listSaleOrder(query) {
     params: query
   })
 }
-// 销售统计（门店）列表
-export function listSaleStore(query) {
+
+// 销售执行统计列表
+export function listSaleExecute(query) {
   return request({
-    url: '/report/saleStoreList',
-    method: 'get',
+    url: '/report/saleExcuteList',
+    method: 'post',
     params: query
   })
 }
+
 // 销售统计（顾问）列表
 export function listSaleCounselor(query) {
   return request({
