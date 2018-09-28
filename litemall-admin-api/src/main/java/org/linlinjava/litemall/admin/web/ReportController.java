@@ -55,4 +55,29 @@ public class ReportController {
         data.put("items", result);
         return ResponseUtil.ok(data);
     }
+
+    /**
+     * 方法描述  销售执行统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 13:49:44
+     */
+    @PostMapping("/saleExcuteList")
+    public Object saleExcuteList(@LoginAdmin Integer adminId,
+                                LitemallReportParam param) {
+        if (adminId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Map<String, Object> data = new HashMap<>();
+        int total = (int) reportService.saleExcuteCount(param);
+        if (total == 0) {
+            data.put("total", total);
+            data.put("items", new ArrayList<>(0));
+            return ResponseUtil.ok(data);
+        }
+        List<SaleOrderReportDTO> result = reportService.saleExcuteList(param);
+        data.put("total", total);
+        data.put("items", result);
+        return ResponseUtil.ok(data);
+    }
 }

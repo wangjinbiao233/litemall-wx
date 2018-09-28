@@ -49,6 +49,10 @@ public class LitemallReportParam {
      */
     private Integer offset;
     /**
+     * 服务顾问
+     */
+    private String doctorName;
+    /**
      * 页码
      */
     private Integer page = 1;
@@ -176,5 +180,13 @@ public class LitemallReportParam {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 }

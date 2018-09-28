@@ -69,4 +69,38 @@ public class LitemallReportService {
         }
         return result;
     }
+
+    /**
+     * 方法描述  销售执行统计 -- 总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:27:08
+     */
+    public long saleExcuteCount(LitemallReportParam param) {
+        Long count = litemallOrderGoodsMapper.saleExcuteCount(param);
+        return count == null ? 0L : count;
+    }
+
+    /**
+     * 方法描述  销售执行统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:01:10
+     */
+    public List<SaleOrderReportDTO> saleExcuteList(LitemallReportParam param) {
+        List<SaleOrderReportDTO> result = litemallOrderGoodsMapper.saleExcuteList(param);
+        if (!CollectionUtils.isEmpty(result)) {
+            result.forEach(o -> {
+                // 商品所属
+                String goodsFlag = o.getGoodsFlag();
+                if ("1".equals(goodsFlag)) {
+                    o.setGoodsFlagName("实物商品");
+                }
+                if ("2".equals(goodsFlag)) {
+                    o.setGoodsFlagName("服务类商品");
+                }
+            });
+        }
+        return result;
+    }
 }

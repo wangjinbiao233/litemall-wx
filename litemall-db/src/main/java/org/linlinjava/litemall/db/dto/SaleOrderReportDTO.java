@@ -87,6 +87,14 @@ public class SaleOrderReportDTO {
      * 实际金额
      */
     private BigDecimal actualPrice;
+    /**
+     * 执行日期
+     */
+    private String executeDate;
+    /**
+     * 服务顾问
+     */
+    private String doctorName;
 
     public String getStoreName() {
         return storeName;
@@ -238,5 +246,21 @@ public class SaleOrderReportDTO {
 
     public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public String getExecuteDate() {
+        return executeDate;
+    }
+
+    public void setExecuteDate(String executeDate) {
+        this.executeDate = executeDate;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 }

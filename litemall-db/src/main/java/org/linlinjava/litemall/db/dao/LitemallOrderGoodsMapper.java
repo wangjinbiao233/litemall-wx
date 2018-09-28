@@ -163,4 +163,20 @@ public interface LitemallOrderGoodsMapper {
      * @date 2018年09月27日 14:27:08
      */
     List<SaleOrderReportDTO> saleOrderList(LitemallReportParam param);
+
+
+    /**
+     * 方法描述  销售执行统计 -- 总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:27:08
+     */
+    Long saleExcuteCount(LitemallReportParam param);
+    /**
+     * 方法描述  销售执行统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:27:08
+     */
+    List<SaleOrderReportDTO> saleExcuteList(LitemallReportParam param);
 }
