@@ -1,17 +1,15 @@
 package org.linlinjava.litemall.db.service;
 
-import com.google.gson.Gson;
 import org.linlinjava.litemall.db.dao.LitemallOrderGoodsMapper;
-import org.linlinjava.litemall.db.domain.LitemallOrder;
+import org.linlinjava.litemall.db.dao.LitemallUserMapper;
 import org.linlinjava.litemall.db.domain.LitemallReportParam;
+import org.linlinjava.litemall.db.dto.AccountBalanceDTO;
 import org.linlinjava.litemall.db.dto.SaleOrderReportDTO;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,6 +24,8 @@ import java.util.List;
 public class LitemallReportService {
     @Resource
     private LitemallOrderGoodsMapper litemallOrderGoodsMapper;
+    @Resource
+    private LitemallUserMapper litemallUserMapper;
 
     /**
      * 方法描述  销售订单统计 -- 总数
@@ -102,5 +102,26 @@ public class LitemallReportService {
             });
         }
         return result;
+    }
+
+    /**
+     * 方法描述  用户账户余额统计 -- 总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:27:08
+     */
+    public long accountBanlanceCount(LitemallReportParam param) {
+        Long count = litemallUserMapper.accountBanlanceCount(param);
+        return count == null ? 0L : count;
+    }
+
+    /**
+     * 方法描述  用户账户余额统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:01:10
+     */
+    public List<AccountBalanceDTO> accountBanlanceList(LitemallReportParam param) {
+        return litemallUserMapper.accountBanlanceList(param);
     }
 }

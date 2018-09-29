@@ -2,8 +2,10 @@ package org.linlinjava.litemall.db.dao;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.linlinjava.litemall.db.domain.LitemallReportParam;
 import org.linlinjava.litemall.db.domain.LitemallUser;
 import org.linlinjava.litemall.db.domain.LitemallUserExample;
+import org.linlinjava.litemall.db.dto.AccountBalanceDTO;
 
 public interface LitemallUserMapper {
     /**
@@ -145,4 +147,21 @@ public interface LitemallUserMapper {
 	int selectDoctorCount(LitemallUser user);
 
 	int selectByOpenId(@Param("openId") String openId);
+
+    /**
+     * 方法描述  用户账户余额--总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月29日 10:47:06
+     */
+    Long accountBanlanceCount(LitemallReportParam param);
+
+	/**
+	 * 方法描述  用户账户余额统计
+	 *
+	 * @author huanghaoqi
+	 * @date 2018年09月29日 10:47:06
+	 */
+	List<AccountBalanceDTO> accountBanlanceList(LitemallReportParam param);
+
 }

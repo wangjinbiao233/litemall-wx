@@ -18,11 +18,11 @@ export function listSaleExecute(query) {
   })
 }
 
-// 销售统计（顾问）列表
-export function listSaleCounselor(query) {
+// 用户账户余额统计列表
+export function listAccountBanlance(query) {
   return request({
-    url: '/report/saleCounselorList',
-    method: 'get',
+    url: '/report/accountBanlanceList',
+    method: 'post',
     params: query
   })
 }
@@ -30,7 +30,7 @@ export function listSaleCounselor(query) {
 export function listSaleTime(query) {
   return request({
     url: '/report/saleTimeList',
-    method: 'get',
+    method: 'post',
     params: query
   })
 }

@@ -116,7 +116,7 @@
   import waves from '@/directive/waves' // 水波纹指令
 
   export default {
-    name: 'saleOrder',
+    name: 'saleExcute',
     directives: {
       waves
     },

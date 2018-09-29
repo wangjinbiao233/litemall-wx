@@ -95,6 +95,14 @@ public class SaleOrderReportDTO {
      * 服务顾问
      */
     private String doctorName;
+    /**
+     * 存储金
+     */
+    private BigDecimal rechargeMoney;
+    /**
+     * 分销金
+     */
+    private BigDecimal money;
 
     public String getStoreName() {
         return storeName;
@@ -262,5 +270,21 @@ public class SaleOrderReportDTO {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public BigDecimal getRechargeMoney() {
+        return rechargeMoney;
+    }
+
+    public void setRechargeMoney(BigDecimal rechargeMoney) {
+        this.rechargeMoney = rechargeMoney;
+    }
+
+    public BigDecimal getMoney() {
+        return money;
+    }
+
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
 }

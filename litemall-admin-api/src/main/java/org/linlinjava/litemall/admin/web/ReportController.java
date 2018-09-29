@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
 import org.linlinjava.litemall.db.domain.LitemallReportParam;
+import org.linlinjava.litemall.db.dto.AccountBalanceDTO;
 import org.linlinjava.litemall.db.dto.SaleOrderReportDTO;
 import org.linlinjava.litemall.db.service.LitemallReportService;
 import org.linlinjava.litemall.db.util.ResponseUtil;
@@ -76,6 +77,31 @@ public class ReportController {
             return ResponseUtil.ok(data);
         }
         List<SaleOrderReportDTO> result = reportService.saleExcuteList(param);
+        data.put("total", total);
+        data.put("items", result);
+        return ResponseUtil.ok(data);
+    }
+
+    /**
+     * 方法描述  用户账户余额统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 13:49:44
+     */
+    @PostMapping("/accountBanlanceList")
+    public Object accountBanlanceList(@LoginAdmin Integer adminId,
+                                 LitemallReportParam param) {
+        if (adminId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Map<String, Object> data = new HashMap<>();
+        int total = (int) reportService.accountBanlanceCount(param);
+        if (total == 0) {
+            data.put("total", total);
+            data.put("items", new ArrayList<>(0));
+            return ResponseUtil.ok(data);
+        }
+        List<AccountBalanceDTO> result = reportService.accountBanlanceList(param);
         data.put("total", total);
         data.put("items", result);
         return ResponseUtil.ok(data);
