@@ -27,9 +27,9 @@ export function listAccountBanlance(query) {
   })
 }
 // 销售统计（时间段）列表
-export function listSaleTime(query) {
+export function listAccountCheck(query) {
   return request({
-    url: '/report/saleTimeList',
+    url: '/report/accountCheckList',
     method: 'post',
     params: query
   })

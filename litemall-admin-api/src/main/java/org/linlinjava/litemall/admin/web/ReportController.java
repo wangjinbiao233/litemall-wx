@@ -106,4 +106,29 @@ public class ReportController {
         data.put("items", result);
         return ResponseUtil.ok(data);
     }
+
+    /**
+     * 方法描述  用户对账明细统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 13:49:44
+     */
+    @PostMapping("/accountCheckList")
+    public Object accountCheckList(@LoginAdmin Integer adminId,
+                                      LitemallReportParam param) {
+        if (adminId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Map<String, Object> data = new HashMap<>();
+        int total = (int) reportService.accountCheckCount(param);
+        if (total == 0) {
+            data.put("total", total);
+            data.put("items", new ArrayList<>(0));
+            return ResponseUtil.ok(data);
+        }
+        List<AccountBalanceDTO> result = reportService.accountCheckList(param);
+        data.put("total", total);
+        data.put("items", result);
+        return ResponseUtil.ok(data);
+    }
 }

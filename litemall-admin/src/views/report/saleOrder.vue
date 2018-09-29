@@ -34,12 +34,12 @@
       <el-date-picker
         v-model="listQuery.beginDate"
         type="date"
-        placeholder="开始日期">
+        placeholder="开始日期" style="width: 200px;">
       </el-date-picker>
       <el-date-picker
         v-model="listQuery.endDate"
         type="date"
-        placeholder="结束日期">
+        placeholder="结束日期" style="width: 200px;">
       </el-date-picker>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter" style="margin-top: 7px;">查找</el-button>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading" style="margin-top: 7px;">导出</el-button>

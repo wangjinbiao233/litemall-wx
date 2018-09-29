@@ -164,4 +164,20 @@ public interface LitemallUserMapper {
 	 */
 	List<AccountBalanceDTO> accountBanlanceList(LitemallReportParam param);
 
+    /**
+     * 方法描述  用户对账明细--总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月29日 10:47:06
+     */
+    Long accountCheckCount(LitemallReportParam param);
+
+    /**
+     * 方法描述  用户账户余额统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月29日 10:47:06
+     */
+    List<AccountBalanceDTO> accountCheckList(LitemallReportParam param);
+
 }

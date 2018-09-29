@@ -825,4 +825,69 @@
             limit #{offset},#{limit}
         </if>
     </select>
+
+
+    <select id="accountCheckCount" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam" resultType="java.lang.Long">
+        SELECT  count(lr.id)
+        FROM litemall_recharge lr
+        LEFT JOIN litemall_user lu ON lu.id=lr.recharge_user_id
+        <where>
+            <if test="memberId != null and memberId.trim() != ''">
+                and lu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and lu.username like concat (concat ('%',#{username}),'%')
+            </if>
+            <if test="operationType != null">
+                and lr.operation=#{operationType}
+            </if>
+            <if test="rechargeType != null">
+                and lr.recharge_type=#{rechargeType}
+            </if>
+            <if test="beginDate != null and beginDate.trim() != ''">
+                and lr.operation_time &gt;=#{beginDate}
+            </if>
+            <if test="endDate != null and endDate.trim() != ''">
+                and lr.operation_time &lt;=#{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="accountCheckList" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam" resultType="org.linlinjava.litemall.db.dto.AccountBalanceDTO">
+        SELECT lu.member_id AS memberId,lu.username AS username,DATE_FORMAT(lr.operation_time,'%Y-%m-%d') AS operationTime,
+        lr.remark AS operationType,lr.recharge_type AS rechargeType,lr.order_sn AS orderSn,lr.recharge_money AS chargeMoney
+        FROM litemall_recharge lr
+        LEFT JOIN litemall_user lu ON lu.id=lr.recharge_user_id
+        <where>
+            <if test="memberId != null and memberId.trim() != ''">
+                and lu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and lu.username like concat (concat ('%',#{username}),'%')
+            </if>
+            <if test="operationType != null">
+                and lr.operation=#{operationType}
+            </if>
+            <if test="rechargeType != null">
+                and lr.recharge_type=#{rechargeType}
+            </if>
+            <if test="beginDate != null and beginDate.trim() != ''">
+                and lr.operation_time &gt;=#{beginDate}
+            </if>
+            <if test="endDate != null and endDate.trim() != ''">
+                and lr.operation_time &lt;=#{endDate}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                ORDER BY ${sort} ${order}
+            </when>
+            <otherwise>
+                ORDER BY lu.member_id ASC
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit !=null ">
+            limit #{offset},#{limit}
+        </if>
+    </select>
 </mapper>

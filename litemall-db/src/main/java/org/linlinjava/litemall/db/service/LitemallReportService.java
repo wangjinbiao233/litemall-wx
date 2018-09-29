@@ -124,4 +124,43 @@ public class LitemallReportService {
     public List<AccountBalanceDTO> accountBanlanceList(LitemallReportParam param) {
         return litemallUserMapper.accountBanlanceList(param);
     }
+
+    /**
+     * 方法描述  用户对账明细统计 -- 总数
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:27:08
+     */
+    public long accountCheckCount(LitemallReportParam param) {
+        Long count = litemallUserMapper.accountCheckCount(param);
+        return count == null ? 0L : count;
+    }
+
+    /**
+     * 方法描述  用户账对账明细统计
+     *
+     * @author huanghaoqi
+     * @date 2018年09月27日 14:01:10
+     */
+    public List<AccountBalanceDTO> accountCheckList(LitemallReportParam param) {
+        List<AccountBalanceDTO> result = litemallUserMapper.accountCheckList(param);
+        result.forEach(a -> {
+            Integer rechargeType = a.getRechargeType();
+            String rechargeTypeName = "";
+            if (rechargeType != null) {
+                if (1 == rechargeType) {
+                    rechargeTypeName = "银联";
+                }
+                if (2 == rechargeType) {
+                    rechargeTypeName = "支付宝";
+                }
+                if (3 == rechargeType) {
+                    rechargeTypeName = "微信";
+                }
+            }
+            a.setRechargeTypeName(rechargeTypeName);
+        });
+        return result;
+
+    }
 }

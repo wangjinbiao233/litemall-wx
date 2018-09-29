@@ -204,7 +204,7 @@ export const asyncRouterMap = [
       { path: 'saleorder', component: _import('report/saleOrder'), name: 'saleOrder', meta: { title: '销售订单统计', noCache: true }},
       { path: 'saleexecute', component: _import('report/saleExecute'), name: 'saleExecute', meta: { title: '销售执行统计', noCache: true }},
       { path: 'customeraccountbalance', component: _import('report/customerAccountBalance'), name: 'customerAccountBalance', meta: { title: '用户账户余额', noCache: true }},
-      // { path: 'customeraccountcheck', component: _import('report/customerAccountCheck'), name: 'timesale', meta: { title: '用户对账明细', noCache: true }}
+      { path: 'customeraccountcheck', component: _import('report/customerAccountCheck'), name: 'timesale', meta: { title: '用户对账明细', noCache: true }}
 
     ]
   },

@@ -28,6 +28,30 @@ public class AccountBalanceDTO {
      * 分销金
      */
     private BigDecimal money;
+    /**
+     * 操作日期
+     */
+    private String operationTime;
+    /**
+     * 交易类型
+     */
+    private String operationType;
+    /**
+     * 支付方式
+     */
+    private Integer rechargeType;
+    /**
+     * 支付方式名称
+     */
+    private String rechargeTypeName;
+    /**
+     * 订单号
+     */
+    private String orderSn;
+    /**
+     * 交易金额
+     */
+    private BigDecimal chargeMoney;
 
     public String getMemberId() {
         return memberId;
@@ -59,5 +83,53 @@ public class AccountBalanceDTO {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    public String getOperationTime() {
+        return operationTime;
+    }
+
+    public void setOperationTime(String operationTime) {
+        this.operationTime = operationTime;
+    }
+
+    public String getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
+
+    public Integer getRechargeType() {
+        return rechargeType;
+    }
+
+    public void setRechargeType(Integer rechargeType) {
+        this.rechargeType = rechargeType;
+    }
+
+    public String getRechargeTypeName() {
+        return rechargeTypeName;
+    }
+
+    public void setRechargeTypeName(String rechargeTypeName) {
+        this.rechargeTypeName = rechargeTypeName;
+    }
+
+    public String getOrderSn() {
+        return orderSn;
+    }
+
+    public void setOrderSn(String orderSn) {
+        this.orderSn = orderSn;
+    }
+
+    public BigDecimal getChargeMoney() {
+        return chargeMoney;
+    }
+
+    public void setChargeMoney(BigDecimal chargeMoney) {
+        this.chargeMoney = chargeMoney;
     }
 }

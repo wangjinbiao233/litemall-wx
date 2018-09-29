@@ -53,6 +53,14 @@ public class LitemallReportParam {
      */
     private String doctorName;
     /**
+     * 交易类型 1充值,2消费,3退款
+     */
+    private Integer operationType;
+    /**
+     * 支付方式
+     */
+    private Integer rechargeType;
+    /**
      * 页码
      */
     private Integer page = 1;
@@ -188,5 +196,21 @@ public class LitemallReportParam {
 
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
+    }
+
+    public Integer getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(Integer operationType) {
+        this.operationType = operationType;
+    }
+
+    public Integer getRechargeType() {
+        return rechargeType;
+    }
+
+    public void setRechargeType(Integer rechargeType) {
+        this.rechargeType = rechargeType;
     }
 }
