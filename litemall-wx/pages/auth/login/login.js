@@ -9,7 +9,16 @@ Page({
     password: '',
     code: '',
     loginErrorCount: 0,
-    pId: ''
+    showNameModal: false,
+    pId: '',
+    send: false,
+    alreadySend: false,
+    second: 60,
+    disabled: true,
+    buttonType: 'default',
+    phoneNum: '',
+    userInfo:'',
+    codeC: ''
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -42,21 +51,36 @@ Page({
   },
   wxLogin: function (e) {
     console.log(e)
-    var userInfo = e.detail.userInfo;
+    var userInfo=this.data.userInfo;
+    if(userInfo == undefined || userInfo == ''){
+      userInfo = e.detail.userInfo;
+    }
+    this.setData({
+      userInfo: userInfo
+    });
     let that = this;
     user.checkLogin().catch(() => {
 
       user.loginByWeixin(that.data.pId, userInfo).then(res => {
-        app.globalData.hasLogin = true;
-        if (that.data.pId) {
-          wx.switchTab({
-            url: '/pages/ucenter/index/index'
+        console.log(res.data.userInfo.mobile);
+        var mobile = res.data.userInfo.mobile;
+        if(mobile==undefined||mobile==''){
+          this.setData({
+            showNameModal: true
           });
-        } else {
-          wx.navigateBack({
-            delta: 1
-          })
+        }else{
+          app.globalData.hasLogin = true;
+          if (that.data.pId) {
+            wx.switchTab({
+              url: '/pages/ucenter/index/index'
+            });
+          } else {
+            wx.navigateBack({
+              delta: 1
+            })
+          }
         }
+       
       }).catch((err) => {
         console.log(err);
         if (err.errno === -2) {
@@ -124,6 +148,14 @@ Page({
       username: e.detail.value
     });
   },
+  hideModal: function () {
+    this.setData({
+      showNameModal: false,
+      alreadySend: false,
+      send:false,
+      disabled:true
+    });
+  },
   bindPasswordInput: function (e) {
 
     this.setData({
@@ -154,5 +186,150 @@ Page({
         });
         break;
     }
+  },
+  inputPhoneNum: function (e) {
+    let phoneNum = e.detail.value
+    if (phoneNum.length === 11) {
+      let checkedNum = this.checkPhoneNum(phoneNum)
+      if (checkedNum) {
+        this.setData({
+          phoneNum: phoneNum
+        })
+        console.log('phoneNum' + this.data.phoneNum)
+        this.showSendMsg()
+        this.activeButton()
+      }
+    } else {
+      this.setData({
+        phoneNum: ''
+      })
+      this.hideSendMsg()
+    }
+  },
+  checkPhoneNum: function (phoneNum) {
+    let str = /^1\d{10}$/
+    if (str.test(phoneNum)) {
+      return true
+    } else {
+      util.showErrorToast('电话号码错误')
+      return false
+    }
+  },
+  showSendMsg: function () {
+    if (!this.data.alreadySend) {
+      this.setData({
+        send: true
+      })
+    }
+  },
+  hideSendMsg: function () {
+   this.setData({
+      send: false,
+      disabled: true,
+      buttonType: 'default'
+    })
+  },
+  sendMsg: function () {
+    var phoneNum = this.data.phoneNum;
+    wx.request({
+      url: api.SetCodeByPhone,
+      data: {
+        phoneNum: phoneNum
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+      }
+    })
+    this.setData({
+      alreadySend: true,
+      send: false
+    })
+    this.timer()
+  },
+  timer: function () {
+    let promise = new Promise((resolve, reject) => {
+      let setTimer = setInterval(
+        () => {
+          this.setData({
+            second: this.data.second - 1
+          })
+          if (this.data.second <= 0) {
+            this.setData({
+              second: 60,
+              alreadySend: false,
+              send: true
+            })
+            resolve(setTimer)
+          }
+        }
+        , 1000)
+    })
+    promise.then((setTimer) => {
+      clearInterval(setTimer)
+    })
+  },
+
+  // 验证码
+
+  addCode: function (e) {
+    this.setData({
+      codeC: e.detail.value
+    })
+    this.activeButton()
+    console.log('code' + this.data.code)
+  },
+
+  // 按钮
+  activeButton: function () {
+    let { phoneNum, codeC} = this.data
+    if (phoneNum && codeC) {
+      this.setData({
+        disabled: false,
+        buttonType: 'primary'
+      })
+    } else {
+      this.setData({
+        disabled: true,
+        buttonType: 'default'
+      })
+    }
+  },
+  verifyCodeSubmit:function(){
+    var userId = wx.getStorageSync('userId');
+    var authCode = this.data.codeC;
+    var mobile = this.data.phoneNum;
+    var userInfo = this.data.userInfo;
+    var that=this;
+    wx.request({
+      url: api.verifyCodeAndSave,
+      data: {
+        mobile: mobile,
+        userId: userId,
+        authCode: authCode
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+        if(res.data.errno === 0){
+          //说明验证成功
+         
+          console.log(userInfo);
+          that.wxLogin(userInfo)
+        }else if(res.data.errno ===403 ){
+          //验证失败
+          util.showErrorToast(res.data.errmsg+'');
+        }
+      }
+    })
+
+
   }
+
 })

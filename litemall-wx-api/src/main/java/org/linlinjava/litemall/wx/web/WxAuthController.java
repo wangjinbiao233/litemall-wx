@@ -13,9 +13,12 @@ import org.linlinjava.litemall.db.service.LitemallSerialNumberService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
 import org.linlinjava.litemall.db.util.ResponseUtil;
+import org.linlinjava.litemall.db.util.SmsUtil;
 import org.linlinjava.litemall.wx.dao.UserInfo;
 import org.linlinjava.litemall.wx.dao.UserToken;
 import org.linlinjava.litemall.wx.service.UserTokenManager;
+import org.linlinjava.litemall.wx.util.Cache;
+import org.linlinjava.litemall.wx.util.CacheManager;
 import org.linlinjava.litemall.wx.util.IpUtil;
 import org.linlinjava.litemall.wx.util.bcrypt.BCryptPasswordEncoder;
 import org.linlinjava.litemall.wx.util.weixin.OpenIdUtil;
@@ -196,7 +199,67 @@ public class WxAuthController {
 		}
 		return ResponseUtil.fail();
     }
-    
+
+
+    /**
+     * 登录发送验证码
+     * @return
+     */
+    @RequestMapping("setCodeByPhone")
+    public Object setCodeByPhone(@RequestBody String body, HttpServletRequest request){
+        String mobile = JacksonUtil.parseString(body, "phoneNum");
+
+        // 将上次生成的验证码移除掉
+        CacheManager.invalidate(mobile);
+        // 6位验证码
+        String authCode = SmsUtil.generate(6);
+        // 5分钟过期
+        CacheManager.putContent(mobile, authCode, 1 * 60 * 1000);
+        String content = "【梵朗PHILAB】验证码为：" + authCode + ", 1分钟内有效。";
+        try {
+            SmsUtil.sendSms(mobile, content, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseUtil.fail(403, "发送失败");
+        }
+
+        return ResponseUtil.ok();
+
+    }
+
+    /**
+     * 验证验证码是否正确，如果正确存储手机号
+     *
+     * @param request
+     */
+    @RequestMapping("verifyCodeAndSave")
+    public Object verifyCode(@RequestBody String body, HttpServletRequest request) {
+
+        Map<String, Object> result = new HashMap<>();
+        String mobile = JacksonUtil.parseString(body, "mobile");
+        String authCode = JacksonUtil.parseString(body, "authCode");
+        String userId = JacksonUtil.parseString(body, "userId");
+
+        Cache cache = CacheManager.getContent(mobile);
+        if (cache == null || cache.isExpired())
+            return ResponseUtil.fail(403, "验证码已失效!");
+        else {
+            if (authCode.equals(cache.getValue().toString())) {
+                CacheManager.invalidate("mobile");
+                //存储手机号码
+                LitemallUser user = new LitemallUser();
+                if(userId != null && !userId.isEmpty()){
+                    user.setId(Integer.valueOf(userId));
+                    user.setMobile(mobile);
+                    userService.update(user);
+                }
+
+            } else
+                return ResponseUtil.fail(403, "验证码校验错误!");
+        }
+        return ResponseUtil.ok(result);
+    }
+
     public String getSerialNumber() {
     	Calendar now = Calendar.getInstance();  
 		String year = now.get(Calendar.YEAR)+"";

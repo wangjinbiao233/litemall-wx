@@ -26,6 +26,8 @@ module.exports = {
   CatalogCurrent: WxApiRoot + 'catalog/current',  //分类目录当前分类数据接口
 
   AuthLoginByWeixin: WxApiRoot + 'auth/login_by_weixin', //微信登录
+  SetCodeByPhone: WxApiRoot + 'auth/setCodeByPhone',//获取验证码
+  verifyCodeAndSave: WxApiRoot + 'auth/verifyCodeAndSave',//验证验证码并保存手机号
   getPhoneNo: WxApiRoot + 'order/weChatGetPhone',  //获取微信绑定手机号
   AuthLoginByAccount: WxApiRoot + 'auth/login', //账号登录
   AuthRegister: WxApiRoot + 'auth/register', //账号注册

@@ -1,0 +1,151 @@
+/* pages/store/index.wxss */
+
+.store {
+  background-color: #fff;
+  width: 100%;
+}
+
+.store .store-main {
+  padding: 30rpx 15px;
+  background-color: #f4f4f4;
+}
+
+.store-parent {
+  background-color: #f4f4f4;
+  display: flex;
+  flex-flow: column;
+  padding: 2rpx;
+}
+
+.page-text{
+  flex-direction: column;
+  display: flex;
+  width:50%;
+}
+
+.page-main{
+  flex-direction: row;
+  display: flex;
+}
+
+
+.page-text-content{
+  margin-top:50rpx;
+  margin-left: 50rpx;
+  font-size: 40rpx;
+}
+
+.page-text-num{
+  margin-top:10rpx;
+  margin-left: 50rpx;
+  font-size: 60rpx;
+  color: #8ac2d6;
+}
+
+.page-text-foot{
+  margin-top:10rpx;
+  margin-left: 50rpx;
+}
+
+.page-text-color{
+  margin-right: 20rpx;
+  padding: 6rpx 6rpx 6rpx 6rpx;
+  background-color: #8ac2d6;
+  font-size: 30rpx;
+}
+
+.store-main-first{
+  background-color: #8ac2d6;
+  width:100%;
+  height: 200rpx;
+  margin-bottom:20rpx;
+  display:flex; 
+  justify-content:center; 
+  align-items:center;
+  flex-direction: column;
+
+}
+
+.free-cell{
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+  margin-left: 15rpx;
+  position: relative;
+  background-color: #fff;
+}
+
+
+.free-cell-color{
+  position: absolute;
+  width:30px;
+  height:20px;
+  color:#fff;
+  border-radius: 20px;
+  background:red;
+  left: 0;
+  top: 40px;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  text-align: center;
+}
+
+.image-circle{
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+}
+
+.store-main-secend{
+  margin-top:10rpx;
+  display:flex; 
+  flex-direction: row;
+}
+
+.page-advise{
+  padding-top: 10rpx;
+  background-color: #fff;
+  padding-bottom: 20rpx;
+  margin-top:20rpx;
+  font-size: 40rpx;
+  height: 80rpx;
+  padding-left: 15rpx;
+
+}
+
+.page-detail{
+  float:right;
+  color: #929292; 
+}
+
+.button-style{
+  background-color:#8ac2d6;
+  margin-top:100%;
+  height: 60rpx;
+  width:80%;
+  margin-right: 10rpx;
+  font-size:30rpx;
+  color:#fff;
+}
+
+
+.page-text-num-two{
+  margin-top:10rpx;
+  margin-left: 50rpx;
+  font-size: 40rpx;
+  color: red;
+}
+
+.page-text-color-two{
+  margin-left: 50rpx;
+  padding-top:10rpx;
+  color: red;
+  font-size: 30rpx;
+}
+
+.page-loop{
+  background-color: #fff;
+  padding: 2rpx;
+  margin: 2rpx;
+}

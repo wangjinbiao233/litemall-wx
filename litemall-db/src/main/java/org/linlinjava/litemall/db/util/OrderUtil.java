@@ -105,6 +105,61 @@ public class OrderUtil {
     }
 
 
+    public static String orderStatusText(int status) {
+
+        if (status == 101) {
+            return "未付款";
+        }
+
+        if (status == 102) {
+            return "已取消";
+        }
+
+        if (status == 201) {
+            return "已付款";
+        }
+
+        if (status == 202) {
+            // 进一步跟踪退款状态
+            return "已退款";
+        }
+
+        if (status == 301) {
+            return "已发货";
+        }
+
+        if (status == 302) {
+            return "部分发货";
+        }
+
+        if (status == 303) {
+            return "退款中";
+        }
+
+        if (status == 304) {
+            return "已退款";
+        }
+
+        if (status == 401) {
+            return "已收货";
+        }
+
+        if (status == 402) {
+            return "已收货(系统)";
+        }
+
+        if (status == 403) {
+            return "部分收货";
+        }
+
+        if (status == 501) {
+            return "已完成";
+        }
+
+        Assert.state(false, "orderStatus不支持");
+        return "";
+    }
+
     public static OrderHandleOption build(LitemallOrder order){
         int status = order.getOrderStatus().intValue();
         OrderHandleOption handleOption = new OrderHandleOption();
