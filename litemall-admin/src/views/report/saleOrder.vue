@@ -48,17 +48,16 @@
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row style="width: 100%">
 
-
-      <el-table-column align="center" width="200" label="门店名称" prop="storeName">
+      <el-table-column align="center" width="150" label="订单号" prop="orderSn">
       </el-table-column>
 
       <el-table-column align="center" width="100" label="日期" prop="orderDate">
       </el-table-column>
 
-      <el-table-column align="center" width="150" label="订单号" prop="orderSn">
+      <el-table-column align="center" width="120" label="订单状态" prop="orderStatusName">
       </el-table-column>
 
-      <el-table-column align="center" width="120" label="订单状态" prop="orderStatusName">
+      <el-table-column align="center" width="200" label="门店名称" prop="storeName">
       </el-table-column>
 
       <el-table-column align="center" width="200" label="商品名称" prop="goodsName">

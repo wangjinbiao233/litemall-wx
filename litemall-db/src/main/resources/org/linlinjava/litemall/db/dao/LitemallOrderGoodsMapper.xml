@@ -790,7 +790,7 @@
                 ORDER BY ${sort} ${order}
             </when>
             <otherwise>
-                ORDER BY ls.store_name ASC
+                ORDER BY lo.order_sn DESC
             </otherwise>
         </choose>
         <if test="offset != null and limit !=null ">
@@ -876,7 +876,7 @@
                 ORDER BY ${sort} ${order}
             </when>
             <otherwise>
-                ORDER BY ls.store_name ASC
+                ORDER BY lo.order_sn DESC
             </otherwise>
         </choose>
         <if test="offset != null and limit !=null ">
