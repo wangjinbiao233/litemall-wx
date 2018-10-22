@@ -96,7 +96,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="createDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="createData">确定</el-button>
+        <el-button type="primary" @click="createData":disabled="isDisable">确定</el-button>
       </div>
     </el-dialog>
 
@@ -142,6 +142,7 @@
         list: null,
         total: null,
         listLoading: true,
+        isDisable:false,
         listQuery: {
           page: 1,
           limit: 20,
@@ -286,6 +287,10 @@
         })
       },
       createData() {
+        this.isDisable = true
+           setTimeout(() => {
+               this.isDisable = false
+           }, 1000)
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
 

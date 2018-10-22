@@ -7,6 +7,7 @@ import org.linlinjava.litemall.admin.annotation.LoginAdmin;
 import org.linlinjava.litemall.db.domain.LitemallGoodsSpecification;
 import org.linlinjava.litemall.db.domain.LitemallProduct;
 import org.linlinjava.litemall.db.service.LitemallGoodsSpecificationService;
+import org.linlinjava.litemall.db.service.LitemallProductService;
 import org.linlinjava.litemall.db.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,9 @@ public class GoodsSpecificationController {
 
     @Autowired
     private LitemallGoodsSpecificationService goodsSpecificationService;
+
+    @Autowired
+    private LitemallProductService productService;
 
     @GetMapping("/list")
     public Object list(@LoginAdmin Integer adminId,
@@ -185,7 +189,7 @@ public class GoodsSpecificationController {
             boolean isHave = false;
             for(LitemallGoodsSpecification goodsSpecification_req : goodsSpecificationList_request) {
 
-                Integer specificationId_req = goodsSpecification_req.getGoodsId();
+                Integer specificationId_req = goodsSpecification_req.getId();
                 if(specificationId_req != null && specificationId_req != 0 && specificationId_req == specificationId) {
                     isHave = true;
                     break;
@@ -200,7 +204,30 @@ public class GoodsSpecificationController {
         if(removeGoodsSpecification.size() > 0) {
             // 进行删除操作
             for(LitemallGoodsSpecification goodsSpecification : removeGoodsSpecification) {
+
+                //此处应该同步删除销售价格中的包含商品规格的销售价格---2018-10-19修改
+                //根据goodIds查找所有的销售价格
+                List<LitemallProduct> productList = productService.queryByGid(goodsSpecification.getGoodsId());
+                for(LitemallProduct litemallProduct : productList){
+                    Integer[] goodsSpecificationIds=litemallProduct.getGoodsSpecificationIds();
+                    List<Integer> lists= Arrays.asList(goodsSpecificationIds);
+                    List<Integer> aLists=new ArrayList<>(lists);
+                    for(int i=0;i<aLists.size();i++){
+                        if(aLists.get(i) == goodsSpecification.getId()){
+                            //销售价格包含删除商品规格,此处删除销售价格中的商品规格
+                            aLists.remove(i);
+                            Integer[] arrayInteger=aLists.toArray(new Integer[aLists.size()]);
+                            litemallProduct.setGoodsSpecificationIds(arrayInteger);
+                            productService.updateById(litemallProduct);
+                        }
+                    }
+
+                }
+
+
                 goodsSpecificationService.deleteById(goodsSpecification.getId());
+
+
             }
         }
 

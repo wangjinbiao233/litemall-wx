@@ -275,8 +275,21 @@
           </el-form>
         </el-tab-pane>
 
+        <!-- 谨慎保存 -->
+            <el-dialog title="请谨慎保存数据" :visible.sync="reserveTimeUpdateDialog" width="30%" center>
+
+              <div>
+                <span class="dialogClass">请谨慎保存数据！ </span>
+              </div>
+
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="reserveTimeUpdateDialog = false">取消</el-button>
+                <el-button type="primary" @click="handleSave()">确定</el-button>
+              </div>
+            </el-dialog>
+
         <div style="text-align: right;">
-          <el-button type="primary" @click="handleSave()">保存</el-button>
+          <el-button type="primary" @click="handleDialog()">保存</el-button>
         </div>
       </el-tabs>
     </div>
@@ -366,7 +379,8 @@
         goodsSpecOptions : [], // add by pengxb @2018-05-10 14:00
         storeList:[],
         isservicegoods: false,
-        treatmentNumVisible: false
+        treatmentNumVisible: false,
+        reserveTimeUpdateDialog: false
       }
     },
 
@@ -629,8 +643,12 @@
             })
           }
         })
+        this.reserveTimeUpdateDialog = false
 
+      },
 
+      handleDialog(){
+        this.reserveTimeUpdateDialog = true
       },
 
       handleAddGoodsAboutItem(index, type) {
@@ -902,5 +920,11 @@
   .goodsDetail .avatar-uploader{
     display: inline-block;
   }
+
+  .dialogClass{
+      vertical-align: top;
+      font-size:40px;
+      margin-left: 35px;
+    }
 
 </style>
