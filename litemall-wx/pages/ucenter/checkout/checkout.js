@@ -68,31 +68,39 @@ Page({
     var that = this;
     if (this.data.payType == 1) {
       let that = this;
-      util.request(api.PayPrepayId, {
-        orderId: this.data.orderId, payType: that.data.payType, userId: wx.getStorageSync('userId')
-      }, 'POST').then(function (res) {
-        if (res.errno === 0) {
 
-          const payParam = res.data;
-          wx.requestPayment({
-            'timeStamp': payParam.timeStamp,
-            'nonceStr': payParam.nonceStr,
-            'package': payParam.package,
-            'signType': payParam.signType,
-            'paySign': payParam.paySign,
-            'success': function (res) {
-              wx.redirectTo({
-                url: '/pages/payResult/payResult?status=1&orderId=' + that.data.orderId
-              });             
-            },
-            'fail': function (res) {
-              wx.redirectTo({
-                url: '/pages/payResult/payResult?status=0&orderId=' + that.data.orderId
-              });
-            }
-          });
-        }
-      });
+      var actualPrice = that.data.actualPrice;
+      if (actualPrice == 0) {
+        wx.redirectTo({
+          url: '/pages/payResult/payResult?status=1&orderId=' + this.data.orderId
+        });
+      } else {
+        util.request(api.PayPrepayId, {
+          orderId: this.data.orderId, payType: that.data.payType, userId: wx.getStorageSync('userId')
+        }, 'POST').then(function (res) {
+          if (res.errno === 0) {
+
+            const payParam = res.data;
+            wx.requestPayment({
+              'timeStamp': payParam.timeStamp,
+              'nonceStr': payParam.nonceStr,
+              'package': payParam.package,
+              'signType': payParam.signType,
+              'paySign': payParam.paySign,
+              'success': function (res) {
+                wx.redirectTo({
+                  url: '/pages/payResult/payResult?status=1&orderId=' + that.data.orderId
+                });             
+              },
+              'fail': function (res) {
+                wx.redirectTo({
+                  url: '/pages/payResult/payResult?status=0&orderId=' + that.data.orderId
+                });
+              }
+            });
+          }
+        });
+      }
     } else {
       //余额支付
       var phoneNo = that.data.mobile;

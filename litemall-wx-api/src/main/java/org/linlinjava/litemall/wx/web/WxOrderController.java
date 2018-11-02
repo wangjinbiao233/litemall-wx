@@ -55,6 +55,7 @@ import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 
+import net.sf.ezmorph.object.BigDecimalMorpher;
 import net.sf.json.JSONObject;
 
 /*
@@ -270,7 +271,7 @@ public class WxOrderController {
 		/**
 		 * 当订单处于未支付时 查需要询支付状态
 		 */
-		if (order.getOrderStatus().intValue() == 101) {
+		if (order.getActualPrice().compareTo(new BigDecimal(0.00)) != 0 && order.getOrderStatus().intValue() == 101 && order.getPayType() != null && order.getPayType() == 1) {
 			WxPayOrderQueryResult wxPayOrderQueryResult = null;
 			try {
 				wxPayOrderQueryResult = wxService.queryOrder(null, order.getOrderSn());
@@ -472,7 +473,9 @@ public class WxOrderController {
 		}
 
 		// 删除购物车里面的商品信息
-		cartService.clearGoods(userId);
+		for (LitemallCart checkGoods : checkedGoodsList) {
+			cartService.clearGoodsByGoodsId(checkGoods.getGoodsId());
+		}
 
 		// 商品货品数量减少
 		for (LitemallCart checkGoods : checkedGoodsList) {
@@ -1003,6 +1006,9 @@ public class WxOrderController {
 	 */
 	@RequestMapping("orderQuery")
 	public Object orderQuery(@RequestBody String body, Integer orderId, HttpServletRequest request) {
+		
+		Map<String, Object> result = new HashMap<>();
+		
 		Integer userId = JacksonUtil.parseInteger(body, "userId");
 		orderId = JacksonUtil.parseInteger(body, "orderId");
 		System.out.println("====================================="+orderId);
@@ -1025,7 +1031,30 @@ public class WxOrderController {
 
 		if (!order.getUserId().equals(userId)) {
 			return ResponseUtil.badArgumentValue();
+		}	
+	
+		
+		if(	order.getActualPrice().compareTo(new BigDecimal(0.00)) == 0) {
+			LitemallOrder updateOrder = new LitemallOrder();
+			updateOrder.setId(order.getId());
+			updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);
+
+			List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(orderId);
+
+			// 商品订单和服务订单标志
+			for (LitemallOrderGoods litemallOrderGoods : litemallOrderGoodsList) {
+					litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
+					orderGoodsService.update(litemallOrderGoods);
+			}
+
+			// 微信的订单号
+			updateOrder.setPayId(null);
+			orderService.update(updateOrder);
+			
+			result.put("tradeStatus", "SUCCESS");
+			return ResponseUtil.ok(result);
 		}
+		
 		WxPayOrderQueryResult wxPayOrderQueryResult = null;
 		try {
 			wxPayOrderQueryResult = wxService.queryOrder(null, order.getOrderSn());
@@ -1033,10 +1062,10 @@ public class WxOrderController {
 			e.printStackTrace();
 			return ResponseUtil.fail(403, "查询失败");
 		}
-		Map<String, Object> result = new HashMap<>();
+	
 		if (wxPayOrderQueryResult.getTradeState().equals("SUCCESS")) {
 			// 支付成功,且订单处于未支付状态
-			if (order.getOrderStatus().intValue() == 101) {
+			if (order.getOrderStatus().intValue() == 101 && order.getPayType() == 1) {
 				LitemallOrder updateOrder = new LitemallOrder();
 				updateOrder.setId(order.getId());
 				updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);

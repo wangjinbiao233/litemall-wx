@@ -104,7 +104,7 @@ public class WxPayController {
         wxPayUnifiedOrderRequest.setNonceStr(new Date().getTime() + "");
         wxPayUnifiedOrderRequest.setBody("微商城-支付");
         wxPayUnifiedOrderRequest.setOutTradeNo(order.getOrderSn());
-        Double totalFee = order.getOrderPrice().doubleValue() * 100 ;
+        Double totalFee = order.getActualPrice().doubleValue() * 100 ;
         wxPayUnifiedOrderRequest.setTotalFee(totalFee.intValue());
         wxPayUnifiedOrderRequest.setSpbillCreateIp(request.getRemoteAddr());
         wxPayUnifiedOrderRequest.setNotifyURL("http://mall-wx.dgtis.com/wx/pay/notify");

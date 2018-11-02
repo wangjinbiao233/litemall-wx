@@ -202,4 +202,13 @@ public class GoodsController {
 		return sort;
     }
     
+    @GetMapping("/goodsList")
+    public Object goodsList(@LoginAdmin Integer adminId){
+        if(adminId == null){
+            return ResponseUtil.unlogin();
+        }
+        List<LitemallGoods>  goodsList = goodsService.selectGoodsList();
+        return ResponseUtil.ok(goodsList);
+    }
+    
 }

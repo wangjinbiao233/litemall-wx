@@ -39,3 +39,11 @@ export function deleteGoods(data) {
     data
   })
 }
+
+export function goodsList(query) {
+  return request({
+    url: '/goods/goodsList',
+    method: 'get',
+    params: query
+  })
+}

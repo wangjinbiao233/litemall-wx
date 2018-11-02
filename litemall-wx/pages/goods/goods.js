@@ -154,8 +154,7 @@ Page({
         }
       }
       checkedValues.push(_checkedObj);
-    }
-
+    }  
     return checkedValues;
   },
   //根据已选的值，计算其它值的状态
@@ -364,7 +363,6 @@ Page({
         });
         return false;
       }
-
       //根据选中的规格，判断是否有对应的sku信息
       let checkedProductArray = this.getCheckedProductItem(this.getCheckedSpecKey());
       if (!checkedProductArray || checkedProductArray.length <= 0) {

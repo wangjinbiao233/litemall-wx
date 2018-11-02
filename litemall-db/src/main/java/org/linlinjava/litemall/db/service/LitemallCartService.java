@@ -78,6 +78,14 @@ public class LitemallCartService {
         cart.setDeleted(true);
         cartMapper.updateByExampleSelective(cart, example);
     }
+    
+    public void clearGoodsByGoodsId(Integer goodsId) {
+    	LitemallCartExample example = new LitemallCartExample();
+    	example.or().andIdEqualTo(goodsId).andCheckedEqualTo(true);
+    	LitemallCart cart = new LitemallCart();
+    	cart.setDeleted(true);
+    	cartMapper.updateByExampleSelective(cart, example);
+    }
 
     public List<LitemallCart> querySelective(Integer userId, Integer goodsId, Integer page, Integer limit, String sort, String order) {
         LitemallCartExample example = new LitemallCartExample();

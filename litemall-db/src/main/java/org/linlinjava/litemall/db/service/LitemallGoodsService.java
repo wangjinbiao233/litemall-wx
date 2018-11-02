@@ -260,5 +260,15 @@ public class LitemallGoodsService {
 //	        PageHelper.startPage(offset, limit);
 	        return goodsMapper.recommendGoods(categoryId);
 	    }
+	 
+	 
+	 public List<LitemallGoods> selectGoodsList() {
+	 	LitemallGoodsExample example = new LitemallGoodsExample();
+        example.or().andIsOnSaleEqualTo(true).andDeletedEqualTo(false);
+        
+        Column[] columns = new Column[]{Column.id,Column.goodsSn, Column.name, Column.retailPrice};
+        return goodsMapper.selectByExampleSelective(example ,columns);
+        
+	 }
 	
 }

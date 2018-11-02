@@ -119,6 +119,40 @@ public class LitemallGoodsSpecificationService {
 
         return lstSpecGroup;
     }
+    
+    public Object querySpecGroupByIds(Integer[] ids) {
+    	
+    	List<LitemallGoodsSpecification> goodsSpecificationList = new ArrayList<LitemallGoodsSpecification>();
+        for(Integer id : ids) {
+        	LitemallGoodsSpecification litemallGoodsSpecification = goodsSpecificationMapper.selectByPrimaryKey(id);
+        	goodsSpecificationList.add(litemallGoodsSpecification);
+        }
+
+         Map<String, VO> map = new HashMap<>();
+         List<VO> specificationVoList = new ArrayList<>();
+
+         for(LitemallGoodsSpecification goodsSpecification : goodsSpecificationList){
+             String specification = goodsSpecification.getSpecification();
+             VO goodsSpecificationVo = map.get(specification);
+             if(goodsSpecificationVo == null){
+                 goodsSpecificationVo = new VO();
+                 goodsSpecificationVo.setName(specification);
+                 List<LitemallGoodsSpecification> valueList = new ArrayList<>();
+                 valueList.add(goodsSpecification);
+                 goodsSpecificationVo.setValueList(valueList);
+                 map.put(specification, goodsSpecificationVo);
+                 specificationVoList.add(goodsSpecificationVo);
+             }
+             else{
+                 List<LitemallGoodsSpecification> valueList = goodsSpecificationVo.getValueList();
+                 valueList.add(goodsSpecification);
+             }
+         }
+
+         return specificationVoList;
+         
+    }
+    
 
     private class VO {
         private String name;

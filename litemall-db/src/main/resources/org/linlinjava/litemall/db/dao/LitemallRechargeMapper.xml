@@ -233,6 +233,7 @@
         date_format(e.operation_time,"%Y-%m-%d %H:%i:%S") AS "operationTime",
         e.recharge_money as "rechargeMoney",
 		e.operation,
+		e.recharge_type,
 		e.remark,
 		e.order_sn as "orderSn"
         FROM litemall_recharge e
