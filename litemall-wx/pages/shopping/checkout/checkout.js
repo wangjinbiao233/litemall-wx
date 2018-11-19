@@ -30,17 +30,19 @@ Page({
     disabled: false,
     isGetPhone: 0,
     mobile: '',
-    code: ''
+    code: '',
+    pageFlag:1
   },
   onLoad: function (options) {
     var that = this
     // 页面初始化 options为页面跳转所带来的参数
     console.log(wx.getStorageSync('userId'));
     util.request(api.getUserInfo, { userId: wx.getStorageSync('userId') }, 'POST').then(function (res) {
-      console.log(res);
+      console.log(options.flag);
       that.setData({
         money: res.user.money,
-        rechargeMoney: res.user.rechargeMoney
+        rechargeMoney: res.user.rechargeMoney,
+        pageFlag:options.flag
       });
     });
     wx.setStorageSync('couponId', 0);
@@ -59,7 +61,8 @@ Page({
           freightPrice: res.data.freightPrice,
           goodsTotalPrice: res.data.goodsTotalPrice,
           orderTotalPrice: res.data.orderTotalPrice,
-          addressId: res.data.addressId
+          addressId: res.data.addressId,
+          pageFlag: res.data.flag
         });
       }
       wx.hideLoading();
@@ -99,6 +102,7 @@ Page({
     })
     try {
       var cartId = wx.getStorageSync('cartId');
+      console.log(cartId);
       if (cartId) {
         this.setData({
           'cartId': cartId

@@ -13,13 +13,16 @@
         <image src="/static/images/address_right.png"></image>
       </view>
     </view>
-    <view class="address-item address-empty" bindtap="selectAddress" wx:else>
+    <view wx:else>
+    <view  class="address-item address-empty" bindtap="selectAddress" wx:if="{{pageFlag==1}}">
       <view class="m">
        请选择收货地址
       </view>
       <view class="r">
         <image src="/static/images/address_right.png"></image>
       </view>
+    </view>
+    <view class="address-item address-empty" wx:else></view>
     </view>
   </view>
 
@@ -54,7 +57,7 @@
   <view class="order-box">
     <view class="order-item">
       <view class="l">
-        <text class="name">商品合计</text>
+        <text class="name">合计</text>
       </view>
       <view class="r">
         <text class="txt">￥{{goodsTotalPrice}}元</text>
