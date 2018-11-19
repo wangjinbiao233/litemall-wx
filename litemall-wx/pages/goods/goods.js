@@ -399,7 +399,7 @@ Page({
             try {
               wx.setStorageSync('cartId', res.data);
               wx.navigateTo({
-                url: '/pages/shopping/checkout/checkout?storeId'+storeid
+                url: '/pages/shopping/checkout/checkout?storeId=' + storeid + '&flag=' + that.data.flag
                 //url: '/pages/shopping/checkout/checkout'
               })
             } catch (e) {

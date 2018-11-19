@@ -137,7 +137,7 @@
     </view> -->
 
     <view class="goods-attr" wx:if="{{attribute.length!=0}}">
-      <view class="t">商品参数</view>
+      <view class="t">参数</view>
       <view class="l">
         <view class="item" wx:for="{{attribute}}" wx:key="name">
           <text class="left">{{item.attribute}}：</text>
@@ -146,14 +146,14 @@
       </view>
     </view>
     <view class="goods-attrdetail">
-      <view class="bt">商品详情</view>      
+      <view class="bt">详情</view>      
     </view>    
     <view class="detail">
       <import src="/lib/wxParse/wxParse.wxml" />
       <template is="wxParse" data="{{wxParseData:goodsDetail.nodes}}" />
     </view>
     <view class="goods-attr" wx:if="{{brand!=null}}">
-      <view class="t">商品品牌</view>
+      <view class="t">品牌</view>
       <navigator url="/pages/brandDetail/brandDetail?id={{brand.id}}">
         <view class="goods-brand">
           <image class="img" src="{{brand.appListPicUrl}}"></image>
