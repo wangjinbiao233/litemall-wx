@@ -390,13 +390,28 @@ public class WxCartController {
 		}
 		
 		// 商品价格
+
+		Map<String, Object> data = new HashMap();
+		data.put("flag",2);
 		List<LitemallCart> checkedGoodsList = null;
 		if (cartId == null || cartId.equals(0)) {
 			checkedGoodsList = cartService.queryByUidAndChecked(userId);
+			//此处为购物车跳转
+				for (LitemallCart cart : checkedGoodsList) {
+					//根据商品id查询商品
+					LitemallGoods goods=goodsService.findById(cart.getGoodsId());
+					if("1".equals(goods.getFlag())){
+						data.put("flag",1);
+					}
+				}
 		} else {
 			LitemallCart cart = cartService.findById(cartId);
 			if (cart == null) {
 				return ResponseUtil.badArgumentValue();
+			}
+			LitemallGoods goods=goodsService.findById(cart.getGoodsId());
+			if("1".equals(goods.getFlag())){
+				data.put("flag",1);
 			}
 			checkedGoodsList = new ArrayList<>(1);
 			checkedGoodsList.add(cart);
@@ -422,7 +437,6 @@ public class WxCartController {
 		BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
 		
 		List<LitemallCustomDiscount> couponList = litemallDiscountService.selectMyUseCoupotList(userId,checkedGoodsPrice);
-		Map<String, Object> data = new HashMap();
 		data.put("checkedAddress", checkedAddress);
 		data.put("freightPrice", freightPrice);
 		data.put("checkedCoupon", 0);
