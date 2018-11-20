@@ -138,7 +138,7 @@ Page({
   },
   submitOrder: function () {
     var that = this;
-    if (this.data.addressId <= 0) {
+    if (this.data.addressId <= 0 && this.data.pageFlag == 1) {
       util.showErrorToast('请选择收货地址');
       return false;
     }
