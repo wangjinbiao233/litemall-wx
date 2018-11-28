@@ -23,7 +23,7 @@
       </el-select>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入商品名称" v-model="listQuery.goodsName">
       </el-input>
-      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态" >
+      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态">
         <el-option
           v-for="item in orderStatusList"
           :key="item.value"
@@ -214,8 +214,8 @@
       handleDownload() {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['门店名称', '日期', '订单号', '订单状态', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
-          const filterVal = ['storeName', 'orderDate', 'orderSn', 'orderStatusName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice', 'couponPrice', 'actualPrice']
+          const tHeader = ['订单号', '分销商', '日期', '订单状态', '门店名称', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
+          const filterVal = ['orderSn', 'distributionName', 'orderDate', 'orderStatusName', 'storeName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice', 'couponPrice', 'actualPrice']
           excel.export_json_to_excel2(tHeader, this.list, filterVal, '销售订单统计')
           this.downloadLoading = false
         })
