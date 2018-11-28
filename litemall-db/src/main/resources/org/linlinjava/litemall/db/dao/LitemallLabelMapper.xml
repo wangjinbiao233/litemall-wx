@@ -179,4 +179,12 @@
     </if>
 
   </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from litemall_label where 1=1
+    and is_delete = 0
+    and user_id = #{userId}
+  </select>
 </mapper>

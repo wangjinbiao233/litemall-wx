@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.db.dao;
 
+import org.apache.ibatis.annotations.Param;
 import org.linlinjava.litemall.db.domain.LitemallLabel;
 
 import java.util.List;
@@ -24,4 +25,11 @@ public interface LitemallLabelMapper {
      * @return
      */
     List<Map> selectSelective(LitemallLabel label);
+
+    /**
+     * 根据userId查询标签
+     * @param userId
+     * @return
+     */
+    List<LitemallLabel> selectByUserId(@Param("userId") String userId);
 }

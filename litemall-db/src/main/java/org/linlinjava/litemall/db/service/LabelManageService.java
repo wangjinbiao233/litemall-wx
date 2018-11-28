@@ -55,4 +55,17 @@ public class LabelManageService {
     public int update(LitemallLabel label) {
         return litemallLabelMapper.updateByPrimaryKeySelective(label);
     }
+
+    public LitemallLabel selectById(Integer id) {
+        return litemallLabelMapper.selectByPrimaryKey(id);
+    }
+
+    /**
+     * 根据userId查询标签
+     * @param userId
+     * @return
+     */
+    public List<LitemallLabel> selectByUserId(String userId) {
+        return litemallLabelMapper.selectByUserId(userId);
+    }
 }

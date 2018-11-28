@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.wx.util.weixin;
+package org.linlinjava.litemall.db.util.weixin;
 
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;

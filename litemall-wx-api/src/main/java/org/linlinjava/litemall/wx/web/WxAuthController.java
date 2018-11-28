@@ -6,8 +6,10 @@ import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.db.domain.LitemallLabel;
 import org.linlinjava.litemall.db.domain.LitemallSerialNumber;
 import org.linlinjava.litemall.db.domain.LitemallUser;
+import org.linlinjava.litemall.db.service.LabelManageService;
 import org.linlinjava.litemall.db.service.LitemallSerialNumberService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
@@ -22,7 +24,7 @@ import org.linlinjava.litemall.wx.util.IpUtil;
 import org.linlinjava.litemall.wx.util.bcrypt.BCryptPasswordEncoder;
 import org.linlinjava.litemall.wx.util.weixin.OpenIdUtil;
 import org.linlinjava.litemall.wx.util.weixin.WXBizDataCrypt;
-import org.linlinjava.litemall.wx.util.weixin.WeixinUtil;
+import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +47,9 @@ public class WxAuthController {
 
     @Autowired
     private LitemallUserService userService;
+
+    @Autowired
+    private LabelManageService labelManageService;
 
     @Autowired
     private WxMaService wxService;
@@ -484,5 +489,28 @@ public class WxAuthController {
 		Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("subUserCount", subCount + subSubCount);
 		return ResponseUtil.ok(result);
+    }
+
+    /**
+     * 查询用户标签列表
+     * @param body
+     * @param request
+     * @return
+     */
+    @RequestMapping("getUserLabel")
+    public Object getUserLabel(@RequestBody String body, HttpServletRequest request){
+        String userId = JacksonUtil.parseString(body, "pId");
+        if(userId == null){
+            return ResponseUtil.badArgument();
+        }
+        List<LitemallLabel> list = labelManageService.selectByUserId(userId);
+        Map<Object, Object> result = new HashMap<Object, Object>();
+        if(list != null && list.size() > 0){
+            result.put("state", true);
+            result.put("labelList", list);
+        } else {
+            result.put("state", false);
+        }
+        return ResponseUtil.ok(result);
     }
 }

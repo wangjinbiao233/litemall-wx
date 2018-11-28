@@ -4,14 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
-import org.linlinjava.litemall.admin.config.AccessToken;
-import org.linlinjava.litemall.admin.config.MessageData;
-import org.linlinjava.litemall.admin.config.WeixinUtil;
+import org.linlinjava.litemall.db.util.entity.MessageData;
 import org.linlinjava.litemall.db.domain.LitemallDictionary;
 import org.linlinjava.litemall.db.domain.LitemallDistributionApply;
 import org.linlinjava.litemall.db.domain.LitemallUser;
@@ -19,6 +15,8 @@ import org.linlinjava.litemall.db.service.LitemallDictionaryService;
 import org.linlinjava.litemall.db.service.LitemallDistributionApplyService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.ResponseUtil;
+import org.linlinjava.litemall.db.util.entity.AccessToken;
+import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -110,7 +108,7 @@ public class DistributionApplyController {
 		/**
 		 * 查询可提取收益列表 + 提现明细列表
 		 *
-		 * @param userId
+		 * @param litemallDictionary
 		 * @return
 		 */
 	    @RequestMapping(value = "/selectDistributionTypeList", method = RequestMethod.POST)  

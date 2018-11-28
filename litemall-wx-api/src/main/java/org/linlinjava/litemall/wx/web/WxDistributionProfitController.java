@@ -16,7 +16,7 @@ import org.linlinjava.litemall.db.service.LitemallDistributionProfitService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
 import org.linlinjava.litemall.db.util.ResponseUtil;
-import org.linlinjava.litemall.wx.util.weixin.WeixinUtil;
+import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

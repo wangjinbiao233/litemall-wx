@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.admin.web;
 
 import com.github.pagehelper.PageInfo;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,6 +9,8 @@ import org.linlinjava.litemall.admin.annotation.LoginAdmin;
 import org.linlinjava.litemall.db.domain.LitemallLabel;
 import org.linlinjava.litemall.db.service.LabelManageService;
 import org.linlinjava.litemall.db.util.ResponseUtil;
+import org.linlinjava.litemall.db.util.entity.AccessToken;
+import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +25,8 @@ public class LabelManageController {
     private final Log logger = LogFactory.getLog(LabelManageController.class);
     @Autowired
     private LabelManageService labelManageService;
+    @Autowired
+    private WeixinUtil weixinUtil;
 
     @GetMapping("/list")
     public Object list(@LoginAdmin Integer adminId,
@@ -95,5 +100,32 @@ public class LabelManageController {
             return ResponseUtil.fail("修改失败");
         }
     }
+
+    @PostMapping("/createQrcode")
+    public Object createQrcode(@LoginAdmin Integer adminId, @RequestBody LitemallLabel label){
+        logger.debug(label);
+        if(adminId == null && label == null){
+            return ResponseUtil.unlogin();
+        }
+        if(label.getId() != null){
+            LitemallLabel litemallLabel = labelManageService.selectById(label.getId());
+            if(litemallLabel != null){
+                AccessToken token = weixinUtil.getAccessToken();
+                if(token != null){
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("labelId", litemallLabel.getId());
+                    JSONObject  parameter = JSONObject.fromObject(map);
+                    String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), parameter.toString());
+                    if (StringUtils.isNotBlank(qrcodeUrl)) {
+                        litemallLabel.setQrcodeUrl(qrcodeUrl);
+                        labelManageService.update(litemallLabel);
+                        return ResponseUtil.ok();
+                    }
+                }
+            }
+        }
+        return ResponseUtil.fail();
+    }
+
 
 }

@@ -31,3 +31,11 @@ export function removeLabel(data) {
     data
   })
 }
+
+export function createQrcode(data) {
+  return request({
+    url: '/label/createQrcode',
+    method: 'post',
+    data
+  })
+}
