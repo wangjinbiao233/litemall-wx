@@ -828,7 +828,7 @@
 
 
     <select id="accountCheckCount" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam" resultType="java.lang.Long">
-        SELECT  count(lr.id)
+        SELECT count(lr.id)
         FROM litemall_recharge lr
         LEFT JOIN litemall_user lu ON lu.id=lr.recharge_user_id
         <where>
@@ -889,5 +889,26 @@
         <if test="offset != null and limit !=null ">
             limit #{offset},#{limit}
         </if>
+    </select>
+
+    <select id="listDistributionUserIds" resultType="java.lang.Integer">
+        select id from litemall_user
+        where distribution_partner=1 and deleted=0
+    </select>
+
+    <select id="listNextDistributionUserIds" resultType="java.lang.Integer">
+        SELECT
+          u.id
+        FROM litemall_user u
+        WHERE p_id  IN (SELECT user.id from litemall_user user WHERE user.distribution_partner=1 and deleted=0 )
+		  GROUP BY u.id
+    </select>
+
+    <select id="listNextNextDistributionUserIds" resultType="java.lang.Integer">
+        SELECT
+          u.id
+        FROM litemall_user u
+        WHERE p_id IN (SELECT id FROM litemall_user  WHERE p_id IN (SELECT user.id from litemall_user user WHERE user.distribution_partner=1 and deleted=0 ))
+        GROUP BY u.id
     </select>
 </mapper>

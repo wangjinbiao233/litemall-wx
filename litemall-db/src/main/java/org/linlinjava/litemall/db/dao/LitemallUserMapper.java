@@ -180,4 +180,25 @@ public interface LitemallUserMapper {
      */
     List<AccountBalanceDTO> accountCheckList(LitemallReportParam param);
 
+    /**
+     * 方法描述  获取所有分销商ID
+     *
+     * @author huanghaoqi
+     * @date 2018年11月28日 09:17:02
+     */
+    List<Integer> listDistributionUserIds();
+    /**
+     * 方法描述  获取所有分销商的下级成员idS
+     *
+     * @author huanghaoqi
+     * @date 2018年11月28日 09:17:02
+     */
+    List<Integer> listNextDistributionUserIds();
+    /**
+     * 方法描述  获取所有分销商的下下级成员idS
+     *
+     * @author huanghaoqi
+     * @date 2018年11月28日 09:17:02
+     */
+    List<Integer> listNextNextDistributionUserIds();
 }

@@ -3,6 +3,8 @@ package org.linlinjava.litemall.db.domain;
 
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * 报表查询参数
  *
@@ -76,6 +78,14 @@ public class LitemallReportParam {
      * 升序或降序
      */
     private String order;
+    /**
+     * 登录人ID
+     */
+    private Integer adminId;
+    /**
+     * 下单人的用户ID集合
+     */
+    private List<Integer> orderUserIds;
 
     public Integer getStoreId() {
         return storeId;
@@ -212,5 +222,21 @@ public class LitemallReportParam {
 
     public void setRechargeType(Integer rechargeType) {
         this.rechargeType = rechargeType;
+    }
+
+    public Integer getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
+    }
+
+    public List<Integer> getOrderUserIds() {
+        return orderUserIds;
+    }
+
+    public void setOrderUserIds(List<Integer> orderUserIds) {
+        this.orderUserIds = orderUserIds;
     }
 }
