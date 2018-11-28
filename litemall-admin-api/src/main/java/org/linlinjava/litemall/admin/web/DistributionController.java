@@ -33,9 +33,6 @@ public class DistributionController {
     @Autowired
     private LitemallUserService userService;
     @Autowired
-    private LitemallDistributionProfitService distributionProfitService;
-
-    @Autowired
     private LitemallRechargeService litemallRechargeService;
     @Autowired
     private LitemallReportService litemallReportService;
@@ -137,7 +134,14 @@ public class DistributionController {
             return ResponseUtil.unlogin();
         }
         Map<String, Object> data = new HashMap<>();
-
+        // 获取分销商下级和下下级的用户ID
+        List<Integer> orderUserIds = litemallReportService.listDistributionUserId();
+        if (CollectionUtils.isEmpty(orderUserIds)) {
+            data.put("total", 0);
+            data.put("items", new ArrayList<>(0));
+            return ResponseUtil.ok(data);
+        }
+        param.setOrderUserIds(orderUserIds);
         int total = (int) litemallReportService.distributionReportCount(param);
         if (total == 0) {
             data.put("total", total);

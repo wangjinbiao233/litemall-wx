@@ -189,7 +189,7 @@ public interface LitemallOrderGoodsMapper {
     Long distributionReportCount(LitemallReportParam param);
 
     /**
-     * 方法描述  销售订单统计
+     * 方法描述  分销报表统计
      *
      * @author huanghaoqi
      * @date 2018年09月27日 14:27:08

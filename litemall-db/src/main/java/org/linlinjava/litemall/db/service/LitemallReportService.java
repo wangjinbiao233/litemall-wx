@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.db.service;
 
+import org.linlinjava.litemall.db.dao.LitemallDistributionProfitMapper;
 import org.linlinjava.litemall.db.dao.LitemallOrderGoodsMapper;
 import org.linlinjava.litemall.db.dao.LitemallUserMapper;
 import org.linlinjava.litemall.db.domain.LitemallReportParam;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 报表统计 service
@@ -27,6 +30,8 @@ public class LitemallReportService {
     private LitemallOrderGoodsMapper litemallOrderGoodsMapper;
     @Resource
     private LitemallUserMapper litemallUserMapper;
+    @Resource
+    private LitemallDistributionProfitMapper litemallDistributionProfitMapper;
 
     /**
      * 方法描述  销售订单统计 -- 总数
@@ -205,10 +210,10 @@ public class LitemallReportService {
                     o.setGoodsFlagName("服务类商品");
                 }
                 // 分销商
-                Integer distributionId=o.getDistributionId();
-                if(distributionId!=null){
-                    LitemallUser litemallUser=litemallUserMapper.selectByPrimaryKey(distributionId);
-                    if(litemallUser!=null){
+                Integer distributionId = o.getDistributionId();
+                if (distributionId != null) {
+                    LitemallUser litemallUser = litemallUserMapper.selectByPrimaryKey(distributionId);
+                    if (litemallUser != null) {
                         o.setDistributionName(litemallUser.getUsername());
                     }
                 }
@@ -217,4 +222,24 @@ public class LitemallReportService {
         return result;
     }
 
+    /**
+     * 方法描述  获取所有分销商的下级和下下级ID
+     *
+     * @author huanghaoqi
+     * @date 2018年11月28日 09:40:44
+     */
+    public List<Integer> listDistributionUserId() {
+        List<Integer> result = new ArrayList<>();
+        // 分销商下级
+        List<Integer> nextDistributionUserIds = litemallUserMapper.listNextDistributionUserIds();
+        if (!CollectionUtils.isEmpty(nextDistributionUserIds)) {
+            result.addAll(nextDistributionUserIds);
+        }
+        // 分销商下下级ID
+        List<Integer> nextNextDistributionUserIds = litemallUserMapper.listNextNextDistributionUserIds();
+        if (!CollectionUtils.isEmpty(nextNextDistributionUserIds)) {
+            result.addAll(nextNextDistributionUserIds);
+        }
+        return result;
+    }
 }

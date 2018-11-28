@@ -896,8 +896,14 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
+            <if test="orderUserIds != null">
+                lo.user_id in
+                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
+                    #{orderUserId}
+                </foreach>
+            </if>
             <if test="storeId != null">
-                ls.id=#{storeId}
+               and ls.id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
@@ -934,8 +940,14 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
+            <if test="orderUserIds != null">
+                lo.user_id in
+                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
+                    #{orderUserId}
+                </foreach>
+            </if>
             <if test="storeId != null">
-                ls.id=#{storeId}
+                and ls.id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
