@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.linlinjava.litemall.db.dao.LitemallLabelMapper" >
+  <resultMap id="BaseResultMap" type="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="label_name" property="labelName" jdbcType="VARCHAR" />
+    <result column="label_desc" property="labelDesc" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="INTEGER" />
+    <result column="modify_time" property="modifyTime" jdbcType="VARCHAR" />
+    <result column="modify_by" property="modifyBy" jdbcType="INTEGER" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="qrcode_url" property="qrcodeUrl" jdbcType="VARCHAR" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, label_name, label_desc, create_time, create_by, modify_time, modify_by, is_delete, qrcode_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from litemall_label
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from litemall_label
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    insert into litemall_label (id, user_id, label_name,
+      label_desc, create_time, create_by,
+      modify_time, modify_by, is_delete,
+      qrcode_url
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{labelName,jdbcType=VARCHAR},
+      #{labelDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{createBy,jdbcType=INTEGER},
+      #{modifyTime,jdbcType=VARCHAR}, #{modifyBy,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER},
+      #{qrcodeUrl,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    insert into litemall_label
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="labelName != null" >
+        label_name,
+      </if>
+      <if test="labelDesc != null" >
+        label_desc,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="modifyBy != null" >
+        modify_by,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="qrcodeUrl != null" >
+        qrcode_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="labelName != null" >
+        #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelDesc != null" >
+        #{labelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyBy != null" >
+        #{modifyBy,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null" >
+        #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    update litemall_label
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="labelName != null" >
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelDesc != null" >
+        label_desc = #{labelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=INTEGER},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyBy != null" >
+        modify_by = #{modifyBy,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="qrcodeUrl != null" >
+        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    update litemall_label
+    set user_id = #{userId,jdbcType=INTEGER},
+      label_name = #{labelName,jdbcType=VARCHAR},
+      label_desc = #{labelDesc,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=INTEGER},
+      modify_time = #{modifyTime,jdbcType=VARCHAR},
+      modify_by = #{modifyBy,jdbcType=INTEGER},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectSelective"
+          parameterType="org.linlinjava.litemall.db.domain.LitemallLabel"
+          resultType="java.util.Map">
+    select
+    id as id,
+    user_id as userId,
+    qrcode_url as qrcodeUrl,
+    label_name as labelName,
+    label_desc as labelDesc,
+    create_by as createBy,
+    create_time as createTime,
+    modify_by as modifyBy,
+    modify_time as modifyTime,
+    is_delete as isDelete
+    from litemall_label where 1=1
+    and is_delete = 0
+    <if test="userId != null" >
+      and user_id = #{userId}
+    </if>
+    <if test="labelName != null">
+      and label_name like concat (concat ('%',#{labelName}),'%')
+    </if>
+
+  </select>
+</mapper>

@@ -42,10 +42,14 @@
       <el-table-column align="center" min-width="100px" label="审批状态" prop="auditStatus"  :formatter="showAuditStatus">
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
+      <el-table-column align="center" label="操作" width="300" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary"   v-if="scope.row.auditStatus  == 0" @click="handleUpdate(scope.row)">通过</el-button>
-          <el-button type="primary"   v-if="scope.row.auditStatus  == 0" @click="handleReject(scope.row)">驳回</el-button>
+          <el-button type="success" class="filter-item" size="mini" v-if="scope.row.auditStatus  == 0" @click="handleUpdate(scope.row)">通过</el-button>
+          <el-button type="warning" class="filter-item" size="mini" v-if="scope.row.auditStatus  == 0" @click="handleReject(scope.row)">驳回</el-button>
+
+          <router-link v-if="scope.row.auditStatus  == 1" ref='tag' :to="{path:'/distribution/labelmanage',query: {id: scope.row.id}}">
+            <el-button class="filter-item" type="primary" size="mini" style="width: inherit;">标签管理</el-button>
+          </router-link>
         </template>
       </el-table-column>
     </el-table>
@@ -132,7 +136,6 @@ export default {
     getList() {
       this.listLoading = true
       listDistribution(this.listQuery).then(response => {
-        debugger
         this.list = response.data.data.items
         this.total = response.data.data.total
         this.listLoading = false
@@ -147,7 +150,6 @@ export default {
       selectDistributionTypeList({
         groupCode: 'distribution_type'
       }).then(response => {
-        debugger
         this.distributionTypeList = response.data.data
 
       }).catch(() => {

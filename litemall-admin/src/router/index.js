@@ -169,8 +169,9 @@ export const asyncRouterMap = [
       icon: 'chart'
     },
     children: [
-      { path: 'distribution', component: _import('distribution/distribution'), name: 'distribution', meta: { icon: 'chart', title: '分销管理', noCache: true }},
-      { path: 'distributionreport', component: _import('distribution/distributionReport'), name: 'distributionReport', meta: { icon: 'chart', title: '分销报表', noCache: true }}
+      { path: 'distribution', component: _import('distribution/distribution'), name: 'distribution', meta: { title: '分销管理', noCache: true }},
+      { path: 'labelmanage', component: _import('distribution/labelmanage'), name: 'labelmanage', meta: { title: '标签管理', noCache: false, hideTag: true, hidden: true }},
+      { path: 'distributionreport', component: _import('distribution/distributionReport'), name: 'distributionReport', meta: { title: '分销报表', noCache: true }}
     ]
   },
   {

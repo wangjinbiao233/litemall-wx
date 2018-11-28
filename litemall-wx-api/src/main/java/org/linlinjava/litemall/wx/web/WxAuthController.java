@@ -1,7 +1,6 @@
 package org.linlinjava.litemall.wx.web;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 
 import org.apache.commons.lang.StringUtils;
@@ -49,7 +48,7 @@ public class WxAuthController {
 
     @Autowired
     private WxMaService wxService;
-    
+
     @Autowired
     private WeixinUtil weixinUtil;
     
