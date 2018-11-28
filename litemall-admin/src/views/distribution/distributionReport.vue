@@ -3,14 +3,6 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-select v-model="listQuery.storeId" clearable placeholder="请选择门店" style="top: -4px;">
-        <el-option
-          v-for="item in storeList"
-          :key="item.id"
-          :label="item.storeName"
-          :value="item.id">
-        </el-option>
-      </el-select>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入会员编号" v-model="listQuery.memberId">
       </el-input>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入会员名称" v-model="listQuery.username">
@@ -23,7 +15,7 @@
       </el-select>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入商品名称" v-model="listQuery.goodsName">
       </el-input>
-      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态">
+      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态" style="top: -4px;">
         <el-option
           v-for="item in orderStatusList"
           :key="item.value"
@@ -55,13 +47,19 @@
       <el-table-column align="center" width="150" label="分销商" prop="distributionName">
       </el-table-column>
 
+      <el-table-column align="center" width="150" label="分销商标签" prop="distributionLabelNames">
+      </el-table-column>
+
+      <el-table-column align="center" width="150" label="佣金状态" prop="operationTypeName">
+      </el-table-column>
+
+      <el-table-column align="center" width="150" label="佣金" prop="profitMoney">
+      </el-table-column>
+
       <el-table-column align="center" width="100" label="日期" prop="orderDate">
       </el-table-column>
 
       <el-table-column align="center" width="120" label="订单状态" prop="orderStatusName">
-      </el-table-column>
-
-      <el-table-column align="center" width="200" label="门店名称" prop="storeName">
       </el-table-column>
 
       <el-table-column align="center" width="200" label="商品名称" prop="goodsName">
@@ -129,8 +127,8 @@
 </style>
 
 <script>
-  import { listStore } from '@/api/reserve'
-  import { distributionReportList } from '@/api/distribution'
+  import {listStore} from '@/api/reserve'
+  import {distributionReportList} from '@/api/distribution'
   import waves from '@/directive/waves' // 水波纹指令
 
   export default {
@@ -145,18 +143,18 @@
         listLoading: true,
         storeList: [],
         orderStatusList: [
-          { label: '未付款', value: 101 },
-          { label: '已取消', value: 102 },
-          { label: '已付款', value: 201 },
-          { label: '已退款', value: 202 },
-          { label: '已发货', value: 301 },
-          { label: '部分发货', value: 302 },
-          { label: '退款中', value: 303 },
-          { label: '已退款', value: 304 },
-          { label: '已收货', value: 401 },
-          { label: '已收货(系统)', value: 402 },
-          { label: '部分收货', value: 403 },
-          { label: '已完成', value: 501 }
+          {label: '未付款', value: 101},
+          {label: '已取消', value: 102},
+          {label: '已付款', value: 201},
+          {label: '已退款', value: 202},
+          {label: '已发货', value: 301},
+          {label: '部分发货', value: 302},
+          {label: '退款中', value: 303},
+          {label: '已退款', value: 304},
+          {label: '已收货', value: 401},
+          {label: '已收货(系统)', value: 402},
+          {label: '部分收货', value: 403},
+          {label: '已完成', value: 501}
         ],
         listQuery: {
           page: 1,
@@ -214,9 +212,10 @@
       handleDownload() {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单号', '分销商', '日期', '订单状态', '门店名称', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
-          const filterVal = ['orderSn', 'distributionName', 'orderDate', 'orderStatusName', 'storeName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice', 'couponPrice', 'actualPrice']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '销售订单统计')
+          const tHeader = ['订单号', '分销商', '分销商标签', '佣金状态', '佣金', '日期', '订单状态', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
+          const filterVal = ['orderSn', 'distributionName', 'distributionLabelNames', 'operationTypeName', 'profitMoney', 'orderDate', 'orderStatusName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice',
+            'couponPrice', 'actualPrice']
+          excel.export_json_to_excel2(tHeader, this.list, filterVal, '分销报表')
           this.downloadLoading = false
         })
       }

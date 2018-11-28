@@ -179,4 +179,11 @@
     </if>
 
   </select>
+
+  <select id="selectByUserId" resultType="org.linlinjava.litemall.db.domain.LitemallLabel" >
+    select
+    <include refid="Base_Column_List" />
+    from litemall_label
+    where user_id = #{userId}
+  </select>
 </mapper>
