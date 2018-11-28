@@ -61,6 +61,12 @@ page{
     color: #999;
 }
 
+.address-box .mstore{
+    width:400rpx;
+    height: 72.25rpx;
+    color: #999;
+}
+
 .address-box .mobile{
     display: block;
     height: 29rpx;
@@ -85,6 +91,16 @@ page{
     justify-content: center;
     align-items: center;
 }
+
+.address-box .storeR{
+    width: 200rpx;
+    height: 77rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 .address-box .r image{
     width: 52.078rpx;
@@ -450,4 +466,19 @@ button::after {
 .content .text{   
     font-size: 20rpx;
     color: #666;
+}
+
+.radio-choose{
+  flex-direction: row;
+  display: flex;
+  background: #fff;
+  padding-left:45rpx;
+  padding-top:5rpx;
+}
+
+.inputClass {
+   text-align: right;
+   font-size: 33rpx;
+   color:#cccccc;
+
 }

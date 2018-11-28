@@ -364,12 +364,29 @@ public class WxOrderController {
 		Integer couponId = JacksonUtil.parseInteger(body, "couponId");
 		Short payType = JacksonUtil.parseShort(body, "payType");
 		Integer storeId = JacksonUtil.parseInteger(body, "storeId");
-		if (cartId == null || addressId == null || couponId == null) {
-			return ResponseUtil.badArgument();
+
+		//增加参数
+		Integer pageFlag = JacksonUtil.parseInteger(body, "pageFlag");
+		Integer radioFlag = JacksonUtil.parseInteger(body, "radioFlag");
+		Integer storeIndex = JacksonUtil.parseInteger(body, "storeIndex");
+		List<Integer> storeIds = JacksonUtil.parseIntegerList(body, "storeIds");
+		//pageFlag为1则是实物商品，需要地址或者门店自取；为2则是服务商品
+
+		//radioFlag为1则是地址选取，为2则是门店自取
+
+		if(pageFlag == 1 && radioFlag  == 1){
+			if (cartId == null  || couponId == null || addressId ==null) {
+				return ResponseUtil.badArgument();
+			}
+		}else if(pageFlag == 1 && radioFlag  == 2){
+			if(cartId == null  || couponId == null || storeIds ==null){
+				return ResponseUtil.badArgument();
+			}
 		}
 
-		// 收货地址
-		LitemallAddress checkedAddress = addressService.findById(addressId);
+
+
+
 
 		// 获取可用的优惠券信息
 		// 使用优惠券减免的金额
@@ -412,14 +429,25 @@ public class WxOrderController {
 
 		// 添加订单表
 		LitemallOrder order = new LitemallOrder();
+
+		if(pageFlag == 1 && radioFlag  == 1){
+			//此处为实物商品的地址选取
+			// 收货地址
+			LitemallAddress checkedAddress = addressService.findById(addressId);
+			order.setConsignee(checkedAddress.getName());
+			order.setMobile(checkedAddress.getMobile());
+			String detailedAddress = detailedAddress(checkedAddress);
+			order.setAddress(detailedAddress);
+		}else if(pageFlag == 1 && radioFlag  == 2){
+			//此处为实物商品的门店自取
+			order.setGetStoreId(String.valueOf(storeIds.get(storeIndex)));
+		}else if(pageFlag == 2){
+			//此处为服务商品
+		}
 		order.setUserId(userId);
 		order.setOrderSn(orderService.generateOrderSn(userId));
 		order.setAddTime(LocalDateTime.now());
 		order.setOrderStatus(OrderUtil.STATUS_CREATE);
-		order.setConsignee(checkedAddress.getName());
-		order.setMobile(checkedAddress.getMobile());
-		String detailedAddress = detailedAddress(checkedAddress);
-		order.setAddress(detailedAddress);
 		order.setGoodsPrice(checkedGoodsPrice);
 		order.setFreightPrice(freightPrice);
 		order.setCouponPrice(couponPrice);

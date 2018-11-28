@@ -231,6 +231,67 @@ public class OrderController {
         }
         return ResponseUtil.ok(zmallOrder);
     }
+
+
+	/*
+	 * 目前仅仅支持管理员设置发货的信息（店面自取）
+	 */
+	@PostMapping("/updateOrderByStore")
+	public Object updateOrderByStore(@LoginAdmin Integer adminId, @RequestBody LitemallOrder order) throws Exception{
+
+
+		if(adminId == null){
+			return ResponseUtil.unlogin();
+		}
+
+		Integer orderId = order.getId();
+		if(orderId == null){
+			return ResponseUtil.badArgument();
+		}
+
+		LitemallOrder zmallOrder = orderService.findById(orderId);
+		if(zmallOrder == null){
+			return ResponseUtil.badArgumentValue();
+		}
+
+		if(OrderUtil.isPayStatus(zmallOrder) || OrderUtil.isShipStatus(zmallOrder) || OrderUtil.isPartShipStatus(zmallOrder)||OrderUtil.isPartConfirmStatus(zmallOrder)){
+			boolean isShip = true;
+			List<LitemallOrderGoods> litemallOrderGoodsList = litemallOrderGoodsService.queryByOid(orderId);
+			if(litemallOrderGoodsList != null && litemallOrderGoodsList.size() > 0) {
+				for(LitemallOrderGoods litemallOrderGoods :litemallOrderGoodsList) {
+					if(litemallOrderGoods.getFlag().equals("1")) {
+						litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_SHIP);
+						litemallOrderGoodsService.update(litemallOrderGoods);
+					}
+
+					//服务订单中存在已付款未发货的，更新总订单状态为部分发货，否则为已发货
+					if(litemallOrderGoods.getFlag().equals("2")) {
+						if (litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PAY)) {
+							isShip = false;
+						}
+					}
+				}
+			}
+
+			//订单状态
+			if (isShip == true) {
+				// 已发货
+				if(!zmallOrder.getOrderStatus().equals(OrderUtil.STATUS_PART_CONFIRM)) {
+					order.setOrderStatus(OrderUtil.STATUS_SHIP);
+				}
+			} else {
+				// 部分发货
+				order.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
+			}
+			order.setShipStartTime(LocalDateTime.now());
+			order.setConfirmTime(LocalDateTime.now());
+			orderService.update(order);
+
+		} else {
+			return ResponseUtil.ok("不能发货",null);
+		}
+		return ResponseUtil.ok(zmallOrder);
+	}
     
     
     /*

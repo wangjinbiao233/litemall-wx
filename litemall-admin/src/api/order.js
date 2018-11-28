@@ -47,6 +47,15 @@ export function updateOrder(data) {
     data
   })
 }
+
+export function updateOrderStore(data) {
+  return request({
+    url: '/order/updateOrderByStore',
+    method: 'post',
+    data: data
+  })
+}
+
 export function updateOrderStatus(data) {
   return request({
     url: '/order/updateOrderStatus',

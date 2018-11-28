@@ -33,6 +33,13 @@ public class LitemallCartService {
         cartMapper.updateByPrimaryKey(cart);
     }
 
+    /**
+     * 根据productId修改购物车的价格
+     * @param userId
+     * @return
+     */
+    public void updateRetailPriceByProductId(LitemallCart cart){cartMapper.updateRetailPriceByProductId(cart);}
+
     public List<LitemallCart> queryByUid(int userId) {
         LitemallCartExample example = new LitemallCartExample();
         example.or().andUserIdEqualTo(userId);

@@ -20,6 +20,7 @@ Page({
     addressId: 0,
     couponId: 0,
     payType: 1,
+    radioFlag: 1,
     verificationCode: null,
     verificationCodeInput: null,
     money: 0.00,
@@ -31,7 +32,10 @@ Page({
     isGetPhone: 0,
     mobile: '',
     code: '',
-    pageFlag:1
+    pageFlag:1,
+    storeName: [],
+    storeId: [],
+    storeIndex: 0
   },
   onLoad: function (options) {
     var that = this
@@ -90,6 +94,54 @@ Page({
   radioChange: function (e) {
     this.data.payType = e.detail.value;
   },
+  //地址选取和店面自取的单选触发事件
+  radioChoose: function(e){
+    this.setData({
+      'radioFlag': e.detail.value
+    });
+    if(e.detail.value == 2){
+      //此处选取店面自取
+      var storeName=[];
+      var storeId=[];
+      var that=this;
+      wx.request({
+        url: api.ServiceStore,
+        header: {
+          "content-type": "application/x-www-form-urlencoded"
+        },
+        method: 'GET',
+        success: function (res) {
+          var data = res.data
+          var stores = data.data.stores;
+          console.log(stores);
+          if (stores != undefined) {
+            for (var i = 0; i < stores.length; i++) {
+              storeName.push(stores[i].storeName)
+              storeId.push(stores[i].id)
+            }
+
+            that.setData({ storeName: storeName, storeId: storeId});
+       
+          }
+
+          console.log(storeName,storeId);
+        }
+      })
+    }else{
+      var that = this;
+      that.setData({
+        storeName:[],
+        storeId:[],
+        storeIndex: 0
+      })
+    }
+  },
+
+  storePickerChange:function(e){
+    this.setData({
+      storeIndex: e.detail.value
+    })
+  },
 
   onReady: function () {
     // 页面渲染完成
@@ -138,16 +190,21 @@ Page({
   },
   submitOrder: function () {
     var that = this;
-    if (this.data.addressId <= 0 && this.data.pageFlag == 1) {
+    if (this.data.addressId <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1) {
       util.showErrorToast('请选择收货地址');
+      return false;
+    }
+    if (this.data.storeId.length <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1){
+      util.showErrorToast('没有门店，不能自取');
       return false;
     }
 
     if (this.data.payType == 1) {
       var storeId = wx.getStorageSync('storeid')
       console.log(wx.getStorageSync('storeid'))
+      var radioFlag = parseInt(that.data.radioFlag);
       //storeId: storeId,
-      util.request(api.OrderSubmit, { storeId: storeId, cartId: that.data.cartId, addressId: that.data.addressId, couponId: that.data.couponId, payType: that.data.payType, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
+      util.request(api.OrderSubmit, { storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag:that.data.pageFlag,storeIds: that.data.storeId,storeIndex:that.data.storeIndex,addressId: that.data.addressId, couponId: that.data.couponId, payType: that.data.payType, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
         if (res.errno === 0) {
           const orderId = res.data.orderInfo.id;
 

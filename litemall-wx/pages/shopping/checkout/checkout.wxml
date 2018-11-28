@@ -14,15 +14,41 @@
       </view>
     </view>
     <view wx:else>
-    <view  class="address-item address-empty" bindtap="selectAddress" wx:if="{{pageFlag==1}}">
-      <view class="m">
-       请选择收货地址
+      <view wx:if="{{pageFlag==1}}">
+         <radio-group class="radio-choose" bindchange="radioChoose">
+          <radio  class="radio" value="1" checked="true">地址选取</radio>
+          <radio  class="radio" value="2" style="padding-left:45rpx;">店面自取</radio>    
+        </radio-group>  
       </view>
-      <view class="r">
-        <image src="/static/images/address_right.png"></image>
+      <view  class="address-item address-empty" bindtap="selectAddress" wx:if="{{pageFlag==1 && radioFlag==1}}">
+        <view class="m">
+        请选择收货地址
+        </view>
+        <view class="r">
+          <image src="/static/images/address_right.png"></image>
+        </view>
       </view>
-    </view>
-    <view class="address-item address-empty" wx:else></view>
+
+       <view  class="address-item address-empty" wx:if="{{pageFlag==1 && radioFlag==2}}">
+        <view class="mstore">
+        请选择店面 :
+        </view>
+        
+        <view class="storeR">
+          <picker class='' bindchange="storePickerChange" value="{{storeIndex}}" range="{{storeName}}">
+          <view class="picker">
+          {{storeName[storeIndex]}} >
+          </view>
+        </picker>
+
+        </view>
+        
+
+        
+        
+      </view>
+
+      <view class="address-item address-empty" wx:else></view>
     </view>
   </view>
 

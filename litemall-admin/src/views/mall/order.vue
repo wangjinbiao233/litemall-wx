@@ -282,7 +282,7 @@
 </style>
 
 <script>
-import { listOrder, listExpress, reserveDetail, updateOrder, updateOrderStatus, orderReturn } from '@/api/order'
+import { listOrder, listExpress, reserveDetail, updateOrder, updateOrderStatus,updateOrderStore, orderReturn } from '@/api/order'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
@@ -381,11 +381,19 @@ export default {
     },
 
     handleSend(row) {
-      this.resetForm(row)
-      this.sendDialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+      debugger
+      var getStoreId=row.getStoreId;
+      if(getStoreId){
+        //非空
+          this.sendDataStore(row.id);
+      }else{
+             this.resetForm(row)
+             this.sendDialogFormVisible = true
+             this.$nextTick(() => {
+               this.$refs['dataForm'].clearValidate()
+             })
+      }
+
     },
     // 取消订单
     handleCancel(row) {
@@ -428,6 +436,39 @@ export default {
           this.getList()
         }
       })
+    },
+    //店面自取的发货
+    sendDataStore(id){
+      debugger
+                var data= {id:id};
+                updateOrderStore(data).then(response => {
+                  if (response.data.errmsg != null && response.data.errmsg != '成功') {
+                    this.$notify({
+                      title: '失败',
+                      message: response.data.errmsg,
+                      type: 'error',
+                      duration: 2000
+                    })
+                  } else {
+                    this.$notify({
+                      title: '成功',
+                      message: '更新成功',
+                      type: 'success',
+                      duration: 2000
+                    })
+                    this.sendDialogFormVisible = false
+                    this.getList()
+                  }
+                }).catch((err) => {
+                console.log(err);
+                  this.$notify({
+                    title: '失败',
+                    message: '更新失败',
+                    type: 'error',
+                    duration: 2000
+                  })
+                })
+
     },
     sendData() {
       this.$refs['dataForm'].validate((valid) => {

@@ -33,6 +33,7 @@
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
+    <result column="get_store_id" jdbcType="VARCHAR" property="getStoreId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -110,7 +111,7 @@
     -->
      id, user_id, order_sn, order_status, consignee, mobile, address, goods_price, freight_price, coupon_id,
     coupon_price, integral_price, order_price, actual_price, pay_id, pay_status,pay_type, pay_time, 
-    ship_sn, ship_channel, ship_start_time, ship_end_time, confirm_time, end_time, add_time, 
+    ship_sn, ship_channel, ship_start_time, ship_end_time, confirm_time, end_time, add_time,get_store_id,
     deleted
   </sql>
   <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderExample" resultMap="BaseResultMap">
@@ -126,7 +127,7 @@
     t1.id, t1.user_id, t1.order_sn, t1.order_status, t1.consignee, t1.mobile, t1.address,
     t1. goods_price, t1.freight_price, t1.coupon_price,t1.coupon_id, t1.integral_price, t1.order_price, 
     t1.actual_price, t1.pay_id, t1.pay_status,t1.pay_type, t1.ship_sn, t1.ship_channel,    
-    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,   
+    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,t1.get_store_id,
     date_format(t1.pay_time,'%Y-%m-%d %H:%i:%s') AS "payTimeDisp",  
     date_format(t1.ship_start_time,'%Y-%m-%d %H:%i:%s')  AS "shipStartTimeDisp",
     date_format(t1.ship_end_time,'%Y-%m-%d %H:%i:%s')  AS "shipEndTimeDisp",
@@ -146,7 +147,7 @@
     t1.id, t1.user_id, t1.order_sn, t1.order_status, t1.consignee, t1.mobile, t1.address,
     t1. goods_price, t1.freight_price, t1.coupon_id,t1.coupon_price, t1.integral_price, t1.order_price, 
     t1.actual_price, t1.pay_id, t1.pay_status,t1.pay_type, t1.ship_sn, t1.ship_channel,   
-    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,     
+    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,t1.get_store_id,
      date_format(t1.pay_time,'%Y-%m-%d %H:%i:%s') AS "payTimeDisp",  
     date_format(t1.ship_start_time,'%Y-%m-%d %H:%i:%s')  AS "shipStartTimeDisp",
     date_format(t1.ship_end_time,'%Y-%m-%d %H:%i:%s')  AS "shipEndTimeDisp",
@@ -231,7 +232,7 @@
      t1.id, t1.user_id, t1.order_sn, t1.order_status, t1.consignee, t1.mobile, t1.address,
     t1. goods_price, t1.freight_price,t1.coupon_id, t1.coupon_price, t1.integral_price, t1.order_price, 
     t1.actual_price, t1.pay_id, t1.pay_status, t1.pay_type,t1.ship_sn, t1.ship_channel, 
-    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,       
+    t1.ship_start_time,  t1.ship_end_time,  t1.confirm_time,  t1.end_time,  t1.add_time,t1.get_store_id,
     date_format(t1.pay_time,'%Y-%m-%d %h:%i:%s') AS "payTimeDisp",  
     date_format(t1.ship_start_time,'%Y-%m-%d %h:%i:%s')  AS "shipStartTimeDisp",
     date_format(t1.ship_end_time,'%Y-%m-%d %h:%i:%s')  AS "shipEndTimeDisp",
@@ -388,6 +389,9 @@
       <if test="deleted != null">
         deleted,
       </if>
+      <if test="getStoreId != null">
+        get_store_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -464,6 +468,9 @@
       </if>
       <if test="deleted != null">
         #{deleted,jdbcType=BIT},
+      </if>
+      <if test="getStoreId != null">
+        #{getStoreId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

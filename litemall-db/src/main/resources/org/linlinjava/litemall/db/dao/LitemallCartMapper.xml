@@ -595,4 +595,10 @@
  		and lc.goods_sn = #{goodsSn,jdbcType=VARCHAR}
  	</if>
   </select>
+
+  <update id="updateRetailPriceByProductId" parameterType="org.linlinjava.litemall.db.domain.LitemallCart">
+    update litemall_cart
+    set  retail_price = #{retailPrice,jdbcType=DECIMAL}
+    where product_id = #{productId,jdbcType=INTEGER}
+  </update>
 </mapper>

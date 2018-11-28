@@ -3,8 +3,10 @@ package org.linlinjava.litemall.admin.web;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
+import org.linlinjava.litemall.db.domain.LitemallCart;
 import org.linlinjava.litemall.db.domain.LitemallGoods;
 import org.linlinjava.litemall.db.domain.LitemallProduct;
+import org.linlinjava.litemall.db.service.LitemallCartService;
 import org.linlinjava.litemall.db.service.LitemallGoodsService;
 import org.linlinjava.litemall.db.service.LitemallGoodsSpecificationService;
 import org.linlinjava.litemall.db.service.LitemallProductService;
@@ -26,6 +28,8 @@ public class ProductController {
     private LitemallGoodsService goodsService;
     @Autowired
     private LitemallGoodsSpecificationService goodsSpecificationService;
+    @Autowired
+    private LitemallCartService litemallCartService;
 
     @GetMapping("/list")
     public Object list(@LoginAdmin Integer adminId,
@@ -276,6 +280,11 @@ public class ProductController {
             // 进行更新操作
             for(LitemallProduct litemallProduct : productList_req) {
                 productService.updateById(litemallProduct);
+                //此处修改销售价格后要修改所有购物车中该商品的价格
+                LitemallCart litemallCart=new LitemallCart();
+                litemallCart.setProductId(litemallProduct.getId());
+                litemallCart.setRetailPrice(litemallProduct.getRetailPrice());
+                litemallCartService.updateRetailPriceByProductId(litemallCart);
             }
         }
 

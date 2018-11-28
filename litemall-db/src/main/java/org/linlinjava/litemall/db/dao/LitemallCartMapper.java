@@ -133,4 +133,6 @@ public interface LitemallCartMapper {
     LitemallCart selectOneByExampleSelective(@Param("example") LitemallCartExample example, @Param("selective") LitemallCart.Column ... selective);
 
 	List<LitemallCart> selectByCart(LitemallCart cart);
+
+	int updateRetailPriceByProductId(LitemallCart cart);
 }
