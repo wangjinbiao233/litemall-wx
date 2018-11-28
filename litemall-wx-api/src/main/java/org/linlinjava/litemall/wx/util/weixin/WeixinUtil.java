@@ -1,5 +1,17 @@
 package org.linlinjava.litemall.wx.util.weixin;
 
+import net.sf.json.JSONObject;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.db.domain.LitemallStorage;
+import org.linlinjava.litemall.db.service.StorageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -9,27 +21,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManager;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.linlinjava.litemall.db.domain.LitemallStorage;
-import org.linlinjava.litemall.db.service.StorageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import net.sf.json.JSONObject;
-
 @Service
 public class WeixinUtil {
 	
 @Autowired
 private StorageService storageService;
 
-private static Log log = LogFactory.getLog(WeixinUtil.class);   
+private static Log log = LogFactory.getLog(WeixinUtil.class);
 	
 	/**
 	 * 得到当前系统时间，返回String类型 ,格式为 "yyyyMMMddHH24mmss"
