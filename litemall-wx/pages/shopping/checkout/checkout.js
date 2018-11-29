@@ -194,7 +194,7 @@ Page({
       util.showErrorToast('请选择收货地址');
       return false;
     }
-    if (this.data.storeId.length <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1){
+    if (this.data.storeId.length <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 2){
       util.showErrorToast('没有门店，不能自取');
       return false;
     }

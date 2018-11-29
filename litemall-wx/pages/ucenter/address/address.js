@@ -46,6 +46,7 @@ Page({
           let addressId = event.target.dataset.addressId;
           util.request(api.AddressDelete, { id: addressId, userId: wx.getStorageSync('userId')}, 'POST').then(function (res) {
             if (res.errno === 0) {
+              wx.setStorageSync('addressId', 0);
               that.getAddressList();
             }
           });
