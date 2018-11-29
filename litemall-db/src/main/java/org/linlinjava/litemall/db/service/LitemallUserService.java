@@ -34,11 +34,13 @@ public class LitemallUserService {
         return userMapper.selectOneByExample(example);
     }
 
-    public void add(LitemallUser user) {
+    public int add(LitemallUser user) {
     	Integer count = userMapper.selectByOpenId(user.getWeixinOpenid());
     	if(count == 0) {
-    		userMapper.insertSelective(user);
-    	}
+    		return userMapper.insertSelective(user);
+    	} else {
+    	    return 0;
+        }
     }
 
     public void update(LitemallUser user) {

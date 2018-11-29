@@ -25,4 +25,12 @@ export function updateDistribution(data) {
   })
 }
 
+export function distributionReportList(query) {
+  return request({
+    url: '/distribution/distributionReportList',
+    method: 'post',
+    params: query
+  })
+}
+
 

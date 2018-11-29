@@ -1,4 +1,4 @@
-package org.linlinjava.litemall.admin.config;
+package org.linlinjava.litemall.db.util.entity;
 
 public class MessageData {
 

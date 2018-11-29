@@ -7,7 +7,7 @@ var WxApiRoot = 'http://127.0.0.1:8082/wx/';
 //production must be in SSL
 //var WxApiRoot = 'https://mall-wx.dgtis.com/wx/';
 //production must be in SSL philab
-//var WxApiRoot = 'https://mall-wx.philab.net/wx/';
+// var WxApiRoot = 'https://mall-wx.philab.net/wx/';
 
 //var WxApiRoot = 'http://10.32.2.69:8082/wx/';
 

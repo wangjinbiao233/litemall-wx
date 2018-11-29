@@ -103,6 +103,14 @@ public class SaleOrderReportDTO {
      * 分销金
      */
     private BigDecimal money;
+    /**
+     * 分销商ID
+     */
+    private Integer distributionId;
+    /**
+     * 分销商名称
+     */
+    private String distributionName;
 
     public String getStoreName() {
         return storeName;
@@ -286,5 +294,21 @@ public class SaleOrderReportDTO {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    public String getDistributionName() {
+        return distributionName;
+    }
+
+    public void setDistributionName(String distributionName) {
+        this.distributionName = distributionName;
+    }
+
+    public Integer getDistributionId() {
+        return distributionId;
+    }
+
+    public void setDistributionId(Integer distributionId) {
+        this.distributionId = distributionId;
     }
 }

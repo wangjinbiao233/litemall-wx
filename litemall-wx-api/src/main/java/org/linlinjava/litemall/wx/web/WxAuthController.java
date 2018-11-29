@@ -1,14 +1,16 @@
 package org.linlinjava.litemall.wx.web;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import me.chanjar.weixin.common.exception.WxErrorException;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.linlinjava.litemall.db.domain.LitemallLabel;
+import org.linlinjava.litemall.db.domain.LitemallLabelUser;
 import org.linlinjava.litemall.db.domain.LitemallSerialNumber;
 import org.linlinjava.litemall.db.domain.LitemallUser;
+import org.linlinjava.litemall.db.service.LabelManageService;
 import org.linlinjava.litemall.db.service.LitemallSerialNumberService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
@@ -23,7 +25,7 @@ import org.linlinjava.litemall.wx.util.IpUtil;
 import org.linlinjava.litemall.wx.util.bcrypt.BCryptPasswordEncoder;
 import org.linlinjava.litemall.wx.util.weixin.OpenIdUtil;
 import org.linlinjava.litemall.wx.util.weixin.WXBizDataCrypt;
-import org.linlinjava.litemall.wx.util.weixin.WeixinUtil;
+import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,11 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/wx/auth")
@@ -48,8 +48,11 @@ public class WxAuthController {
     private LitemallUserService userService;
 
     @Autowired
+    private LabelManageService labelManageService;
+
+    @Autowired
     private WxMaService wxService;
-    
+
     @Autowired
     private WeixinUtil weixinUtil;
     
@@ -112,6 +115,7 @@ public class WxAuthController {
     		String iv = JacksonUtil.parseString(body, "iv");
     		String encryptedData = JacksonUtil.parseString(body, "encryptedData");
     		String referrerId = JacksonUtil.parseString(body, "pId");
+            String labelId = JacksonUtil.parseString(body, "labelId");
     		UserInfo userInfo = JacksonUtil.parseObject(body, "userInfo", UserInfo.class);
     		
     		if(code == null || userInfo == null){
@@ -154,12 +158,27 @@ public class WxAuthController {
     	    			
     	    			user.setMemberId(getSerialNumber());
     	    			//我的推荐人
-    	    			if(referrerId != null && !referrerId.equals("")) {
-    	    				LitemallUser litemallUser = userService.findById(Integer.valueOf(referrerId));
+                        LitemallUser litemallUser = null;
+                        if(referrerId != null && !referrerId.equals("")) {
+                            //查询我的上级
+                            litemallUser = userService.findById(Integer.valueOf(referrerId));
     	    				if(litemallUser != null)
     	    					user.setpId(litemallUser.getId());
     	    			}
-    	    			userService.add(user);
+    	    			int state = userService.add(user);
+
+                        //推荐人不为空，插入
+    	    			if(state != 0 && litemallUser != null){
+                            LitemallLabelUser labelUser = new LitemallLabelUser();
+                            if(StringUtils.isNotBlank(labelId)){
+                                labelUser.setLabelId(Integer.valueOf(labelId));
+                            }
+                            labelUser.setUserId(user.getId());
+                            labelUser.setpId(litemallUser.getId());
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+                            labelUser.setCreateTime(sdf.format(new Date()));
+                            labelManageService.addUserLabelInfo(labelUser);
+                        }
     	    		} else {
     	    			if(StringUtils.isBlank(user.getMemberId())) {
     	    				user.setMemberId(getSerialNumber());
@@ -485,5 +504,28 @@ public class WxAuthController {
 		Map<Object, Object> result = new HashMap<Object, Object>();
         result.put("subUserCount", subCount + subSubCount);
 		return ResponseUtil.ok(result);
+    }
+
+    /**
+     * 查询用户标签列表
+     * @param body
+     * @param request
+     * @return
+     */
+    @RequestMapping("getUserLabel")
+    public Object getUserLabel(@RequestBody String body, HttpServletRequest request){
+        String userId = JacksonUtil.parseString(body, "pId");
+        if(userId == null){
+            return ResponseUtil.badArgument();
+        }
+        List<LitemallLabel> list = labelManageService.selectByUserId(userId);
+        Map<Object, Object> result = new HashMap<Object, Object>();
+        if(list != null && list.size() > 0){
+            result.put("state", true);
+            result.put("labelList", list);
+        } else {
+            result.put("state", false);
+        }
+        return ResponseUtil.ok(result);
     }
 }
