@@ -47,7 +47,7 @@
           <el-button type="success" class="filter-item" size="mini" v-if="scope.row.auditStatus  == 0" @click="handleUpdate(scope.row)">通过</el-button>
           <el-button type="warning" class="filter-item" size="mini" v-if="scope.row.auditStatus  == 0" @click="handleReject(scope.row)">驳回</el-button>
 
-          <router-link v-if="scope.row.auditStatus  == 1" ref='tag' :to="{path:'/distribution/labelmanage',query: {id: scope.row.id}}">
+          <router-link v-if="scope.row.auditStatus  == 1" ref='tag' :to="{path:'/distribution/labelmanage',query: {id: scope.row.createUserId}}">
             <el-button class="filter-item" type="primary" size="mini" style="width: inherit;">标签管理</el-button>
           </router-link>
         </template>

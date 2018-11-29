@@ -515,23 +515,20 @@ public class WxAuthController {
 
     /**
      * 查询用户标签列表
-     * @param body
-     * @param request
+     * @param pId
      * @return
      */
     @RequestMapping("getUserLabel")
-    public Object getUserLabel(@RequestBody String body, HttpServletRequest request){
-        String userId = JacksonUtil.parseString(body, "pId");
-        if(userId == null){
+    public Object getUserLabel(Integer pId){
+        if(pId == null){
             return ResponseUtil.badArgument();
         }
-        List<LitemallLabel> list = labelManageService.selectByUserId(userId);
+        List<LitemallLabel> list = labelManageService.selectByUserId(pId);
         Map<Object, Object> result = new HashMap<Object, Object>();
         if(list != null && list.size() > 0){
-            result.put("state", true);
             result.put("labelList", list);
         } else {
-            result.put("state", false);
+            result.put("labelList", new ArrayList<LitemallLabel>());
         }
         return ResponseUtil.ok(result);
     }
