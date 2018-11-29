@@ -157,6 +157,12 @@ public class WxAuthController {
     	    			user.setDistributionPartner(false);
     	    			
     	    			user.setMemberId(getSerialNumber());
+
+    	    			//标签
+    	    			LitemallLabel label = null;
+                        if(StringUtils.isNotBlank(labelId)){
+                            label = labelManageService.selectById(Integer.valueOf(labelId));
+                        }
     	    			//我的推荐人
                         LitemallUser litemallUser = null;
                         if(referrerId != null && !referrerId.equals("")) {
@@ -164,17 +170,18 @@ public class WxAuthController {
                             litemallUser = userService.findById(Integer.valueOf(referrerId));
     	    				if(litemallUser != null)
     	    					user.setpId(litemallUser.getId());
-    	    			}
+    	    			} else if(label != null && label.getUserId() != null){
+                            user.setpId(label.getUserId());
+
+                        }
     	    			int state = userService.add(user);
 
-                        //推荐人不为空，插入
-    	    			if(state != 0 && litemallUser != null){
+                        //标签不为空，插入
+    	    			if(state != 0 && label != null){
                             LitemallLabelUser labelUser = new LitemallLabelUser();
-                            if(StringUtils.isNotBlank(labelId)){
-                                labelUser.setLabelId(Integer.valueOf(labelId));
-                            }
                             labelUser.setUserId(user.getId());
-                            labelUser.setpId(litemallUser.getId());
+                            labelUser.setLabelId(label.getId());
+                            labelUser.setpId(label.getUserId());
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
                             labelUser.setCreateTime(sdf.format(new Date()));
                             labelManageService.addUserLabelInfo(labelUser);

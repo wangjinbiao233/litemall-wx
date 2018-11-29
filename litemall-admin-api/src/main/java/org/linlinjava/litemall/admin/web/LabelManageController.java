@@ -35,8 +35,11 @@ public class LabelManageController {
                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "limit", defaultValue = "10") Integer limit,
                        String sort){
-        if(adminId == null && userId == null){
+        if(adminId == null){
             return ResponseUtil.fail401();
+        }
+        if(userId == null){
+            return ResponseUtil.fail();
         }
         LitemallLabel label = new LitemallLabel();
         label.setUserId(userId);
@@ -54,8 +57,11 @@ public class LabelManageController {
     @PostMapping("/create")
     public Object create(@LoginAdmin Integer adminId, @RequestBody LitemallLabel label){
         logger.debug(label);
-        if(adminId == null && label == null){
+        if(adminId == null){
             return ResponseUtil.unlogin();
+        }
+        if(label == null){
+            return ResponseUtil.fail();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
         label.setCreateBy(adminId);
@@ -72,8 +78,11 @@ public class LabelManageController {
     @PostMapping("/update")
     public Object update(@LoginAdmin Integer adminId, @RequestBody LitemallLabel label){
         logger.debug(label);
-        if(adminId == null && label == null){
+        if(adminId == null){
             return ResponseUtil.unlogin();
+        }
+        if(label == null){
+            return ResponseUtil.fail();
         }
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
         label.setModifyBy(adminId);
@@ -89,8 +98,11 @@ public class LabelManageController {
     @PostMapping("/delete")
     public Object delete(@LoginAdmin Integer adminId, @RequestBody LitemallLabel label){
         logger.debug(label);
-        if(adminId == null && label == null){
+        if(adminId == null){
             return ResponseUtil.unlogin();
+        }
+        if(label == null){
+            return ResponseUtil.fail();
         }
         label.setIsDelete(1);
         int state = labelManageService.update(label);
@@ -104,27 +116,26 @@ public class LabelManageController {
     @PostMapping("/createQrcode")
     public Object createQrcode(@LoginAdmin Integer adminId, @RequestBody LitemallLabel label){
         logger.debug(label);
-        if(adminId == null && label == null){
+        if(adminId == null){
             return ResponseUtil.unlogin();
+        }
+        if(label == null){
+            return ResponseUtil.fail();
         }
         if(label.getId() != null){
             LitemallLabel litemallLabel = labelManageService.selectById(label.getId());
             if(litemallLabel != null){
                 AccessToken token = weixinUtil.getAccessToken();
                 if(token != null){
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("labelId", litemallLabel.getId());
-                    JSONObject  parameter = JSONObject.fromObject(map);
-                    String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), parameter.toString());
+                    String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), "labelId:"+litemallLabel.getId());
                     if (StringUtils.isNotBlank(qrcodeUrl)) {
                         litemallLabel.setQrcodeUrl(qrcodeUrl);
                         labelManageService.update(litemallLabel);
-                        return ResponseUtil.ok();
                     }
                 }
             }
         }
-        return ResponseUtil.fail();
+        return ResponseUtil.ok();
     }
 
 
