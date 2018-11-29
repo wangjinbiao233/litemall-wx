@@ -9,6 +9,8 @@ public class LitemallLabelUser {
 
     private String createTime;
 
+    private Integer pId;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class LitemallLabelUser {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime == null ? null : createTime.trim();
+    }
+
+    public Integer getpId() {
+        return pId;
+    }
+
+    public void setpId(Integer pId) {
+        this.pId = pId;
     }
 }

@@ -1,22 +1,26 @@
 package org.linlinjava.litemall.db.service;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.linlinjava.litemall.db.dao.LitemallLabelMapper;
+import org.linlinjava.litemall.db.dao.LitemallLabelUserMapper;
 import org.linlinjava.litemall.db.domain.LitemallLabel;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.linlinjava.litemall.db.domain.LitemallLabelUser;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
 @Service
 public class LabelManageService {
 
-    @Autowired
+    @Resource
     private LitemallLabelMapper litemallLabelMapper;
+
+    @Resource
+    private LitemallLabelUserMapper litemallLabelUserMapper;
 
     /**
      * 查询标签列表
@@ -67,5 +71,13 @@ public class LabelManageService {
      */
     public List<LitemallLabel> selectByUserId(String userId) {
         return litemallLabelMapper.selectByUserId(userId);
+    }
+
+    /**
+     * 添加
+     * @param labelUser
+     */
+    public int addUserLabelInfo(LitemallLabelUser labelUser) {
+        return litemallLabelUserMapper.insertSelective(labelUser);
     }
 }

@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.db.domain.LitemallLabel;
+import org.linlinjava.litemall.db.domain.LitemallLabelUser;
 import org.linlinjava.litemall.db.domain.LitemallSerialNumber;
 import org.linlinjava.litemall.db.domain.LitemallUser;
 import org.linlinjava.litemall.db.service.LabelManageService;
@@ -34,11 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import net.sf.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/wx/auth")
@@ -116,6 +115,7 @@ public class WxAuthController {
     		String iv = JacksonUtil.parseString(body, "iv");
     		String encryptedData = JacksonUtil.parseString(body, "encryptedData");
     		String referrerId = JacksonUtil.parseString(body, "pId");
+            String labelId = JacksonUtil.parseString(body, "labelId");
     		UserInfo userInfo = JacksonUtil.parseObject(body, "userInfo", UserInfo.class);
     		
     		if(code == null || userInfo == null){
@@ -158,12 +158,27 @@ public class WxAuthController {
     	    			
     	    			user.setMemberId(getSerialNumber());
     	    			//我的推荐人
-    	    			if(referrerId != null && !referrerId.equals("")) {
-    	    				LitemallUser litemallUser = userService.findById(Integer.valueOf(referrerId));
+                        LitemallUser litemallUser = null;
+                        if(referrerId != null && !referrerId.equals("")) {
+                            //查询我的上级
+                            litemallUser = userService.findById(Integer.valueOf(referrerId));
     	    				if(litemallUser != null)
     	    					user.setpId(litemallUser.getId());
     	    			}
-    	    			userService.add(user);
+    	    			int state = userService.add(user);
+
+                        //推荐人不为空，插入
+    	    			if(state != 0 && litemallUser != null){
+                            LitemallLabelUser labelUser = new LitemallLabelUser();
+                            if(StringUtils.isNotBlank(labelId)){
+                                labelUser.setLabelId(Integer.valueOf(labelId));
+                            }
+                            labelUser.setUserId(user.getId());
+                            labelUser.setpId(litemallUser.getId());
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:SS");
+                            labelUser.setCreateTime(sdf.format(new Date()));
+                            labelManageService.addUserLabelInfo(labelUser);
+                        }
     	    		} else {
     	    			if(StringUtils.isBlank(user.getMemberId())) {
     	    				user.setMemberId(getSerialNumber());
