@@ -14,14 +14,14 @@
     </view>
   </view>
   <view class="user user-facial">
- 
-   <view class="left" bindtap="navigateToPages">
-        <image class="img" src="../../../static/images/pfjl.png"></image>
-        <text class="text" >皮肤记录</text>
-   </view>   
-     <view class="right" bindtap="windowchoose" data-statu="open">
-        <image  class="img" src="../../../static/images/pfjc.png"></image>
-        <text class="text" >皮肤检测</text>
+
+    <view class="left" bindtap="navigateToPages">
+      <image class="img" src="../../../static/images/pfjl.png"></image>
+      <text class="text">皮肤记录</text>
+    </view>
+    <view class="right" bindtap="windowchoose" data-statu="open">
+      <image class="img" src="../../../static/images/pfjc.png"></image>
+      <text class="text">皮肤检测</text>
     </view>
     <!-- <view class="right" bindtap="windowchooseProfessional" data-statu="open">
         <image  class="img" src="../../../static/images/pfjl.png"></image>
@@ -30,7 +30,7 @@
   </view>
 
   <view class="order user-bb">
-    <view bindtap="goOrderList" data-sort='1' data-flag='0'  class="cell-access">
+    <view bindtap="goOrderList" data-sort='1' data-flag='0' class="cell-access">
       <view class="cell-bd">
         <text class="cell-bd-text">我的订单</text>
       </view>
@@ -39,15 +39,15 @@
       </view>
     </view>
     <view class="order-list">
-      <view bindtap="goOrderList" data-sort='1'  data-flag='0' class="order-box">
+      <view bindtap="goOrderList" data-sort='1' data-flag='0' class="order-box">
         <image class="order-img" mode="aspectFit" src="/static/images/Bag.png"></image>
         <text class="order-name">待付款</text>
       </view>
-      <view bindtap="goOrderList" data-sort='2'  data-flag='1' class="order-box">
+      <view bindtap="goOrderList" data-sort='2' data-flag='1' class="order-box">
         <image class="order-img" mode="aspectFit" src="/static/images/Truck.png"></image>
         <text class="order-name">待发货</text>
       </view>
-        <!-- <view bindtap="goOrderList" data-sort='2' data-flag='2'  class="order-box">
+      <!-- <view bindtap="goOrderList" data-sort='2' data-flag='2'  class="order-box">
         <image class="order-img" mode="aspectFit" src="/static/images/Truck.png"></image>
         <text class="order-name">待预约</text>
       </view> 
@@ -59,7 +59,7 @@
         <image class="order-img" mode="aspectFit" src="/static/images/Truck.png"></image>
         <text class="order-name">已预约</text>
       </view>     -->
-      <view bindtap="goOrderList" data-sort='4'  data-flag='0' class="order-box">
+      <view bindtap="goOrderList" data-sort='4' data-flag='0' class="order-box">
         <image class="order-img" mode="aspectFit" src="/static/images/Typing.png"></image>
         <text class="order-name">待评价</text>
       </view>
@@ -86,7 +86,7 @@
       <view class="cell-ft"></view>
     </view>
 
-     <view bindtap="goRecharge" class="cell-access cell-sm">
+    <view bindtap="goRecharge" class="cell-access cell-sm">
       <view class="cell-icon">
         <image class="cell-img" mode="aspectFit" src="/static/images/cunchujin.png"></image>
       </view>
@@ -105,7 +105,7 @@
       </view>
       <view class="cell-ft"></view>
     </view>
-    <view bindtap="goAddress"  class="cell-access cell-sm">
+    <view bindtap="goAddress" class="cell-access cell-sm">
       <view class="cell-icon">
         <image class="cell-img" mode="aspectFit" src="/static/images/Pointer.png"></image>
       </view>
@@ -165,19 +165,19 @@
         <text class="txt">地址管理</text>
       </view>
     </view> -->
-    <!-- <view class="item">
+  <!-- <view class="item">
       <view class="a">
         <text class="icon security"></text>
         <text class="txt">账号安全</text>
       </view>
     </view> -->
-    <!-- <view class="item no-border">
+  <!-- <view class="item no-border">
       <view class="a">
         <text class="icon kefu"></text>
         <text class="txt">联系客服</text>
       </view>
     </view> -->
-    <!-- <view class="item item-bottom">
+  <!-- <view class="item item-bottom">
       <view class="a">
         <text class="icon help"></text>
         <text class="txt">帮助中心</text>
@@ -188,24 +188,43 @@
     <view class="logout" bindtap="exitLogin">退出登录</view>
   </view>
 
-<!--mask-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+  <!--mask-->
+  <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
 
-<!--content--><!--使用animation属性指定需要执行的动画 animation="{{animationData}}" -->
-<view  class="drawer_box" wx:if="{{showModalStatus}}"> 
- <!--drawer content-->
-    
-     <view class="drawer_title">肤质检测</view> 
-     <view class="drawer_content">
-        <view class="tiaozi"  bindtap="chooseImages"  data-statu="myself" >自己测</view>
-        <view class="xiaozi">肤质数据存入个人记录</view>
-         <view class="tiaozi2" bindtap="chooseImages" data-statu="friend" >帮朋友测</view>
-        <view class="xiaozi">肤质数据不会记录</view>
-        <navigator url="/pages/facialUtil/facialUtil">
-         <view class="tiaozi3">检测教程</view>
-        </navigator> 
-        <view class="yz_close"  bindtap="powerDrawer" data-statu="close"><image src="/static/images/yz_close.png"/></view>
-    </view> 
+  <!--content-->
+  <!--使用animation属性指定需要执行的动画 animation="{{animationData}}" -->
+  <view class="drawer_box" wx:if="{{showModalStatus}}">
+    <!--drawer content-->
+
+    <view class="drawer_title">肤质检测</view>
+    <view class="drawer_content">
+      <view class="tiaozi" bindtap="chooseImages" data-statu="myself">自己测</view>
+      <view class="xiaozi">肤质数据存入个人记录</view>
+      <view class="tiaozi2" bindtap="chooseImages" data-statu="friend">帮朋友测</view>
+      <view class="xiaozi">肤质数据不会记录</view>
+      <navigator url="/pages/facialUtil/facialUtil">
+        <view class="tiaozi3">检测教程</view>
+      </navigator>
+      <view class="yz_close" bindtap="powerDrawer" data-statu="close">
+        <image src="/static/images/yz_close.png" />
+      </view>
+    </view>
+  </view>
+
 </view>
-
+<!-- 标签弹窗 -->
+<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showmodal}}"></view>
+<view class="modal-dialog" wx:if="{{showmodal}}">
+  <view class="modal-content">
+    <view class="modal-title">选择标签</view>
+    <picker range="{{tagarray}}" value="{{tagindex}}" bindchange="bindtagChange">
+      <view class='typicker'>
+        {{tagarray[tagindex]}} ∨
+      </view>
+    </picker>
+  </view>
+  <view class="modal-footer">
+    <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+    <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+  </view>
 </view>
