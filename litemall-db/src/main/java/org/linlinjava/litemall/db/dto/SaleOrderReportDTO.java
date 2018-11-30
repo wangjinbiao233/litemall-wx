@@ -3,12 +3,12 @@ package org.linlinjava.litemall.db.dto;
 import java.math.BigDecimal;
 
 /**
- *  销售订单统计报表
+ * 销售订单统计报表
  *
- * @version 1.0
- * @since JDK1.8
  * @author huanghaoqi
+ * @version 1.0
  * @date 2018年09月27日 16:22:04
+ * @since JDK1.8
  */
 public class SaleOrderReportDTO {
     /**
@@ -111,6 +111,22 @@ public class SaleOrderReportDTO {
      * 分销商名称
      */
     private String distributionName;
+    /**
+     * 分销商标签
+     */
+    private String distributionLabelNames;
+    /**
+     * 佣金
+     */
+    private BigDecimal profitMoney = BigDecimal.ZERO;
+    /**
+     * 操作状态
+     */
+    private Integer operationType;
+    /**
+     * 状态名称
+     */
+    private String operationTypeName;
 
     public String getStoreName() {
         return storeName;
@@ -310,5 +326,37 @@ public class SaleOrderReportDTO {
 
     public void setDistributionId(Integer distributionId) {
         this.distributionId = distributionId;
+    }
+
+    public String getDistributionLabelNames() {
+        return distributionLabelNames;
+    }
+
+    public void setDistributionLabelNames(String distributionLabelNames) {
+        this.distributionLabelNames = distributionLabelNames;
+    }
+
+    public BigDecimal getProfitMoney() {
+        return profitMoney;
+    }
+
+    public void setProfitMoney(BigDecimal profitMoney) {
+        this.profitMoney = profitMoney;
+    }
+
+    public Integer getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(Integer operationType) {
+        this.operationType = operationType;
+    }
+
+    public String getOperationTypeName() {
+        return operationTypeName;
+    }
+
+    public void setOperationTypeName(String operationTypeName) {
+        this.operationTypeName = operationTypeName;
     }
 }
