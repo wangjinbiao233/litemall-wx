@@ -29,15 +29,18 @@
       <el-table-column align="center" min-width="200px" label="标签描述" prop="labelDesc">
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="创建时间" prop="createTime">
+      <el-table-column align="center" min-width="200px" label="创建时间" prop="createTime">
       </el-table-column>
 
-      <el-table-column align="left" label="操作" width="320px" class-name="small-padding fixed-width">
+      <el-table-column align="left" label="操作" width="400px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button type="danger"  size="small" @click="handleDelete(scope.row)">删除</el-button>
           <el-button type="success" size="small" v-if="scope.row.qrcodeUrl== null "  @click="handleQrcode(scope.row)">生成二维码</el-button>
-          <!--<el-button type="primary" size="mini" style="padding-left: 6px"  @click="showDistriUser(scope.row)">分销用户</el-button>-->
+          <!--<el-button type="primary" size="small" @click="showDistriUser(scope.row)">分销用户</el-button>-->
+          <!--<router-link ref='tag' v-if="scope.row.qrcodeUrl" :to="{path:'/user/userDetail',query: {id: scope.row.userId}}">
+            <el-button type="primary" size="small" style="width: inherit;">分销客户</el-button>
+          </router-link>-->
         </template>
       </el-table-column>
     </el-table>
@@ -204,8 +207,6 @@
           if (valid) {
             updateLabel(this.dataForm).then(response => {
             this.dialogFormVisible = false
-            var errno = response.data.errno
-            if (errno === '0') {
               this.getList()
               this.$notify({
                 title: '成功',
@@ -213,7 +214,6 @@
                 type: 'success',
                 duration: 2000
               })
-            }
           })
           }
         })
