@@ -31,7 +31,7 @@ public interface LitemallLabelMapper {
      * @param userId
      * @return
      */
-    List<LitemallLabel> selectByUserId(@Param("userId") String userId);
+    List<LitemallLabel> selectByUserId(@Param("userId") Integer userId);
 
     /**
      * 方法描述  根据分销商ID查询
