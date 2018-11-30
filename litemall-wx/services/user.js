@@ -85,7 +85,7 @@ function getUserInfo() {
 /**
  * 调用微信登录
  */
-function loginByWeixin(pId, userInfo) {
+function loginByWeixin(pId,labelId, userInfo) {
   console.log('pId === ' + pId + userInfo)
   let code = null;
   return new Promise(function(resolve, reject) {
@@ -97,6 +97,7 @@ function loginByWeixin(pId, userInfo) {
           util.request(api.AuthLoginByWeixin, {
             code: code,
             pId: pId,
+            labelId:labelId,
             userInfo: userInfo,
             iv: res.iv,
             encryptedData: res.encryptedData
