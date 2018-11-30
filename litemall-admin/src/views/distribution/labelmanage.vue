@@ -17,11 +17,11 @@
       <el-table-column align="center" width="50px" label="ID" prop="id" >
       </el-table-column>
 
-      <!--<el-table-column align="center" min-width="100px" label="二维码" prop="qrcodeUrl">
+      <el-table-column align="center" min-width="100px" label="二维码" prop="qrcodeUrl">
         <template slot-scope="scope">
           <img :src="scope.row.qrcodeUrl" style="width: 50px;height: 50px;border-radius: 50%"/>
         </template>
-      </el-table-column>-->
+      </el-table-column>
 
       <el-table-column align="center" min-width="200px" label="标签名称" prop="labelName">
       </el-table-column>
@@ -29,15 +29,18 @@
       <el-table-column align="center" min-width="200px" label="标签描述" prop="labelDesc">
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="创建时间" prop="createTime">
+      <el-table-column align="center" min-width="200px" label="创建时间" prop="createTime">
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="320px" class-name="small-padding fixed-width">
+      <el-table-column align="left" label="操作" width="400px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary"  @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button type="danger"   @click="handleDelete(scope.row)">删除</el-button>
-          <!--<el-button type="success" v-if="scope.row.qrcodeUrl== null "  @click="handleQrcode(scope.row)">生成二维码</el-button>-->
-          <!--<el-button type="primary" size="mini" style="padding-left: 6px"  @click="showDistriUser(scope.row)">分销用户</el-button>-->
+          <el-button type="primary" size="small" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button type="danger"  size="small" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button type="success" size="small" v-if="scope.row.qrcodeUrl== null "  @click="handleQrcode(scope.row)">生成二维码</el-button>
+          <!--<el-button type="primary" size="small" @click="showDistriUser(scope.row)">分销用户</el-button>-->
+          <!--<router-link ref='tag' v-if="scope.row.qrcodeUrl" :to="{path:'/user/userDetail',query: {id: scope.row.userId}}">
+            <el-button type="primary" size="small" style="width: inherit;">分销客户</el-button>
+          </router-link>-->
         </template>
       </el-table-column>
     </el-table>
@@ -204,8 +207,6 @@
           if (valid) {
             updateLabel(this.dataForm).then(response => {
             this.dialogFormVisible = false
-            var errno = response.data.errno
-            if (errno === '0') {
               this.getList()
               this.$notify({
                 title: '成功',
@@ -213,7 +214,6 @@
                 type: 'success',
                 duration: 2000
               })
-            }
           })
           }
         })
@@ -245,6 +245,7 @@
       handleQrcode(row){
 
         createQrcode(row).then(response => {
+          debugger
           this.getList()
           this.$notify({
             title: '成功',
@@ -264,8 +265,8 @@
       handleDownload() {
         this.downloadLoading = true
         import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['ID', '标签名称', '标签描述', '创建时间']
-          const filterVal = ['id', 'labelName', 'labelDesc', 'createTime']
+          const tHeader = ['ID', '标签名称', '标签描述', '二维码','创建时间']
+          const filterVal = ['id', 'labelName', 'labelDesc', 'qrcodeUrl','createTime']
           excel.export_json_to_excel2(tHeader, this.labelList, filterVal, '标签信息')
           this.downloadLoading = false
         })
@@ -292,7 +293,12 @@
       }
     },
     created() {
-      this.getList()
+      var id = this.$route.query.id
+      if (id) {
+        this.id = id
+        this.listQuery.userId = id
+        this.getList()
+      }
     }
   }
 </script>
