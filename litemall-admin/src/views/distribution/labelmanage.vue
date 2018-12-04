@@ -17,22 +17,28 @@
       <el-table-column align="center" width="50px" label="ID" prop="id" >
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="二维码" prop="qrcodeUrl">
+      <!--<el-table-column align="center" min-width="100px" label="二维码" prop="qrcodeUrl">
         <template slot-scope="scope">
           <img :src="scope.row.qrcodeUrl" style="width: 50px;height: 50px;border-radius: 50%"/>
         </template>
+      </el-table-column>-->
+      <el-table-column align="center" min-width="200px" label="二维码" prop="qrcodeUrl">
+        <template slot-scope="scope" v-if="scope.row.qrcodeUrl">
+          <a :href="scope.row.qrcodeUrl" target="_blank" class="buttonText">查看二维码</a>
+          <a :href="scope.row.qrcodeUrl" :download="scope.row.qrcodeUrl" >下载二维码</a>
+        </template>
       </el-table-column>
 
-      <el-table-column align="center" min-width="200px" label="标签名称" prop="labelName">
+      <el-table-column align="center" min-width="190px" label="标签名称" prop="labelName">
       </el-table-column>
 
       <el-table-column align="center" min-width="200px" label="标签描述" prop="labelDesc">
       </el-table-column>
 
-      <el-table-column align="center" min-width="200px" label="创建时间" prop="createTime">
+      <el-table-column align="center" min-width="190px" label="创建时间" prop="createTime">
       </el-table-column>
 
-      <el-table-column align="left" label="操作" width="400px" class-name="small-padding fixed-width">
+      <el-table-column align="left" label="操作" width="300px" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button type="primary" size="small" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button type="danger"  size="small" @click="handleDelete(scope.row)">删除</el-button>
