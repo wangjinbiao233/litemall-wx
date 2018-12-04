@@ -50,7 +50,7 @@
           <router-link v-if="scope.row.auditStatus  == 1" ref='tag' :to="{path:'/distribution/labelmanage',query: {id: scope.row.createUserId}}">
             <el-button class="filter-item" type="primary" size="mini" style="width: inherit;">标签管理</el-button>
           </router-link>
-          <router-link ref='tag' :to="{path:'/user/userDetail',query: {id: scope.row.createUserId}}">
+          <router-link v-if="scope.row.auditStatus  == 1" ref='tag' :to="{path:'/user/userDetail',query: {id: scope.row.createUserId}}">
             <el-button class="filter-item" type="primary" size="mini" style="width: inherit;">我的分销</el-button>
           </router-link>
         </template>
