@@ -1,8 +1,10 @@
 package org.linlinjava.litemall.db.service;
 
 import org.linlinjava.litemall.db.dao.LitemallDistributionProfitMapper;
+import org.linlinjava.litemall.db.dao.LitemallLabelMapper;
 import org.linlinjava.litemall.db.dao.LitemallOrderGoodsMapper;
 import org.linlinjava.litemall.db.dao.LitemallUserMapper;
+import org.linlinjava.litemall.db.domain.LitemallLabel;
 import org.linlinjava.litemall.db.domain.LitemallReportParam;
 import org.linlinjava.litemall.db.domain.LitemallUser;
 import org.linlinjava.litemall.db.dto.AccountBalanceDTO;
@@ -10,11 +12,14 @@ import org.linlinjava.litemall.db.dto.SaleOrderReportDTO;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 报表统计 service
@@ -31,7 +36,7 @@ public class LitemallReportService {
     @Resource
     private LitemallUserMapper litemallUserMapper;
     @Resource
-    private LitemallDistributionProfitMapper litemallDistributionProfitMapper;
+    private LitemallLabelMapper litemallLabelMapper;
 
     /**
      * 方法描述  销售订单统计 -- 总数
@@ -216,7 +221,62 @@ public class LitemallReportService {
                     if (litemallUser != null) {
                         o.setDistributionName(litemallUser.getUsername());
                     }
+                    // 分销商标签
+                    List<LitemallLabel> litemallLabelList = litemallLabelMapper.selectByDistributionId(distributionId);
+                    if (!CollectionUtils.isEmpty(litemallLabelList)) {
+                        List<String> names=new ArrayList<>();
+                        litemallLabelList.forEach(litemallLabel -> {
+                            String name=litemallLabel.getLabelName();
+                            if(!StringUtils.isEmpty(name)){
+                                names.add(name);
+                            }
+                        });
+                        if(!CollectionUtils.isEmpty(names)){
+                            o.setDistributionLabelNames(String.join(",", names));
+                        }
+                    }
                 }
+                // 操作类型
+                Integer operationType = o.getOperationType();
+                BigDecimal profitMoney = o.getProfitMoney();
+                String operationName = "-";
+                if (operationType != null) {
+                    if (operationType == 1) {
+                        operationName = "订单佣金";
+                        if (profitMoney != null) {
+                            profitMoney = new BigDecimal("+" + profitMoney);
+                        }
+                    }
+                    if (operationType == 2) {
+                        operationName = "提现";
+                        if (profitMoney != null) {
+                            profitMoney = new BigDecimal("-" + profitMoney);
+                        }
+                    }
+                    if (operationType == 3) {
+                        operationName = "充值";
+                        if (profitMoney != null) {
+                            profitMoney = new BigDecimal("+" + profitMoney);
+                        }
+                    }
+                    if (operationType == 4) {
+                        operationName = "消费";
+                        if (profitMoney != null) {
+                            profitMoney = new BigDecimal("-" + profitMoney);
+                        }
+                    }
+                    if (operationType == 5) {
+                        operationName = "退款";
+                        if (profitMoney != null) {
+                            profitMoney = new BigDecimal("+" + profitMoney);
+                        }
+                    }
+                    if (operationType == 6) {
+                        operationName = "提现失败";
+                    }
+                }
+                o.setOperationTypeName(operationName);
+                o.setProfitMoney(profitMoney);
             });
         }
         return result;

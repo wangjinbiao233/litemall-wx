@@ -269,6 +269,10 @@
               </el-table-column>
               <el-table-column align="center" min-width="100px" label="用户名" prop="username">
               </el-table-column>
+
+              <el-table-column align="center" min-width="100px" label="标签" prop="lebelName">
+              </el-table-column>
+
               <el-table-column align="center" min-width="100px" label="注册时间" prop="add_time">
               </el-table-column>
             </el-table>
@@ -397,7 +401,7 @@
     <!-- 优惠券详情对话框 -->
     <el-dialog title="优惠券详情" :visible.sync="discountOrderDialogVisible">
       <el-form :rules="rules" ref="discountOrderDetailForm" :model="discountOrderDetailForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
-        
+
         <el-form-item width="100px" label="订单编号" prop="orderSn">
           <span>{{ discountOrderDetailForm.orderSn }}</span>
         </el-form-item>
@@ -428,7 +432,7 @@
         <el-form-item label="商品总费用" prop="goodsPrice">
           <el-input v-model="discountOrderDetailForm.goodsPrice"></el-input>
         </el-form-item>
-        
+
         <el-form-item label="配送费用" prop="freightPrice">
           <el-input v-model="discountOrderDetailForm.freightPrice"></el-input>
         </el-form-item>
@@ -441,10 +445,10 @@
         <el-form-item label="发货时间" prop="shipStartTimeDisp">
           <el-input v-model="discountOrderDetailForm.shipStartTimeDisp"></el-input>
         </el-form-item>
-        
+
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="discountOrderDialogVisible = false">取消</el-button>        
+        <el-button @click="discountOrderDialogVisible = false">取消</el-button>
       </div>
     </el-dialog>
 
@@ -844,17 +848,17 @@ export default {
       getDiscountOrderDetail(this.discountOrderQuery).then(response => {
         console.log(response.data.data.items)
         if(response.data.data.items!=null){
-          this.discountOrderDetailForm = response.data.data.items        
+          this.discountOrderDetailForm = response.data.data.items
           this.discountOrderDialogVisible = true
           this.$nextTick(() => {
             this.$refs['discountOrderDetailForm'].clearValidate()
           })
         }else{
-          this.$message.success('没有相关数据') 
-        }        
+          this.$message.success('没有相关数据')
+        }
       }).catch(() => {
-        this.$message.error('失败')    
-      })      
+        this.$message.error('失败')
+      })
     }
 
   },

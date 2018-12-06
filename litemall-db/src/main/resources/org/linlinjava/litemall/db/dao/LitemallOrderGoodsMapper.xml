@@ -932,13 +932,14 @@
     <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
         (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
-        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice,lu.p_id as distributionId
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
         LEFT JOIN litemall_order lo ON lo.id=log.order_id
         LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
+        LEFT JOIN litemall_earnings ear ON ear.order_id=lo.id
         <where>
             <if test="orderUserIds != null">
                 lo.user_id in

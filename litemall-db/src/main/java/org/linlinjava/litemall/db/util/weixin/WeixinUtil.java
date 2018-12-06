@@ -16,10 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -94,15 +91,18 @@ public class WeixinUtil {
 				outputStream.close();    
 			}    
 
-			// 将返回的输入流转换成字符串    
+			// 将返回的输入流转换成字符串
 			InputStream inputStream = httpUrlConn.getInputStream();  
 			int size=inputStream.available();
 			if( size == 0 ){
 				return getwxacode( requestUrl, requestMethod, outputStr);
 			} else {
 				String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
+
 				LitemallStorage storage = storageService.store(inputStream, realName, "image");
 				urlPath = storage.getUrl();
+
+				//saveToImgByInputStream(inputStream,"D:\\",realName);  //保存图片到本地
 			}
 
 			inputStream.close();    
@@ -112,6 +112,37 @@ public class WeixinUtil {
 		}
 		return urlPath;    
 	}
+
+    /**
+     * 将二进制转换成文件保存
+     * @param instreams 二进制流
+     * @param imgPath 图片的保存路径
+     * @param imgName 图片的名称
+     * @return
+     *      1：保存正常
+     *      0：保存失败
+     */
+    public static int saveToImgByInputStream(InputStream instreams,String imgPath,String imgName){
+        int stateInt = 1;
+        if(instreams != null){
+            try {
+                File file=new File(imgPath,imgName);//可以是任何图片格式.jpg,.png等
+                FileOutputStream fos=new FileOutputStream(file);
+                byte[] b = new byte[1024];
+                int nRead = 0;
+                while ((nRead = instreams.read(b)) != -1) {
+                    fos.write(b, 0, nRead);
+                }
+                fos.flush();
+                fos.close();
+            } catch (Exception e) {
+                stateInt = 0;
+                e.printStackTrace();
+            } finally {
+            }
+        }
+        return stateInt;
+    }
 
 	/**
 	 * 发起https请求并获取结果

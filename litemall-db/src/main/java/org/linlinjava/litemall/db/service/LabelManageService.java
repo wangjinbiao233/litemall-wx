@@ -69,7 +69,7 @@ public class LabelManageService {
      * @param userId
      * @return
      */
-    public List<LitemallLabel> selectByUserId(String userId) {
+    public List<LitemallLabel> selectByUserId(Integer userId) {
         return litemallLabelMapper.selectByUserId(userId);
     }
 
