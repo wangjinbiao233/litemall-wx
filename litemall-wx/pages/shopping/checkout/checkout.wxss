@@ -62,7 +62,7 @@ page{
 }
 
 .address-box .mstore{
-    width:400rpx;
+    width:25%;
     height: 72.25rpx;
     color: #999;
 }
@@ -93,7 +93,7 @@ page{
 }
 
 .address-box .storeR{
-    width: 200rpx;
+    width: 75%;
     height: 77rpx;
     display: flex;
     justify-content: center;
@@ -480,5 +480,11 @@ button::after {
    text-align: right;
    font-size: 33rpx;
    color:#cccccc;
+}
 
+.picker{
+ padding-left: 30rpx;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
 }

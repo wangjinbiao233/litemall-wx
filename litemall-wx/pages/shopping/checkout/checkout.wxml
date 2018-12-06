@@ -36,12 +36,15 @@
         </view>
         
         <view class="storeR">
-          <picker class='' bindchange="storePickerChange" value="{{storeIndex}}" range="{{storeName}}">
+          <picker style="width:90%" bindchange="storePickerChange" value="{{storeIndex}}" range="{{storeName}}">
           <view class="picker">
-          {{storeName[storeIndex]}} >
+          {{storeName[storeIndex]}} 
           </view>
-        </picker>
-
+          </picker>
+          <view class="r">
+            <image src="/static/images/address_right.png"></image>
+          </view>
+          
         </view>
         
 
