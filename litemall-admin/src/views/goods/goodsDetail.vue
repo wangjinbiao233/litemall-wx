@@ -226,7 +226,7 @@
             <el-row :gutter="5" v-for="(productItem, index) in goodsProducts">
               <el-col :span="6">
                 <el-form-item label="规格" label-width="60px" prop="goodsSpecificationIds">
-                  <el-select style="width: 100%;" v-model="productItem.goodsSpecificationIds" multiple filterable placeholder="请选择" @change="goodsSpecSelectChange">
+                  <el-select style="width: 100%;" v-model="productItem.goodsSpecificationIds" multiple filterable placeholder="请选择"  @change="goodsSpecSelectChange">
                     <el-option-group
                       v-for="group in goodsSpecOptions"
                       :key="group.label"
@@ -617,6 +617,7 @@
               })
 
               saveGoodsSpecification({goodsId: goodsId, goodsSpecifications: this.goodsSpecifications}).then(() => {
+                this.getGoodsSpecification()
                 this.$notify({
                   title: '成功',
                   message: '商品规格更新成功啦😘',
@@ -626,6 +627,7 @@
               })
 
               saveProduct({goodsId: goodsId, products: this.goodsProducts}).then(() => {
+                this.getGoodsProduct()
                 this.$notify({
                   title: '成功',
                   message: '货品价格更新成功啦😍',
@@ -702,6 +704,7 @@
         }
       },
       goodsSpecSelectChange(value) {
+
         // this.dataForm.goodsSpecificationIds = Array.sort(value);
         /** 把当选中项所在分组的其他选项禁用 */
         for(let i = 0; i < this.goodsSpecOptions.length; i++) {
