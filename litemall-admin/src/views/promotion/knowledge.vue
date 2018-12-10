@@ -210,7 +210,7 @@
 
 <script>
   import { listKnowledge, createKnowledge, updateKnowledge,
-    deleteKnowledge, getKCategory ,selectGoodSn, listKnowledgeGoods} from '@/api/knowledge'
+    deleteKnowledge, getKCategory, selectGoodSn, listKnowledgeGoods } from '@/api/knowledge'
   import waves from '@/directive/waves' // 水波纹指令
   import BackToTop from '@/components/BackToTop'
   import Tinymce from '@/components/Tinymce'
@@ -245,7 +245,6 @@
           knowledgeCls: undefined,
           titlePicUrl: undefined,
           goodsId: [],
-          titlePicUrl: undefined,
           video: undefined
         },
         dialogFormVisible: false,
@@ -281,7 +280,6 @@
         } else {
           this.goodsList = []
         }
-
       }).catch(() => {
         this.goodsList = []
       })
@@ -369,11 +367,10 @@
           this.$refs['dataForm'].clearValidate()
         })
 
-        listKnowledgeGoods({ knowleId : this.dataForm.id}).then(response => {
+        listKnowledgeGoods({ knowleId: this.dataForm.id }).then(response => {
           const items = response.data.data.items
           console.log(items)
-          debugger
-          this.dataForm.goodsId = items.map((item)=>{
+          this.dataForm.goodsId = items.map((item) => {
             return item.id
           })
         }).catch(() => {
@@ -448,12 +445,10 @@
       },
       // 视频上传
       handleVideoSuccess(res, file) { // 获取上传图片地址
-        debugger
         this.videoFlag = false
         this.videoUploadPercent = 0
-        if (res.status === 200) {
-          this.dataForm.id = res.data.id
-          this.dataForm.Video = res.data.uploadUrl
+        if (res.errno === 0) {
+          this.dataForm.video = res.data.url
         } else {
           this.$message.error('视频上传失败，请重新上传！')
         }
