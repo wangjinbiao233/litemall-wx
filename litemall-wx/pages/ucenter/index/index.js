@@ -23,18 +23,19 @@ Page({
     util.request(api.getDistributionTag, {
       pId: that.data.pId
     }, 'GET').then(function(res) {
-      var labelList = []
-      for (var i = 0; i < res.data.labelList.length; i++) {
-        var labelName = res.data.labelList[i].labelName
-        labelList.push(labelName)
+      if (res.data.labelList.length > 0) {
+        var labelList = []
+        for (var i = 0; i < res.data.labelList.length; i++) {
+          var labelName = res.data.labelList[i].labelName
+          labelList.push(labelName)
+        }
+        console.log(res);
+        that.setData({
+          taglist: res.data.labelList,
+          tagarray: labelList,
+          showmodal: true
+        })
       }
-      console.log(res);
-      that.setData({
-        tagarray: labelList
-      })
-    })
-    this.setData({
-      showmodal: true
     })
   },
   hidemodal: function() {
@@ -50,7 +51,7 @@ Page({
     for (var i = 0; i < this.data.taglist.length; i++) {
       if (that.data.tagarray[that.data.tagindex] == that.data.taglist[i].labelName) {
         that.setData({
-          labelId: that.data.taglist[i].labelId
+          labelId: that.data.taglist[i].id
         })
         wx.showToast({
           title: '选择成功',
@@ -70,15 +71,15 @@ Page({
     // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
     if (options) {
       var scene = decodeURIComponent(options.scene)
-      console.log('pId == ' + scene);
+      // var scene = 'labelId:3'
       if (scene && scene != 'undefined') {
-        if (scene.indexOf('labelId' != -1)) {
+        if (scene.indexOf('labelId') != -1) {
           that.setData({
-            labelId: scene.substring(8)
+            labelId: Number(scene.substring(8))
           })
         } else {
           that.setData({
-            'pId': scene
+            'pId': Number(scene)
           })
           that.showDialogBtn();
         }
@@ -325,13 +326,78 @@ Page({
 
     if (ismyself == 'myself') {
       console.log('takePhoto ismyself=' + ismyself);
-      wx.navigateTo({
-        url: '/pages/takePhoto/takePhoto'
+      wx.getSetting({
+        success(res) {
+          console.log(res)
+          if (!res.authSetting['scope.camera'] || res.authSetting['scope.camera'] == false) {
+            wx.authorize({
+              scope: 'scope.camera',
+              success() {
+                wx.navigateTo({
+                  url: '/pages/takePhoto/takePhoto'
+                })
+              },
+              fail() {
+                wx.showModal({
+                  title: '提示',
+                  content: '摄像头权限未开启，功能无法使用',
+                  showCancel: true,
+                  confirmText: "前往授权",
+                  confirmColor: "#52a2d8",
+                  success: function(res) {
+                    console.log(res)
+                    if (res.confirm == true) {
+                      wx.openSetting({
+
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          } else if (res.authSetting['scope.camera'] == true) {
+            wx.navigateTo({
+              url: '/pages/takePhoto/takePhoto'
+            })
+          }
+        }
       })
     } else {
       console.log('friend ismyself=' + ismyself);
-      wx.navigateTo({
-        url: '/pages/takePhoto/friend'
+      wx.getSetting({
+        success(res) {
+          console.log(res)
+          if (!res.authSetting['scope.camera'] || res.authSetting['scope.camera'] == false) {
+            wx.authorize({
+              scope: 'scope.camera',
+              success() {
+                wx.navigateTo({
+                  url: '/pages/takePhoto/friend'
+                })
+              },
+              fail() {
+                wx.showModal({
+                  title: '提示',
+                  content: '摄像头权限未开启，功能无法使用',
+                  showCancel: true,
+                  confirmText: "前往授权",
+                  confirmColor: "#52a2d8",
+                  success: function(res) {
+                    if (res.confirm == true) {
+                      wx.openSetting({
+
+                      })
+                    }
+                  }
+                })
+              }
+            })
+          } else if (res.authSetting['scope.camera'] == true) {
+            wx.navigateTo({
+              url: '/pages/takePhoto/friend'
+            })
+          }
+        }
       })
     }
   },

@@ -8,27 +8,26 @@
       门店名称：
       <text class="store-name ">{{item.storeName}}</text>
       <!-- <text class="store-navigation" bindtap='toYuYue'>预约</text> -->
-      <view class="store-address" bindtap='toMap' data-storeAddress="{{item.storeAddress}}" data-storeName="{{item.storeName}}"> 
-        {{item.storeAddress}}  {{distant!=null?distant:0}}km
-       
+      <view class="store-address" bindtap='toMap' data-storeAddress="{{item.storeAddress}}" data-storeName="{{item.storeName}}">
+        {{item.storeAddress}} {{distant!=null?distant:0}}km
+
       </view>
     </view>
     <view class="store-opening">
       周一至周日
       <text class="store-time">9:00 - 22:00</text>
     </view>
+    <view class='reserve' bindtap='toReserve'>在线预约</view>
   </view>
-  <view>
-    <!-- <view class="store-product-title">项目选择</view> -->
+  <!-- <view>
     <view class="store-parent">
       <view wx:for="{{goods}}" wx:key="id" data-id="{{item.id}}" bindtap='toGoodsDetail' class="store-child">
         <image class="goods-img" src="{{item.primaryPicUrl}}"></image>
         <view class="goods-main">
           <text class="goods-name">{{item.name}}</text>
-          <!--<text class="goods-nameEn goods-text">JanDan Jewellery</text>-->
           <text class="goods-unit">￥ {{item.retailPrice}}</text>
         </view>
       </view>
     </view>
-  </view>
+  </view> -->
 </view>

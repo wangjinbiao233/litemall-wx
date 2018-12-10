@@ -1,0 +1,14 @@
+<!-- reserveGoods.wxml -->
+<view class="service-header" style='margin-left:1rpx;'>
+  <view class="service-title">服务商品</view>
+  <view class="service-describe">请选择服务商品，以便我们更好的为您服务</view>
+</view>
+<view class="store-parent">
+  <view wx:for="{{goods}}" wx:key="id" data-id="{{item.id}}" bindtap='toGoodsDetail' class="store-child">
+    <image class="goods-img" src="{{item.primaryPicUrl}}"></image>
+    <view class="goods-main">
+      <text class="goods-name">{{item.name}}</text>
+      <text class="goods-unit">￥ {{item.retailPrice}}</text>
+    </view>
+  </view>
+</view>

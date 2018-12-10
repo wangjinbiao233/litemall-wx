@@ -458,7 +458,7 @@ margin-left:75rpx;
 }
 
 .modal-title {
-  font-size: 34rpx;
+  font-size: 32rpx;
   color: #030303;
 }
 
@@ -488,7 +488,7 @@ margin-left:75rpx;
 }
 
 .btn-confirm {
-  width: 50%;
+  width: 100%;
   color: #ec5300;
   text-align: center;
 }
