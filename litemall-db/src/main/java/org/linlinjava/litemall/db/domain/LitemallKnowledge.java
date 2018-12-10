@@ -35,6 +35,8 @@ public class LitemallKnowledge{
 
     private String content;
 
+    private String video;
+
     public Integer getId() {
         return id;
     }
@@ -162,4 +164,12 @@ public class LitemallKnowledge{
 	public void setKnowledgeClsName(String knowledgeClsName) {
 		this.knowledgeClsName = knowledgeClsName;
 	}
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 }

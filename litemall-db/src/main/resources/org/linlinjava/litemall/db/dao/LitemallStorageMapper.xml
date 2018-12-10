@@ -21,6 +21,7 @@
     <result column="modify_user_id" jdbcType="VARCHAR" property="modifyUserId" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
     <result column="img_belongs" jdbcType="VARCHAR" property="imgBelongs" />
+    <result column="screenshot_url" jdbcType="VARCHAR" property="screenshotUrl" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -97,7 +98,7 @@
       This element was generated on Thu Apr 26 16:54:11 CST 2018.
     -->
     id, `key`, old_name, new_name, `type`, `size`, file_path, url, modify_time, create_user_id, 
-    create_time, modify_user_id, deleted, img_belongs
+    create_time, modify_user_id, deleted, img_belongs,screenshot_url
   </sql>
   <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallStorageExample" resultMap="BaseResultMap">
     <!--
@@ -253,6 +254,9 @@
       <if test="imgBelongs != null">
         img_belongs,
       </if>
+      <if test="screenshotUrl != null">
+        screenshot_url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="key != null">
@@ -293,6 +297,9 @@
       </if>
       <if test="imgBelongs != null">
         #{imgBelongs,jdbcType=VARCHAR},
+      </if>
+      <if test="screenshotUrl != null">
+        #{screenshotUrl,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
