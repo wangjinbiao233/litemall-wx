@@ -45,3 +45,18 @@ export function getKCategory() {
     method: 'get'
   })
 }
+
+export function selectGoodSn() {
+  return request({
+    url: '/knowledge/getGoodSn',
+    method: 'get'
+  })
+}
+
+export function listKnowledgeGoods(data) {
+  return request({
+    url: '/knowledge/getListKnowledgeGoods',
+    method: 'get',
+    params: data
+  })
+}

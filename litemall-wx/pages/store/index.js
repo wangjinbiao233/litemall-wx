@@ -174,14 +174,9 @@ Page({
     })
 
   },
-  toYuYue: function (res) {
-
-
+  toReserve: function (res) {
     wx.navigateTo({
       url: '../service/index'
     })
-
   },
-
-
 })

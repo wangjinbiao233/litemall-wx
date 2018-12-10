@@ -90,29 +90,29 @@
 
 .cate-item .b {
   width: 750rpx;
-  padding: 0 6.25rpx;
   height: auto;
   overflow: hidden;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
 }
 
 .cate-item .b .item {
-  float: left;
+  flex: 0 0 366rpx;
   background: #fff;
-  width: 363rpx;
   margin-bottom: 6.25rpx;
   padding-bottom: 13.333rpx;
   height: auto;
   overflow: hidden;
-  text-align: center;
   position: relative;
 }
 
 .cate-item .b .item-b {
-  margin-left: 10.25rpx;
+  margin-left: 15rpx;
 }
 
 .cate-item .item .img {
-  width: 352rpx;
+  width: 366rpx;
   height: 412rpx;
 }
 

@@ -132,3 +132,14 @@
   border-radius: 5rpx;
   box-shadow: 0.5px 0.5px #ddd, 0px 0px #ddd inset;
 }
+
+.reserve{
+  padding: 5rpx 10rpx 5rpx 10rpx;
+  font-size: 28rpx;
+  color: #ffffff;
+  background-color: #8ac2d6;
+  border-radius: 8rpx;
+  float: right;
+  margin-top: 20rpx;
+  margin-right: 20rpx;
+}

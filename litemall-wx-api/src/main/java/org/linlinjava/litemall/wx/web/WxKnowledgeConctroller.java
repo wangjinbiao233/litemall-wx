@@ -8,16 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.linlinjava.litemall.db.domain.LitemallCategory;
-import org.linlinjava.litemall.db.domain.LitemallComment;
-import org.linlinjava.litemall.db.domain.LitemallKCategory;
-import org.linlinjava.litemall.db.domain.LitemallKnowledge;
-import org.linlinjava.litemall.db.domain.LitemallLikedetails;
-import org.linlinjava.litemall.db.domain.LitemallUser;
-import org.linlinjava.litemall.db.service.LitemallCommentService;
-import org.linlinjava.litemall.db.service.LitemallKnowledgeService;
-import org.linlinjava.litemall.db.service.LitemallLikedetailsService;
-import org.linlinjava.litemall.db.service.LitemallUserService;
+import org.linlinjava.litemall.db.domain.*;
+import org.linlinjava.litemall.db.service.*;
 import org.linlinjava.litemall.db.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +29,8 @@ public class WxKnowledgeConctroller {
 	private LitemallUserService userService;
 	@Autowired
 	private LitemallLikedetailsService likedetailsService;
+	@Autowired
+	private LitemallGoodsService goodsService;
 	
 	/**
 	 * 获取知识分类的信息列表
@@ -125,6 +119,10 @@ public class WxKnowledgeConctroller {
     	if(!selectKnowledgeList.isEmpty()) {
     		res= selectKnowledgeList.get(0);
     		res.setContent(res.getContent().replaceAll("&lt;", ""));
+			List<LitemallGoods> list = new ArrayList<LitemallGoods>();
+			list = goodsService.queryLitemallGoodsByKnowledgeId(res.getId());
+			res.setGoodsList(list);
+
     	}
     	data.put("knowledge", res);
     	
