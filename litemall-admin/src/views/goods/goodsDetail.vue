@@ -603,7 +603,6 @@
       },
       showData(){
         this.getGoodsSpecification()
-        this.getGoodsProduct()
       },
 
       handleSave() {
