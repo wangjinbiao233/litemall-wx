@@ -275,8 +275,9 @@
       this.getKCategoryList()
 
       selectGoodSn().then(response => {
-        if (response.data.errno === '0') {
+        if (response.data.errno === 0) {
           this.goodsList = response.data.data.items
+          console.log(this.goodsList)
         } else {
           this.goodsList = []
         }
