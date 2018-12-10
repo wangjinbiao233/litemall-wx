@@ -226,7 +226,7 @@
             <el-row :gutter="5" v-for="(productItem, index) in goodsProducts">
               <el-col :span="6">
                 <el-form-item label="规格" label-width="60px" prop="goodsSpecificationIds">
-                  <el-select style="width: 100%;" v-model="productItem.goodsSpecificationIds" multiple filterable placeholder="请选择"  @change="goodsSpecSelectChange">
+                  <el-select style="width: 100%;" v-model="productItem.goodsSpecificationIds" multiple filterable placeholder="请选择" @click.native="showData()"  @change="goodsSpecSelectChange">
                     <el-option-group
                       v-for="group in goodsSpecOptions"
                       :key="group.label"
@@ -600,6 +600,10 @@
           })
         }
 
+      },
+      showData(){
+        this.getGoodsSpecification()
+        this.getGoodsProduct()
       },
 
       handleSave() {
