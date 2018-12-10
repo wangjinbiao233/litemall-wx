@@ -245,7 +245,6 @@
           knowledgeCls: undefined,
           titlePicUrl: undefined,
           goodsId: [],
-          titlePicUrl: undefined,
           video: undefined
         },
         dialogFormVisible: false,
@@ -372,7 +371,6 @@
         listKnowledgeGoods({ knowleId : this.dataForm.id}).then(response => {
           const items = response.data.data.items
           console.log(items)
-          debugger
           this.dataForm.goodsId = items.map((item)=>{
             return item.id
           })
