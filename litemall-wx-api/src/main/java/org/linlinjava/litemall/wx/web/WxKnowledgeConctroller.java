@@ -59,7 +59,7 @@ public class WxKnowledgeConctroller {
 	 * @return
 	 */
 	@RequestMapping("knlist")
-    public Object knlist(Integer kCategoryId,
+    public Object knlist(Integer userId,Integer kCategoryId,
                         @RequestParam(value = "page", defaultValue = "1") Integer page,
                         @RequestParam(value = "size", defaultValue = "10") Integer size) {
 
@@ -69,7 +69,13 @@ public class WxKnowledgeConctroller {
         	knowledge.setKnowledgeCls(kCategoryId);
         }
         List<LitemallKnowledge> knowledgeList = knowledgeService.selectKnowledgeList(knowledge, page, size, null, null);
-        
+		for(int i=0;i<knowledgeList.size();i++){
+			knowledgeList.get(i).setIsShow(false);
+			LitemallLikedetails likedetails = likedetailsService.selectByUserIdValueId(knowledgeList.get(i).getId(),userId, 0);
+			if(likedetails != null){
+				knowledgeList.get(i).setIsShow(true);//充当点过赞的标识字段
+			}
+		}
         Map<String, Object> data = new HashMap<>();
         data.put("kCategory", kCategoryId);
         data.put("knowledgeList", knowledgeList);
@@ -271,7 +277,7 @@ public class WxKnowledgeConctroller {
      			likedetails.setStatus(0);
      			likedetails.setUpdatetime(new Date());
      			//修改
-     			likedetailsService.updateByCommentIdUserId(likedetails);
+     			likedetailsService.updateByCommentIdUserId2(likedetails);
      		}
      		
      	}else{//取消赞  之前一定点过
@@ -279,7 +285,7 @@ public class WxKnowledgeConctroller {
  			likedetails.setStatus(1);
  			likedetails.setUpdatetime(new Date());
  			//修改
- 			likedetailsService.updateByCommentIdUserId(likedetails);
+ 			likedetailsService.updateByCommentIdUserId2(likedetails);
      	}
     	 
     	 knowledgeService.updatePraiseCountById(knowldegeId, one);

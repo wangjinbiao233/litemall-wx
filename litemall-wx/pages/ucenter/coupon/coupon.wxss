@@ -118,10 +118,10 @@ page{
 
 
 .content{
-  margin-top: 24rpx;
-  margin-left: 40rpx;
+  margin-top: 2rpx;
+  margin-left: 20rpx;
   display: flex;
-  margin-right: 40rpx;
+  margin-right: 20rpx;
   flex-direction: row;
   align-items: center;
 }

@@ -619,18 +619,18 @@
                 })
               })
 
-              saveGoodsSpecification({goodsId: goodsId, goodsSpecifications: this.goodsSpecifications}).then(() => {
-                this.getGoodsSpecification()
-                this.$notify({
-                  title: '成功',
-                  message: '商品规格更新成功啦😘',
-                  type: 'success',
-                  duration: 2000
-                })
-              })
-
               saveProduct({goodsId: goodsId, products: this.goodsProducts}).then(() => {
                 this.getGoodsProduct()
+                saveGoodsSpecification({goodsId: goodsId, goodsSpecifications: this.goodsSpecifications}).then(() => {
+                  this.getGoodsSpecification()
+                  this.getGoodsProduct()
+                  this.$notify({
+                    title: '成功',
+                    message: '商品规格更新成功啦😘',
+                    type: 'success',
+                    duration: 2000
+                  })
+                })
                 this.$notify({
                   title: '成功',
                   message: '货品价格更新成功啦😍',
@@ -638,6 +638,10 @@
                   duration: 2000
                 })
               })
+
+
+
+
 
               this.$notify({
                 title: '成功',
