@@ -22,6 +22,10 @@ public class LitemallLikedetailsService {
 	public  int updateByCommentIdUserId(LitemallLikedetails record){
 		return likedetailsMapper.updateByCommentIdUserId(record);
 	}
+
+	public  int updateByCommentIdUserId2(LitemallLikedetails record){
+		return likedetailsMapper.updateByCommentIdUserId2(record);
+	}
 	
 	public LitemallLikedetails selectByUserIdValueId(Integer valueId,Integer userId, Integer status){
 		return likedetailsMapper.selectByUserIdValueId(valueId, userId, status);

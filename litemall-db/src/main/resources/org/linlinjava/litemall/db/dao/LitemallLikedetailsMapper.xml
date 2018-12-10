@@ -136,6 +136,13 @@
       updatetime = #{updatetime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER} and comment_id=#{commentId,jdbcType=INTEGER}
   </update>
+
+  <update id="updateByCommentIdUserId2" parameterType="org.linlinjava.litemall.db.domain.LitemallLikedetails" >
+    update litemall_likedetails
+    set status = #{status,jdbcType=INTEGER},
+      updatetime = #{updatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER} and comment_id is null
+  </update>
   
   <select id="selectByUserIdValueId" resultMap="BaseResultMap">
     select  

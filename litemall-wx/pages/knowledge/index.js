@@ -58,17 +58,17 @@ Page({
   },
   getKnowledgeByClsId:function(){//获取某个知识分类的知识列表信息
     let that = this;
-    util.request(api.KnowledgeList, { kCategoryId: that.data.kCategory, page: that.data.page, size: that.data.size })
+    util.request(api.KnowledgeList, { userId:wx.getStorageSync('userId'),kCategoryId: that.data.kCategory, page: that.data.page, size: that.data.size })
       .then(function (res) {
         that.setData({
           knowledgeList: res.data.knowledgeList,
           kCategory: res.data.kCategory
         });
-        for (var i = 0; i < that.data.knowledgeList.length;i++){
-          that.setData({
-            ['knowledgeList[' + i + '].isShow']: false, 
-          });
-        }
+        // for (var i = 0; i < that.data.knowledgeList.length;i++){
+        //   that.setData({
+        //     ['knowledgeList[' + i + '].isShow']: false, 
+        //   });
+        // }
         console.log(res.data);
       });
   },
