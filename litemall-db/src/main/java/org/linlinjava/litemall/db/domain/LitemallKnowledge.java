@@ -36,6 +36,8 @@ public class LitemallKnowledge{
 
     private String content;
 
+    private String video;
+
     private String[] goodsId;
 
     private List<LitemallGoods> goodsList;
@@ -167,6 +169,14 @@ public class LitemallKnowledge{
 	public void setKnowledgeClsName(String knowledgeClsName) {
 		this.knowledgeClsName = knowledgeClsName;
 	}
+
+    public String getVideo() {
+        return video;
+    }
+
+    public void setVideo(String video) {
+        this.video = video;
+    }
 
     public String[] getGoodsId() {
         return goodsId;

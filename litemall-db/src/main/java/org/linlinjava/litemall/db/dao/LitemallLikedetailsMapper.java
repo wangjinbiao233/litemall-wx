@@ -21,6 +21,8 @@ public interface LitemallLikedetailsMapper {
     		@Param("userId")Integer userId,@Param("status")Integer status);
     
     int updateByCommentIdUserId(LitemallLikedetails record);
+
+    int updateByCommentIdUserId2(LitemallLikedetails record);
     
     LitemallLikedetails selectByUserIdValueId(@Param("valueId")Integer valueId,
     		@Param("userId")Integer userId,@Param("status")Integer status);
