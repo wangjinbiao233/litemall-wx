@@ -63,6 +63,12 @@ Page({
   onUnload: function () {
     // 页面关闭
   },
+  //跳商城
+  toGoods() {
+    wx.switchTab({
+        url: "/pages/category/category"
+    });
+  },
   onPullDownRefresh: function () {
     var that = this;
     var data = {
