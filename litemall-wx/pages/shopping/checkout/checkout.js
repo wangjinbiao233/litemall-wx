@@ -42,11 +42,9 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     console.log(wx.getStorageSync('userId'));
     util.request(api.getUserInfo, { userId: wx.getStorageSync('userId') }, 'POST').then(function (res) {
-      console.log(options.flag);
       that.setData({
         money: res.user.money,
-        rechargeMoney: res.user.rechargeMoney,
-        pageFlag:options.flag
+        rechargeMoney: res.user.rechargeMoney
       });
     });
     wx.setStorageSync('couponId', 0);
@@ -375,7 +373,9 @@ Page({
     } else {
       util.request(api.verifyCode, { mobile: that.data.mobile, authCode: e.detail.value.verificationCode }, 'POST').then(function (res) {
         if (res.errno === 0) {
-          util.request(api.OrderSubmit, { payType: that.data.payType, cartId: that.data.cartId, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
+          var radioFlag = parseInt(that.data.radioFlag);
+          var storeId = wx.getStorageSync('storeid');
+          util.request(api.OrderSubmit, { payType: that.data.payType, storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag: that.data.pageFlag,storeIds: that.data.storeId, storeIndex: that.data.storeIndex, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
             if (res.errno === 0) {
               const orderId = res.data.orderInfo.id;
               util.request(api.moneyPay, {

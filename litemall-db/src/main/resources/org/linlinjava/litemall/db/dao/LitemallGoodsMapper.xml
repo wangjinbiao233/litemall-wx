@@ -868,5 +868,14 @@
 		</if>
 		and flag ='2'
   </select>
+
+  <select id="selectLitemallGoodsByKnowledgeId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select lg.*
+    from litemall_knowledge_goods lkg
+    LEFT JOIN litemall_goods lg
+    on lkg.fk_goods_id = lg.id
+    where 1=1
+    and lkg.fk_knowledge_id = #{knowledgtId}
+  </select>
   
 </mapper>

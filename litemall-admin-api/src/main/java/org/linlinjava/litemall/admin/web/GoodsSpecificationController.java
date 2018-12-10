@@ -213,7 +213,9 @@ public class GoodsSpecificationController {
                     List<Integer> lists= Arrays.asList(goodsSpecificationIds);
                     List<Integer> aLists=new ArrayList<>(lists);
                     for(int i=0;i<aLists.size();i++){
-                        if(aLists.get(i) == goodsSpecification.getId()){
+                        Integer specId = goodsSpecification.getId();
+                        Integer listId = aLists.get(i);
+                        if(listId.equals(specId)){
                             //销售价格包含删除商品规格,此处删除销售价格中的商品规格
                             aLists.remove(i);
                             Integer[] arrayInteger=aLists.toArray(new Integer[aLists.size()]);
