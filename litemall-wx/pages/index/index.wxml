@@ -7,12 +7,12 @@
     <view class='search'>
       <image mode='aspectFill' bindtap="windowchoose" data-statu="open" src='/static/images/code.png'></image>
       <view bindtap="windowchoose" data-statu="open">测一测</view>
-    
-      <view class='search-btn' wx:if="{{isSearch==1}}">
+
+      <navigator url="/pages/searchGoods/searchGoods" class='search-btn' wx:if="{{isSearch==1}}">
         <icon type='search' size='15' color='#dbdbdb'></icon>
-        <navigator url="/pages/searchGoods/searchGoods"><view style='color:#dbdbdb;margin-left:10rpx;'>大家都在搜</view></navigator>
-      </view>
-      
+        <view style='color:#dbdbdb;margin-left:10rpx;'>大家都在搜</view>
+      </navigator>
+
       <view class='search-btn-o' wx:else>
         <input placeholder='请输入...'></input>
         <icon type='search' size='15' color='#dbdbdb'></icon>
@@ -24,20 +24,20 @@
           <image mode='aspectFill' src="{{item.url}}" background-size="cover"></image>
         </navigator>
 
-         <image wx:if="{{item.linkValue =='/pages/knowledge/index'}}"  mode='aspectFill' src="{{item.url}}" background-size="cover" bindtap="goKnowledge" data-id="{{item.linkDetailid}}"> </image>
+        <image wx:if="{{item.linkValue =='/pages/knowledge/index'}}" mode='aspectFill' src="{{item.url}}" background-size="cover" bindtap="goKnowledge" data-id="{{item.linkDetailid}}"> </image>
 
       </swiper-item>
     </swiper>
     <view class="{{isfirstlogin?'firstlogin':' '}}">
-    <view class="category" >
-      <view bindtap='goKnowledge' class="category-iconBox" wx:key="id" wx:for="{{kcategories}}" data-id="{{item.id}}" data-index='{{index}}'>
-        <image mode='aspectFill' class="category-icon" src="{{item.bannerUrl}}" background-size="cover"></image>
-        <text class="category-text">{{item.name}}</text>
+      <view class="category">
+        <view bindtap='goKnowledge' class="category-iconBox" wx:key="id" wx:for="{{kcategories}}" data-id="{{item.id}}" data-index='{{index}}'>
+          <image mode='aspectFill' class="category-icon" src="{{item.bannerUrl}}" background-size="cover"></image>
+          <text class="category-text">{{item.name}}</text>
+        </view>
       </view>
     </view>
-    </view>
     <view bindtap="windowchoose" data-statu="open" class="{{isfirstlogin?'':'firstlogin'}}">
-        <image style="width:100%;height:420rpx;" src="{{picUrl}}system/30s.jpg" />
+      <image style="width:100%;height:420rpx;" src="{{picUrl}}system/30s.jpg" />
     </view>
     <!-- <view class="knowledge">
     <navigator class="knowledge-box" wx:key = "id" wx:for="{{knowledges}}" 
@@ -57,10 +57,10 @@
         <navigator url="/pages/goods/goods?id={{item.goodsSn}}">
           <view class='swiper-box'>
             <view style='height:384rpx;width:330rpx;'>
-            <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
-            <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:384rpx;width:330rpx;'></image>
+              <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
+              <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:384rpx;width:330rpx;'></image>
             </view>
-            
+
             <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.name}}</view>
             <view style='padding:5rpx 15rpx 0rpx 15rpx;color:#6bb5dc;font-size:35rpx;'>￥{{item.retailPrice}}</view>
             <view class='ellipsis' style='padding:5rpx 15rpx 10rpx 15rpx;font-size:24rpx;'>{{item.goodsBrief}}</view>
@@ -115,34 +115,37 @@
           </view>
           <view class='item-name-o'>
             <view style='font-size:24rpx;color:#dbdbdb;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.storeAddress}}</view>
-             <view style='font-size:24rpx;color:#dbdbdb;'>{{item.distant!=null?item.distant:0}}km</view> 
+            <view style='font-size:24rpx;color:#dbdbdb;'>{{item.distant!=null?item.distant:0}}km</view>
           </view>
         </view>
       </swiper-item>
     </swiper>
 
-<!--mask-->
-<view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view> 
+    <!--mask-->
+    <view class="drawer_screen" bindtap="powerDrawer" data-statu="close" wx:if="{{showModalStatus}}"></view>
 
-<!--content--><!--使用animation属性指定需要执行的动画 animation="{{animationData}}"-->
-<view  class="drawer_box" wx:if="{{showModalStatus}}"> 
- <!--drawer content-->
- 
-     <view class="drawer_title">肤质检测</view> 
-     <view class="drawer_content">
-        <view class="tiaozi"  bindtap="chooseImages"  data-statu="myself" >自己测</view>
+    <!--content-->
+    <!--使用animation属性指定需要执行的动画 animation="{{animationData}}"-->
+    <view class="drawer_box" wx:if="{{showModalStatus}}">
+      <!--drawer content-->
+
+      <view class="drawer_title">肤质检测</view>
+      <view class="drawer_content">
+        <view class="tiaozi" bindtap="chooseImages" data-statu="myself">自己测</view>
         <view class="xiaozi">肤质数据存入个人记录</view>
-         <view class="tiaozi2" bindtap="chooseImages" data-statu="friend" >帮朋友测</view>
+        <view class="tiaozi2" bindtap="chooseImages" data-statu="friend">帮朋友测</view>
         <view class="xiaozi">肤质数据不会记录</view>
         <navigator url="/pages/facialUtil/facialUtil">
-        <view class="tiaozi3">检测教程</view>
-        <view class="xiaozi">【护肤测试结果仅供参考，以线下服务顾问面诊为准】</view>
-        </navigator> 
-        <view class="yz_close"  bindtap="powerDrawer" data-statu="close"><image src="/static/images/yz_close.png"/></view>
-    </view> 
+          <view class="tiaozi3">检测教程</view>
+          <view class="xiaozi">【护肤测试结果仅供参考，以线下服务顾问面诊为准】</view>
+        </navigator>
+        <view class="yz_close" bindtap="powerDrawer" data-statu="close">
+          <image src="/static/images/yz_close.png" />
+        </view>
+      </view>
 
 
-</view>
+    </view>
 
     <!-- <view class="stores">
 

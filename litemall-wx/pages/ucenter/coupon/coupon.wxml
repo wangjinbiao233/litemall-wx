@@ -7,7 +7,7 @@
       <button class="add-btn disabled" form-type='submit'>查询</button>
     </view>
   </form>
-  <view class="help">使用说明</view>
+  <!-- <view class="help">使用说明</view> -->
   <view class="coupon-list">
     <block wx:for='{{myCouponList}}'>
       <view class="{{item.isUse==0?'item':'item-use'}}">
