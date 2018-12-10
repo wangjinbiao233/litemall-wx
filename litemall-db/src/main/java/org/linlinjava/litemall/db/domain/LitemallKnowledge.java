@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.db.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class LitemallKnowledge{
     private Integer id;
@@ -36,6 +37,8 @@ public class LitemallKnowledge{
     private String content;
 
     private String[] goodsId;
+
+    private List<LitemallGoods> goodsList;
 
     public Integer getId() {
         return id;
@@ -171,5 +174,13 @@ public class LitemallKnowledge{
 
     public void setGoodsId(String[] goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public List<LitemallGoods> getGoodsList() {
+        return goodsList;
+    }
+
+    public void setGoodsList(List<LitemallGoods> goodsList) {
+        this.goodsList = goodsList;
     }
 }
