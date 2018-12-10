@@ -4,6 +4,9 @@ package org.linlinjava.litemall.db.service;
 import org.linlinjava.litemall.db.domain.LitemallStorage;
 import org.linlinjava.litemall.db.util.CharUtil;
 import org.linlinjava.litemall.db.util.FileUploadConfig;
+import org.linlinjava.litemall.db.util.FileUtils;
+import org.linlinjava.litemall.db.util.entity.VideoFile;
+import org.linlinjava.litemall.db.util.runner.FFmpegCommandRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -134,6 +137,31 @@ public class FileSystemStorageService implements StorageService {
             storageInfo.setKey(key);
             storageInfo.setUrl(url);
             storageInfo.setImgBelongs(imgBelongs);
+
+            //video screen shot
+            if(contentType.contains("mp4")&&contentType.contains("video")) {
+                File f_video=new File(path.resolve(newFileName).toString());
+                //capture video in 3 seconds
+                //0 for random screen shot
+                File f_screeshot= FFmpegCommandRunner.screenshot(f_video, 0);
+                if(f_screeshot!=null){
+                    String screenshotUrl=generateUrl(newPath+"/" + FileUtils.PATH_SRCEENTSHOT,f_screeshot.getName());
+                    storageInfo.setScreenshotUrl(screenshotUrl);
+                }
+                //start re-generate mp4
+                //针对mp4视频重新输出，解决卡顿问题
+                String key_copy = generateKey();
+                String newFileName_copy = key_copy+".mp4";
+                VideoFile copy_video=FFmpegCommandRunner.coverToMp4_GeneralCopy(f_video,key_copy);
+                if (copy_video.getTarget() != null && copy_video.getTarget().exists()) {
+                    storageInfo.setKey(key_copy);
+                    storageInfo.setNewName(newFileName_copy);
+                    String url_copy = generateUrl(newPath,newFileName_copy);
+                    storageInfo.setUrl(url_copy);
+                    storageInfo.setFilePath("/"+newPath+"/"+newFileName_copy);
+                }
+                //end re-generate mp4
+            }
             litemallStorageService.insertSelective(storageInfo);
 
         }

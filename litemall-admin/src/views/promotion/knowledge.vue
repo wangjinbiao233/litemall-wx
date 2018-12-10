@@ -156,6 +156,22 @@
           </el-tooltip>
         </el-form-item>
 
+        <el-form-item label="视频" prop="video">
+          <el-upload
+            class="k-avatar-uploader el-upload--text"
+            action="/admin/storage/create"
+            :show-file-list="false"
+            :on-success="handleVideoSuccess"
+            :before-upload="beforeUploadVideo"
+            :on-progress="uploadVideoProcess">
+            <video v-if="dataForm.video !='' && videoFlag == false" :src="dataForm.video" class="k-avatar" width="300px" height="200px"
+                   controls="controls">您的浏览器不支持视频播放</video>
+            <i v-else-if="dataForm.video =='' && videoFlag == false" class="el-icon-plus k-avatar-uploader-icon"></i>
+            <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
+          </el-upload>
+          <P class="text">请保证视频格式正确，且不超过100M</P>
+        </el-form-item>
+
         <el-form-item style="width: 700px;" label="知识内容" prop="content" >
           <tinymce v-model="dataForm.content" ref = "tinymce"></tinymce>
         </el-form-item>
@@ -228,7 +244,9 @@
           isShow: undefined,
           knowledgeCls: undefined,
           titlePicUrl: undefined,
-          goodsId:[]
+          goodsId: [],
+          titlePicUrl: undefined,
+          video: undefined
         },
         dialogFormVisible: false,
         dialogStatus: '',
@@ -245,6 +263,7 @@
         },
         goodsList: [],
         downloadLoading: false,
+        videoFlag: false,
         fileImgUrl: process.env.BASE_API + '/storage/uploadPic',
         kCategoryList: undefined,
         kCategoryMap: undefined,
@@ -256,8 +275,9 @@
       this.getKCategoryList()
 
       selectGoodSn().then(response => {
-        if(response.data.errno == '0'){
+        if (response.data.errno === 0) {
           this.goodsList = response.data.data.items
+          console.log(this.goodsList)
         } else {
           this.goodsList = []
         }
@@ -310,7 +330,8 @@
           isShow: undefined,
           knowledgeCls: undefined,
           titlePicUrl: undefined,
-          goodsId:[]
+          goodsId: [],
+          video: undefined
         }
       },
       handleCreate() {
@@ -348,8 +369,8 @@
           this.$refs['dataForm'].clearValidate()
         })
 
-        listKnowledgeGoods({knowleId : this.dataForm.id}).then(response => {
-          let items = response.data.data.items
+        listKnowledgeGoods({ knowleId : this.dataForm.id}).then(response => {
+          const items = response.data.data.items
           console.log(items)
           debugger
           this.dataForm.goodsId = items.map((item)=>{
@@ -424,6 +445,33 @@
           this.$message.error('上传头像图片大小不能超过 2MB!')
         }
         return isJPG && isLt2M
+      },
+      // 视频上传
+      handleVideoSuccess(res, file) { // 获取上传图片地址
+        debugger
+        this.videoFlag = false
+        this.videoUploadPercent = 0
+        if (res.status === 200) {
+          this.dataForm.id = res.data.id
+          this.dataForm.Video = res.data.uploadUrl
+        } else {
+          this.$message.error('视频上传失败，请重新上传！')
+        }
+      },
+      beforeUploadVideo(file) {
+        const isLt100M = file.size / 1024 / 1024 < 100
+        if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) === -1) {
+          this.$message.error('请上传正确的视频格式')
+          return false
+        }
+        if (!isLt100M) {
+          this.$message.error('上传视频大小不能超过100MB哦!')
+          return false
+        }
+      },
+      uploadVideoProcess(event, file, fileList) {
+        this.videoFlag = true
+        this.videoUploadPercent = file.percentage.toFixed(0)
       }
     }
   }

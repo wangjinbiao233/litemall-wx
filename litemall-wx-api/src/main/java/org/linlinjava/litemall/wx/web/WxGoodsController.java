@@ -289,12 +289,12 @@ public class WxGoodsController {
      * 大家都在看的商品
      */
     @RequestMapping("related")
-    public Object related(Integer id) {
+    public Object related(String id) {
         if(id == null){
             return ResponseUtil.fail402();
         }
 
-        LitemallGoods goods = goodsService.findById(id);
+        LitemallGoods goods = goodsService.findByGoodsSn(id);
         int cid = goods.getCategoryId();
 
         // 查找六个相关商品

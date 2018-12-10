@@ -9,7 +9,7 @@
   <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}};margin-top:10px">
     <view class="cate-item">
       <view class="b">
-        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.id}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
+        <navigator class="item {{(iindex + 1) % 2 == 0 ? 'item-b' : ''}}" url="/pages/goods/goods?id={{iitem.goodsSn}}" wx:for="{{goodsList}}" wx:key="id" wx:for-item="iitem" wx:for-index="iindex">
           <text class='serviceFlag' wx:if="{{iitem.flag == '2'}}">服务</text>
           <image class="img" src="{{iitem.listPicUrl}}"></image>
           <text class="name">{{iitem.name}}</text>
