@@ -35,6 +35,8 @@ public class LitemallKnowledge{
 
     private String content;
 
+    private String[] goodsId;
+
     public Integer getId() {
         return id;
     }
@@ -162,4 +164,12 @@ public class LitemallKnowledge{
 	public void setKnowledgeClsName(String knowledgeClsName) {
 		this.knowledgeClsName = knowledgeClsName;
 	}
+
+    public String[] getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String[] goodsId) {
+        this.goodsId = goodsId;
+    }
 }

@@ -168,4 +168,11 @@ public interface LitemallGoodsMapper {
 	int selectCountForStore(LitemallGoods goods);
 	
 	List<LitemallGoods> recommendGoods(@Param("categoryid")Integer categoryid);
+
+    /**
+     * 根据知识id查询绑定的商品
+     * @param knowledgtId
+     * @return
+     */
+    List<LitemallGoods> selectLitemallGoodsByKnowledgeId(@Param("knowledgtId") Integer knowledgtId);
 }
