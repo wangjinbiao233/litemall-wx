@@ -121,6 +121,7 @@ Page({
                         wx.navigateBack();
                     }
                 })
+              app.knowledgeId = that.data.valueId;
             }
         });
     },
