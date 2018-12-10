@@ -6,6 +6,7 @@
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="banner_url" property="bannerUrl" jdbcType="VARCHAR" />
     <result column="title_pic_url" property="titlePicUrl" jdbcType="VARCHAR" />
+    <result column="video" property="video" jdbcType="VARCHAR" />
     <result column="introduction" property="introduction" jdbcType="VARCHAR" />
     <result column="visit_count" property="visitCount" jdbcType="INTEGER" />
     <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
@@ -24,7 +25,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     lk.id, lk.title, lk.title_pic_url,lk.banner_url,lk.introduction, 
-    lk.knowledge_cls, lkg.name knowledge_cls_name,
+    lk.knowledge_cls,lk.video, lkg.name knowledge_cls_name,
     lk.visit_count, lk.comment_count, lk.praise_count, lk.create_date, 
     lk.create_by, lk.update_date, lk.update_by,is_show
   </sql>
@@ -75,12 +76,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
-    insert into litemall_knowledge (title, title_pic_url, 
+    insert into litemall_knowledge (title, title_pic_url,video,
       banner_url, introduction, knowledge_cls,
       visit_count, comment_count, praise_count, 
       create_date, create_by, update_date, 
       update_by,is_show, content)
-    values (#{title,jdbcType=VARCHAR}, #{titlePicUrl,jdbcType=VARCHAR}, 
+    values (#{title,jdbcType=VARCHAR}, #{titlePicUrl,jdbcType=VARCHAR}, #{video,jdbcType=VARCHAR},
       #{bannerUrl,jdbcType=VARCHAR},#{introduction,jdbcType=VARCHAR},
       #{knowledgeCls,jdbcType=INTEGER},#{visitCount,jdbcType=INTEGER},
       #{commentCount,jdbcType=INTEGER}, #{praiseCount,jdbcType=INTEGER}, 
@@ -99,6 +100,9 @@
       </if>
       <if test="titlePicUrl != null" >
         title_pic_url,
+      </if>
+      <if test="video != null" >
+        video,
       </if>
       <if test="bannerUrl != null" >
         banner_url,
@@ -135,6 +139,9 @@
       </if>
       <if test="titlePicUrl != null" >
         #{titlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        #{video,jdbcType=VARCHAR},
       </if>
       <if test="bannerUrl != null" >
         #{bannerUrl,jdbcType=VARCHAR},
@@ -175,6 +182,9 @@
       </if>
       <if test="titlePicUrl != null" >
         title_pic_url = #{titlePicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="video != null" >
+        video = #{video,jdbcType=VARCHAR},
       </if>
       <if test="bannerUrl != null" >
         banner_url = #{bannerUrl,jdbcType=VARCHAR},
