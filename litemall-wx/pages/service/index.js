@@ -58,7 +58,7 @@ Page({
         that.setData({
           dateDetailList: res.data
         });
-        console.log(that.data.dateDetailList)
+        console.log('dateDetailList',that.data.dateDetailList)
 
       }
     });
@@ -217,50 +217,52 @@ Page({
   },
 
   toConfirmTime:  function(){
-
     // console.log(this.data.orderGoodsId);
 
-    if (this.data.storeId=='') {
-      wx.showToast({
-        image: '/static/images/icon_error.png',
-        title: '请选择门店'
-      });
-      return false;
-    }
+    // if (this.data.storeId=='') {
+    //   wx.showToast({
+    //     image: '/static/images/icon_error.png',
+    //     title: '请选择门店'
+    //   });
+    //   return false;
+    // }
   
     if (this.data.selectTime == undefined) {
       wx.showToast({
         image: '/static/images/icon_error.png',
         title: '请选择预约时间'
       });
-      return false;
+      return;
     }
+
+    wx.navigateTo({
+      url: '../reserveGoods/reserveGoods',
+    })
 
     //更新后台数据
-    var param = {
+    // var param = {
   
-      userId: wx.getStorageSync('userId'),
-      orderGoodsId: this.data.orderGoodsId,
-      reserveTime: this.data.selectTime,
-      reserveDate: this.data.selectDate,
-      storeId: this.data.storeId
+    //   userId: wx.getStorageSync('userId'),
+    //   orderGoodsId: this.data.orderGoodsId,
+    //   reserveTime: this.data.selectTime,
+    //   reserveDate: this.data.selectDate,
+    //   storeId: this.data.storeId
             
-    }
+    // }
 
 
-    let that = this;
-    util.request(api.StoerServirceInsert, param,'POST').then(function (res) {
-      if (res.errno === 0) {
+    // let that = this;
+    // util.request(api.StoerServirceInsert, param,'POST').then(function (res) {
+    //   if (res.errno === 0) {
        
-        console.error('预约成功');     
-          util.redirect('/pages/ucenter/order/index?sort=1&flag=0');
-      }else{
-        util.showErrorToast(res.errmsg);
-      }
-    });
+    //     console.error('预约成功');     
+    //       util.redirect('/pages/ucenter/order/index?sort=1&flag=0');
+    //   }else{
+    //     util.showErrorToast(res.errmsg);
+    //   }
+    // });
   },
 
-  //去门店选择界面
   toSelectStore: function(e){
     var goodsId = e.currentTarget.dataset.id
     wx.navigateTo({

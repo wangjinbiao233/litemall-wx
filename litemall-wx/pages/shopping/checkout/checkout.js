@@ -44,7 +44,8 @@ Page({
     util.request(api.getUserInfo, { userId: wx.getStorageSync('userId') }, 'POST').then(function (res) {
       that.setData({
         money: res.user.money,
-        rechargeMoney: res.user.rechargeMoney
+        rechargeMoney: res.user.rechargeMoney,
+        pageFlag:options.flag
       });
     });
     wx.setStorageSync('couponId', 0);
@@ -187,6 +188,7 @@ Page({
 
   },
   submitOrder: function () {
+    debugger
     var that = this;
     if (this.data.addressId <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1) {
       util.showErrorToast('请选择收货地址');
@@ -206,26 +208,18 @@ Page({
         if (res.errno === 0) {
           const orderId = res.data.orderInfo.id;
 
-          var actualPrice = that.data.actualPrice;
-          if (actualPrice == 0) {
+          // 微信统一下单，获取支付参数
+          pay.payOrder(orderId).then(res => {
+            //支付成功后
+
             wx.redirectTo({
-              url: '/pages/payResult/payResult?status=1&orderId=' + this.data.orderId
+              url: '/pages/payResult/payResult?status=1&orderId=' + orderId
             });
-          } else {
-
-              // 微信统一下单，获取支付参数
-              pay.payOrder(orderId).then(res => {
-                //支付成功后
-
-                wx.redirectTo({
-                  url: '/pages/payResult/payResult?status=1&orderId=' + orderId
-                });
-              }).catch(res => {
-                wx.redirectTo({
-                  url: '/pages/payResult/payResult?status=0&orderId=' + orderId
-                });
-              });
-          }
+          }).catch(res => {
+            wx.redirectTo({
+              url: '/pages/payResult/payResult?status=0&orderId=' + orderId
+            });
+          });
         }
       });
     } else {
@@ -377,6 +371,7 @@ Page({
           var storeId = wx.getStorageSync('storeid');
           util.request(api.OrderSubmit, { payType: that.data.payType, storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag: that.data.pageFlag,storeIds: that.data.storeId, storeIndex: that.data.storeIndex, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
             if (res.errno === 0) {
+              debugger
               const orderId = res.data.orderInfo.id;
               util.request(api.moneyPay, {
                 payType: that.data.payType,

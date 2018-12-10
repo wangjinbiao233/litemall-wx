@@ -52,6 +52,7 @@
     	<if test = "isShow != null ">and lk.is_show = #{isShow,jdbcType=VARCHAR}</if>
     	
     </where>
+    order by lk.create_date desc
   </select>
 
   <select id="countKnowledge" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
@@ -89,6 +90,9 @@
   </insert>
   
   <insert id="insertSelective" parameterType="org.linlinjava.litemall.db.domain.LitemallKnowledge" >
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
     insert into litemall_knowledge
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="title != null" >

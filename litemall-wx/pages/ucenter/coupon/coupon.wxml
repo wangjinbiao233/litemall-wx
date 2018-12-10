@@ -18,7 +18,7 @@
             <view class="time">{{item.startTime}} ~ {{item.endTime}}</view>
           </view>
           <view class="right">
-            <button wx-if="{{item.isUse==0}}" class="go">去使用</button>
+            <button wx-if="{{item.isUse==0}}" class="go" bindtap="toGoods">去使用</button>
              <button wx-if="{{item.isUse==1}}" class="go">已使用</button>
           </view>
         </view>

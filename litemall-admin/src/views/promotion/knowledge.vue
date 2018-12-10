@@ -23,7 +23,9 @@
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" width="100px" label="知识编号" prop="id" sortable>
+      <!--<el-table-column align="center" width="100px" label="知识编号" prop="id" sortable>
+      </el-table-column>-->
+      <el-table-column type="index" label="序号" header-align="center" align="center">
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="标题" prop="title">
@@ -174,6 +176,13 @@
           <tinymce v-model="dataForm.content" ref = "tinymce"></tinymce>
         </el-form-item>
 
+        <el-form-item label="关联商品" prop="goodsId">
+          <el-select v-model="dataForm.goodsId" multiple filterable placeholder="请选择" style="width: 350px;">
+            <el-option v-for="item in goodsList" :label="item.name" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
@@ -200,7 +209,8 @@
 </style>
 
 <script>
-  import { listKnowledge, createKnowledge, updateKnowledge, deleteKnowledge, getKCategory } from '@/api/knowledge'
+  import { listKnowledge, createKnowledge, updateKnowledge,
+    deleteKnowledge, getKCategory ,selectGoodSn, listKnowledgeGoods} from '@/api/knowledge'
   import waves from '@/directive/waves' // 水波纹指令
   import BackToTop from '@/components/BackToTop'
   import Tinymce from '@/components/Tinymce'
@@ -234,6 +244,8 @@
           isShow: undefined,
           knowledgeCls: undefined,
           titlePicUrl: undefined,
+          goodsId: [],
+          titlePicUrl: undefined,
           video: undefined
         },
         dialogFormVisible: false,
@@ -249,6 +261,7 @@
           knowledgeCls: [{ required: true, message: '知识分类不能为空', trigger: 'blur' }],
           content: [{ required: true, message: '知识内容不能为空', trigger: 'blur' }]
         },
+        goodsList: [],
         downloadLoading: false,
         videoFlag: false,
         fileImgUrl: process.env.BASE_API + '/storage/uploadPic',
@@ -260,6 +273,17 @@
     created() {
       this.getList()
       this.getKCategoryList()
+
+      selectGoodSn().then(response => {
+        if (response.data.errno === '0') {
+          this.goodsList = response.data.data.items
+        } else {
+          this.goodsList = []
+        }
+
+      }).catch(() => {
+        this.goodsList = []
+      })
     },
     methods: {
       getList() {
@@ -305,6 +329,7 @@
           isShow: undefined,
           knowledgeCls: undefined,
           titlePicUrl: undefined,
+          goodsId: [],
           video: undefined
         }
       },
@@ -341,6 +366,17 @@
         this.$nextTick(() => {
           this.$refs.tinymce.setContent(row.content)
           this.$refs['dataForm'].clearValidate()
+        })
+
+        listKnowledgeGoods({ knowleId : this.dataForm.id}).then(response => {
+          const items = response.data.data.items
+          console.log(items)
+          debugger
+          this.dataForm.goodsId = items.map((item)=>{
+            return item.id
+          })
+        }).catch(() => {
+
         })
       },
       updateData() {

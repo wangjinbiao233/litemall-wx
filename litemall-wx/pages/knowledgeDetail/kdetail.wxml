@@ -5,6 +5,25 @@
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
 </view>
 
+<view class='goods'>
+  <swiper class="banner-o" autoplay="" interval="3000" duration="1000" previous-margin="20rpx" next-margin='370rpx' circular='true'>
+      <swiper-item wx:for="{{goodsList}}" wx:key="id">
+        <navigator url="/pages/goods/goods?id={{item.goodsSn}}">
+          <view class='swiper-box'>
+            <view style='height:384rpx;width:330rpx;'>
+            <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
+            <image mode='aspectFill' src="{{item.listPicUrl}}" style='height:384rpx;width:330rpx;'></image>
+            </view>
+            
+            <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.name}}</view>
+            <view style='padding:5rpx 15rpx 0rpx 15rpx;color:#6bb5dc;font-size:35rpx;'>￥{{item.retailPrice}}</view>
+            <view class='ellipsis' style='padding:5rpx 15rpx 10rpx 15rpx;font-size:24rpx;'>{{item.goodsBrief}}</view>
+          </view>
+        </navigator>
+      </swiper-item>
+    </swiper>
+</view>
+
 <view class="line"></view>
 
 <view class="comments">

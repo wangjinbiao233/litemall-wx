@@ -270,5 +270,13 @@ public class LitemallGoodsService {
         return goodsMapper.selectByExampleSelective(example ,columns);
         
 	 }
-	
+
+    /**
+     * 根据知识id查询绑定的商品
+     * @param knowledgtId
+     * @return
+     */
+    public List<LitemallGoods> queryLitemallGoodsByKnowledgeId(Integer knowledgtId) {
+        return goodsMapper.selectLitemallGoodsByKnowledgeId(knowledgtId);
+    }
 }

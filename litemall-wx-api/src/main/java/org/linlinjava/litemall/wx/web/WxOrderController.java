@@ -324,6 +324,8 @@ public class WxOrderController {
 				orderGoodsVo.put("picUrl", orderGoods.getPicUrl());
 				orderGoodsVo.put("reserveFlag", orderGoods.getReserveFlag());
 				orderGoodsVo.put("orderStatus", orderGoods.getOrderStatus());
+				orderGoodsVo.put("goodsId", orderGoods.getGoodsId());
+				orderGoodsVo.put("retailPrice",orderGoods.getRetailPrice());
 				orderGoodsVo.put("goodsSpecifitionValues", orderGoods.getGoodsSpecificationValues());
 				orderGoodsVoList.add(orderGoodsVo);
 			}

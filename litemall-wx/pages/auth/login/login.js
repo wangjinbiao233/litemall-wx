@@ -25,7 +25,7 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     let pId = options.pId;
     let labelId = options.labelId;
-    if (pId && pId != 'undefined') {
+    if (pId != 'undefined') {
       console.log('pId  = ' + pId)
       this.setData({
         pId: pId,
