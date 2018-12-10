@@ -1,15 +1,15 @@
 // 以下是业务服务器API地址
 // 本机开发时使用
-var WxApiRoot = 'http://127.0.0.1:8082/wx/';
+// var WxApiRoot = 'http://127.0.0.1:8082/wx/';
 // 局域网测试使用
-//var WxApiRoot = 'http://192.168.0.27:8082/wx/';
+// var WxApiRoot = 'http://192.168.0.27:8082/wx/';
 
 //production must be in SSL
 //var WxApiRoot = 'https://mall-wx.dgtis.com/wx/';
 //production must be in SSL philab
-// var WxApiRoot = 'https://mall-wx.philab.net/wx/';
+var WxApiRoot = 'https://mall-wx.philab.net/wx/';
 
-//var WxApiRoot = 'http://10.32.2.69:8082/wx/';
+// var WxApiRoot = 'http://192.168.0.23:8082/wx/';
 
 // 以下是图片存储服务器API地址
 var StorageApi = 'https://mall-wx.philab.net/wx/storage/create';
@@ -152,5 +152,6 @@ module.exports = {
   saveDistributionApply: WxApiRoot + 'profit/saveDistributionApply', //分销申请
   selectDistributionTypeList: WxApiRoot + 'profit/selectDistributionTypeList', //分销类型列表
   selectApplyByUserId: WxApiRoot + 'profit/selectApplyByUserId', //查询用户的分销申请
-  picUrl: picUrl
+  picUrl: picUrl,
+  getDistributionTag: WxApiRoot +'auth/getUserLabel'//获取分销标签
 };
