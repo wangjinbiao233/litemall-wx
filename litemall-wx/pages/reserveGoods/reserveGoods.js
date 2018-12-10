@@ -11,9 +11,28 @@ Page({
    * 页面的初始数据
    */
   data: {
-    goods:[]
+    goods: []
   },
-
+  toGoodsDetail: function() {
+    wx.showModal({
+      title: '提示',
+      content: '是否预约该服务',
+      showCancel: true,
+      confirmText: "确认预约",
+      success: function(res) {
+        if (res.confirm == true) {
+          wx.showToast({
+            title: '预约成功',
+          })
+          setTimeout(function() {
+            wx.navigateBack({
+              delta: 3
+            })
+          }, 500)
+        }
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
