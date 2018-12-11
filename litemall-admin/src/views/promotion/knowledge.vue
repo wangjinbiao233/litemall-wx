@@ -160,7 +160,7 @@
           <el-tooltip content="建议视频格式:mp4" placement="top-start" style= "width:178px">
             <el-upload
               class="k-avatar-uploader el-upload--text"
-              action="http://localhost:8083/admin/storage/create"
+              action="/admin/storage/create"
               :show-file-list="false"
               :on-success="handleVideoSuccess"
               :before-upload="beforeUploadVideo"
