@@ -1,10 +1,10 @@
 
-<view style='background-color:#fff' >
+<!-- <view style='background-color:#fff' >
       <view class='choice-store' bindtap='toSelectStore' data-id="{{goodsId}}">
         <view style='font-size:35rpx;'>选择门店</view>
         <view style='font-size:35rox;'>〉</view>
       </view>
-</view>
+</view> -->
 
 <view class='storeList' wx:if="{{storeid > 0}}">
   <view class="store-box" style='margin-left:-22rpx;' >

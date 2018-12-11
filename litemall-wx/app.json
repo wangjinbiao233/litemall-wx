@@ -6,6 +6,7 @@
     "pages/ucenter/reservation/index",
     "pages/ucenter/order/index",
     "pages/service/index",
+    "pages/serviceReserve/index",
     "pages/reserveGoods/reserveGoods",
     "pages/knowledge/index",
     "pages/catalog/catalog",

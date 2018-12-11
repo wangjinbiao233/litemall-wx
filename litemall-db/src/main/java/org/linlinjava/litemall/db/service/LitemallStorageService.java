@@ -29,7 +29,7 @@ public class LitemallStorageService {
      * @return
      */
     public int insertSelective(LitemallStorage record){
-        return litemallStorageMapper.insertSelective(record);
+        return litemallStorageMapper.insert(record);
     }
 
 

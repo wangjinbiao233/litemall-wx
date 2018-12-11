@@ -126,13 +126,11 @@ Page({
    */
   onShow: function () {
     let that = this
-    let kc = that.data.kCategory
     let knowledgeId = app.knowledgeId;
-    if (knowledgeId && kc != knowledgeId){
-      that.setData({
-        kCategory: knowledgeId
-      })
-      that.getkCategoryInfoList()
+    let knowledgeList = that.data.knowledgeList;
+    if (knowledgeId && knowledgeList){
+      that.getkCategoryInfoList();
+      app.knowledgeId = null;
     }
   },
 

@@ -157,18 +157,20 @@
         </el-form-item>
 
         <el-form-item label="视频" prop="video">
-          <el-upload
-            class="k-avatar-uploader el-upload--text"
-            action="/admin/storage/create"
-            :show-file-list="false"
-            :on-success="handleVideoSuccess"
-            :before-upload="beforeUploadVideo"
-            :on-progress="uploadVideoProcess">
-            <video v-if="dataForm.video !='' && videoFlag == false" :src="dataForm.video" class="k-avatar" width="300px" height="200px"
-                   controls="controls">您的浏览器不支持视频播放</video>
-            <i v-else-if="dataForm.video =='' && videoFlag == false" class="el-icon-plus k-avatar-uploader-icon"></i>
-            <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
-          </el-upload>
+          <el-tooltip content="建议视频格式:mp4" placement="top-start" style= "width:178px">
+            <el-upload
+              class="k-avatar-uploader el-upload--text"
+              action="/admin/storage/create"
+              :show-file-list="false"
+              :on-success="handleVideoSuccess"
+              :before-upload="beforeUploadVideo"
+              :on-progress="uploadVideoProcess">
+              <video v-if="dataForm.video !='' && videoFlag == false" :src="dataForm.video" class="k-avatar" width="480px" height="270px"
+                     controls="controls">您的浏览器不支持视频播放</video>
+              <i v-else-if="dataForm.video =='' && videoFlag == false" class="el-icon-plus k-avatar-uploader-icon"></i>
+              <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
+            </el-upload>
+          </el-tooltip>
           <P class="text">请保证视频格式正确，且不超过100M</P>
         </el-form-item>
 
@@ -210,7 +212,7 @@
 
 <script>
   import { listKnowledge, createKnowledge, updateKnowledge,
-    deleteKnowledge, getKCategory ,selectGoodSn, listKnowledgeGoods} from '@/api/knowledge'
+    deleteKnowledge, getKCategory, selectGoodSn, listKnowledgeGoods } from '@/api/knowledge'
   import waves from '@/directive/waves' // 水波纹指令
   import BackToTop from '@/components/BackToTop'
   import Tinymce from '@/components/Tinymce'
@@ -245,7 +247,6 @@
           knowledgeCls: undefined,
           titlePicUrl: undefined,
           goodsId: [],
-          titlePicUrl: undefined,
           video: undefined
         },
         dialogFormVisible: false,
@@ -281,7 +282,6 @@
         } else {
           this.goodsList = []
         }
-
       }).catch(() => {
         this.goodsList = []
       })
@@ -369,11 +369,10 @@
           this.$refs['dataForm'].clearValidate()
         })
 
-        listKnowledgeGoods({ knowleId : this.dataForm.id}).then(response => {
+        listKnowledgeGoods({ knowleId: this.dataForm.id }).then(response => {
           const items = response.data.data.items
           console.log(items)
-          debugger
-          this.dataForm.goodsId = items.map((item)=>{
+          this.dataForm.goodsId = items.map((item) => {
             return item.id
           })
         }).catch(() => {
@@ -448,30 +447,29 @@
       },
       // 视频上传
       handleVideoSuccess(res, file) { // 获取上传图片地址
-        debugger
         this.videoFlag = false
         this.videoUploadPercent = 0
-        if (res.status === 200) {
-          this.dataForm.id = res.data.id
-          this.dataForm.Video = res.data.uploadUrl
+        if (res.errno === 0) {
+          this.dataForm.video = res.data.url
         } else {
           this.$message.error('视频上传失败，请重新上传！')
         }
       },
       beforeUploadVideo(file) {
         const isLt100M = file.size / 1024 / 1024 < 100
-        if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) === -1) {
+        // if (['video/mp4', 'video/ogg', 'video/flv', 'video/x-flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) === -1) {
+        if (['video/mp4'].indexOf(file.type) === -1) {
           this.$message.error('请上传正确的视频格式')
           return false
         }
         if (!isLt100M) {
-          this.$message.error('上传视频大小不能超过100MB哦!')
+          this.$message.error('上传视频大小不能超过100MB!')
           return false
         }
       },
       uploadVideoProcess(event, file, fileList) {
         this.videoFlag = true
-        this.videoUploadPercent = file.percentage.toFixed(0)
+        this.videoUploadPercent = event.percent.toFixed(0)
       }
     }
   }

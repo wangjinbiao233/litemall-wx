@@ -26,21 +26,6 @@ Page({
       })
     }
     this.getKnowledge();
-    this.getGoodsList();
-  },
-  getGoodsList: function() {
-    var that = this;
-    util.request(api.GoodsList, {
-        categoryId: 1005007,
-        page: 1,
-        size: 100
-      })
-      .then(function(res) {
-        console.log(res)
-        that.setData({
-          goodsList: res.data.goodsList,
-        });
-      });
   },
   getKnowledge: function() {
     let that = this;
@@ -48,7 +33,8 @@ Page({
       id: this.data.id
     }).then((res) => {
       that.setData({
-        knowledge: res.data.knowledge
+        knowledge: res.data.knowledge,
+        goodsList: res.data.knowledge.goodsList
       })
       wx.setNavigationBarTitle({
         title: res.data.knowledge.title
