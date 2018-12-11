@@ -107,6 +107,26 @@ public class WxDistributionProfitController {
 		return ResponseUtil.ok(map);
 	}
 
+    /**
+     * 查询不可提取收益
+     *
+     * @param body
+     * @return
+     */
+    @RequestMapping("searchSubAllProfitDetailsByPId")
+    public Object searchSubAllProfitDetailsByPId(@RequestBody String body) {
+        Integer userId = JacksonUtil.parseInteger(body, "userId");
+        String orderId = JacksonUtil.parseString(body, "orderId");
+        Map<String, Object> map = litemallDistributionProfitService.selectSubAllProfitListByPId(
+                userId,
+                null,
+                orderId,
+                1,
+                10);
+
+        return ResponseUtil.ok(map);
+    }
+
 	/***********************************
 	 * 可提取收益内容
 	 *****************************************/
@@ -289,7 +309,7 @@ public class WxDistributionProfitController {
 	/**
 	 * 查询是否提交分销申请
 	 *
-	 * @param userId
+	 * @param body
 	 * @return
 	 */
 	@RequestMapping("selectApplyByUserId")
@@ -351,7 +371,7 @@ public class WxDistributionProfitController {
 	/**
 	 * 查询可提取收益列表 + 提现明细列表
 	 *
-	 * @param userId
+	 * @param litemallDictionary
 	 * @return
 	 */
 	@RequestMapping("selectDistributionTypeList")

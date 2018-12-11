@@ -115,7 +115,7 @@ module.exports = {
 
   cashDetail: WxApiRoot + 'profit/selectExtractMoneyByUserId',  //提现明细列表
   noCash: WxApiRoot + 'profit/selectSubAllProfitListByPId', //不可提现列表
-  searchNoCash: WxApiRoot + 'profit/selectSubAllProfitListByPId', //查询不可提现列表
+  searchNoCash: WxApiRoot + 'profit/searchSubAllProfitDetailsByPId', //查询不可提现列表
   cash: WxApiRoot + 'profit/selectEarningsMoneyListByUserId',  //可提现列表
   noCashNum: WxApiRoot + 'profit/selectSubAllProfitByPId',  //不可提现金额
   cashNum: WxApiRoot + 'profit/selectExtractProfitByUserId',  //可提现金额

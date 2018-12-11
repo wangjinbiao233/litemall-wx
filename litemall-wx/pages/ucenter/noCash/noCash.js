@@ -29,12 +29,12 @@ Page({
       var that = this;
       var userId = wx.getStorageSync('userId');
       var data = {
-        userId: userId,
-        orderId: e.detail.value.searchInfo
+        'userId': userId,
+        'orderId': e.detail.value.searchInfo
       }
-      util.request(api.searchNoCash, data).then(function (res) {
+      util.request(api.searchNoCash, data,'POST').then(function (res) {
+        console.log(res)
         if (res.errno === 0) {
-          console.log(res)
           that.setData({
             orderList: res.data.items
           });

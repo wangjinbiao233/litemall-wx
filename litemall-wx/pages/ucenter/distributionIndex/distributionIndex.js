@@ -126,7 +126,7 @@ function getDataInfo(that) {
     }
   });
 
-  util.request(api.noCashNum, { userId: userId }, 'POST').then(function (res) {
+  util.request(api.noCashNum, { userId: userId }).then(function (res) {
     if (res.errno === 0) {
       console.log(res)
       that.setData({
