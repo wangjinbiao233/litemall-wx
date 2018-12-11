@@ -58,7 +58,7 @@
           <view class='swiper-box'>
             <view style='height:384rpx;width:330rpx;'>
               <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
-              <image mode='aspectFill' src="{{item.primaryPicUrl}}" style='height:384rpx;width:330rpx;'></image>
+              <image mode='' src="{{item.primaryPicUrl}}" style='height:384rpx;width:330rpx;'></image>
             </view>
 
             <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.name}}</view>

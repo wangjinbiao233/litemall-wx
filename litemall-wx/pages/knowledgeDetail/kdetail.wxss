@@ -215,3 +215,8 @@
   padding: 5rpx;
   font-size: 20rpx;
 }
+
+video{
+  height: 300rpx;
+  width: 100%;
+}

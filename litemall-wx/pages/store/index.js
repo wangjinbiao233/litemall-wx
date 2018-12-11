@@ -176,7 +176,7 @@ Page({
   },
   toReserve: function (res) {
     wx.navigateTo({
-      url: '../service/index'
+      url: '../serviceReserve/index'
     })
   },
 })
