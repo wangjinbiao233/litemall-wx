@@ -6,7 +6,7 @@
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
 </view>
 
-<view class='goods'>
+<view class='goods' wx:if='{{goodsList.length>0}}'>
   <swiper class="banner-o" autoplay="" interval="3000" duration="1000" previous-margin="20rpx" next-margin='370rpx' circular='true'>
       <swiper-item wx:for="{{goodsList}}" wx:key="id">
         <navigator url="/pages/goods/goods?id={{item.goodsSn}}">

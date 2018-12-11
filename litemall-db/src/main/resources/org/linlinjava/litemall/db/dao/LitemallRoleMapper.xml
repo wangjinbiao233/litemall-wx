@@ -399,4 +399,14 @@
         a.id = #{id,jdbcType=INTEGER}
   </select>
   
+  <!-- pad端登录查询当前用户所属角色是门店管理员还是美容师 -->
+  <select id="selectPadRoleIdByUserId" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT DISTINCT
+        ar.`role_id`
+    FROM       
+        `litemall_admin_role` ar 
+        
+       WHERE ar.admin_id = #{id,jdbcType=INTEGER}
+  </select>
+  
 </mapper>

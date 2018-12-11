@@ -13,28 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.linlinjava.litemall.db.domain.LitemallAddress;
-import org.linlinjava.litemall.db.domain.LitemallCart;
-import org.linlinjava.litemall.db.domain.LitemallDiscount;
-import org.linlinjava.litemall.db.domain.LitemallGoods;
-import org.linlinjava.litemall.db.domain.LitemallOrder;
-import org.linlinjava.litemall.db.domain.LitemallOrderGoods;
-import org.linlinjava.litemall.db.domain.LitemallProduct;
-import org.linlinjava.litemall.db.domain.LitemallReserve;
-import org.linlinjava.litemall.db.domain.LitemallUser;
-import org.linlinjava.litemall.db.service.LitemallAddressService;
-import org.linlinjava.litemall.db.service.LitemallCartService;
-import org.linlinjava.litemall.db.service.LitemallDiscountService;
-import org.linlinjava.litemall.db.service.LitemallDistributionProfitService;
-import org.linlinjava.litemall.db.service.LitemallGoodsService;
-import org.linlinjava.litemall.db.service.LitemallOrderGoodsService;
-import org.linlinjava.litemall.db.service.LitemallOrderService;
-import org.linlinjava.litemall.db.service.LitemallProductService;
-import org.linlinjava.litemall.db.service.LitemallRechargeService;
-import org.linlinjava.litemall.db.service.LitemallRegionService;
-import org.linlinjava.litemall.db.service.LitemallReserveService;
-import org.linlinjava.litemall.db.service.LitemallUserService;
-import org.linlinjava.litemall.db.service.WmwImgMedicalAnalyseService;
+import org.linlinjava.litemall.db.domain.*;
+import org.linlinjava.litemall.db.service.*;
 import org.linlinjava.litemall.db.util.JacksonUtil;
 import org.linlinjava.litemall.db.util.OrderHandleOption;
 import org.linlinjava.litemall.db.util.OrderUtil;
@@ -116,6 +96,9 @@ public class WxOrderController {
 	
 	@Autowired
 	private WmwImgMedicalAnalyseService wmwimgMedicalAanalyseService;
+
+	@Autowired
+	private LitemallStoreService litemallStoreService;
 	
 	
 	
@@ -293,6 +276,8 @@ public class WxOrderController {
 		
 		List<Short> orderStatus = OrderUtil.orderStatus(showType);
 		List<LitemallOrderGoods> orderGoodsList = orderGoodsService.queryByOidAndStatus(order.getId(), orderStatus);
+
+
 		
 		order.setOrderFlag(flag);
 		Map<String, Object> orderVo = new HashMap<String, Object>();
@@ -308,6 +293,12 @@ public class WxOrderController {
 		orderVo.put("payId", order.getPayId());
 		orderVo.put("orderStatusText", OrderUtil.orderStatusText(order));
 		orderVo.put("handleOption", OrderUtil.detailBuild(order,orderGoodsList));
+		orderVo.put("getStoreId",order.getGetStoreId());
+		if(order.getGetStoreId() != null && order.getGetStoreId() != ""){
+			LitemallStore store=litemallStoreService.selectStoreById(order.getGetStoreId());
+			orderVo.put("storeName",store.getStoreName());
+		}
+
 
 		if (showType == null) {
 			showType = 0;
@@ -504,7 +495,7 @@ public class WxOrderController {
 
 		// 删除购物车里面的商品信息
 		for (LitemallCart checkGoods : checkedGoodsList) {
-			cartService.clearGoodsByGoodsId(checkGoods.getGoodsId());
+			cartService.clearGoodsByGoodsId(checkGoods.getId());
 		}
 
 		// 商品货品数量减少

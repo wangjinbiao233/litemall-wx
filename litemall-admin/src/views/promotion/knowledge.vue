@@ -361,23 +361,32 @@
         })
       },
       handleUpdate(row) {
-        this.dataForm = Object.assign({}, row)
-        this.dialogStatus = 'update'
-        this.dialogFormVisible = true
-        this.$nextTick(() => {
-          this.$refs.tinymce.setContent(row.content)
-          this.$refs['dataForm'].clearValidate()
-        })
+        let goodsId = this.dataForm.goodsId
+        this.dataForm = Object.assign({goodsId : goodsId}, row)
+
+
 
         listKnowledgeGoods({ knowleId: this.dataForm.id }).then(response => {
+
           const items = response.data.data.items
-          console.log(items)
           this.dataForm.goodsId = items.map((item) => {
             return item.id
           })
+
+          this.dialogStatus = 'update'
+
+          this.dialogFormVisible = true
+          this.$nextTick(() => {
+            this.$refs.tinymce.setContent(this.dataForm.content)
+            this.$refs['dataForm'].clearValidate()
+          })
+
+
         }).catch(() => {
 
         })
+
+
       },
       updateData() {
         this.$refs['dataForm'].validate((valid) => {

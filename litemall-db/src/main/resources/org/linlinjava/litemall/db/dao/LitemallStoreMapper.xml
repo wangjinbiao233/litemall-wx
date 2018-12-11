@@ -49,6 +49,13 @@
     from litemall_store
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+    <select id="selectStoreById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from litemall_store
+        where id = #{id,jdbcType=INTEGER}
+    </select>
   
     <select id="countByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallStore" resultType="java.lang.Integer">
     <!--
