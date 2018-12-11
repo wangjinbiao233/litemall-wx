@@ -20,6 +20,8 @@ public interface LitemallStoreMapper {
 
     LitemallStore selectByPrimaryKey(Integer id);
 
+    LitemallStore selectStoreById(Integer id);
+
     int updateByPrimaryKeySelective(LitemallStore record);
 
     int updateByPrimaryKey(LitemallStore record);

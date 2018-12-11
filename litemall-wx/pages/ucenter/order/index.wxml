@@ -202,7 +202,7 @@
           </view>
           <view class="goods-total">
             <text class="goods-total-num">合计:￥{{order.actualPrice}}</text>
-            <view class="goods-btnBox">
+            <view class="goods-btnBox" wx:if="{{order.getStoreId == 'undefined' || order.getStoreId == 'null'}}">
               <text class="goods-logistics-text">快递单号：{{order.shipSn}}</text>
             </view>
           </view>

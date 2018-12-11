@@ -172,6 +172,13 @@ public class LitemallStoreService {
 	public List<LitemallStore> getGoodsStoreList(LitemallStore store) {
 		return storeAdMapper.getGoodsStoreList(store);
 	}
+
+	//根据id查询门店
+
+	public LitemallStore selectStoreById(String storeId){
+		return storeAdMapper.selectStoreById(Integer.valueOf(storeId));
+	}
+
 	
 
 }
