@@ -39,7 +39,6 @@ public class WxStoreController {
         // 门店名称 图片 具体地址  计算地点位置
         List<LitemallStore> storeList = storeService.wxqueryStore(store);
         //获取门店包含的服务
-        store.setFlag("2");
         List<LitemallGoods> goodsList = storeService.wxqueryGoods(store);
         
         Map<String, Object> data = new HashMap<>();
