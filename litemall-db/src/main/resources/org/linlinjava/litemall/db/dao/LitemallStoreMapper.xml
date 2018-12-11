@@ -578,10 +578,14 @@
 		   su.id,
 		   su.primary_pic_url,
 		   su.counter_price,
+		   su.flag,
 		   p.retail_price
 		   from litemall_store_goods s left join litemall_goods su on s.goods_id= su.id
 		   left join litemall_product p on p.goods_id = s.goods_id
-		    where 
+		    where
+		    <if test="flag != null and flag !='' ">
+                and su.flag = #{flag,jdbcType=VARCHAR}
+            </if>
 		    1=1 and su.deleted=0 and p.deleted=0
    			and s.store_id =#{id}
   </select>
