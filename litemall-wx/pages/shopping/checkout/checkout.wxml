@@ -1,6 +1,6 @@
 <view class="container">
-  <view class="address-box">
-    <view wx:if="{{pageFlag==1}}">
+  <view class="address-box" wx:if="{{pageFlag==1}}">
+    <view>
          <radio-group class="radio-choose" bindchange="radioChoose">
           <radio  class="radio" value="1" checked="true">地址选取</radio>
           <radio  class="radio" value="2" style="padding-left:45rpx;">店面自取</radio>    
