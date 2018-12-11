@@ -72,7 +72,7 @@ public class WxReserveController {
 	public Object timeData(String storeId, String currentTime) {
 		// 循环时间段进行遍历 封装成list 返回到前端
 		// String storeId= "11";
-		String timeStr = "09:00,09:30,10:00,10:30,11:00,11:30,12:00,12:30,13:00,"
+		String timeStr = "10:00,10:30,11:00,11:30,12:00,12:30,13:00,"
 				+ "13:30,14:00,14:30,15:00,15:30,16:00,16:30,17:00,17:30,18:00,18:30";
 		String[] timeArr = timeStr.split(",");
 
