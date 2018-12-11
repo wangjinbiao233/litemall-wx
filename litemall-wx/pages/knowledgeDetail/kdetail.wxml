@@ -1,6 +1,7 @@
 <wxs src="./../tools.wxs" module="comtools" />
 <view class="detail">
 <view style="font-size:32rpx;color:blue;font-weight:bold;text-align:center;margin-bottom:20rpx;">{{knowledge.title}}</view>
+    <video src='http://mall.philab.net/images/video/2018/12/10/k1v0zcz5duxce39cwah7.mp4'></video>
     <import src="/lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
 </view>
@@ -12,7 +13,7 @@
           <view class='swiper-box'>
             <view style='height:384rpx;width:330rpx;'>
             <text class='serviceFlag' wx:if="{{item.flag=='2'}}">服务</text>
-            <image mode='aspectFill' src="{{item.listPicUrl}}" style='height:384rpx;width:330rpx;'></image>
+            <image mode='' src="{{item.listPicUrl}}" style='height:384rpx;width:330rpx;'></image>
             </view>
             
             <view style='padding:5rpx 15rpx 0rpx 15rpx;font-size:24rpx;overflow:hidden; text-overflow:ellipsis;white-space:nowrap;'>{{item.name}}</view>
