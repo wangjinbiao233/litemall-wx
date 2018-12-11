@@ -204,4 +204,10 @@ public class LitemallRoleService {
 		List<String> list = litemallRoleMapper.selectPadAdminUserRoleById(id);
         return list;
 	}
+	
+	
+	public List<String> selectPadRoleIdByUserId(Integer id) {
+		List<String> list = litemallRoleMapper.selectPadRoleIdByUserId(id);
+		return list;
+	}
 }
