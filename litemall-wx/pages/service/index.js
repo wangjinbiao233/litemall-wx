@@ -235,7 +235,7 @@ Page({
       return;
     }
 
-    更新后台数据
+    //更新后台数据
     var param = {
   
       userId: wx.getStorageSync('userId'),
