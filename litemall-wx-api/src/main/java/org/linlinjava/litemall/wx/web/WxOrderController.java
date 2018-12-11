@@ -504,7 +504,7 @@ public class WxOrderController {
 
 		// 删除购物车里面的商品信息
 		for (LitemallCart checkGoods : checkedGoodsList) {
-			cartService.clearGoodsByGoodsId(checkGoods.getGoodsId());
+			cartService.clearGoodsByGoodsId(checkGoods.getId());
 		}
 
 		// 商品货品数量减少
