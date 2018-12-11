@@ -1,7 +1,7 @@
 <wxs src="./../tools.wxs" module="comtools" />
 <view class="detail">
 <view style="font-size:32rpx;color:blue;font-weight:bold;text-align:center;margin-bottom:20rpx;">{{knowledge.title}}</view>
-    <video src='http://mall.philab.net/images/video/2018/12/10/k1v0zcz5duxce39cwah7.mp4'></video>
+    <video src='{{knowledge.video}}' wx:if="{{knowledge.video}}"></video>
     <import src="/lib/wxParse/wxParse.wxml" />
     <template is="wxParse" data="{{wxParseData:detail.nodes}}" />
 </view>
