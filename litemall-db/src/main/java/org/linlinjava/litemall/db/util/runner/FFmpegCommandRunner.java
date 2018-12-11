@@ -44,7 +44,7 @@ public class FFmpegCommandRunner {
             }
         } else {
             if (log.isErrorEnabled())
-                log.error("video '{}' is not fount! ", input.getAbsolutePath());
+                log.error("video '{}' is not found! ", input.getAbsolutePath());
         }
 
         return vi;
