@@ -32,15 +32,19 @@
               <span>{{ props.row.actualPrice }}</span>
             </el-form-item>
 
-            <el-form-item label="收货人名称" >
+            <el-form-item label="自取门店" v-show="props.row.getStoreId != null" >
+              <span>{{ props.row.storeName }}</span>
+            </el-form-item>
+
+            <el-form-item label="收货人名称" v-show="props.row.getStoreId == null" >
               <span>{{ props.row.consignee }}</span>
             </el-form-item>
 
-            <el-form-item label="收货人手机号">
+            <el-form-item label="收货人手机号" v-show="props.row.getStoreId == null">
               <span>{{ props.row.mobile }}</span>
             </el-form-item>
 
-            <el-form-item label="收货人地址">
+            <el-form-item label="收货人地址" v-show="props.row.getStoreId == null">
               <span>{{ props.row.address }}</span>
             </el-form-item>
 
@@ -48,7 +52,7 @@
               <span>{{ props.row.goodsPrice }}</span>
             </el-form-item>
 
-            <el-form-item label="配送费用" >
+            <el-form-item label="配送费用" v-show="props.row.getStoreId == null">
               <span>{{ props.row.freightPrice }}</span>
             </el-form-item>
 
@@ -76,11 +80,11 @@
               <span>{{ props.row.shipSn }}</span>
             </el-form-item>
 
-            <el-form-item label="发货快递公司">
+            <el-form-item label="发货快递公司" v-show="props.row.getStoreId == null">
               <span>{{ props.row.shipChannel }}</span>
             </el-form-item>
 
-            <el-form-item label="发货时间">
+            <el-form-item label="发货时间" v-show="props.row.getStoreId == null">
               <span>{{ props.row.shipStartTimeDisp }}</span>
             </el-form-item>
 
@@ -154,7 +158,8 @@
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button type="primary"  v-if="scope.row.isShip == 'true'"  @click="handleSend(scope.row)">发货</el-button>
+          <el-button type="primary"  v-if="scope.row.isShip == 'true' && scope.row.getStoreId == null"  @click="handleSend(scope.row)">发货</el-button>
+          <el-button type="primary"  v-if="scope.row.isShip == 'true' && scope.row.getStoreId != null"  @click="handleSend(scope.row)">自提确认</el-button>
           <el-button type="primary"  v-if="scope.row.isCancel == 'true'" @click="handleCancel(scope.row)">取消订单</el-button>
           <el-button type="primary"  v-if="scope.row.isReturn == 'true'"  @click="handleReturn(scope.row)">退货</el-button>
         </template>

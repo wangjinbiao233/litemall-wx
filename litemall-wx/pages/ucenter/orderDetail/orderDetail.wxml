@@ -51,12 +51,18 @@
     </view>
 
     <view class="order-bottom">
-        <view class="address">
+        <view class="address" wx:if="{{orderInfo.getStoreId == null || orderInfo.getStoreId == 'undefined' || orderInfo.getStoreId == ''}}">
             <view class="t">
                 <text class="name">{{orderInfo.consignee}}</text>
                 <text class="mobile">{{orderInfo.mobile}}</text>
             </view>
             <view class="b">{{orderInfo.address}}</view>
+        </view>
+        <view class="address" wx:else>
+            <view class="t">
+                <text class="">自取店面:</text>
+                <text class="mobile">{{orderInfo.storeName}}</text>
+            </view>
         </view>
         <view class="total">
             <view class="t">
