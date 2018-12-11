@@ -157,18 +157,20 @@
         </el-form-item>
 
         <el-form-item label="视频" prop="video">
-          <el-upload
-            class="k-avatar-uploader el-upload--text"
-            action="/admin/storage/create"
-            :show-file-list="false"
-            :on-success="handleVideoSuccess"
-            :before-upload="beforeUploadVideo"
-            :on-progress="uploadVideoProcess">
-            <video v-if="dataForm.video !='' && videoFlag == false" :src="dataForm.video" class="k-avatar" width="300px" height="200px"
-                   controls="controls">您的浏览器不支持视频播放</video>
-            <i v-else-if="dataForm.video =='' && videoFlag == false" class="el-icon-plus k-avatar-uploader-icon"></i>
-            <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
-          </el-upload>
+          <el-tooltip content="建议视频格式:mp4" placement="top-start" style= "width:178px">
+            <el-upload
+              class="k-avatar-uploader el-upload--text"
+              action="http://localhost:8083/admin/storage/create"
+              :show-file-list="false"
+              :on-success="handleVideoSuccess"
+              :before-upload="beforeUploadVideo"
+              :on-progress="uploadVideoProcess">
+              <video v-if="dataForm.video !='' && videoFlag == false" :src="dataForm.video" class="k-avatar" width="480px" height="270px"
+                     controls="controls">您的浏览器不支持视频播放</video>
+              <i v-else-if="dataForm.video =='' && videoFlag == false" class="el-icon-plus k-avatar-uploader-icon"></i>
+              <el-progress v-if="videoFlag == true" type="circle" :percentage="videoUploadPercent" style="margin-top:30px;"></el-progress>
+            </el-upload>
+          </el-tooltip>
           <P class="text">请保证视频格式正确，且不超过100M</P>
         </el-form-item>
 
@@ -455,7 +457,7 @@
       },
       beforeUploadVideo(file) {
         const isLt100M = file.size / 1024 / 1024 < 100
-        if (['video/mp4', 'video/ogg', 'video/flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) === -1) {
+        if (['video/mp4', 'video/ogg', 'video/flv', 'video/x-flv', 'video/avi', 'video/wmv', 'video/rmvb'].indexOf(file.type) === -1) {
           this.$message.error('请上传正确的视频格式')
           return false
         }
@@ -466,7 +468,7 @@
       },
       uploadVideoProcess(event, file, fileList) {
         this.videoFlag = true
-        this.videoUploadPercent = file.percentage.toFixed(0)
+        this.videoUploadPercent = event.percent.toFixed(0)
       }
     }
   }
