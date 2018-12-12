@@ -33,6 +33,8 @@ public class LitemallDistributionApply {
 
 	private String formId;
 
+	private String username;//用户名
+
 	public Integer getId() {
 		return id;
 	}
@@ -153,4 +155,11 @@ public class LitemallDistributionApply {
 		this.formId = formId;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }

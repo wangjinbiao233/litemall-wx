@@ -310,6 +310,7 @@ public class WxOrderController {
 
 				Map<String, Object> orderGoodsVo = new HashMap<>();
 				orderGoodsVo.put("id", orderGoods.getId());
+				orderGoodsVo.put("goodsSn", orderGoods.getGoodsSn());
 				orderGoodsVo.put("goodsName", orderGoods.getGoodsName());
 				orderGoodsVo.put("number", orderGoods.getNumber());
 				orderGoodsVo.put("picUrl", orderGoods.getPicUrl());

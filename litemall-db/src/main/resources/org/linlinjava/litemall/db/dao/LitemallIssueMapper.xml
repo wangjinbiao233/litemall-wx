@@ -105,6 +105,10 @@
     <if  test="questionType != null">
     and question_type = #{questionType}
     </if>
+    <if  test="deleted != null">
+      and deleted = #{deleted}
+    </if>
+
    
   </select>
   <select id="selectByExampleSelective" parameterType="map" resultMap="BaseResultMap">
