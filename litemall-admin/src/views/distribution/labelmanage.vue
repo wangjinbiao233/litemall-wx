@@ -26,14 +26,11 @@
     <!-- 查询结果 -->
     <el-table size="small" :data="labelList" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
 
-      <el-table-column align="center" width="50px" label="ID" prop="id" >
+      <!--<el-table-column align="center" width="50px" label="ID" prop="id" >
+      </el-table-column>-->
+      <el-table-column type="index" label="序号" header-align="center" align="center">
       </el-table-column>
 
-      <!--<el-table-column align="center" min-width="100px" label="二维码" prop="qrcodeUrl">
-        <template slot-scope="scope">
-          <img :src="scope.row.qrcodeUrl" style="width: 50px;height: 50px;border-radius: 50%"/>
-        </template>
-      </el-table-column>-->
       <el-table-column align="center" min-width="200px" label="二维码" prop="qrcodeUrl">
         <template slot-scope="scope" v-if="scope.row.qrcodeUrl">
           <a :href="scope.row.qrcodeUrl" target="_blank" class="buttonText">查看二维码</a>

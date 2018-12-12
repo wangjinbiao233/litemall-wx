@@ -26,6 +26,9 @@
       <el-table-column align="center" min-width="100px" label="申请人" prop="nickName">
       </el-table-column>
 
+      <el-table-column align="center" min-width="100px" label="用户名" prop="username">
+      </el-table-column>
+
       <el-table-column align="center" min-width="100px" label="申请日期" prop="createTimeDisp">
       </el-table-column>
 
