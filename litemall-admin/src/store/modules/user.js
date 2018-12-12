@@ -112,9 +112,9 @@ const user = {
           console.log('get user info')
           const data = response.data.data
           commit('SET_ROLES', data.roles)
-          if (data.roles.indexOf('门店管理员') > -1) {
+          if (data.roles.indexOf('2') > -1) {
             commit('SET_ISMANAGERS', 'yes')
-          } else if (data.roles.indexOf('美疗师') > -1) {
+          } else if (data.roles.indexOf('5') > -1) {
             commit('SET_ISMANAGERS', 'no')
           }
           commit('SET_NAME', data.name)

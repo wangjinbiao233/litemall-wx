@@ -143,10 +143,10 @@ public class ReservrPadController {
 			List<LitemallRole> roleList =  litemallReserveService.selectUserRole(litemallUser);
 			String roleStr="";
 			for (LitemallRole litemallRole : roleList) {
-				roleStr +=litemallRole.getRoleName()+",";
+				roleStr +=litemallRole.getId()+",";
 			}
 			//筛选出含有“美疗师”角色且不含有“门店管理员”角色的用户
-			if( !(roleStr.contains("美疗师") && !roleStr.contains("门店管理员")) ) {
+			if( !(roleStr.contains("5") && !roleStr.contains("2")) ) {
 				//userList.remove(i);
 			}else {
 				touserList.add(litemallUser);

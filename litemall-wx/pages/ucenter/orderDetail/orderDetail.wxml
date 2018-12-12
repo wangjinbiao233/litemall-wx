@@ -60,7 +60,7 @@
         </view>
         <view class="address" wx:if="{{orderInfo.consignee ==null && orderInfo.getStoreId !=null && orderInfo.address == null}}">
             <view class="t">
-                <text class="">自取店面:</text>
+                <text class="">自取门店:</text>
                 <text class="mobile">{{orderInfo.storeName}}</text>
             </view>
         </view>

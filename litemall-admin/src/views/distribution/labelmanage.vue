@@ -2,6 +2,18 @@
   <div class="app-container calendar-list-container">
 
     <!-- 查询和其他操作 -->
+    <div class="userDetail">
+      <div class="user-info">
+        <div class="user-face">
+          <img :src="userDataForm.avatar" style="width: 50px;height: 50px;border-radius: 50%"/>
+        </div>
+        <div class="user-msg">
+          <p>
+            <span class="user-msg-item">{{userDataForm.username}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
     <div class="filter-container">
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入标签名称" v-model="listQuery.labelName">
       </el-input>
@@ -80,6 +92,7 @@
 
 <script>
   import { fetchList, createLabel, updateLabel, removeLabel, createQrcode} from '@/api/label'
+  import { readUser } from '@/api/user'
   import waves from '@/directive/waves' // 水波纹指令
   export default {
     name: 'labelmanage',
@@ -112,6 +125,10 @@
           userId: undefined,
           labelName: undefined,
           labelDesc: undefined
+        },
+        userDataForm: {
+          id: undefined,
+          username: '',
         },
         rules: {
           labelName: [{ required: true, message: '标签内容不能为空', trigger: 'blur' }]
@@ -295,6 +312,13 @@
             this.listLoading = false
           })
 
+          readUser({ 'id': id }).then(response => {
+            this.userDataForm = response.data.data.items
+            this.$nextTick(() => {
+              this.$refs['userDataForm'].clearValidate()
+            })
+          })
+
         }
       }
     },
@@ -304,7 +328,31 @@
         this.id = id
         this.listQuery.userId = id
         this.getList()
+
+        readUser({ 'id': id }).then(response => {
+          this.userDataForm = response.data.data.items
+          this.$nextTick(() => {
+            this.$refs['userDataForm'].clearValidate()
+          })
+        })
       }
     }
   }
 </script>
+<style>
+  .userDetail .user-info{
+    display: flex;
+    align-items: center;
+
+  }
+  .userDetail .user-msg{
+    padding-left: 10px;
+    font-size: 14px;
+
+  }
+  .userDetail .user-msg-item{
+    font-size: 16px;
+    color: #409eff;
+    display: inline-block;
+  }
+</style>

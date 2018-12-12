@@ -16,17 +16,17 @@
               <p class="client-msg-serial"></p>
             </div>
             <el-button v-if="reinfo.doctorId !=null "  class="client-btn" type="primary">已分配</el-button>
-            <el-button v-else  @click="getCosmelist(reinfo.id)" class="client-btn" type="primary">分配</el-button>            
+            <el-button v-else  @click="getCosmelist(reinfo.id)" class="client-btn" type="primary">分配</el-button>
           </div>
           <p class="client-content"><span class="client-content-title">预约项目：</span> {{reinfo.goodsName}}</p>
           <p class="client-content">
-            <span class="client-content-title">预约时间：</span>{{reinfo.reserveTime}}             
+            <span class="client-content-title">预约时间：</span>{{reinfo.reserveTime}}
           </p>
           <p class="client-content"><span class="client-content-title">订单编号：</span> {{reinfo.orderSn}}</p>
         </el-col>
       </template>
     </el-row>
-    
+
     <!--
     <div class="pad-state">
       <span class="pad-state-box"> <span class="pad-state-yuan load"></span> 进行中</span>
@@ -37,7 +37,7 @@
     -->
 
     <el-dialog
-      title="请选择美容师"
+      title="请选择服务顾问"
       :visible.sync="dialogVisible"
       width="30%">
       <div class="doctor-List">
@@ -89,15 +89,15 @@ export default {
       this.listQuery.storeId =  value
       this.getList()
     },
-  }, 
+  },
   computed: {
     dateTimes: function(){
       return this.$store.state.user.dateTimes
     },
     storeId:function(){
-      return this.$store.state.user.storeId      
+      return this.$store.state.user.storeId
     }
-  }, 
+  },
   created() {
     this.getList()
   },
@@ -159,7 +159,7 @@ export default {
             type: 'error',
             duration: 2000
           })
-        }        
+        }
       }).catch(() => {
         this.$notify({
           title: '失败',

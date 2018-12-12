@@ -45,7 +45,7 @@ public class AdminController {
 
         // 目前roles不支持，这里简单设置admin
         //roles.add("admin");
-        List<String> roles = litemallRoleService.selectPadAdminUserRoleById(adminId);        
+        List<String> roles = litemallRoleService.selectPadRoleIdByUserId(adminId);        
         data.put("roles", roles);
         data.put("introduction", "admin introduction");
         //根据当前登录人信息，查询他所属门店信息

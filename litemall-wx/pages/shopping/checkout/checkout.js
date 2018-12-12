@@ -188,7 +188,6 @@ Page({
 
   },
   submitOrder: function () {
-    debugger
     var that = this;
     if (this.data.addressId <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1) {
       util.showErrorToast('请选择收货地址');
@@ -371,7 +370,6 @@ Page({
           var storeId = wx.getStorageSync('storeid');
           util.request(api.OrderSubmit, { payType: that.data.payType, storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag: that.data.pageFlag,storeIds: that.data.storeId, storeIndex: that.data.storeIndex, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
             if (res.errno === 0) {
-              debugger
               const orderId = res.data.orderInfo.id;
               util.request(api.moneyPay, {
                 payType: that.data.payType,
