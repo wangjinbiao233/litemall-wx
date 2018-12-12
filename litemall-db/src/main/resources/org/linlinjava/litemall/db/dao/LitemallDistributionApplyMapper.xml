@@ -15,7 +15,7 @@
     <result column="modify_user_id" property="modifyUserId" jdbcType="INTEGER" />
     <result column="deleted" property="deleted" jdbcType="BIT" />
   </resultMap>
-  
+
   <sql id="Base_Column_List" >
     id, distribution_id, nick_name, pic_urls, distribution_type, audit_status, remark, 
     create_time, create_user_id, modify_time, modify_user_id, deleted
@@ -44,22 +44,23 @@
   </select>
   
   <select id="selectList" resultMap="BaseResultMap" parameterType="org.linlinjava.litemall.db.domain.LitemallDistributionApply" >
-    select 
+    select
     t.id, t.distribution_id, t.nick_name, t.pic_urls, t.distribution_type,
-    t.audit_status, t.remark, 
+    t.audit_status, t.remark,
     t.create_time, t.create_user_id, t.modify_time, t.modify_user_id, t.deleted,
-    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp"
-    from litemall_distribution_apply t
+    date_format(t.create_time,'%Y-%m-%d %h:%i:%s')  AS "createTimeDisp",
+    lu.username
+    from litemall_distribution_apply t LEFT JOIN litemall_user lu on t.create_user_id = lu.id
     where 1 = 1
-    
+
       <if test="distributionType != null and distributionType != '' " >
         and t.distribution_type = #{distributionType,jdbcType=VARCHAR}
       </if>
       
-       <if test="createUserName != null and createUserName != 'undefined' and  createUserName != ''  ">
+      <if test="createUserName != null and createUserName != 'undefined' and  createUserName != ''  ">
         and t.nick_name  like CONCAT('%',#{createUserName},'%')
       </if>
-     
+    ORDER BY t.audit_status asc,t.create_time desc
 
   </select>
   
