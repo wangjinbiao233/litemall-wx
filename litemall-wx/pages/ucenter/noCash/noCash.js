@@ -21,11 +21,11 @@ Page({
     })
   },
   search: function (e) {
-    if (e.detail.value.searchInfo == '') {
-      wx.showToast({
-        title: '请输入订单号'
-      })
-    } else {
+    // if (e.detail.value.searchInfo == '') {
+    //   wx.showToast({
+    //     title: '请输入订单号'
+    //   })
+    // } else {
       var that = this;
       var userId = wx.getStorageSync('userId');
       var data = {
@@ -40,7 +40,7 @@ Page({
           });
         }
       })
-    }
+    //}
   },
   /**
    * 生命周期函数--监听页面加载
