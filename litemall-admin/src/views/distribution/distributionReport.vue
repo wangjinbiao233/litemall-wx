@@ -68,7 +68,7 @@
       <el-table-column align="center" width="150" label="佣金" prop="profitMoney">
       </el-table-column>
 
- <el-table-column align="center" width="150" label="分销比例(百分比%)" prop="distributionRate">
+ <el-table-column align="center" width="150" label="分销比例(百分比)" prop="distributionRate">
       </el-table-column>
 
        <el-table-column align="center" width="150" label="分销等级" prop="distributeClass">
