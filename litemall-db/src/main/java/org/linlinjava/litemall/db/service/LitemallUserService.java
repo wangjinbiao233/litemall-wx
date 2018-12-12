@@ -189,5 +189,13 @@ public class LitemallUserService {
 		 PageHelper.startPage(page, limit);
 	     return userMapper.selectDoctorCount(user);
 	}
+
+    /**
+     * 根据名称查询用户
+     */
+
+    public List<LitemallUser> selectUsersByName(String username){
+        return userMapper.selectUsersByName(username);
+    }
 	
 }

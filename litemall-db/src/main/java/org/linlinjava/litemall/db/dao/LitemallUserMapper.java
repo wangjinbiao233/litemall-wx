@@ -201,4 +201,9 @@ public interface LitemallUserMapper {
      * @date 2018年11月28日 09:17:02
      */
     List<Integer> listNextNextDistributionUserIds();
+    /**
+     * 根据名称查询用户
+     */
+    List<LitemallUser> selectUsersByName(String username);
+
 }

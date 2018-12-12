@@ -888,92 +888,28 @@
 
 
     <select id="distributionReportCount" resultType="java.lang.Long" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT count(log.id)
+        SELECT count(*) FROM(
+        SELECT t.*,<!--2018/12/11-->llu.label_id as labelId FROM(
+        SELECT a.* ,lu.p_id as
+        distributionId,ear.operation as operationType,ear.profit_money as profitMoney FROM (
+        SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username FROM(
+        SELECT c.* FROM(
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        unitPrice,lo.user_id,lo.id,
+        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
         LEFT JOIN litemall_order lo ON lo.id=log.order_id
         LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
-        LEFT JOIN litemall_user lu ON lu.id=lo.user_id
-        <!--2018/12/11修改-->
-        LEFT JOIN litemall_label_user llu ON llu.user_id = lu.p_id
         <where>
-            <if test="orderUserIds != null">
-                lo.user_id in
-                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
-                    #{orderUserId}
-                </foreach>
-            </if>
-            <if test="storeId != null">
-               and ls.id=#{storeId}
-            </if>
-            <if test="memberId != null and memberId.trim() != ''">
-                and lu.member_id like concat (concat ('%',#{memberId}),'%')
-            </if>
-            <if test="username != null and username.trim() != ''">
-                and lu.username like concat (concat ('%',#{username}),'%')
-            </if>
-            <if test="goodsFlag != null and goodsFlag.trim() != ''">
-                and lg.flag =${goodsFlag}
-            </if>
-            <if test="goodsName != null and goodsName.trim() != ''">
-                and lg.`name` like concat (concat ('%',#{goodsName}),'%')
-            </if>
-            <if test="orderStatus != null">
-                and lo.order_status =#{orderStatus}
-            </if>
-            <!--2018/12/11-->
-            <if test="distributionIds != null">
-                and lu.p_id in
-                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
-                    #{distributionId}
-                </foreach>
-            </if>
-            <if test="labelIds != null">
-                and llu.label_id in
-                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
-                    #{labelId}
-                </foreach>
-            </if>
-            <!--2018/12/11-->
-            <if test="beginDate != null">
-                and lo.add_time &gt;=#{beginDate}
-            </if>
-            <if test="endDate != null">
-                and lo.add_time &lt;=#{endDate}
-            </if>
-        </where>
-    </select>
-
-    <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
-        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney,<!--2018/12/11-->llu.label_id as labelId
-        FROM litemall_order_goods log
-        LEFT JOIN litemall_store ls ON ls.id=log.store_id
-        LEFT JOIN litemall_order lo ON lo.id=log.order_id
-        LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
-        LEFT JOIN litemall_product lp ON lp.id=log.product_id
-        LEFT JOIN litemall_user lu ON lu.id=lo.user_id
-        LEFT JOIN litemall_earnings ear ON ear.order_id=lo.id
-        <!--2018/12/11修改-->
-        LEFT JOIN litemall_label_user llu ON llu.user_id = lu.p_id
-        <where>
-            <if test="orderUserIds != null">
-                lo.user_id in
-                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
-                    #{orderUserId}
-                </foreach>
-            </if>
+            1=1
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
-            <if test="memberId != null and memberId.trim() != ''">
-                and lu.member_id like concat (concat ('%',#{memberId}),'%')
-            </if>
-            <if test="username != null and username.trim() != ''">
-                and lu.username like concat (concat ('%',#{username}),'%')
-            </if>
             <if test="goodsFlag != null and goodsFlag.trim() != ''">
                 and lg.flag =${goodsFlag}
             </if>
@@ -983,20 +919,7 @@
             <if test="orderStatus != null">
                 and lo.order_status =#{orderStatus}
             </if>
-            <!--2018/12/11-->
-            <if test="distributionIds != null">
-               and lu.p_id in
-                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
-                    #{distributionId}
-                </foreach>
-            </if>
-            <if test="labelIds != null">
-               and llu.label_id in
-                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
-                    #{labelId}
-                </foreach>
-            </if>
-            <!--2018/12/11-->
+
             <if test="beginDate != null and beginDate.trim() != ''">
                 and lo.add_time &gt;=#{beginDate}
             </if>
@@ -1012,6 +935,152 @@
                 ORDER BY lo.add_time DESC
             </otherwise>
         </choose>
+        ) c
+        <where>
+            <if test="orderUserIds != null">
+                c.user_id in
+                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
+                    #{orderUserId}
+                </foreach>
+            </if>
+        </where>
+        ) b
+        LEFT JOIN litemall_user liteu on liteu.id = b.user_id
+        <where>
+            1=1
+            <if test="memberId != null and memberId.trim() != ''">
+                and liteu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and liteu.username like concat (concat ('%',#{username}),'%')
+            </if>
+        </where>
+        ) a
+        LEFT JOIN litemall_user lu ON lu.id=a.user_id
+        LEFT JOIN litemall_earnings ear ON ear.order_id=a.id
+        <where>
+            <!--2018/12/11-->
+            <if test="distributionIds != null">
+                lu.p_id in
+                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
+                    #{distributionId}
+                </foreach>
+            </if>
+            <if test="optType != null">
+                ear.operation=#{optType}
+            </if>
+            <!--2018/12/11-->
+        </where>
+        ) t  <!--2018/12/11修改-->
+        LEFT JOIN litemall_label_user llu ON llu.user_id = t.distributionId) l
+        <where>
+            <if test="labelIds != null">
+                l.labelId in
+                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
+                    #{labelId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+        SELECT l.storeName,l.orderDate,l.orderSn,l.orderStatus,l.goodsName,l.goodsNumber,l.unitPrice,
+        l.totalPrices,l.residueTreatmentNum,l.goodsFlag,l.treatmentNumCount,l.memberId,l.username,
+        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1) as distributionRate,
+       (select if(classUser.p_id is null,'1级','2级') from litemall_user classUser where classUser.id=l.distributionId) as distributeClass
+        FROM(
+        SELECT t.*,<!--2018/12/11-->llu.label_id as labelId FROM(
+        SELECT a.* ,lu.p_id as
+        distributionId,ear.operation as operationType,ear.profit_money as profitMoney FROM (
+        SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username FROM(
+        SELECT c.* FROM(
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        unitPrice,lo.user_id,lo.id,
+        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
+        FROM litemall_order_goods log
+        LEFT JOIN litemall_store ls ON ls.id=log.store_id
+        LEFT JOIN litemall_order lo ON lo.id=log.order_id
+        LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
+        LEFT JOIN litemall_product lp ON lp.id=log.product_id
+        <where>
+            1=1
+            <if test="storeId != null">
+                and ls.id=#{storeId}
+            </if>
+            <if test="goodsFlag != null and goodsFlag.trim() != ''">
+                and lg.flag =${goodsFlag}
+            </if>
+            <if test="goodsName != null and goodsName.trim() != ''">
+                and lg.`name` like concat (concat ('%',#{goodsName}),'%')
+            </if>
+            <if test="orderStatus != null">
+                and lo.order_status =#{orderStatus}
+            </if>
+
+            <if test="beginDate != null and beginDate.trim() != ''">
+                and lo.add_time &gt;=#{beginDate}
+            </if>
+            <if test="endDate != null and endDate.trim() != ''">
+                and lo.add_time &lt;=#{endDate}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                ORDER BY ${sort} ${order}
+            </when>
+            <otherwise>
+                ORDER BY lo.add_time DESC
+            </otherwise>
+        </choose>
+        ) c
+        <where>
+            <if test="orderUserIds != null">
+                c.user_id in
+                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
+                    #{orderUserId}
+                </foreach>
+            </if>
+        </where>
+        ) b
+          LEFT JOIN litemall_user liteu on liteu.id = b.user_id
+          <where>
+              1=1
+              <if test="memberId != null and memberId.trim() != ''">
+                 and liteu.member_id like concat (concat ('%',#{memberId}),'%')
+              </if>
+              <if test="username != null and username.trim() != ''">
+                 and liteu.username like concat (concat ('%',#{username}),'%')
+              </if>
+          </where>
+        ) a
+          LEFT JOIN litemall_user lu ON lu.id=a.user_id
+          LEFT JOIN litemall_earnings ear ON ear.order_id=a.id
+          <where>
+              <!--2018/12/11-->
+              <if test="distributionIds != null">
+                   lu.p_id in
+                  <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
+                      #{distributionId}
+                  </foreach>
+              </if>
+              <if test="optType != null">
+                  ear.operation=#{optType}
+              </if>
+              <!--2018/12/11-->
+          </where>
+        ) t  <!--2018/12/11修改-->
+        LEFT JOIN litemall_label_user llu ON llu.user_id = t.distributionId) l
+        <where>
+            <if test="labelIds != null">
+                 l.labelId in
+                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
+                    #{labelId}
+                </foreach>
+            </if>
+        </where>
         <if test="offset != null and limit !=null ">
             limit #{offset},#{limit}
         </if>
