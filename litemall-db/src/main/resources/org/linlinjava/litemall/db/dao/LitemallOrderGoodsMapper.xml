@@ -895,6 +895,8 @@
         LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
+        <!--2018/12/11修改-->
+        LEFT JOIN litemall_label_user llu ON llu.user_id = lu.p_id
         <where>
             <if test="orderUserIds != null">
                 lo.user_id in
@@ -920,6 +922,20 @@
             <if test="orderStatus != null">
                 and lo.order_status =#{orderStatus}
             </if>
+            <!--2018/12/11-->
+            <if test="distributionIds != null">
+                and lu.p_id in
+                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
+                    #{distributionId}
+                </foreach>
+            </if>
+            <if test="labelIds != null">
+                and llu.label_id in
+                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
+                    #{labelId}
+                </foreach>
+            </if>
+            <!--2018/12/11-->
             <if test="beginDate != null">
                 and lo.add_time &gt;=#{beginDate}
             </if>
@@ -932,7 +948,7 @@
     <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
         (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
-        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney,<!--2018/12/11-->llu.label_id as labelId
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
         LEFT JOIN litemall_order lo ON lo.id=log.order_id
@@ -940,6 +956,8 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         LEFT JOIN litemall_earnings ear ON ear.order_id=lo.id
+        <!--2018/12/11修改-->
+        LEFT JOIN litemall_label_user llu ON llu.user_id = lu.p_id
         <where>
             <if test="orderUserIds != null">
                 lo.user_id in
@@ -965,6 +983,20 @@
             <if test="orderStatus != null">
                 and lo.order_status =#{orderStatus}
             </if>
+            <!--2018/12/11-->
+            <if test="distributionIds != null">
+               and lu.p_id in
+                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
+                    #{distributionId}
+                </foreach>
+            </if>
+            <if test="labelIds != null">
+               and llu.label_id in
+                <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
+                    #{labelId}
+                </foreach>
+            </if>
+            <!--2018/12/11-->
             <if test="beginDate != null and beginDate.trim() != ''">
                 and lo.add_time &gt;=#{beginDate}
             </if>

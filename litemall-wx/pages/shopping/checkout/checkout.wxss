@@ -9,14 +9,14 @@ page{
     background: url('http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/address-bg-bd30f2bfeb.png') 0 0 repeat-x;
     background-size: 62.5rpx 10.5rpx;
     margin-bottom: 20rpx;
-    padding-top: 10.5rpx;
+    padding-top: 20.5rpx;
 }
 
 .address-item{
     display: flex;
     height: 155.55rpx;
     background: #fff;
-    padding: 41.6rpx 0 41.6rpx 31.25rpx;
+    padding: 30rpx 40rpx 20rpx 40rpx;
 }
 
 .address-item.address-empty{
@@ -64,7 +64,7 @@ page{
 .address-box .mstore{
     width:25%;
     height: 72.25rpx;
-    color: #999;
+    font-size: 30rpx;
 }
 
 .address-box .mobile{
@@ -336,7 +336,7 @@ page{
     overflow: hidden;
     background: #fff;
     display: flex;
-    padding-left: 31.25rpx;
+    padding-left: 40rpx;
 }
 
 .payType-box .l{
@@ -473,7 +473,7 @@ button::after {
   display: flex;
   background: #fff;
   padding-left:45rpx;
-  padding-top:5rpx;
+  padding-top:25rpx;
 }
 
 .inputClass {
