@@ -93,8 +93,8 @@
             <if test="orderId != null">
                 AND order_id = #{orderId,jdbcType=INTEGER}
             </if>
-            <if test="orderSn != null">
-                AND order_sn = #{orderSn,jdbcType=INTEGER}
+            <if test="orderSn != null and orderSn != ''">
+                AND order_sn = #{orderSn,jdbcType=VARCHAR}
             </if>
         ORDER BY profit_list.`add_time` DESC
 
