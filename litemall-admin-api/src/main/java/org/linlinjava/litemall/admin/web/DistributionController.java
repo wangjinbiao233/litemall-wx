@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
+import org.linlinjava.litemall.db.domain.LitemallLabel;
 import org.linlinjava.litemall.db.domain.LitemallReportParam;
 import org.linlinjava.litemall.db.domain.LitemallUser;
 import org.linlinjava.litemall.db.dto.SaleOrderReportDTO;
@@ -142,7 +143,42 @@ public class DistributionController {
             return ResponseUtil.ok(data);
         }
         param.setOrderUserIds(orderUserIds);
+        /**
+         * 2018-12-11 此处根据分销商名称，分销商标签名称查询分销商id，分销商标签id,如果不为空查不到就返回0条数据
+         */
+        Boolean flag = false;
+        if(param.getDistributionName()!=null && param.getDistributionName()!="" ){
+            //根据名称查询分销商，如果没查到total为0
+            List<LitemallUser> users=userService.queryByUsername(param.getDistributionName().trim());
+            if(users.size()>0){
+                List<Integer> distributionIds=new ArrayList<Integer>();
+                for(int i=0;i<users.size();i++){
+                    distributionIds.add(users.get(i).getId());
+                }
+                param.setDistributionIds(distributionIds);
+            }else{
+                flag =true;
+            }
+        }
+        if(param.getDistributionLabelNames()!=null && param.getDistributionLabelNames()!="" ){
+            //根据名称查询分销商标签，如果没查到total为0
+            List<LitemallLabel> maps=litemallReportService.selectSelective(param.getDistributionLabelNames().trim());
+            if(maps.size()>0){
+                List<Integer> lableIds=new ArrayList<Integer>();
+                for(int i=0;i<maps.size();i++){
+                    lableIds.add(maps.get(i).getId());
+                }
+                param.setLabelIds(lableIds);
+            }else{
+                flag =true;
+            }
+        }
         int total = (int) litemallReportService.distributionReportCount(param);
+        if(flag){
+            total = 0;
+        }
+
+
         if (total == 0) {
             data.put("total", total);
             data.put("items", new ArrayList<>(0));

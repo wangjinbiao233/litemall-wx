@@ -27,6 +27,12 @@ public interface LitemallLabelMapper {
     List<Map> selectSelective(LitemallLabel label);
 
     /**
+     * 根据名称获取标签列表
+     */
+
+    List<LitemallLabel> selectLabelByName(String name);
+
+    /**
      * 根据userId查询标签
      * @param userId
      * @return

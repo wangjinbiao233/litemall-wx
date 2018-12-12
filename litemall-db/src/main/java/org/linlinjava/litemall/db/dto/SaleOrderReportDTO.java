@@ -128,6 +128,21 @@ public class SaleOrderReportDTO {
      */
     private String operationTypeName;
 
+
+    /**
+     * 分销商标签id
+     * 2018/12/11
+     */
+    private String labelId;
+
+    public String getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
+    }
+
     public String getStoreName() {
         return storeName;
     }
