@@ -11,6 +11,9 @@ public class LitemallCustomDiscount extends LitemallDiscount {
 	private String startTimeStr;
 	private String endTimeStr;
 
+	private Integer discountsPrice;//优惠金额
+	private Integer limitPrice;//限制金额
+
 	private BigDecimal goodsTotalPrice;
 	private String discountTypeStr;
 
@@ -78,7 +81,27 @@ public class LitemallCustomDiscount extends LitemallDiscount {
         this.isUser = isUser;
     }
 
-    @Override
+	@Override
+	public Integer getDiscountsPrice() {
+		return discountsPrice;
+	}
+
+	@Override
+	public void setDiscountsPrice(Integer discountsPrice) {
+		this.discountsPrice = discountsPrice;
+	}
+
+	@Override
+	public Integer getLimitPrice() {
+		return limitPrice;
+	}
+
+	@Override
+	public void setLimitPrice(Integer limitPrice) {
+		this.limitPrice = limitPrice;
+	}
+
+	@Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("LitemallCustomDiscount{");
         sb.append("discountCount='").append(discountCount).append('\'');
