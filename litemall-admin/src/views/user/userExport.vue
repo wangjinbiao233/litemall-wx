@@ -26,12 +26,14 @@
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
       -->
       <el-button class="filter-item" type="primary" :loading="downloadLoading" v-waves icon="el-icon-download" @click="handleDownload">导出</el-button>
-      
+
     </div>
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" width="100px" label="用户ID" prop="id" sortable>
+      <!--<el-table-column align="center" width="100px" label="用户ID" prop="id" sortable>
+      </el-table-column>-->
+      <el-table-column type="index" label="序号" header-align="center" align="center">
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="头像" prop="avatar">

@@ -16,16 +16,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
-import org.linlinjava.litemall.db.domain.LitemallExpress;
-import org.linlinjava.litemall.db.domain.LitemallOrder;
-import org.linlinjava.litemall.db.domain.LitemallOrderGoods;
-import org.linlinjava.litemall.db.domain.LitemallProduct;
-import org.linlinjava.litemall.db.service.LitemallDistributionProfitService;
-import org.linlinjava.litemall.db.service.LitemallExpressService;
-import org.linlinjava.litemall.db.service.LitemallOrderGoodsService;
-import org.linlinjava.litemall.db.service.LitemallOrderService;
-import org.linlinjava.litemall.db.service.LitemallProductService;
-import org.linlinjava.litemall.db.service.LitemallRechargeService;
+import org.linlinjava.litemall.db.domain.*;
+import org.linlinjava.litemall.db.service.*;
 import org.linlinjava.litemall.db.util.OrderHandleOption;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.linlinjava.litemall.db.util.ResponseUtil;
@@ -60,6 +52,9 @@ public class OrderController {
 	 
 	@Autowired
 	private LitemallRechargeService litemallRechargeService;
+
+	@Autowired
+	private LitemallStoreService litemallStoreService;
 
     @RequestMapping(value = "/list", method = RequestMethod.POST)  
     public Object list(@LoginAdmin Integer adminId,
@@ -99,6 +94,13 @@ public class OrderController {
         	for(LitemallOrder litemall :orderList) {
         		OrderHandleOption handleOption = OrderUtil.build(litemall);
         		litemall.setIsCancel(String.valueOf(handleOption.isCancel()));
+        		//此处查找是否为门店自取然后查找门店名称
+				String storeId=litemall.getGetStoreId();
+				if(storeId !=null && storeId !=""){
+						//查找门店名称
+					LitemallStore store=litemallStoreService.selectStoreById(storeId);
+					litemall.setStoreName(store.getStoreName());
+				}
         	}
         }
         
@@ -260,7 +262,7 @@ public class OrderController {
 			if(litemallOrderGoodsList != null && litemallOrderGoodsList.size() > 0) {
 				for(LitemallOrderGoods litemallOrderGoods :litemallOrderGoodsList) {
 					if(litemallOrderGoods.getFlag().equals("1")) {
-						litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_SHIP);
+						litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_CONFIRM);
 						litemallOrderGoodsService.update(litemallOrderGoods);
 					}
 
@@ -277,7 +279,7 @@ public class OrderController {
 			if (isShip == true) {
 				// 已发货
 				if(!zmallOrder.getOrderStatus().equals(OrderUtil.STATUS_PART_CONFIRM)) {
-					order.setOrderStatus(OrderUtil.STATUS_SHIP);
+					order.setOrderStatus(OrderUtil.STATUS_CONFIRM);
 				}
 			} else {
 				// 部分发货

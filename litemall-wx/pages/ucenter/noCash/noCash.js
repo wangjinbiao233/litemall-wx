@@ -21,26 +21,26 @@ Page({
     })
   },
   search: function (e) {
-    if (e.detail.value.searchInfo == '') {
-      wx.showToast({
-        title: '请输入订单号'
-      })
-    } else {
+    // if (e.detail.value.searchInfo == '') {
+    //   wx.showToast({
+    //     title: '请输入订单号'
+    //   })
+    // } else {
       var that = this;
       var userId = wx.getStorageSync('userId');
       var data = {
-        userId: userId,
-        orderId: e.detail.value.searchInfo
+        'userId': userId,
+        'orderId': e.detail.value.searchInfo
       }
-      util.request(api.searchNoCash, data).then(function (res) {
+      util.request(api.searchNoCash, data,'POST').then(function (res) {
+        console.log(res)
         if (res.errno === 0) {
-          console.log(res)
           that.setData({
             orderList: res.data.items
           });
         }
       })
-    }
+    //}
   },
   /**
    * 生命周期函数--监听页面加载

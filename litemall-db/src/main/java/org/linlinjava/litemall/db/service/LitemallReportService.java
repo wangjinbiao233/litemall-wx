@@ -222,19 +222,12 @@ public class LitemallReportService {
                         o.setDistributionName(litemallUser.getUsername());
                     }
                     // 分销商标签
-                    List<LitemallLabel> litemallLabelList = litemallLabelMapper.selectByDistributionId(distributionId);
-                    if (!CollectionUtils.isEmpty(litemallLabelList)) {
-                        List<String> names=new ArrayList<>();
-                        litemallLabelList.forEach(litemallLabel -> {
-                            String name=litemallLabel.getLabelName();
-                            if(!StringUtils.isEmpty(name)){
-                                names.add(name);
-                            }
-                        });
-                        if(!CollectionUtils.isEmpty(names)){
-                            o.setDistributionLabelNames(String.join(",", names));
-                        }
+                    String labelId = o.getLabelId();
+                    if(labelId !=null && labelId !=""){
+                        LitemallLabel litemallLabel=litemallLabelMapper.selectByPrimaryKey(Integer.valueOf(labelId));
+                        o.setDistributionLabelNames(litemallLabel.getLabelName());
                     }
+
                 }
                 // 操作类型
                 Integer operationType = o.getOperationType();
@@ -301,5 +294,12 @@ public class LitemallReportService {
             result.addAll(nextNextDistributionUserIds);
         }
         return result;
+    }
+
+    /**
+     * 根据标签名称获取标签
+     */
+    public List<LitemallLabel> selectSelective(String name){
+        return litemallLabelMapper.selectLabelByName(name);
     }
 }

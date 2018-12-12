@@ -33,6 +33,10 @@
         type="date"
         placeholder="结束日期" style="width: 200px;">
       </el-date-picker>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入分销商" v-model="listQuery.distributionName">
+       </el-input>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入分销商标签" v-model="listQuery.distributionLabelNames">
+      </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter" style="margin-top: 7px;">查找</el-button>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading" style="margin-top: 7px;">导出</el-button>
     </div>

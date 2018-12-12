@@ -144,4 +144,11 @@ public interface LitemallRoleMapper {
      * @return
      */
 	List<String> selectPadAdminUserRoleById(Integer id);
+	
+	/**
+	 * pad端查询当前用户所属角色
+	 * @param id
+	 * @return
+	 */
+	List<String> selectPadRoleIdByUserId(Integer id);
 }

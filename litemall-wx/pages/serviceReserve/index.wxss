@@ -1,0 +1,187 @@
+/* 门店 */
+
+.stores {
+}
+
+.store-box {
+  margin-bottom: 20rpx;
+  display: flex;
+  padding: 10rpx;
+  background-color: #fff;
+}
+
+.store-main {
+  flex: 1;
+  padding: 15rpx 0 15rpx 30rpx;
+}
+
+.store-img {
+  width: 320rpx;
+  height: 200rpx;
+}
+
+.store-text {
+  display: block;
+  padding-bottom: 15rpx;
+}
+
+.store-name {
+  color: #8ac2d6;
+  font-size: 35rpx;
+}
+
+.store-evaluate {
+  color: #333;
+  font-size: 30rpx;
+}
+
+.store-address {
+  color: #929292;
+  font-size: 23rpx;
+  position: relative;
+}
+
+.store-distance {
+  position: absolute;
+  font-size: 23rpx;
+  right: 15rpx;
+  top: 7rpx;
+  color: #929292;
+}
+
+.choice-store {
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0rpx 20rpx 0rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  border-bottom: 1rpx #ccc solid;
+}
+
+.service-header{
+  padding: 30rpx 15px;
+  border-bottom: 20rpx solid #f8f8f8;
+  margin: 0 -15px;
+}
+.service .service-title{
+  font-size: 38rpx;
+  color: #333;
+  padding-bottom: 10rpx;
+}
+.service .service-describe{
+  font-size: 30rpx;
+  color: #929292;
+}
+.service .service-date{
+  display: flex;
+  border-bottom: 1px solid #e5e5e5;
+}
+.service .service-date-left{
+  padding:40rpx 10rpx;
+}
+.service .icon-text{
+  font-size: 35rpx;
+  color: #bcbcbc;
+}
+.service .service-date-list{
+  flex: 1;
+  overflow-y: auto;
+  white-space: nowrap;
+  justify-content: space-between;
+}
+.service .service-date-box{
+  display: inline-block;
+  padding: 20rpx 15rpx;
+  width: 115rpx;
+}
+.service .service-date-box.active{
+  background-color: #88c2d7;
+}
+.service .service-date-box.active .service-date-time{
+  color: #fff;
+}
+.service .service-date-box.active .service-date-week{
+  color: #fff;
+}
+.service .service-date-right{
+  text-align: right;
+  padding:40rpx 10rpx;
+}
+.service .service-date-time{
+  display: block;
+  font-size: 35rpx;
+  color: #333;
+  text-align: center;
+}
+.service .service-date-week{
+  display: block;
+  color: #929292;
+  font-size: 26rpx;
+  text-align: center;
+}
+.service .service-time-list{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 20rpx;
+}
+.service .service-time-box{
+  padding: 20rpx 0;
+  width: 210rpx;
+  /* text-align: center; */
+  padding-left:38rpx;
+
+  border-radius: 5px;
+  border: 1px solid #f7f7f7;
+  margin: 20rpx 0;
+}
+.service .service-time-text{
+  color: #444;
+  font-size: 31rpx;
+  padding-left: 20rpx;
+}
+.service .service-time-warn{
+  position: absolute;
+  top: 3rpx;
+  right: 10rpx;
+  color: #df3535;
+  font-size: 18rpx;
+}
+.service .service-time-box.full{
+  background-color: #f8f8f8;
+  position: relative;
+}
+.service .service-time-box.full .service-time-text{
+  color: #bcbcbc;
+}
+.service .service-time-box.active{
+  background-color: #8ac2d6;
+}
+.service .service-time-box.active .service-time-text{
+  color: #fff;
+}
+
+.service .service-main{
+  position: fixed;
+  bottom: 20rpx;
+  right: 0;
+  left: 15px;
+  display: flex;
+  padding-top: 15rpx;
+}
+.service .service-main-text{
+  flex: 1;
+  color: #8ac2d6;
+  font-size: 32rpx;
+}
+.service .service-btn-box{
+  text-align: right;
+}
+.service .service-btn{
+  background-color: #8ac2d6;
+  font-size: 32rpx;
+  color: #fff;
+  padding: 20rpx 40rpx;
+}

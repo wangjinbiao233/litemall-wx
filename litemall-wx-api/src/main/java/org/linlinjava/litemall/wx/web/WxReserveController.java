@@ -72,7 +72,7 @@ public class WxReserveController {
 	public Object timeData(String storeId, String currentTime) {
 		// 循环时间段进行遍历 封装成list 返回到前端
 		// String storeId= "11";
-		String timeStr = "09:00,09:30,10:00,10:30,11:00,11:30,12:00,12:30,13:00,"
+		String timeStr = "10:00,10:30,11:00,11:30,12:00,12:30,13:00,"
 				+ "13:30,14:00,14:30,15:00,15:30,16:00,16:30,17:00,17:30,18:00,18:30";
 		String[] timeArr = timeStr.split(",");
 
@@ -185,7 +185,7 @@ public class WxReserveController {
 		litemallOrderGoods.setTreatmentNum(litemallOrderGoods.getTreatmentNum() + 1);
 		
 		// 可能需要更新订单总状态
-		boolean isShip = true;
+		boolean isPartShip = false;
 				
 		 // 商品信息
         LitemallGoods info = goodsService.findById(litemallOrderGoods.getGoodsId());
@@ -193,7 +193,7 @@ public class WxReserveController {
 			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
 		}else {
 			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
-			isShip = false;
+			isPartShip = true;
 		}
 		
 		litemallOrderGoodsService.update(litemallOrderGoods);
@@ -203,18 +203,18 @@ public class WxReserveController {
 		List<LitemallOrderGoods> orderGoodsList = litemallOrderGoodsService.queryByOid(litemallOrderGoods.getOrderId());
 		if (orderGoodsList.size() > 0) {
 			for (LitemallOrderGoods good : orderGoodsList) {
-				if (good.getOrderStatus().equals(OrderUtil.STATUS_PAY)) {
-					isShip = false;
+				if (good.getOrderStatus().equals(OrderUtil.STATUS_PART_SHIP)) {
+					isPartShip = true;
 					break;
 				}
 			}
 					
-			if (isShip == true) {
+			if (isPartShip == true) {
     			// 已发货
-				litemallOrder.setOrderStatus(OrderUtil.STATUS_SHIP);
+				litemallOrder.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
     		} else {
     			// 部分发货
-    			litemallOrder.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
+    			litemallOrder.setOrderStatus(OrderUtil.STATUS_PAY);
     		}
 			litemallOrderService.update(litemallOrder);
 		}
