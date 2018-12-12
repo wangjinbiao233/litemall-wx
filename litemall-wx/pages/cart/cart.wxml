@@ -20,7 +20,7 @@
             <view class="item {{isEditCart ? 'edit' : ''}}" wx:for="{{cartGoods}}" wx:key="id">
               <view class="checkbox {{item.checked ? 'checked' : ''}}" bindtap="checkedItem" data-item-index="{{index}}"></view>
               <view class="cart-goods">
-               <navigator url="/pages/goods/goods?id={{item.goodsId}}">
+               <navigator url="/pages/goods/goods?id={{item.goodsSn}}">
                 <image class="img" src="{{item.picUrl}}"></image> </navigator>
                 <view class="info">
                   <view class="t">
