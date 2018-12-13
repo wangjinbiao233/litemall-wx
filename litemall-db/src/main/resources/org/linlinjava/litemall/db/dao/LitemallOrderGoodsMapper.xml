@@ -752,7 +752,7 @@
     <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
         (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
-        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
         LEFT JOIN litemall_order lo ON lo.id=log.order_id
