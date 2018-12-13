@@ -409,6 +409,7 @@ page{
   height: 60px;
   flex-direction: row;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -446,11 +447,24 @@ page{
 }
 
 .send-btn {
-  width: 180rpx;
-  margin-right: 8%;
-  font-size: 25rpx;
-  background-color: #8ac2d6;
+  width: 160rpx;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70rpx;
+  border-radius: 8rpx;
+  margin-right: 50rpx;
+  font-size: 24rpx;
   color: #fff;
+}
+
+.send-btn-bg{
+  background-color: #8ac2d6;
+}
+
+.send-btn-bg-o{
+  background-color: #d3d3d3;  
 }
 
 button::after {

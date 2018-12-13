@@ -57,6 +57,7 @@ Page({
           title: '选择成功',
         })
         that.hidemodal();
+        that.goLogin();
       }
     }
   },
@@ -69,19 +70,22 @@ Page({
     var that = this;
     // 页面初始化 options为页面跳转所带来的参数
     // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
-    if (options) {
-      var scene = decodeURIComponent(options.scene)
-      // var scene = 'labelId:3'
-      if (scene && scene != 'undefined') {
-        if (scene.indexOf('labelId') != -1) {
-          that.setData({
-            labelId: Number(scene.substring(8))
-          })
-        } else {
-          that.setData({
-            'pId': Number(scene)
-          })
-          that.showDialogBtn();
+    
+    if (!app.globalData.hasLogin) {
+      if (options) {
+        var scene = decodeURIComponent(options.scene)
+        // var scene = 'labelId:3'
+        if (scene && scene != 'undefined') {
+          if (scene.indexOf('labelId') != -1) {
+            that.setData({
+              labelId: Number(scene.substring(8))
+            })
+          } else {
+            that.setData({
+              'pId': Number(scene)
+            })
+            that.showDialogBtn();
+          }
         }
       }
     }
