@@ -149,7 +149,7 @@ public class DistributionController {
         Boolean flag = false;
         if(param.getDistributionName()!=null && param.getDistributionName()!="" ){
             //根据名称查询分销商，如果没查到total为0
-            List<LitemallUser> users=userService.queryByUsername(param.getDistributionName().trim());
+            List<LitemallUser> users=userService.selectUsersByName(param.getDistributionName().trim());
             if(users.size()>0){
                 List<Integer> distributionIds=new ArrayList<Integer>();
                 for(int i=0;i<users.size();i++){

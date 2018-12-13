@@ -104,6 +104,10 @@ public class LitemallReportParam {
      * 分销商标签名称
      */
     private String distributionLabelNames;
+    /**
+     * 佣金状态
+     */
+    private Integer optType;
 
     public String getDistributionName() {
         return distributionName;
@@ -288,5 +292,13 @@ public class LitemallReportParam {
 
     public void setOrderUserIds(List<Integer> orderUserIds) {
         this.orderUserIds = orderUserIds;
+    }
+
+    public Integer getOptType() {
+        return optType;
+    }
+
+    public void setOptType(Integer optType) {
+        this.optType = optType;
     }
 }

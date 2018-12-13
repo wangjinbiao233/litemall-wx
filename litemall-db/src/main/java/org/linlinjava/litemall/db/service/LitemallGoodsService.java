@@ -72,6 +72,9 @@ public class LitemallGoodsService {
         if(brandId != null){
             criteria.andBrandIdEqualTo(brandId);
         }
+        
+        criteria.andIsOnSaleEqualTo(true);
+        
         if(isNew != null){
             criteria.andIsNewEqualTo(isNew.intValue() == 1);
         }

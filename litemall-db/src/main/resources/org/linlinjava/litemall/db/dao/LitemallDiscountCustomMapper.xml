@@ -38,6 +38,8 @@
         dn.`name` as "discountTypeStr",
         start_time as "startTimeStr",
         end_time as "endTimeStr",
+        discounts_price,
+        limit_price,
         COUNT(is_get) AS discount_count,
         SUM(is_get) AS get_count,
         SUM(is_use) AS use_count
@@ -52,7 +54,7 @@
         <if test="discountType != null">
           AND dc.discount_type = #{discountType,jdbcType=INTEGER}
         </if>
-    GROUP BY `key` , discount_name , start_time , end_time , discountTypeStr
+      GROUP BY `key` , discount_name , start_time , end_time , discounts_price, limit_price, discountTypeStr
   </select>
 
 

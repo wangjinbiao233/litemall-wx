@@ -15,9 +15,9 @@
       </el-select>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入商品名称" v-model="listQuery.goodsName">
       </el-input>
-      <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态" style="top: -4px;">
+      <el-select v-model="listQuery.optType" clearable placeholder="请选择佣金状态" style="top: -4px;">
         <el-option
-          v-for="item in orderStatusList"
+          v-for="item in profitStatusList"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -26,17 +26,25 @@
       <el-date-picker
         v-model="listQuery.beginDate"
         type="date"
-        placeholder="开始日期" style="width: 200px;">
+        placeholder="开始日期" style="width: 200px;top: -4px;">
       </el-date-picker>
       <el-date-picker
         v-model="listQuery.endDate"
         type="date"
         placeholder="结束日期" style="width: 200px;">
       </el-date-picker>
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入分销商" v-model="listQuery.distributionName">
+      <el-input clearable class="filter-item" style="width: 200px;margin-top: 7px;" placeholder="请输入分销商" v-model="listQuery.distributionName">
        </el-input>
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入分销商标签" v-model="listQuery.distributionLabelNames">
+      <el-input clearable class="filter-item" style="width: 200px;margin-top: 7px;" placeholder="请输入分销商标签" v-model="listQuery.distributionLabelNames">
       </el-input>
+       <el-select v-model="listQuery.orderStatus" clearable placeholder="请选择订单状态" style="">
+              <el-option
+                v-for="item in orderStatusList"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter" style="margin-top: 7px;">查找</el-button>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-download" @click="handleDownload" :loading="downloadLoading" style="margin-top: 7px;">导出</el-button>
     </div>
@@ -59,6 +67,12 @@
 
       <el-table-column align="center" width="150" label="佣金" prop="profitMoney">
       </el-table-column>
+
+ <el-table-column align="center" width="150" label="分销比例(百分比)" prop="distributionRate">
+      </el-table-column>
+
+       <el-table-column align="center" width="150" label="分销等级" prop="distributeClass">
+            </el-table-column>
 
       <el-table-column align="center" width="100" label="日期" prop="orderDate">
       </el-table-column>
@@ -160,6 +174,14 @@
           {label: '部分收货', value: 403},
           {label: '已完成', value: 501}
         ],
+        profitStatusList: [
+                  {label: '订单佣金', value: 1},
+                  {label: '提取', value: 2},
+                  {label: '充值', value: 3},
+                  {label: '消费', value: 4},
+                  {label: '退款', value: 5},
+                  {label: '提现失败', value: 6}
+                ],
         listQuery: {
           page: 1,
           limit: 20,
@@ -170,7 +192,8 @@
           goodsName: '',
           orderStatus: '',
           beginDate: '',
-          endDate: ''
+          endDate: '',
+          optType:''
         },
         downloadLoading: false
       }

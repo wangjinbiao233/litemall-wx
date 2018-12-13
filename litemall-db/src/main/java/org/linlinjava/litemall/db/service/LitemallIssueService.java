@@ -17,8 +17,8 @@ public class LitemallIssueService {
 
     public List<LitemallIssue> query(Integer questionType) {
     	LitemallIssue example = new LitemallIssue();
-//        example.or().andDeletedEqualTo(false);
     	example.setQuestionType(questionType);
+        example.setDeleted(false);
         return issueMapper.selectByExample(example);
     }
 
@@ -36,17 +36,10 @@ public class LitemallIssueService {
     }
 
     public List<LitemallIssue> querySelective(String question, Integer page, Integer size, String sort, String order) {
-        LitemallIssueExample example = new LitemallIssueExample();
-        LitemallIssueExample.Criteria criteria = example.createCriteria();
-
-        if(!StringUtils.isEmpty(question)){
-            criteria.andQuestionLike("%" + question + "%" );
-        }
-        criteria.andDeletedEqualTo(false);
 
         PageHelper.startPage(page, size);
         LitemallIssue issue  = new LitemallIssue();
-        //issue.setQuestionType(0);
+        issue.setDeleted(false);
         return issueMapper.selectByExample(issue);
     }
 
