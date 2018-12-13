@@ -93,8 +93,8 @@
             <if test="orderId != null">
                 AND order_id = #{orderId,jdbcType=INTEGER}
             </if>
-            <if test="orderSn != null">
-                AND order_sn = #{orderSn,jdbcType=INTEGER}
+            <if test="orderSn != null and orderSn != ''">
+                AND order_sn = #{orderSn,jdbcType=VARCHAR}
             </if>
         ORDER BY profit_list.`add_time` DESC
 
@@ -197,7 +197,7 @@
             LEFT JOIN litemall_label label on labelUser.label_id = label.id
             where labelUser.user_id = u.id
           ) as lebelName,
-          (SELECT count(1) FROM litemall_user WHERE p_id = u.p_id) AS promotion_user,/* 我推广的人数 */
+          (SELECT count(1) FROM litemall_user WHERE p_id = u.id) AS promotion_user,/* 我推广的人数 */
           IFNULL(sum(e.profit_money),0)   AS sum_profit_money, /* 下级总消费收益 */
           count(e.order_id)     AS order_count /* 下级消费订单数*/
         FROM litemall_user u
@@ -238,7 +238,7 @@
           u.avatar,
           DATE_FORMAT(u.add_time, "%Y-%m-%d %H:%i:%S") AS add_time,
           u.p_id,
-          (SELECT count(1)  FROM litemall_user WHERE p_id = u.p_id) AS promotion_user, /* 我推广的人数 */
+          (SELECT count(1)  FROM litemall_user WHERE p_id = u.id) AS promotion_user, /* 我推广的人数 */
           IFNULL(sum(e.profit_money),0)                AS sum_profit_money, /* 下级总消费收益 */
           count(e.order_id)                            AS order_count /* 下级消费订单数*/
         FROM litemall_user u

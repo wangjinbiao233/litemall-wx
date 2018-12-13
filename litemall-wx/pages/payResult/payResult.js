@@ -9,7 +9,6 @@ Page({
     orderId: 0
   },
   onLoad: function (options) {
-
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
       orderId: options.orderId,
@@ -19,15 +18,15 @@ Page({
     //主动查询支付结果， 防止回调失败无法更新订单状态
     util.request(api.OrderQuery, { orderId: options.orderId, userId: wx.getStorageSync('userId') }, 'POST').then(res       => {
       if (res.errno === 0) {
-        if (res.data.tradeStatus == 'SUCCESS'){
-          this.setData({
-            status: true
-          });
-        } else {
-          this.setData({
-            status: false
-          });
-        }
+        // if (res.data.tradeStatus == 'SUCCESS'){
+        //   this.setData({
+        //     status: true
+        //   });
+        // } else {
+        //   this.setData({
+        //     status: false
+        //   });
+        // }
       } 
     });
   },

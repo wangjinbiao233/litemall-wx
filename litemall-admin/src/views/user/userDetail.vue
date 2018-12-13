@@ -30,6 +30,9 @@
           <el-form-item label="用户名" prop="username">
             <el-input v-model="userDataForm.username"></el-input>
           </el-form-item>
+          <el-form-item width="100px" label="用户昵称" prop="nickname">
+            <span>{{ userDataForm.nickname }}</span>
+          </el-form-item>
           <el-form-item label="手机号码" prop="mobile">
             <el-input v-model="userDataForm.mobile"></el-input>
           </el-form-item>

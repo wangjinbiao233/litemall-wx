@@ -897,18 +897,21 @@
     </select>
 
     <select id="listNextDistributionUserIds" resultType="java.lang.Integer">
-        SELECT
-          u.id
-        FROM litemall_user u
-        WHERE p_id  IN (SELECT user.id from litemall_user user WHERE user.distribution_partner=1 and deleted=0 )
-		  GROUP BY u.id
+        select b.id from litemall_user b where b.p_id in (
+          select id from litemall_user u where u.p_id is null and u.distribution_partner=1 and u.deleted=0)
     </select>
 
     <select id="listNextNextDistributionUserIds" resultType="java.lang.Integer">
-        SELECT
-          u.id
-        FROM litemall_user u
-        WHERE p_id IN (SELECT id FROM litemall_user  WHERE p_id IN (SELECT user.id from litemall_user user WHERE user.distribution_partner=1 and deleted=0 ))
-        GROUP BY u.id
+        select c.id from litemall_user c where c.p_id in(
+        select b.id from litemall_user b where b.p_id in (
+          select id from litemall_user u where u.p_id is null and u.distribution_partner=1 and u.deleted=0))
     </select>
+
+    <select id="selectUsersByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM litemall_user u
+        WHERE u.username like concat (concat ('%',#{username}),'%')
+    </select>
+
 </mapper>

@@ -30,7 +30,9 @@
 
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row>
-      <el-table-column align="center" width="100px" label="用户ID" prop="id" sortable>
+      <!--<el-table-column align="center" width="100px" label="用户ID" prop="id" sortable>
+      </el-table-column>-->
+      <el-table-column type="index" label="序号" header-align="center" align="center">
       </el-table-column>
 
       <el-table-column align="center" min-width="100px" label="头像" prop="avatar">
@@ -42,6 +44,8 @@
       <el-table-column align="center" min-width="100px" label="用户名" prop="username">
       </el-table-column>
 
+      <el-table-column align="center" min-width="100px" label="用户昵称" prop="nickname">
+      </el-table-column>
       <!--
       <el-table-column align="center" min-width="100px" label="手机号码" prop="mobile">
       </el-table-column>

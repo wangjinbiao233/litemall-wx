@@ -33,6 +33,13 @@
         from litemall_label
         where id = #{id,jdbcType=INTEGER}
     </select>
+    <select id="selectLabelByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from litemall_label
+        where label_name like concat (concat ('%',#{name}),'%')
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
         from litemall_label

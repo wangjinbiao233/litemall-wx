@@ -318,8 +318,14 @@
       </if>
       <if test="endTimeStr != null and endTimeStr !='' ">
         end_time = #{endTimeStr,jdbcType=DATE},
-      </if> 
-      <if test="discountType != null">
+      </if>
+      <if test="discountsPrice != null and discountsPrice !='' ">
+        discounts_price = #{discountsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="limitPrice != null and limitPrice !='' ">
+        limit_price = #{limitPrice,jdbcType=INTEGER},
+      </if>
+      <if test="discountType != null and discountType !='' ">
         discount_type = #{discountType,jdbcType=INTEGER},
       </if>          
     </set>

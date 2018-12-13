@@ -125,6 +125,14 @@ page{
   font-size: 44rpx;
   color: #fff;
   margin-bottom: 14rpx;
+
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: normal !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .time{

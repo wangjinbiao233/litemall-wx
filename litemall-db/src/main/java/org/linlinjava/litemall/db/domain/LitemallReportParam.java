@@ -87,6 +87,60 @@ public class LitemallReportParam {
      */
     private List<Integer> orderUserIds;
 
+    /**
+     * 分销商Ids
+     * 2018/12/11
+     */
+    private List<Integer> distributionIds;
+    /**
+     * 分销商标签ids
+     */
+    private List<Integer> labelIds;
+    /**
+     * 分销商名称
+     */
+    private String distributionName;
+    /**
+     * 分销商标签名称
+     */
+    private String distributionLabelNames;
+    /**
+     * 佣金状态
+     */
+    private Integer optType;
+
+    public String getDistributionName() {
+        return distributionName;
+    }
+
+    public void setDistributionName(String distributionName) {
+        this.distributionName = distributionName;
+    }
+
+    public String getDistributionLabelNames() {
+        return distributionLabelNames;
+    }
+
+    public void setDistributionLabelNames(String distributionLabelNames) {
+        this.distributionLabelNames = distributionLabelNames;
+    }
+
+    public List<Integer> getDistributionIds() {
+        return distributionIds;
+    }
+
+    public void setDistributionIds(List<Integer> distributionIds) {
+        this.distributionIds = distributionIds;
+    }
+
+    public List<Integer> getLabelIds() {
+        return labelIds;
+    }
+
+    public void setLabelIds(List<Integer> labelIds) {
+        this.labelIds = labelIds;
+    }
+
     public Integer getStoreId() {
         return storeId;
     }
@@ -238,5 +292,13 @@ public class LitemallReportParam {
 
     public void setOrderUserIds(List<Integer> orderUserIds) {
         this.orderUserIds = orderUserIds;
+    }
+
+    public Integer getOptType() {
+        return optType;
+    }
+
+    public void setOptType(Integer optType) {
+        this.optType = optType;
     }
 }

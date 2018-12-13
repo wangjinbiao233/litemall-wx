@@ -128,6 +128,29 @@ public class SaleOrderReportDTO {
      */
     private String operationTypeName;
 
+
+    /**
+     * 分销商标签id
+     * 2018/12/11
+     */
+    private String labelId;
+    /**
+     * 分销比率
+     */
+    private String distributionRate;
+    /**
+     * 分销等级
+     */
+    private String distributeClass;
+
+    public String getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(String labelId) {
+        this.labelId = labelId;
+    }
+
     public String getStoreName() {
         return storeName;
     }
@@ -358,5 +381,21 @@ public class SaleOrderReportDTO {
 
     public void setOperationTypeName(String operationTypeName) {
         this.operationTypeName = operationTypeName;
+    }
+
+    public String getDistributionRate() {
+        return distributionRate;
+    }
+
+    public void setDistributionRate(String distributionRate) {
+        this.distributionRate = distributionRate;
+    }
+
+    public String getDistributeClass() {
+        return distributeClass;
+    }
+
+    public void setDistributeClass(String distributeClass) {
+        this.distributeClass = distributeClass;
     }
 }

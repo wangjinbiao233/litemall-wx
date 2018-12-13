@@ -25,7 +25,7 @@
       </el-table-column>
 
       <el-table-column align="center" min-width="400px" label="问题回复" prop="answer">
-      </el-table-column>      
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="250" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -49,7 +49,6 @@
           <el-select v-model="dataForm.questionType" placeholder="请选择">
               <el-option label = "商品帮助" :value="0"></el-option>
               <el-option label = "帮助中心" :value="1"></el-option>
-              </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="问题" prop="question">

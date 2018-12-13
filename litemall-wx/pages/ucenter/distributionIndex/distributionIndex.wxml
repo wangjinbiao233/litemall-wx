@@ -1,6 +1,6 @@
 <view>
   <view class='top'>
-    <view class='number'>{{cashNum+noCashNum}}</view>
+    <view class='number'>{{cashNum}}</view>
     <view class='content'>账户可用余额</view>
   </view>
   <view class='center'>
