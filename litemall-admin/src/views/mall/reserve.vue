@@ -56,7 +56,7 @@
     <el-dialog title="修改预约时间" :visible.sync="reserveTimeUpdateDialog">
       <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
         <el-form-item label="预约日期" prop="reserveDate">
-          <el-date-picker v-model="dataForm.reserveDate" value-format="yyyy-MM-dd" type="date" placeholder="选择日期">
+          <el-date-picker v-model="dataForm.reserveDate" value-format="yyyy/MM/dd" type="date" placeholder="选择日期">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="预约时间" prop="reserveTime">
