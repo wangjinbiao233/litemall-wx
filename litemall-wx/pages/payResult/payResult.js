@@ -5,7 +5,7 @@ const pay = require('../../services/pay.js');
 var app = getApp();
 Page({
   data: {
-    status: false,
+    status: '',
     orderId: 0
   },
   onLoad: function (options) {
