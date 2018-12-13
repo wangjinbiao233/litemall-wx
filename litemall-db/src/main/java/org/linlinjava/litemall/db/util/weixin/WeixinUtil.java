@@ -62,7 +62,8 @@ public class WeixinUtil {
 	 * @param outputStr 提交的数据  
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)  
 	 */    
-	public String getwxacode(String requestUrl, String requestMethod, String outputStr) {
+	public String getwxacode(String requestUrl, String requestMethod, String outputStr, int tryCount) {
+
 		String urlPath="";
 		try {    
 			TrustManager[] tm = { new MyX509TrustManager() };    
@@ -94,8 +95,9 @@ public class WeixinUtil {
 			// 将返回的输入流转换成字符串
 			InputStream inputStream = httpUrlConn.getInputStream();  
 			int size=inputStream.available();
-			if( size == 0 ){
-				return getwxacode( requestUrl, requestMethod, outputStr);
+			System.out.println("--------size = -----------"+size);
+			if( size < 2048 && tryCount < 3){
+				return getwxacode( requestUrl, requestMethod, outputStr, ++tryCount);
 			} else {
 				String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
 
@@ -305,7 +307,7 @@ public class WeixinUtil {
 		param.put("line_color", line_color);
 		param.put("is_hyaline", false);
 
-		filePath = getwxacode(request_url, "POST", param.toString());
+		filePath = getwxacode(request_url, "POST", param.toString(),0);
 		return filePath;
 
 	}

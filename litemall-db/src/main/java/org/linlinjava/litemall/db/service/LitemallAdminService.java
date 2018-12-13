@@ -1,6 +1,7 @@
 package org.linlinjava.litemall.db.service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.linlinjava.litemall.db.dao.LitemallAdminMapper;
 import org.linlinjava.litemall.db.domain.LitemallAdmin;
 import org.linlinjava.litemall.db.domain.LitemallAdmin.Column;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LitemallAdminService {
@@ -34,6 +37,16 @@ public class LitemallAdminService {
 
         PageHelper.startPage(page, limit);
         return adminMapper.selectByExampleSelective(example, result);
+    }
+
+    public Map<String, Object> selectSelective(LitemallAdmin litemallAdmin, Integer page, Integer limit){
+        PageHelper.startPage(page, limit);
+        List<LitemallAdmin> adminList= adminMapper.selectLitemallAdminBySelective(litemallAdmin);
+        PageInfo pageinfo = new PageInfo(adminList);
+        Map<String, Object> data = new HashMap<>();
+        data.put("total", pageinfo.getTotal());
+        data.put("items", adminList);
+        return data;
     }
 
     public int countSelective(String username, Integer page, Integer size, String sort, String order) {
