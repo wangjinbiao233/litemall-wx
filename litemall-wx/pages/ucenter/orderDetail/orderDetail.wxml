@@ -63,6 +63,10 @@
                 <text class="">自取门店:</text>
                 <text class="mobile">{{orderInfo.storeName}}</text>
             </view>
+            <view class="t" wx:if="{{orderInfo.confirmTime != null}}">
+                <text class="">自取时间:</text>
+                <text class="mobile">{{orderInfo.confirmTime}}</text>
+            </view>
         </view>
         <view class="total">
             <view class="t">
