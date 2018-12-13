@@ -143,9 +143,9 @@
   <form bindsubmit='sendCode'>
     <view class="drawer_title">手机验证</view>
     <view class="drawer_content">
-      <input class="input_base" name="verificationCode" placeholder='请输入验证码'></input>
-      <button class='send-btn' bindtap='getVerificationCode' disabled='{{disabled}}' wx:if="{{isGetPhone==0}}">{{time}}</button>
-      <button class="send-btn" bindgetphonenumber="getNumber" open-type="getPhoneNumber" wx:else>获取验证码</button>
+      <input class="input_base" name="verificationCode" placeholder='请输入验证码' type='number'></input>
+      <view class="send-btn {{disabled==false?'send-btn-bg':'send-btn-bg-o'}}" bindtap='getVerificationCode'>{{time}}</view>
+      <!-- <view class="send-btn" bindtap="getNumber" wx:else>获取验证码</view> -->
     </view>
     <view class='drawer_btn_view'>
       <button class="btn_ok" bindtap="powerDrawer" data-statu="close">取消</button>

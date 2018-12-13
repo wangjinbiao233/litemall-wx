@@ -130,7 +130,7 @@ function getDataInfo(that) {
     if (res.errno === 0) {
       console.log(res)
       that.setData({
-        noCashNum: res.data
+        noCashNum: res.data.toFixed(2)
       });
     }
   })
@@ -138,14 +138,14 @@ function getDataInfo(that) {
     console.log(res)
     if (res.errno === 0) {
       that.setData({
-        cashNum: res.data
+        cashNum: res.data.toFixed(2)
       });
     }
   })
   util.request(api.cashDetailNum, { userId: userId }).then(function (res) {
     if (res.errno === 0) {
       that.setData({
-        cashDetailNum: res.data
+        cashDetailNum: res.data.toFixed(2)
       });
     }
   })
