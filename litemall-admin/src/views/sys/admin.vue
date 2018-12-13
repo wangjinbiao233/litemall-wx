@@ -3,7 +3,9 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入用户名称" v-model="listQuery.username">
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入登录名称" v-model="listQuery.username">
+      </el-input>
+      <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入显示名称" v-model="listQuery.adminName">
       </el-input>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查找</el-button>
       <el-button class="filter-item" type="primary" @click="handleCreate" icon="el-icon-edit">添加</el-button>
@@ -15,10 +17,18 @@
       <el-table-column align="center" width="100px" label="用户ID" prop="id" sortable>
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="用户名称" prop="username">
+      <el-table-column align="center" min-width="100px" label="登录名称" prop="username">
       </el-table-column>
 
-      <el-table-column align="center" min-width="100px" label="用户头像" prop="avatar">
+      <el-table-column align="center" min-width="100px" label="显示名称" prop="adminName">
+      </el-table-column>
+
+      <!--<el-table-column align="center" min-width="100px" label="用户头像" prop="avatar">
+      </el-table-column>-->
+      <el-table-column align="center" min-width="100px" label="头像" prop="avatar">
+        <template slot-scope="scope" v-if="scope">
+          <img :src="scope.row.avatar" v-if="scope.row.avatar" style="width: 50px;height: 50px;border-radius: 50%"/>
+        </template>
       </el-table-column>
 
       <el-table-column align="center" label="操作" width="450px" class-name="small-padding fixed-width">
@@ -43,8 +53,12 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <template v-if="!dialogFlag">
         <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
-          <el-form-item label="用户名称" prop="username">
+
+          <el-form-item label="登录名称" prop="username">
             <el-input v-model="dataForm.username"></el-input>
+          </el-form-item>
+          <el-form-item label="显示名称" prop="adminName">
+            <el-input v-model="dataForm.adminName"></el-input>
           </el-form-item>
           <el-form-item label="用户密码" prop="password">
             <el-input type="password" v-model="dataForm.password"  auto-complete="off"></el-input>
@@ -52,21 +66,27 @@
           <el-form-item label="确认密码" prop="checkPassword">
             <el-input type="password" v-model="dataForm.checkPassword" auto-complete="off"></el-input>
           </el-form-item>
-          <!--<el-form-item label="用户头像" prop="avatar">-->
-          <!--<el-input v-model="dataForm.avatar"></el-input>-->
-          <!--<el-upload action="#" list-type="picture" :show-file-list="false" :limit="1" :http-request="uploadAvatar">-->
-          <!--<el-button size="small" type="primary">点击上传</el-button>-->
-          <!--</el-upload>-->
-          <!--</el-form-item>-->
-          <el-form-item label="用户头像" prop="avatar">
-            <el-upload
+          <el-form-item label="用户头像" style="display: block !important; margin-left: 10px">
+            <!--<el-upload
               class="avatar-uploader"
               action="/admin/storage/create"
               :show-file-list="false"
               :data="typeDate"
               :on-success="handleAvatarSuccess"
               :before-upload="beforeAvatarUpload">
-              <img v-if="imageUrl" :src="imageUrl" class="avatar">
+             &lt;!&ndash; <img v-if="imageUrl" :src="imageUrl" class="avatar">&ndash;&gt;
+              <i class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>-->
+            <el-upload
+              class="avatar-uploader"
+              action="/admin/storage/create"
+              :data="typeDate"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload">
+              <template v-if="dataForm.imageUrl" >
+                <img :src="dataForm.imageUrl" class="avatar">
+              </template>
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
@@ -275,6 +295,7 @@
         listQuery: {
           page: 1,
           limit: 20,
+          adminName: undefined,
           username: undefined,
           sort: '+id'
         },
@@ -297,6 +318,7 @@
         multipleSelectionStore: [],
         dataForm: {
           id: undefined,
+          adminName: undefined,
           username: undefined,
           password: undefined,
           checkPassword: undefined,
@@ -317,7 +339,8 @@
           editStore: '编辑门店'
         },
         rules: {
-          username: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
+          adminName: [{ required: true, message: '用户昵称不能为空', trigger: 'blur' }],
+          username: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
           password: [
             { required: true, message: '密码不能为空', trigger: 'blur' },
             { validator: validatePass, trigger: 'blur' }

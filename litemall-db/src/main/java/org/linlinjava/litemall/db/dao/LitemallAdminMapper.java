@@ -129,4 +129,6 @@ public interface LitemallAdminMapper {
      * @project https://github.com/itfsw/mybatis-generator-plugin
      */
     LitemallAdmin selectOneByExampleSelective(@Param("example") LitemallAdminExample example, @Param("selective") LitemallAdmin.Column ... selective);
+
+    List<LitemallAdmin> selectLitemallAdminBySelective(LitemallAdmin litemallAdmin);
 }
