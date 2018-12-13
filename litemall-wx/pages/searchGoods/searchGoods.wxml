@@ -1,7 +1,7 @@
 <view class="container">
   <view class="cate-nav">
       <view class='search-btn-o'>
-        <input placeholder='请输入关键字'  bindinput="bindInput" ></input>
+        <input placeholder='请输入关键字'  bindinput="bindInput" confirm-type="search" bindconfirm='getGoodsList' type='text'></input>
         <icon type='search' size='15' color='#dbdbdb'  bindtap='getGoodsList'></icon>
       </view>
   </view>

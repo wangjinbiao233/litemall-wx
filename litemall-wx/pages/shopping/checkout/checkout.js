@@ -12,10 +12,10 @@ Page({
     checkedCoupon: [],
     couponList: [],
     goodsTotalPrice: 0.00, //商品总价
-    freightPrice: 0.00,    //快递费
-    couponPrice: 0.00,     //优惠券的价格
-    orderTotalPrice: 0.00,  //订单总价
-    actualPrice: 0.00,     //实际需要支付的总价
+    freightPrice: 0.00, //快递费
+    couponPrice: 0.00, //优惠券的价格
+    orderTotalPrice: 0.00, //订单总价
+    actualPrice: 0.00, //实际需要支付的总价
     cartId: 0,
     addressId: 0,
     couponId: 0,
@@ -32,27 +32,38 @@ Page({
     isGetPhone: 0,
     mobile: '',
     code: '',
-    pageFlag:1,
+    pageFlag: 1,
     storeName: [],
     storeId: [],
     storeIndex: 0
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     var that = this
+    var mobile = wx.getStorageSync("userInfo").mobile;
+    that.setData({
+      mobile: mobile
+    })
     // 页面初始化 options为页面跳转所带来的参数
     console.log(wx.getStorageSync('userId'));
-    util.request(api.getUserInfo, { userId: wx.getStorageSync('userId') }, 'POST').then(function (res) {
+    util.request(api.getUserInfo, {
+      userId: wx.getStorageSync('userId')
+    }, 'POST').then(function(res) {
       that.setData({
         money: res.user.money,
         rechargeMoney: res.user.rechargeMoney,
-        pageFlag:options.flag
+        pageFlag: options.flag
       });
     });
     wx.setStorageSync('couponId', 0);
   },
-  getCheckoutInfo: function () {
+  getCheckoutInfo: function() {
     let that = this;
-    util.request(api.CartCheckout, { cartId: that.data.cartId, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(function (res) {
+    util.request(api.CartCheckout, {
+      cartId: that.data.cartId,
+      addressId: that.data.addressId,
+      couponId: that.data.couponId,
+      userId: wx.getStorageSync('userId')
+    }, 'POST').then(function(res) {
       if (res.errno === 0) {
         that.setData({
           checkedGoodsList: res.data.checkedGoodsList,
@@ -90,26 +101,26 @@ Page({
   },
 
   //单选按钮触发事件
-  radioChange: function (e) {
+  radioChange: function(e) {
     this.data.payType = e.detail.value;
   },
   //地址选取和店面自取的单选触发事件
-  radioChoose: function(e){
+  radioChoose: function(e) {
     this.setData({
       'radioFlag': e.detail.value
     });
-    if(e.detail.value == 2){
+    if (e.detail.value == 2) {
       //此处选取店面自取
-      var storeName=[];
-      var storeId=[];
-      var that=this;
+      var storeName = [];
+      var storeId = [];
+      var that = this;
       wx.request({
         url: api.ServiceStore,
         header: {
           "content-type": "application/x-www-form-urlencoded"
         },
         method: 'GET',
-        success: function (res) {
+        success: function(res) {
           var data = res.data
           var stores = data.data.stores;
           console.log(stores);
@@ -119,34 +130,37 @@ Page({
               storeId.push(stores[i].id)
             }
 
-            that.setData({ storeName: storeName, storeId: storeId});
-       
+            that.setData({
+              storeName: storeName,
+              storeId: storeId
+            });
+
           }
 
-          console.log(storeName,storeId);
+          console.log(storeName, storeId);
         }
       })
-    }else{
+    } else {
       var that = this;
       that.setData({
-        storeName:[],
-        storeId:[],
+        storeName: [],
+        storeId: [],
         storeIndex: 0
       })
     }
   },
 
-  storePickerChange:function(e){
+  storePickerChange: function(e) {
     this.setData({
       storeIndex: e.detail.value
     })
   },
 
-  onReady: function () {
+  onReady: function() {
     // 页面渲染完成
 
   },
-  onShow: function () {
+  onShow: function() {
     // 页面显示
     wx.showLoading({
       title: '加载中...',
@@ -179,21 +193,21 @@ Page({
     }
     this.getCheckoutInfo();
   },
-  onHide: function () {
+  onHide: function() {
     // 页面隐藏
 
   },
-  onUnload: function () {
+  onUnload: function() {
     // 页面关闭
 
   },
-  submitOrder: function () {
+  submitOrder: function() {
     var that = this;
     if (this.data.addressId <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 1) {
       util.showErrorToast('请选择收货地址');
       return false;
     }
-    if (this.data.storeId.length <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 2){
+    if (this.data.storeId.length <= 0 && this.data.pageFlag == 1 && this.data.radioFlag == 2) {
       util.showErrorToast('没有门店，不能自取');
       return false;
     }
@@ -203,7 +217,18 @@ Page({
       console.log(wx.getStorageSync('storeid'))
       var radioFlag = parseInt(that.data.radioFlag);
       //storeId: storeId,
-      util.request(api.OrderSubmit, { storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag:that.data.pageFlag,storeIds: that.data.storeId,storeIndex:that.data.storeIndex,addressId: that.data.addressId, couponId: that.data.couponId, payType: that.data.payType, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
+      util.request(api.OrderSubmit, {
+        storeId: storeId,
+        cartId: that.data.cartId,
+        radioFlag: radioFlag,
+        pageFlag: that.data.pageFlag,
+        storeIds: that.data.storeId,
+        storeIndex: that.data.storeIndex,
+        addressId: that.data.addressId,
+        couponId: that.data.couponId,
+        payType: that.data.payType,
+        userId: wx.getStorageSync('userId')
+      }, 'POST').then(res => {
         if (res.errno === 0) {
           const orderId = res.data.orderInfo.id;
 
@@ -244,10 +269,12 @@ Page({
         that.setData({
           isGetPhone: 1
         })
-        setTimeout(function () {
-          that.setData({ showModalStatus: true })
+        setTimeout(function() {
+          that.setData({
+            showModalStatus: true
+          })
         }, 500);
-        return new Promise(function (resolve, reject) {
+        return new Promise(function(resolve, reject) {
           return user.login().then((res) => {
             console.log(res);
             that.setData({
@@ -256,15 +283,17 @@ Page({
           })
         })
       } else {
-        that.setData({ showModalStatus: true });
+        that.setData({
+          showModalStatus: true
+        });
       }
     }
   },
-  powerDrawer: function (e) {
+  powerDrawer: function(e) {
     var currentStatu = e.currentTarget.dataset.statu;
     this.util(currentStatu)
   },
-  util: function (currentStatu) {
+  util: function(currentStatu) {
     /* 动画部分 */
     // 第1步：创建动画实例 
     var animation = wx.createAnimation({
@@ -285,7 +314,7 @@ Page({
     })
 
     // 第5步：设置定时器到指定时候后，执行第二组动画 
-    setTimeout(function () {
+    setTimeout(function() {
       // 执行第二组动画 
       animation.opacity(1).rotateX(0).step();
       // 给数据对象储存的第一组动画，更替为执行完第二组动画的动画对象 
@@ -295,18 +324,16 @@ Page({
 
       //关闭 
       if (currentStatu == "close") {
-        this.setData(
-          {
-            showModalStatus: false
-          }
-        );
+        this.setData({
+          showModalStatus: false
+        });
       }
     }.bind(this), 200)
   },
-  getCode: function () {
+  getCode: function() {
     var that = this;
     var currentTime = that.data.currentTime
-    interval = setInterval(function () {
+    interval = setInterval(function() {
       currentTime--;
       that.setData({
         time: currentTime + '秒'
@@ -321,13 +348,18 @@ Page({
       }
     }, 1000)
   },
-  getVerificationCode: function () {
+  getVerificationCode: function() {
+    if (this.data.disabled == true) {
+      return;
+    }
     this.getCode();
     var that = this
     that.setData({
       disabled: true
     })
-    util.request(api.getVerificationCode, { mobile: that.data.mobile }, 'POST').then(res => {
+    util.request(api.getVerificationCode, {
+      mobile: that.data.mobile
+    }, 'POST').then(res => {
       if (res.errno === 0) {
         this.data.verificationCode = res.data.verificationCode;
       } else {
@@ -335,45 +367,69 @@ Page({
       }
     });
   },
-  getNumber: function (e) {
+  getNumber: function(e) {
     var that = this;
-    var iv = e.detail.iv;
-    var encryptedData = e.detail.encryptedData;
-    var data = {
-      code: this.data.code,
-      iv: e.detail.iv,
-      encryptedData: e.detail.encryptedData
-    };
-    util.request(api.getPhoneNo, data, 'POST').then(res => {
-      console.log(res);
-      if (res.phoneNumber) {
-        that.setData({
-          isGetPhone: 0,
-          mobile: res.phoneNumber
-        })
-        that.getVerificationCode();
-      } else {
-        util.showErrorToast(res.errmsg);
-      }
-    });
+    var mobile = wx.getStorageSync("userInfo").mobile;
+    if (mobile) {
+      that.setData({
+        isGetPhone: 0,
+        mobile: mobile
+      })
+      that.getVerificationCode();
+    } else {
+      util.showErrorToast(res.errmsg);
+    }
+    // var iv = e.detail.iv;
+    // var encryptedData = e.detail.encryptedData;
+    // var data = {
+    //   code: this.data.code,
+    //   iv: e.detail.iv,
+    //   encryptedData: e.detail.encryptedData
+    // };
+    // util.request(api.getPhoneNo, data, 'POST').then(res => {
+    //   console.log(res);
+    //   if (res.phoneNumber) {
+    //     that.setData({
+    //       isGetPhone: 0,
+    //       mobile: res.phoneNumber
+    //     })
+    //     that.getVerificationCode();
+    //   } else {
+    //     util.showErrorToast(res.errmsg);
+    //   }
+    // });
   },
-  sendCode: function (e) {
+  sendCode: function(e) {
     var that = this;
     if (e.detail.value.verificationCode == '') {
       wx.showToast({
         title: '请输入验证码'
       })
     } else {
-      util.request(api.verifyCode, { mobile: that.data.mobile, authCode: e.detail.value.verificationCode }, 'POST').then(function (res) {
+      util.request(api.verifyCode, {
+        mobile: that.data.mobile,
+        authCode: e.detail.value.verificationCode
+      }, 'POST').then(function(res) {
         if (res.errno === 0) {
           var radioFlag = parseInt(that.data.radioFlag);
           var storeId = wx.getStorageSync('storeid');
-          util.request(api.OrderSubmit, { payType: that.data.payType, storeId: storeId, cartId: that.data.cartId, radioFlag: radioFlag, pageFlag: that.data.pageFlag,storeIds: that.data.storeId, storeIndex: that.data.storeIndex, addressId: that.data.addressId, couponId: that.data.couponId, userId: wx.getStorageSync('userId') }, 'POST').then(res => {
+          util.request(api.OrderSubmit, {
+            payType: that.data.payType,
+            storeId: storeId,
+            cartId: that.data.cartId,
+            radioFlag: radioFlag,
+            pageFlag: that.data.pageFlag,
+            storeIds: that.data.storeId,
+            storeIndex: that.data.storeIndex,
+            addressId: that.data.addressId,
+            couponId: that.data.couponId,
+            userId: wx.getStorageSync('userId')
+          }, 'POST').then(res => {
             if (res.errno === 0) {
               const orderId = res.data.orderInfo.id;
               util.request(api.moneyPay, {
                 payType: that.data.payType,
-                orderId: orderId, 
+                orderId: orderId,
                 userId: wx.getStorageSync('userId'),
                 actualPrice: that.data.actualPrice,
                 money: that.data.money
