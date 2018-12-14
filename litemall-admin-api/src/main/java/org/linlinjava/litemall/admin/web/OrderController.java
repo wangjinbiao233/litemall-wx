@@ -266,9 +266,10 @@ public class OrderController {
 						litemallOrderGoodsService.update(litemallOrderGoods);
 					}
 
-					//服务订单中存在已付款未发货的，更新总订单状态为部分发货，否则为已发货
+					//服务订单中存在已付款未发货或者已发货状态的，更新总订单状态为部分收货，否则为已发货
 					if(litemallOrderGoods.getFlag().equals("2")) {
 						if (litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PAY) ||
+								litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_SHIP) ||
 								litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PART_SHIP)) {
 							isShip = false;
 						}
@@ -278,13 +279,13 @@ public class OrderController {
 
 			//订单状态
 			if (isShip == true) {
-				// 已发货
+				// 已收货
 				if(!zmallOrder.getOrderStatus().equals(OrderUtil.STATUS_PART_CONFIRM)) {
 					order.setOrderStatus(OrderUtil.STATUS_CONFIRM);
 				}
 			} else {
-				// 部分发货
-				order.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
+				// 部分收货
+				order.setOrderStatus(OrderUtil.STATUS_PART_CONFIRM);
 			}
 			order.setShipStartTime(LocalDateTime.now());
 			order.setConfirmTime(LocalDateTime.now());
