@@ -439,16 +439,18 @@ public class WxAuthController {
         Map<Object, Object> result = new HashMap<Object, Object>();
         if(user != null) {
         	try {
+        	    boolean status = false;
         		String accessToken = wxService.getAccessToken();
-        		String qrcodeUrl = weixinUtil.getQRcode(accessToken, userId.toString());
-        		if(StringUtils.isNotBlank(qrcodeUrl)) {
-        			user.setDistributionPartner(true);
-        			user.setQrcodeUrl(qrcodeUrl);
-        			userService.update(user);
-        			result.put("isDistributionPartner", true);
-        		} else {
-        			result.put("isDistributionPartner", false);
-        		}
+        		if(StringUtils.isNotBlank(accessToken)){
+                    String qrcodeUrl = weixinUtil.getQRcode(accessToken, user.getId().toString());
+                    if(StringUtils.isNotBlank(qrcodeUrl)) {
+                        user.setDistributionPartner(true);
+                        user.setQrcodeUrl(qrcodeUrl);
+                        userService.update(user);
+                        status = true;
+                    }
+                }
+                result.put("isDistributionPartner", status);
         		result.put("userInfo", user);
         	} catch (WxErrorException e) {
         		e.printStackTrace();

@@ -307,7 +307,7 @@ public class WxOrderController {
 
 		List<Map<String, Object>> orderGoodsVoList = new ArrayList<>(orderGoodsList.size());
 		for (LitemallOrderGoods orderGoods : orderGoodsList) {
-			if (!flag.equals(0) && orderGoods.getFlag().equals(flag)) {
+			/*if (!flag.equals(0) && orderGoods.getFlag().equals(flag)) {*/
 
 				Map<String, Object> orderGoodsVo = new HashMap<>();
 				orderGoodsVo.put("id", orderGoods.getId());
@@ -321,7 +321,8 @@ public class WxOrderController {
 				orderGoodsVo.put("retailPrice",orderGoods.getRetailPrice());
 				orderGoodsVo.put("goodsSpecifitionValues", orderGoods.getGoodsSpecificationValues());
 				orderGoodsVoList.add(orderGoodsVo);
-			}
+			/*}*/
+
 		}
 		LitemallReserve litemallReserve = null;
 		if(reserveId != null) {

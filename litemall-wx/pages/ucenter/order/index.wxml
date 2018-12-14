@@ -21,10 +21,10 @@
       <view bindtap="changeTab" data-sort='4' data-flag='0' class="order-sort-box {{sort === 4? 'active' : ''}}">
         <view class="order-sort-text">待评价</view>
       </view>
-      <view bindtap="changeTab" data-sort='5' data-flag='1' class="order-sort-box {{sort === 5? 'active' : ''}}">
+      <view bindtap="changeTab" data-sort='5' data-flag='0' class="order-sort-box {{sort === 5? 'active' : ''}}">
         <view class="order-sort-text">已完成</view>
       </view>
-         <view bindtap="changeTab" data-sort='6' data-flag='1' class="order-sort-box {{sort === 6? 'active' : ''}}">
+         <view bindtap="changeTab" data-sort='6' data-flag='0' class="order-sort-box {{sort === 6? 'active' : ''}}">
         <view class="order-sort-text">已退款</view>
       </view>
     </scroll-view>
@@ -301,7 +301,7 @@
       </view>
     </view>
 
-    <view wx:if="{{sort === 5  && flag == 1}}" class="order-box">
+    <view wx:if="{{sort === 5  && flag == 0}}" class="order-box">
       <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
         <view class="order-serial">
           <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
@@ -342,7 +342,7 @@
       </view>
     </view>
 
-    <view wx:if="{{sort === 6  && flag == 1}}" class="order-box">
+    <view wx:if="{{sort === 6  && flag == 0}}" class="order-box">
       <view wx:for="{{orderList}}" wx:for-item="order" wx:for-index="idx">
         <view class="order-serial">
           <text class="order-serial-text">订单编号：{{order.orderSn}}</text>
