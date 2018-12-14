@@ -1077,40 +1077,42 @@ public class WxOrderController {
 			result.put("tradeStatus", "SUCCESS");
 			return ResponseUtil.ok(result);
 		}
-		
-		WxPayOrderQueryResult wxPayOrderQueryResult = null;
-		try {
-			wxPayOrderQueryResult = wxService.queryOrder(null, order.getOrderSn());
-		} catch (WxPayException e) {
-			e.printStackTrace();
-			return ResponseUtil.fail(403, "查询失败");
-		}
-	
-		if (wxPayOrderQueryResult.getTradeState().equals("SUCCESS")) {
-			// 支付成功,且订单处于未支付状态
-			if (order.getOrderStatus().intValue() == 101 && order.getPayType() == 1) {
-				LitemallOrder updateOrder = new LitemallOrder();
-				updateOrder.setId(order.getId());
-				updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);
 
-				List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(orderId);
-
-				// 商品订单和服务订单标志
-				for (LitemallOrderGoods litemallOrderGoods : litemallOrderGoodsList) {
-						litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
-						orderGoodsService.update(litemallOrderGoods);
-				}
-
-				// 微信的订单号
-				updateOrder.setPayId(wxPayOrderQueryResult.getTransactionId());
-				orderService.update(updateOrder);
+		if(order.getPayType() == 1){
+			WxPayOrderQueryResult wxPayOrderQueryResult = null;
+			try {
+				wxPayOrderQueryResult = wxService.queryOrder(null, order.getOrderSn());
+			} catch (WxPayException e) {
+				e.printStackTrace();
+				return ResponseUtil.fail(403, "查询失败");
 			}
 
-			result.put("tradeStatus", "SUCCESS");
-			return ResponseUtil.ok(result);
+			if (wxPayOrderQueryResult.getTradeState().equals("SUCCESS")) {
+				// 支付成功,且订单处于未支付状态
+				if (order.getOrderStatus().intValue() == 101 && order.getPayType() == 1) {
+					LitemallOrder updateOrder = new LitemallOrder();
+					updateOrder.setId(order.getId());
+					updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);
+
+					List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(orderId);
+
+					// 商品订单和服务订单标志
+					for (LitemallOrderGoods litemallOrderGoods : litemallOrderGoodsList) {
+						litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
+						orderGoodsService.update(litemallOrderGoods);
+					}
+
+					// 微信的订单号
+					updateOrder.setPayId(wxPayOrderQueryResult.getTransactionId());
+					orderService.update(updateOrder);
+				}
+
+				result.put("tradeStatus", "SUCCESS");
+				return ResponseUtil.ok(result);
+			}
+			result.put("tradeStatus", wxPayOrderQueryResult.getTradeState());
+			result.put("tradeMsg", wxPayOrderQueryResult.getErrCodeDes());
 		}
-		result.put("tradeStatus", wxPayOrderQueryResult.getTradeState());
-		result.put("tradeMsg", wxPayOrderQueryResult.getErrCodeDes());
 		return ResponseUtil.ok(result);
 	}
 
