@@ -16,9 +16,21 @@ Page({
     picPage: 1,
     size: 20
   },
-  getCommentCount: function () {
+  preview: function(e) {
+    console.log(e);
+    var index = e.currentTarget.dataset.index;
+    var urls = e.currentTarget.dataset.urls;
+    wx.previewImage({
+      current: urls[index],
+      urls: urls
+    })
+  },
+  getCommentCount: function() {
     let that = this;
-    util.request(api.CommentCount, { valueId: that.data.valueId, typeId: that.data.typeId}).then(function (res) {
+    util.request(api.CommentCount, {
+      valueId: that.data.valueId,
+      typeId: that.data.typeId
+    }).then(function(res) {
       if (res.errno === 0) {
         that.setData({
           allCount: res.data.allCount,
@@ -27,15 +39,15 @@ Page({
       }
     });
   },
-  getCommentList: function(){
+  getCommentList: function() {
     let that = this;
-    util.request(api.CommentList, { 
-      valueId: that.data.valueId, 
-      typeId: that.data.typeId, 
+    util.request(api.CommentList, {
+      valueId: that.data.valueId,
+      typeId: that.data.typeId,
       size: that.data.size,
       page: (that.data.showType == 0 ? that.data.allPage : that.data.picPage),
-      showType: that.data.showType 
-      }).then(function (res) {
+      showType: that.data.showType
+    }).then(function(res) {
       if (res.errno === 0) {
 
         if (that.data.showType == 0) {
@@ -54,7 +66,7 @@ Page({
       }
     });
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.setData({
       typeId: options.typeId,
@@ -63,23 +75,23 @@ Page({
     this.getCommentCount();
     this.getCommentList();
   },
-  onReady: function () {
+  onReady: function() {
     // 页面渲染完成
 
   },
-  onShow: function () {
+  onShow: function() {
     // 页面显示
 
   },
-  onHide: function () {
+  onHide: function() {
     // 页面隐藏
 
   },
-  onUnload: function () {
+  onUnload: function() {
     // 页面关闭
 
   },
-  switchTab: function () {
+  switchTab: function() {
     let that = this;
     if (that.data.showType == 0) {
       that.setData({
@@ -98,16 +110,16 @@ Page({
     }
     this.getCommentList();
   },
-  onReachBottom: function(){
+  onReachBottom: function() {
     console.log('onPullDownRefresh');
-    if ( this.data.showType == 0) {
+    if (this.data.showType == 0) {
 
       if (this.data.allCount / this.data.size < this.data.allPage) {
         return false;
       }
 
       this.setData({
-        'allPage' : this.data.allPage + 1
+        'allPage': this.data.allPage + 1
       });
     } else {
       if (this.data.hasPicCount / this.data.size < this.data.picPage) {
