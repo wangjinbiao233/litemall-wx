@@ -109,7 +109,7 @@ page{
 
 
 .content{
-  margin-top: 24rpx;
+  margin-top: 2rpx;
   margin-left: 20rpx;
   display: flex;
   margin-right: 20rpx;
