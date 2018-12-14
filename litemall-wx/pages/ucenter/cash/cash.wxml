@@ -12,7 +12,7 @@
       <view class='number' style='color:#FF0000' wx:elif="{{item.operation==6 }}">{{item.profit_money}}</view>
       <view class='number' style='color:#74d8aa' wx:else>+{{item.profit_money}}</view>
     </view>
-    <view class='order' wx:if="{{item.operation==1 }}">订单编号：{{item.order_id}}</view>
+    <view class='order' wx:if="{{item.operation==1 }}">订单编号：{{item.order_sn}}</view>
     <view class='cash' style='margin-top:10rpx;'>
       <view class='date'>{{item.operation_time}}</view>
       <view class='recommend' >{{item.username}}</view>

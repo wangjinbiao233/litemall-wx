@@ -294,6 +294,7 @@ public class WxOrderController {
 		orderVo.put("orderStatusText", OrderUtil.orderStatusText(order));
 		orderVo.put("handleOption", OrderUtil.detailBuild(order,orderGoodsList));
 		orderVo.put("getStoreId",order.getGetStoreId());
+		orderVo.put("confirmTime",order.getConfirmTimeDisp());
 		if(order.getGetStoreId() != null && order.getGetStoreId() != ""){
 			LitemallStore store=litemallStoreService.selectStoreById(order.getGetStoreId());
 			orderVo.put("storeName",store.getStoreName());

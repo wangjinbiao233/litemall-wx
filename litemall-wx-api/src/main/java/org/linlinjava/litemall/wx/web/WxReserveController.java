@@ -161,7 +161,9 @@ public class WxReserveController {
 				// 订单中还有未发货或者未预约的订单
 				litemallOrder.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
 
-			} else {
+			} else if(orderStatusList.contains(OrderUtil.STATUS_CONFIRM) && litemallOrderGoods.getOrderStatus().equals( OrderUtil.STATUS_SHIP)){
+				litemallOrder.setOrderStatus(OrderUtil.STATUS_PART_CONFIRM);
+			}else {
 				litemallOrder.setOrderStatus(OrderUtil.STATUS_SHIP);
 			}
 			litemallOrderService.update(litemallOrder);

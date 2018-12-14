@@ -26,6 +26,12 @@
       <el-table-column align="center" min-width="100px" label="名称" prop="discountName">
       </el-table-column>
 
+      <el-table-column align="center" min-width="100px" label="优惠金额" prop="discountsPrice">
+      </el-table-column>
+
+      <el-table-column align="center" min-width="100px" label="限制金额" prop="limitPrice">
+      </el-table-column>
+
       <el-table-column align="center" min-width="100px" label="优惠券类别" prop="discountTypeStr">
       </el-table-column>
 
@@ -107,20 +113,20 @@
           <el-input v-model="dataForm.discountName" readonly></el-input>
         </el-form-item>
         <el-form-item label="优惠券Key" prop="">
-          <el-input v-model="dataForm.key" readonly></el-input>
+          <el-input disabled="true" v-model="dataForm.key" readonly></el-input>
         </el-form-item>
         <el-form-item label="优惠金额" prop="" >
-          <el-input-number v-model="dataForm.discountsPrice" controls-position="right" :min="0" :max="10000"></el-input-number>
+          <el-input-number disabled="true" v-model="dataForm.discountsPrice" controls-position="right" :min="0" :max="10000"></el-input-number>
         </el-form-item>
         <el-form-item label="限制金额" prop="">
-          <el-input-number v-model="dataForm.limitPrice" controls-position="right" :min="0" :max="10000"></el-input-number>
+          <el-input-number disabled="true" v-model="dataForm.limitPrice" controls-position="right" :min="0" :max="10000"></el-input-number>
         </el-form-item>
         <el-form-item label="开始时间" prop="">
-          <el-date-picker v-model="dataForm.startTimeStr" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+          <el-date-picker disabled="true" v-model="dataForm.startTimeStr" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
         <el-form-item label="结束时间" prop="">
-          <el-date-picker v-model="dataForm.endTimeStr" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
+          <el-date-picker disabled="true" v-model="dataForm.endTimeStr" type="date" placeholder="选择日期" value-format="yyyy-MM-dd">
           </el-date-picker>
         </el-form-item>
       </el-form>

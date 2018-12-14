@@ -268,7 +268,8 @@ public class OrderController {
 
 					//服务订单中存在已付款未发货的，更新总订单状态为部分发货，否则为已发货
 					if(litemallOrderGoods.getFlag().equals("2")) {
-						if (litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PAY)) {
+						if (litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PAY) ||
+								litemallOrderGoods.getOrderStatus().equals(OrderUtil.STATUS_PART_SHIP)) {
 							isShip = false;
 						}
 					}

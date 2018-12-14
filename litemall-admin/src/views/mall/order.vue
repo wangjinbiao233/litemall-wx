@@ -36,6 +36,10 @@
               <span>{{ props.row.storeName }}</span>
             </el-form-item>
 
+            <el-form-item label="自取时间" v-show="props.row.getStoreId != null" >
+              <span>{{ props.row.confirmTimeDisp }}</span>
+            </el-form-item>
+
             <el-form-item label="收货人名称" v-show="props.row.getStoreId == null" >
               <span>{{ props.row.consignee }}</span>
             </el-form-item>

@@ -63,7 +63,7 @@ public class AdminController {
 
     @GetMapping("/list")
     public Object list(@LoginAdmin Integer adminId,
-                       String username,
+                       LitemallAdmin litemallAdmin,
                        @RequestParam(value = "page", defaultValue = "1") Integer page,
                        @RequestParam(value = "limit", defaultValue = "10") Integer limit,
                        String sort, String order){
@@ -71,11 +71,10 @@ public class AdminController {
             return ResponseUtil.unlogin();
         }
 
-        List<LitemallAdmin> adminList = adminService.querySelective(username, page, limit, sort, order);
-        int total = adminService.countSelective(username, page, limit, sort, order);
-        Map<String, Object> data = new HashMap<>();
-        data.put("total", total);
-        data.put("items", adminList);
+        //List<LitemallAdmin> adminList = adminService.querySelective(username, page, limit, sort, order);
+        //int total = adminService.countSelective(litemallAdmin.getUsername(), page, limit, sort, order);
+        Map<String, Object> data = adminService.selectSelective(litemallAdmin,page,limit);
+
 
         return ResponseUtil.ok(data);
     }
