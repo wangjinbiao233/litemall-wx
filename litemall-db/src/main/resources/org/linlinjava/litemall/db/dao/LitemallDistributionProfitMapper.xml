@@ -217,6 +217,7 @@
           u.id,
           u.username,
           u.avatar,
+          e.order_sn,
           e.profit_money , /* 收益 */
           e.order_id    AS order_count, /* 下级消费订单数*/
           DATE_FORMAT(gi.add_time, "%Y-%m-%d %H:%i:%S") AS add_time,/* 下单时间 */
