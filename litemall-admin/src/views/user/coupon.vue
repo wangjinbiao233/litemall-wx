@@ -140,11 +140,11 @@
 </template>
 
 <script>
-  import { couponList ,CreateCoupon , updateCoupon , getDictionaryTypeList } from '@/api/coupon'
-  import waves from '@/directive/waves' // 水波纹指令
-  import axios from 'axios'
+  import { couponList, CreateCoupon, updateCoupon, getDictionaryTypeList } from '@/api/coupon'
+  import waves from '@/directive/waves'
+  import { createStorage, deleteStorage } from '../../api/storage' // 水波纹指令
 
-  export default {
+export default {
     name: 'Storage',
     directives: {
       waves
@@ -154,7 +154,7 @@
         list: null,
         total: null,
         listLoading: true,
-        isDisable:false,
+        isDisable: false,
         listQuery: {
           page: 1,
           limit: 20,
@@ -178,8 +178,8 @@
         updateDialogVisible: false,
         rules: {
           name: [{ required: true, message: '对象名称不能为空', trigger: 'blur' }],
-          discountsPrice: [{ required: true,type: 'number', message: '年龄必须为数字值' }],
-          limitPrice: [{ required: true,type: 'number', message: '年龄必须为数字值' }]
+          discountsPrice: [{ required: true, type: 'number', message: '金额必须为数字值' }],
+          limitPrice: [{ required: true, type: 'number', message: '金额必须为数字值' }]
         },
         downloadLoading: false,
         couponsTypeList: undefined
@@ -190,20 +190,20 @@
       this.getCouponsTypeList()
     },
     methods: {
-      getList() {
+      getList: function() {
         this.listLoading = true
         couponList(this.listQuery).then(response => {
           this.list = response.data.data.items
-        this.total = response.data.data.total
-        this.listLoading = false
-      }).catch(() => {
+          this.total = response.data.data.total
+          this.listLoading = false
+        }).catch(() => {
           this.list = []
-        this.total = 0
-        this.listLoading = false
-      })
+          this.total = 0
+          this.listLoading = false
+        })
       },
 
-      getCouponsTypeList(){
+      getCouponsTypeList() {
         getDictionaryTypeList({
           groupCode: 'coupons_type'
         }).then(response => {
@@ -238,9 +238,9 @@
         }
       },
       handleCreate() {
-        this.resetForm();
+        this.resetForm()
         this.listQuery.page = 1
-        this.getList();
+        this.getList()
         this.createDialogVisible = true
       },
       handleUpload(item) {
@@ -248,94 +248,100 @@
         formData.append('file', item.file)
         createStorage(formData).then(response => {
           this.list.unshift(response.data.data)
-        this.createDialogVisible = false
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        })
-      }).catch(() => {
+          this.createDialogVisible = false
+          this.$notify({
+            title: '成功',
+            message: '创建成功',
+            type: 'success',
+            duration: 2000
+          })
+        }).catch(() => {
           this.$message.error('失败')
-      })
+        })
       },
-      //修改
+      // 修改
       handleUpdate(row) {
         this.dataForm = Object.assign({}, row)
         this.updateDialogVisible = true
         this.$nextTick(() => {
           this.$refs['dataForm'].clearValidate()
-      })
+        })
       },
-      //修改保存
+      // 修改保存
       updateData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-            if(this.dataForm.endTimeStr < this.dataForm.startTimeStr){
+            if (this.dataForm.endTimeStr < this.dataForm.startTimeStr) {
               this.$message.error('结束时间不能小于开始时间')
-              return;
+              return
             }
-
+            if (this.dataForm.limitPrice < this.dataForm.discountsPrice) {
+              this.$message.error('限制金额不能小于优惠金额')
+              return
+            }
             updateCoupon(this.dataForm).then(() => {
               for (const v of this.list) {
-              if (v.id === this.dataForm.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.dataForm)
-                break
+                if (v.id === this.dataForm.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.dataForm)
+                  break
+                }
               }
-            }
-            //重新查询list 开始======
-            this.getList()
-            //重新查询list 结束======
-            this.updateDialogVisible = false
-            this.$notify({
-              title: '成功',
-              message: '更新成功',
-              type: 'success',
-              duration: 2000
+              // 重新查询list 开始======
+              this.getList()
+              // 重新查询list 结束======
+              this.updateDialogVisible = false
+              this.$notify({
+                title: '成功',
+                message: '更新成功',
+                type: 'success',
+                duration: 2000
+              })
             })
-          })
           }
         })
       },
       createData() {
         this.isDisable = true
-           setTimeout(() => {
-               this.isDisable = false
-           }, 1000)
+        setTimeout(() => {
+          this.isDisable = false
+        }, 1000)
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
-
-            if(this.dataForm.endTimeStr < this.dataForm.startTimeStr){
+            if (this.dataForm.limitPrice < this.dataForm.discountsPrice) {
+              this.$message.error('限制金额不能小于优惠金额')
+              return
+            }
+            if (this.dataForm.endTimeStr < this.dataForm.startTimeStr) {
               this.$message.error('结束时间不能小于开始时间')
-              return;
+              return
             }
             CreateCoupon(this.dataForm).then(response => {
-              //this.list.unshift(response.data.data)
+              // this.list.unshift(response.data.data)
               this.createDialogVisible = false
-            this.$notify({
-              title: '成功',
-              message: '创建成功',
-              type: 'success',
-              duration: 2000
+              this.$notify({
+                title: '成功',
+                message: '创建成功',
+                type: 'success',
+                duration: 2000
+              })
             })
-          })
           }
         })
       },
       handleDelete(row) {
         deleteStorage({
-          id:row.id
+          id: row.id
         }).then(response => {
           this.$notify({
-          title: '成功',
-          message: '删除成功',
-          type: 'success',
-          duration: 2000
+            title: '成功',
+            message: '删除成功',
+            type: 'success',
+            duration: 2000
+          })
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
         })
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      })
       },
       handleDownload() {
         this.downloadLoading = true
@@ -343,16 +349,15 @@
           const tHeader = ['ID', '对象KEY', '对象名称', '对象类型', '对象大小', '访问链接']
           const filterVal = ['id', 'key', 'oldName', 'type', 'size', 'url']
           excel.export_json_to_excel2(tHeader, this.list, filterVal, '对象存储信息')
-        this.downloadLoading = false
-      })
+          this.downloadLoading = false
+        })
       },
 
-      downloadImg(row){
-        //alert(process.env.BASE_API)
-        let baseurl =  process.env.BASE_API
-        let url = baseurl+'/discount/downloadCodeImg?id=&keys='+row.key;
+      downloadImg(row) {
+        // alert(process.env.BASE_API)
+        const baseurl = process.env.BASE_API
+        const url = baseurl + '/discount/downloadCodeImg?id=&keys=' + row.key
         window.location.href = url
-
       }
     }
   }
