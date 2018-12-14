@@ -28,6 +28,8 @@ import java.util.Random;
 @Service
 public class WeixinUtil {
 	private static Logger log = LoggerFactory.getLogger(WeixinUtil.class);
+    //创建静态map缓存
+    private static Map<String,AccessToken> weixinCacheToken = new HashMap<String, AccessToken>();
 
 	@Autowired
 	private StorageService storageService;
@@ -213,28 +215,60 @@ public class WeixinUtil {
 	 * @return
 	 */
 	public static AccessToken getAccessToken() {
-		AccessToken accessToken = null;
-		String requestUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential"
-				+"&appid="+WeixinConfig.WX_AppId
-				+"&secret="+WeixinConfig.WX_Secret;
-			JSONObject jsonObject = httpRequest(requestUrl, "GET", null);  //调用通用的https请求方法
-			// 如果请求成功
-			if (null != jsonObject) {
-				try {
-					if(jsonObject.containsKey("access_token") && jsonObject.containsKey("expires_in")){
-						accessToken = new AccessToken();
-						accessToken.setToken(jsonObject.getString("access_token"));
-						accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
-						accessToken.setTime(new Date().getTime());
-					} else
-						accessToken = null;
-				} catch (JSONException e) {
-					accessToken = null;
-					// 获取token失败
-					log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
-				}
-			}
-		return accessToken;
+        AccessToken accessToken = weixinCacheToken.get("token");
+        String requestUrl = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential"
+                +"&appid="+WeixinConfig.WX_AppId
+                +"&secret="+WeixinConfig.WX_Secret;
+        if(accessToken != null) {
+            long time = accessToken.getTime();
+            int expiresIn = accessToken.getExpiresIn();
+            long millions = new Long(expiresIn).longValue()*1000;
+            long newDate = new Date().getTime();
+            long rt = newDate - time;//获取当前时间跟存入时间的差值
+            if(rt > millions){  //判断时间是否已经过期  如果过期则重新请求， 否则不做处理
+                JSONObject jsonObject = httpRequest(requestUrl, "GET", null);  //调用通用的https请求方法
+                // 如果请求成功
+                if (null != jsonObject) {
+                    try {
+                        if(jsonObject.containsKey("access_token") && jsonObject.containsKey("expires_in")){
+                            weixinCacheToken.remove("token");
+                            accessToken = new AccessToken();
+                            accessToken.setToken(jsonObject.getString("access_token"));
+                            accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
+                            accessToken.setTime(new Date().getTime());
+                            weixinCacheToken.put("token", accessToken);
+                        } else
+                            accessToken = null;
+                    } catch (JSONException e) {
+                        accessToken = null;
+                        // 获取token失败
+                        //log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+                        log.error("获取taken失败");
+                    }
+                }
+            }
+        } else {
+            JSONObject jsonObject = httpRequest(requestUrl, "GET", null);  //调用通用的https请求方法
+            // 如果请求成功
+            if (null != jsonObject) {
+                try {
+                    if(jsonObject.containsKey("access_token") && jsonObject.containsKey("expires_in")){
+                        accessToken = new AccessToken();
+                        accessToken.setToken(jsonObject.getString("access_token"));
+                        accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
+                        accessToken.setTime(new Date().getTime());
+                        weixinCacheToken.put("token", accessToken);
+                    } else
+                        accessToken = null;
+                } catch (JSONException e) {
+                    accessToken = null;
+                    // 获取token失败
+                    //log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+                    log.error("获取taken失败");
+                }
+            }
+        }
+        return accessToken;
 	}
 
 	/**
