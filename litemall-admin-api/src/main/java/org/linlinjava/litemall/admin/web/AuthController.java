@@ -53,19 +53,22 @@ public class AuthController {
         System.out.println("------------------------ browserEquipment =="+browserEquipment);
 
         if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
-            return ResponseUtil.badArgument();
+            //return ResponseUtil.badArgument();
+            return ResponseUtil.fail(403, "请输入正确的用户名和密码");
         }
 
         List<LitemallAdmin> adminList = adminService.findAdmin(username);
         Assert.state(adminList.size() < 2, "同一个用户名存在两个账户");
         if(adminList.size() == 0){
-            return ResponseUtil.badArgumentValue();
+            //return ResponseUtil.badArgumentValue();
+            return ResponseUtil.fail(403, "用户名或密码错误，请重新输入");
         }
         LitemallAdmin admin = adminList.get(0);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if(!encoder.matches(password, admin.getPassword())){
-            return ResponseUtil.fail(403, "账号密码不对");
+            //return ResponseUtil.fail(403, "账号密码不对");
+            return ResponseUtil.fail(403, "用户名或密码错误，请重新输入");
         }
 
         Integer adminId = admin.getId();

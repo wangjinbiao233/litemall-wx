@@ -89,7 +89,26 @@ export default {
     },
     handleLogin() {
       var retrMp = browserEquipmentCheck();
+      var that = this;
       this.$refs.loginForm.validate(valid => {
+        if(!valid){
+          that.$confirm('请输入正确的用户名和密码', '请输入正确的用户名和密码', {
+            confirmButtonText: '确定',
+            showCancelButton:false,
+            type: 'warning'
+          }).then(() => {
+
+          }).catch(() => {
+
+          });
+
+          /*that.$notify({
+            title: '请输入正确的用户名和密码',
+            message: '请输入正确的用户名和密码',
+            type: 'warning',
+            duration: 2000
+          })*/
+        }
         if (valid && !this.loading) {
           this.loading = true
           this.loginForm.browserEquipment = retrMp
