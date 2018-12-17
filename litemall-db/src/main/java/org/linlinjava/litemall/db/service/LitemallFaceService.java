@@ -63,7 +63,7 @@ public class LitemallFaceService {
 		 user.setMaxSkintypeId(compers(compar,false));
 		 
 		 user.setUserId(userId);
-		 user.setCreatetime(LocalDateTime.now());
+		 user.setCreatetime(new Date());
 		 user.setIsdelete(0);
 		 faceUserdataMapper.insert(user);
 		return user.getId();
@@ -131,7 +131,7 @@ public class LitemallFaceService {
 	
 	public  Integer saveFiledata(LitemallFaceUserdata userdata){
 		userdata.setIsdelete(1);
-		userdata.setCreatetime(LocalDateTime.now());
+		userdata.setCreatetime(new Date());
 		faceUserdataMapper.insert(userdata);
 		
 		return userdata.getId();
