@@ -1,5 +1,7 @@
 package org.linlinjava.litemall.db.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,7 +63,7 @@ public class LitemallFaceService {
 		 user.setMaxSkintypeId(compers(compar,false));
 		 
 		 user.setUserId(userId);
-		 user.setCreatetime(new Date());
+		 user.setCreatetime(LocalDateTime.now());
 		 user.setIsdelete(0);
 		 faceUserdataMapper.insert(user);
 		return user.getId();
@@ -129,7 +131,7 @@ public class LitemallFaceService {
 	
 	public  Integer saveFiledata(LitemallFaceUserdata userdata){
 		userdata.setIsdelete(1);
-		userdata.setCreatetime(new Date());
+		userdata.setCreatetime(LocalDateTime.now());
 		faceUserdataMapper.insert(userdata);
 		
 		return userdata.getId();

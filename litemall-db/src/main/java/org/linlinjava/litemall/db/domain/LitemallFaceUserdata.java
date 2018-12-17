@@ -1,5 +1,7 @@
 package org.linlinjava.litemall.db.domain;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class LitemallFaceUserdata {
@@ -25,7 +27,7 @@ public class LitemallFaceUserdata {
 
     private Integer isdelete;
 
-    private Date createtime;
+    private LocalDateTime createtime;
     
     private String faildata;
 
@@ -148,11 +150,11 @@ public class LitemallFaceUserdata {
         this.isdelete = isdelete;
     }
 
-    public Date getCreatetime() {
+    public LocalDateTime getCreatetime() {
         return createtime;
     }
 
-    public void setCreatetime(Date createtime) {
+    public void setCreatetime(LocalDateTime createtime) {
         this.createtime = createtime;
     }
 
