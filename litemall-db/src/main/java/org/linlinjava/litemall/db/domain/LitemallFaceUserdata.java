@@ -1,5 +1,9 @@
 package org.linlinjava.litemall.db.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class LitemallFaceUserdata {
@@ -148,6 +152,7 @@ public class LitemallFaceUserdata {
         this.isdelete = isdelete;
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     public Date getCreatetime() {
         return createtime;
     }
