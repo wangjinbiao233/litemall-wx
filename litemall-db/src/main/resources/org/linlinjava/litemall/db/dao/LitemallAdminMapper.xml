@@ -451,6 +451,7 @@
     <include refid="Base_Column_List" />
      from litemall_admin la
      where 1=1
+     and la.deleted = 0
     <if test="adminName != null and adminName != '' ">
       and la.admin_name like CONCAT('%',#{adminName,jdbcType=VARCHAR},'%')
     </if>
