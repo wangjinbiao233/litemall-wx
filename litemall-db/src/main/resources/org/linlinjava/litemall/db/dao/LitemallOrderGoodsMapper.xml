@@ -722,8 +722,9 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
+            lo.deleted = 0
             <if test="storeId != null">
-                ls.id=#{storeId}
+                and ls.id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
@@ -760,8 +761,9 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
+            lo.deleted = 0
             <if test="storeId != null">
-                ls.id=#{storeId}
+                and ls.id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
@@ -809,6 +811,7 @@
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         LEFT JOIN litemall_admin la ON la.id=lr.doctor_id
         WHERE lr.reserve_status=1
+        and lo.deleted = 0
         <if test="storeId != null">
             and ls.id=#{storeId}
         </if>
@@ -847,6 +850,7 @@
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         LEFT JOIN litemall_admin la ON la.id=lr.doctor_id
         WHERE lr.reserve_status=1
+        and lo.deleted = 0
         <if test="storeId != null">
             and ls.id=#{storeId}
         </if>
@@ -907,6 +911,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         <where>
             1=1
+            and lo.deleted = 0
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -1010,6 +1015,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         <where>
             1=1
+            and lo.deleted = 0
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>

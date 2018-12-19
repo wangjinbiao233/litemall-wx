@@ -157,6 +157,7 @@
     t1.deleted,t2.username as "username", t2.member_id as "memberId"
     from litemall_order t1 left join litemall_user t2 on t1.user_id = t2.id
     where 1= 1
+    and t1.deleted = 0
 
     <if test="userId != null">
       and t1.user_id = #{userId,jdbcType=INTEGER}
@@ -180,6 +181,7 @@
     COUNT(t1.id)
     FROM litemall_order t1  LEFT JOIN litemall_user t2  ON t1.user_id = t2.id
     WHERE 1 = 1
+    and t1.deleted = 0
     <if test="orderSn != null and orderSn != 'undefined' and  orderSn != '' ">
       and t1.order_sn =  ${orderSn}
     </if>
