@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.admin.annotation.LoginAdmin;
@@ -38,6 +39,8 @@ public class DistributionApplyController {
 	
 	@Autowired
 	private LitemallDictionaryService litemallDictionaryService;
+	@Autowired
+	private WeixinUtil weixinUtil;
 
 	
 	 @RequestMapping(value = "/distributionList", method = RequestMethod.POST)  
@@ -69,7 +72,14 @@ public class DistributionApplyController {
 	        litemallDistributionApplyService.update(litemallDistributionApply);
 	        
 	        LitemallUser user = userService.findById(litemallDistributionApply.getCreateUserId());
-	        if(litemallDistributionApply.getAuditStatus() == 1) {
+	        if(litemallDistributionApply.getAuditStatus() == 1 && user != null) {
+				AccessToken token = weixinUtil.getAccessToken();
+				if(token != null){
+					String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
+					if (StringUtils.isNotBlank(qrcodeUrl)) {
+						user.setQrcodeUrl(qrcodeUrl);
+					}
+				}
 	        	user.setDistributionPartner(true);
   				userService.update(user);
 	        }
