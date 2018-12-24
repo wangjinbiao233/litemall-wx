@@ -64,7 +64,7 @@ public class FileSystemStorageService implements StorageService {
         String newFileName = key+"."+fileSuffix[fileSuffix.length-1];
 
         try {
-
+            int size = inputStream.available();
             //创建目录
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             String ymd = sdf.format(new Date());
@@ -79,7 +79,7 @@ public class FileSystemStorageService implements StorageService {
 
             storageInfo.setOldName(originalFilename);
             storageInfo.setNewName(newFileName);
-//            storageInfo.setSize(fi);
+            storageInfo.setSize(size);
             storageInfo.setType(imgType);
             storageInfo.setFilePath("/"+newPath+"/"+newFileName);
             storageInfo.setCreateTime(LocalDateTime.now());
