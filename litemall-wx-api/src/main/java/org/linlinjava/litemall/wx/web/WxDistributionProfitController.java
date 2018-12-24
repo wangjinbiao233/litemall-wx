@@ -16,6 +16,7 @@ import org.linlinjava.litemall.db.service.LitemallDistributionProfitService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
 import org.linlinjava.litemall.db.util.JacksonUtil;
 import org.linlinjava.litemall.db.util.ResponseUtil;
+import org.linlinjava.litemall.db.util.entity.AccessToken;
 import org.linlinjava.litemall.db.util.weixin.WeixinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +24,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cn.binarywang.wx.miniapp.api.WxMaService;
-import me.chanjar.weixin.common.exception.WxErrorException;
 
 @RestController
 @RequestMapping("/wx/profit")
@@ -38,9 +37,6 @@ public class WxDistributionProfitController {
 
 	@Autowired
 	private LitemallDistributionApplyService litemallDistributionApplyService;
-
-	@Autowired
-	private WxMaService wxService;
 
 	@Autowired
 	private WeixinUtil weixinUtil;
@@ -334,34 +330,35 @@ public class WxDistributionProfitController {
 			return ResponseUtil.fail401();
 		}
 
-		try {
-			
-			LitemallDistributionApply oldDistributionApply = litemallDistributionApplyService.selectByUserId(userId);
-			if(oldDistributionApply != null) {
-				oldDistributionApply.setAuditStatus(0);
-				oldDistributionApply.setModifyTime(LocalDateTime.now());
-				oldDistributionApply.setModifyUserId(userId);
-				oldDistributionApply.setNickName(litemallDistributionApply.getNickName());
-				oldDistributionApply.setDistributionType(litemallDistributionApply.getDistributionType());
-				oldDistributionApply.setPicUrls(litemallDistributionApply.getPicUrls());
-				litemallDistributionApplyService.update(oldDistributionApply);
-			}else {
-				litemallDistributionApply.setCreateTime(LocalDateTime.now());
-				litemallDistributionApplyService.save(litemallDistributionApply);
+		LitemallDistributionApply oldDistributionApply = litemallDistributionApplyService.selectByUserId(userId);
+		if(oldDistributionApply != null) {
+			oldDistributionApply.setAuditStatus(0);
+			oldDistributionApply.setModifyTime(LocalDateTime.now());
+			oldDistributionApply.setModifyUserId(userId);
+			oldDistributionApply.setNickName(litemallDistributionApply.getNickName());
+			oldDistributionApply.setDistributionType(litemallDistributionApply.getDistributionType());
+			oldDistributionApply.setPicUrls(litemallDistributionApply.getPicUrls());
+			litemallDistributionApplyService.update(oldDistributionApply);
+		}else {
+			litemallDistributionApply.setCreateTime(LocalDateTime.now());
+			litemallDistributionApplyService.save(litemallDistributionApply);
+		}
+
+
+		LitemallUser user = litemallUserService.findById(userId);
+
+		if(user != null){
+			if(litemallDistributionApply.getFormId() != null){
+				user.setFormId(litemallDistributionApply.getFormId());
 			}
-			
-			
-			LitemallUser user = litemallUserService.findById(userId);
-			String accessToken = wxService.getAccessToken();
-			String qrcodeUrl = weixinUtil.getQRcode(accessToken, userId.toString());
-			user.setFormId(litemallDistributionApply.getFormId());
-			if (StringUtils.isNotBlank(qrcodeUrl)) {
-				user.setQrcodeUrl(qrcodeUrl);
-				litemallUserService.update(user);
+			AccessToken token = weixinUtil.getAccessToken();
+			if(token != null){
+				String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
+				if (StringUtils.isNotBlank(qrcodeUrl)) {
+					user.setQrcodeUrl(qrcodeUrl);
+					litemallUserService.update(user);
+				}
 			}
-		} catch (WxErrorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		return ResponseUtil.ok(litemallDistributionApply);
