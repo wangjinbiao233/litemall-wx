@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -281,17 +282,21 @@ public class LitemallReportService {
      * @author huanghaoqi
      * @date 2018年11月28日 09:40:44
      */
-    public List<Integer> listDistributionUserId() {
-        List<Integer> result = new ArrayList<>();
-        // 分销商下级
-        List<Integer> nextDistributionUserIds = litemallUserMapper.listNextDistributionUserIds();
-        if (!CollectionUtils.isEmpty(nextDistributionUserIds)) {
-            result.addAll(nextDistributionUserIds);
-        }
+    public Map<String,List<Integer>> listDistributionUserId() {
+        Map<String,List<Integer>> result = new HashMap<>();
+
+        List<Integer> userIds=new ArrayList<>();
         // 分销商下下级ID
         List<Integer> nextNextDistributionUserIds = litemallUserMapper.listNextNextDistributionUserIds();
         if (!CollectionUtils.isEmpty(nextNextDistributionUserIds)) {
-            result.addAll(nextNextDistributionUserIds);
+            result.put("nextNextDistributionUserIds",nextNextDistributionUserIds);
+            userIds.addAll(nextNextDistributionUserIds);
+        }
+        // 分销商下级
+        List<Integer> nextDistributionUserIds = litemallUserMapper.listNextDistributionUserIds();
+        if (!CollectionUtils.isEmpty(nextDistributionUserIds)) {
+            userIds.addAll(nextDistributionUserIds);
+            result.put("nextDistributionUserIds",userIds);
         }
         return result;
     }
