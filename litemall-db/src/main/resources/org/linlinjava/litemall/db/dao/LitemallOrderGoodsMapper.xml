@@ -955,7 +955,7 @@
     <sql id="lastClassSelect">
         SELECT l.storeName,l.orderDate,l.orderSn,l.orderStatus,l.goodsName,l.goodsNumber,l.unitPrice,
         l.totalPrices,l.residueTreatmentNum,l.goodsFlag,l.treatmentNumCount,l.memberId,l.username,
-        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,CONCAT(ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1),'%')
+        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,CONCAT(ifnull(ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1),0.0),'%')
         as distributionRate,'1级' as distributeClass
         FROM(
         SELECT t.*,<!--2018/12/11-->llu.label_id as labelId
