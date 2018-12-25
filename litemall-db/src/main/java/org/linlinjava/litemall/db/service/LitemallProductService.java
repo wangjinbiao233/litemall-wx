@@ -73,4 +73,8 @@ public class LitemallProductService {
 
         return (int)productMapper.countByExample(example);
     }
+
+    public List<LitemallProduct> selectSpecificationByGoodsId(Integer goodsId){
+        return productMapper.selectSpecificationByGoodsId(goodsId);
+    }
 }

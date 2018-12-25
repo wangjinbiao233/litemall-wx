@@ -287,6 +287,20 @@ public class ProductController {
                 litemallCartService.updateRetailPriceByProductId(litemallCart);
             }
         }
+        //此处修改当前价格问题，逻辑为取得销售价格中的最小值，然后赋值给当前价格，根据商品id查询所有的未删除的销售价格 2018-12-25
+        List<LitemallProduct> litemallProducts = productService.selectSpecificationByGoodsId(goodsId);
+        if(litemallProducts.size()>0){
+            LitemallGoods litemallGoods=new LitemallGoods();
+            litemallGoods.setId(goodsId);
+            List<BigDecimal> doubleList = new ArrayList<>();
+            for(LitemallProduct litemallProduct :litemallProducts){
+                doubleList.add(litemallProduct.getRetailPrice());
+            }
+            BigDecimal minValue=Collections.min(doubleList);
+            litemallGoods.setRetailPrice(minValue);
+            goodsService.updateById(litemallGoods);
+
+        }
 
 
         return ResponseUtil.ok();
