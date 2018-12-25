@@ -187,7 +187,7 @@
                 v-for="item in expressList"
                 :key="item.expressSn"
                 :label="item.expressName"
-                :value="item.expressSn">
+                :value="item.expressName">
               </el-option>
             </el-select>
           </el-form-item>
