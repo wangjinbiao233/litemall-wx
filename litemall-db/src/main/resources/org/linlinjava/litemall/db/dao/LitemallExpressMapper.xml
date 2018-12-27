@@ -91,4 +91,10 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByExpressSn" resultType="org.linlinjava.litemall.db.domain.LitemallExpress">
+    select
+    id, express_sn as expressSn, express_name as expressName, deleted
+    from litemall_express where express_sn=#{expressSn}
+  </select>
 </mapper>

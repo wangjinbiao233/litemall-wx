@@ -750,7 +750,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
-            lo.deleted = 0
+            lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -781,9 +781,9 @@
     <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO"
             parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
-        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
         unitPrice,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
         goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
@@ -793,7 +793,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
-            lo.deleted = 0
+            lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -967,9 +967,9 @@
         SELECT c.*
         FROM(
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
-        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
         unitPrice,lo.user_id,log.id,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
         goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
@@ -1071,9 +1071,9 @@
         SELECT c.*
         FROM(
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
-        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
         unitPrice,lo.user_id,log.id,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
         goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log

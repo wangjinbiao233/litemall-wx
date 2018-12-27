@@ -22,6 +22,7 @@ import org.linlinjava.litemall.db.util.OrderHandleOption;
 import org.linlinjava.litemall.db.util.OrderUtil;
 import org.linlinjava.litemall.db.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/admin/order")
@@ -69,7 +72,7 @@ public class OrderController {
         List<LitemallOrder> orderList = orderService.querySelective(litemallOrder, page, limit, sort, order);
         //判断订单是服务订单或者商品订单
         if(orderList.size() > 0) {        	
-        	for(LitemallOrder litemall :orderList) { 		
+        	for(LitemallOrder litemall :orderList) {
         		litemall.setOrderStatusDisp(OrderUtil.orderStatusText(litemall));
         		List<LitemallOrderGoods> litemallOrderGoodsList = litemallOrderGoodsService.queryByOid(litemall.getId());
         		litemall.setLitemallOrderGoodsList(litemallOrderGoodsList);
@@ -85,6 +88,15 @@ public class OrderController {
                 		OrderHandleOption handleOption = OrderUtil.orderGoodsbuild(litemall, litemallOrderGoods);
                 		litemall.setIsReturn(String.valueOf(handleOption.isReturn()));
             		}
+        		}
+
+        		// 查询快递公司名称
+                String shipChannel=litemall.getShipChannel();
+        		if(StringUtils.isNotEmpty(shipChannel)){
+        		    List<LitemallExpress> litemallExpressList=litemallExpressService.selectByExpressSn(shipChannel);
+                    if(!CollectionUtils.isEmpty(litemallExpressList)){
+                        litemall.setShipChannel(litemallExpressList.get(0).getExpressName());
+                    }
         		}
         	}
         }        
