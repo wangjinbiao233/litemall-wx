@@ -98,15 +98,18 @@ public class WeixinUtil {
 			InputStream inputStream = httpUrlConn.getInputStream();  
 			int size=inputStream.available();
 			System.out.println("--------size = -----------"+size);
-			if( size < 2048 && tryCount < 3){
+			if( size < 5000 && tryCount < 3){
 				return getwxacode( requestUrl, requestMethod, outputStr, ++tryCount);
 			} else {
-				String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
+				if(size > 5000){
+					String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
+					LitemallStorage storage = storageService.store(inputStream, realName, "image");
+					urlPath = storage.getUrl();
+					//saveToImgByInputStream(inputStream,"D:\\",realName);  //保存图片到本地
+				} else {
+                    urlPath = null;
+                }
 
-				LitemallStorage storage = storageService.store(inputStream, realName, "image");
-				urlPath = storage.getUrl();
-
-				//saveToImgByInputStream(inputStream,"D:\\",realName);  //保存图片到本地
 			}
 
 			inputStream.close();    

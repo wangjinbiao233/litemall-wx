@@ -69,6 +69,7 @@ public class DistributionApplyController {
 	        if(adminId == null){
 	            return ResponseUtil.unlogin();
 	        }
+	        Boolean flag = false;
 	        litemallDistributionApplyService.update(litemallDistributionApply);
 	        
 	        LitemallUser user = userService.findById(litemallDistributionApply.getCreateUserId());
@@ -78,39 +79,45 @@ public class DistributionApplyController {
 					String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
 					if (StringUtils.isNotBlank(qrcodeUrl)) {
 						user.setQrcodeUrl(qrcodeUrl);
+						user.setDistributionPartner(true);
+						userService.update(user);
+						flag = true;
 					}
 				}
-	        	user.setDistributionPartner(true);
-  				userService.update(user);
 	        }
-	      
-			String result = "";
-			String content = "";
-			
-			if(litemallDistributionApply.getAuditStatus() == 1) {
-				//审批通过
-				result = "审核通过";
-				content = "恭喜您通过分销申请";	
-			}else {
-				//审批驳回
-				result = "审核未通过";
-				content = "驳回理由为"+litemallDistributionApply.getRemark();	
-			}
-			
-			if(user.getFormId() != null) {
-				MessageData msgData = new MessageData();
-				msgData.setKeyword1(user.getUsername());
-				msgData.setKeyword2("分销审核认证");
-				msgData.setKeyword3(result);
-				msgData.setKeyword4(content);
-				AccessToken accessToken = WeixinUtil.getAccessToken();
-				if(accessToken != null) {
-					WeixinUtil.sendWXMessage(accessToken.getToken(),user.getWeixinOpenid(), user.getFormId(), msgData);
+
+	        if(flag){
+
+				String result = "";
+				String content = "";
+
+				if(litemallDistributionApply.getAuditStatus() == 1) {
+					//审批通过
+					result = "审核通过";
+					content = "恭喜您通过分销申请";
+				}else {
+					//审批驳回
+					result = "审核未通过";
+					content = "驳回理由为"+litemallDistributionApply.getRemark();
 				}
+
+				if(user.getFormId() != null) {
+					MessageData msgData = new MessageData();
+					msgData.setKeyword1(user.getUsername());
+					msgData.setKeyword2("分销审核认证");
+					msgData.setKeyword3(result);
+					msgData.setKeyword4(content);
+					AccessToken accessToken = WeixinUtil.getAccessToken();
+					if(accessToken != null) {
+						WeixinUtil.sendWXMessage(accessToken.getToken(),user.getWeixinOpenid(), user.getFormId(), msgData);
+					}
+				}
+				return ResponseUtil.ok(litemallDistributionApply);
+			} else {
+				return ResponseUtil.fail(-1,"推广二维码生成失败,稍后再试");
 			}
-			
-			
-	        return ResponseUtil.ok(litemallDistributionApply);
+
+
 	    }
 	    
 	    

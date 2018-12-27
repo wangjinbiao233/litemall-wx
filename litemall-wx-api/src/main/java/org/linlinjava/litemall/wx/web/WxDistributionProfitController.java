@@ -350,15 +350,16 @@ public class WxDistributionProfitController {
 		if(user != null){
 			if(litemallDistributionApply.getFormId() != null){
 				user.setFormId(litemallDistributionApply.getFormId());
+				litemallUserService.update(user);
 			}
-			AccessToken token = weixinUtil.getAccessToken();
+			/*AccessToken token = weixinUtil.getAccessToken();
 			if(token != null){
 				String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
 				if (StringUtils.isNotBlank(qrcodeUrl)) {
 					user.setQrcodeUrl(qrcodeUrl);
 					litemallUserService.update(user);
 				}
-			}
+			}*/
 		}
 
 		return ResponseUtil.ok(litemallDistributionApply);
