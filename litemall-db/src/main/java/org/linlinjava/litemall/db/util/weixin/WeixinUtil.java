@@ -98,7 +98,14 @@ public class WeixinUtil {
 			//获取数据流里有多少个字节
 			int size=inputStream.available();
 			if( size < 2048 && tryCount < 3){
-				return getwxacode( requestUrl, requestMethod, outputStr, ++tryCount);
+				//重新获取AccessToken
+				weixinCacheToken.remove("token");
+				AccessToken accessToken = getAccessToken();
+				if(accessToken != null){
+					String userDetail_url ="https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN";
+					String request_url = userDetail_url.replace("ACCESS_TOKEN", accessToken.getToken());
+					return getwxacode( request_url, requestMethod, outputStr, ++tryCount);
+				}
 			} else {
 			    if(size < 2048){
                     log.info("用户推广二维码生成失败");
