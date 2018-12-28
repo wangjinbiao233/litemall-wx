@@ -88,6 +88,17 @@ public class LitemallReportParam {
     private List<Integer> orderUserIds;
 
     /**
+     * 上级分销商id
+     */
+    private List<Integer> lastUserIds;
+
+    /**
+     * 上上级分销商id
+     */
+    private List<Integer> lastLastUserIds;
+
+
+    /**
      * 分销商Ids
      * 2018/12/11
      */
@@ -300,5 +311,21 @@ public class LitemallReportParam {
 
     public void setOptType(Integer optType) {
         this.optType = optType;
+    }
+
+    public List<Integer> getLastUserIds() {
+        return lastUserIds;
+    }
+
+    public void setLastUserIds(List<Integer> lastUserIds) {
+        this.lastUserIds = lastUserIds;
+    }
+
+    public List<Integer> getLastLastUserIds() {
+        return lastLastUserIds;
+    }
+
+    public void setLastLastUserIds(List<Integer> lastLastUserIds) {
+        this.lastLastUserIds = lastLastUserIds;
     }
 }

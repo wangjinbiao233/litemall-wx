@@ -129,4 +129,6 @@ public interface LitemallProductMapper {
      * @project https://github.com/itfsw/mybatis-generator-plugin
      */
     LitemallProduct selectOneByExampleSelective(@Param("example") LitemallProductExample example, @Param("selective") LitemallProduct.Column ... selective);
+
+    List<LitemallProduct> selectSpecificationByGoodsId( @Param("goodsId")Integer goodsId);
 }

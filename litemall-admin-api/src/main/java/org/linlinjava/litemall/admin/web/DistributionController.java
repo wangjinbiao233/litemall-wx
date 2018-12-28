@@ -136,13 +136,14 @@ public class DistributionController {
         }
         Map<String, Object> data = new HashMap<>();
         // 获取分销商下级和下下级的用户ID
-        List<Integer> orderUserIds = litemallReportService.listDistributionUserId();
+        Map<String,List<Integer>> orderUserIds = litemallReportService.listDistributionUserId();
         if (CollectionUtils.isEmpty(orderUserIds)) {
             data.put("total", 0);
             data.put("items", new ArrayList<>(0));
             return ResponseUtil.ok(data);
         }
-        param.setOrderUserIds(orderUserIds);
+        param.setLastUserIds(orderUserIds.get("nextDistributionUserIds"));
+        param.setLastLastUserIds(orderUserIds.get("nextNextDistributionUserIds"));
         /**
          * 2018-12-11 此处根据分销商名称，分销商标签名称查询分销商id，分销商标签id,如果不为空查不到就返回0条数据
          */

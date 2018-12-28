@@ -20,7 +20,8 @@
         <result column="actual_price" jdbcType="DECIMAL" property="actualPrice"/>
         <result column="order_status" jdbcType="SMALLINT" property="orderStatus"/>
         <result column="goods_specification_values" jdbcType="VARCHAR" property="goodsSpecificationValues"/>
-        <result column="goods_specification_ids" jdbcType="CHAR" property="goodsSpecificationIds" typeHandler="org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler"/>
+        <result column="goods_specification_ids" jdbcType="CHAR" property="goodsSpecificationIds"
+                typeHandler="org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler"/>
         <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
         <result column="add_time" jdbcType="TIMESTAMP" property="addTime"/>
         <result column="deleted" jdbcType="BIT" property="deleted"/>
@@ -49,7 +50,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -61,14 +63,19 @@
                                     and ${criterion.condition}
                                 </when>
                                 <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                 </when>
                                 <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler} and #{criterion.secondValue,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and
+                                    #{criterion.secondValue,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                     </foreach>
                                 </when>
@@ -102,7 +109,8 @@
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem}
                                     </foreach>
                                 </when>
@@ -114,14 +122,19 @@
                                     and ${criterion.condition}
                                 </when>
                                 <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                 </when>
                                 <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler} and #{criterion.secondValue,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and ${criterion.condition}
+                                    #{criterion.value,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
+                                    and
+                                    #{criterion.secondValue,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                 </when>
                                 <when test="criterion.listValue">
                                     and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
                                         #{listItem,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler}
                                     </foreach>
                                 </when>
@@ -138,10 +151,12 @@
           This element is automatically generated by MyBatis Generator, do not modify.
           This element was generated on Sat Apr 07 10:22:31 CST 2018.
         -->
-        id, order_id, goods_id, goods_name, goods_sn, product_id,treatment_num, `number`, retail_price, order_status,actual_price,
+        id, order_id, goods_id, goods_name, goods_sn, product_id,treatment_num, `number`, retail_price,
+        order_status,actual_price,
         goods_specification_values, goods_specification_ids, pic_url, add_time, deleted,is_extract
     </sql>
-    <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample" resultMap="BaseResultMap">
+    <select id="selectByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample"
+            resultMap="BaseResultMap">
         <!--
           WARNING - @mbg.generated
           This element is automatically generated by MyBatis Generator, do not modify.
@@ -162,10 +177,13 @@
         </if>
     </select>
 
-    <select id="selectOrderGoodsList" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoods" resultMap="BaseResultMap">
+    <select id="selectOrderGoodsList" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoods"
+            resultMap="BaseResultMap">
         select
-        t1.id, t1.order_id, t1.goods_id,t1.order_status,t1.actual_price,t1.store_id, t1.goods_name, t1.goods_sn, t1.product_id, t1.treatment_num,t1.`number`, t1.retail_price,
-        t1.goods_specification_values, t1.goods_specification_ids, t1.pic_url, t1.add_time, t1.deleted,t1.is_extract,t2.flag as "flag"
+        t1.id, t1.order_id, t1.goods_id,t1.order_status,t1.actual_price,t1.store_id, t1.goods_name, t1.goods_sn,
+        t1.product_id, t1.treatment_num,t1.`number`, t1.retail_price,
+        t1.goods_specification_values, t1.goods_specification_ids, t1.pic_url, t1.add_time,
+        t1.deleted,t1.is_extract,t2.flag as "flag"
         from litemall_order_goods t1 left join litemall_goods t2 on t1.goods_id = t2.id
         where 1 = 1
         and t1.order_id = ${orderId}
@@ -260,8 +278,10 @@
         goods_specification_ids,
         pic_url, add_time, deleted,is_extract
         )
-        values (#{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{storeId,jdbcType=INTEGER},#{goodsName,jdbcType=VARCHAR},
-        #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},#{treatmentNum,jdbcType=INTEGER}, #{number,jdbcType=SMALLINT},
+        values (#{orderId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
+        #{storeId,jdbcType=INTEGER},#{goodsName,jdbcType=VARCHAR},
+        #{goodsSn,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER},#{treatmentNum,jdbcType=INTEGER},
+        #{number,jdbcType=SMALLINT},
         #{retailPrice,jdbcType=DECIMAL}, #{orderStatus,jdbcType=SMALLINT}, #{actualPrice,jdbcType=DECIMAL},
         #{goodsSpecificationValues,jdbcType=VARCHAR},
         #{goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
@@ -385,7 +405,8 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample" resultType="java.lang.Long">
+    <select id="countByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample"
+            resultType="java.lang.Long">
         <!--
           WARNING - @mbg.generated
           This element is automatically generated by MyBatis Generator, do not modify.
@@ -445,7 +466,8 @@
                 goods_specification_values = #{record.goodsSpecificationValues,jdbcType=VARCHAR},
             </if>
             <if test="record.goodsSpecificationIds != null">
-                goods_specification_ids = #{record.goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
+                goods_specification_ids =
+                #{record.goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
             </if>
             <if test="record.picUrl != null">
                 pic_url = #{record.picUrl,jdbcType=VARCHAR},
@@ -484,7 +506,8 @@
         order_status = #{orderStatus,jdbcType=SMALLINT},
         actual_price = #{actualPrice,jdbcType=DECIMAL},
         goods_specification_values = #{record.goodsSpecificationValues,jdbcType=VARCHAR},
-        goods_specification_ids = #{record.goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
+        goods_specification_ids =
+        #{record.goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
         pic_url = #{record.picUrl,jdbcType=VARCHAR},
         add_time = #{record.addTime,jdbcType=TIMESTAMP},
         deleted = #{record.deleted,jdbcType=BIT},
@@ -539,7 +562,8 @@
                 goods_specification_values = #{goodsSpecificationValues,jdbcType=VARCHAR},
             </if>
             <if test="goodsSpecificationIds != null">
-                goods_specification_ids = #{goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
+                goods_specification_ids =
+                #{goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
             </if>
             <if test="picUrl != null">
                 pic_url = #{picUrl,jdbcType=VARCHAR},
@@ -575,14 +599,16 @@
         order_status = #{orderStatus,jdbcType=SMALLINT},
         actual_price = #{actualPrice,jdbcType=DECIMAL},
         goods_specification_values = #{goodsSpecificationValues,jdbcType=VARCHAR},
-        goods_specification_ids = #{goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
+        goods_specification_ids =
+        #{goodsSpecificationIds,jdbcType=CHAR,typeHandler=org.linlinjava.litemall.db.mybatis.JsonIntegerArrayTypeHandler},
         pic_url = #{picUrl,jdbcType=VARCHAR},
         add_time = #{addTime,jdbcType=TIMESTAMP},
         deleted = #{deleted,jdbcType=BIT},
         is_extract = #{isExtract,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <select id="selectOneByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample" resultMap="BaseResultMap">
+    <select id="selectOneByExample" parameterType="org.linlinjava.litemall.db.domain.LitemallOrderGoodsExample"
+            resultMap="BaseResultMap">
         <!--
           WARNING - @mbg.generated
           This element is automatically generated by MyBatis Generator, do not modify.
@@ -619,7 +645,8 @@
         limit 1
     </select>
 
-    <select id="selectTimeData" parameterType="java.lang.String" resultType="org.linlinjava.litemall.db.domain.LitemallTime">
+    <select id="selectTimeData" parameterType="java.lang.String"
+            resultType="org.linlinjava.litemall.db.domain.LitemallTime">
     select count(a.id) as count ,
     	a.store_id as storeId
 	    from  litemall_reserve a left join litemall_store b on a.store_id= b.id
@@ -713,7 +740,8 @@
     </update>
 
 
-    <select id="saleOrderCount" resultType="java.lang.Long" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+    <select id="saleOrderCount" resultType="java.lang.Long"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT count(log.id)
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
@@ -722,7 +750,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
-            lo.deleted = 0
+            lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -750,9 +778,13 @@
         </where>
     </select>
 
-    <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS unitPrice,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
+    <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
+        unitPrice,
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,lu.member_id AS memberId,lu.username AS username,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
@@ -761,7 +793,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         LEFT JOIN litemall_user lu ON lu.id=lo.user_id
         <where>
-            lo.deleted = 0
+            lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -800,7 +832,8 @@
         </if>
     </select>
 
-    <select id="saleExcuteCount" resultType="java.lang.Long" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+    <select id="saleExcuteCount" resultType="java.lang.Long"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT count(lr.id)
         FROM litemall_reserve lr
         LEFT JOIN litemall_order_goods log ON log.id=lr.order_goods_id
@@ -838,9 +871,13 @@
         </if>
     </select>
 
-    <select id="saleExcuteList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') AS orderDate, lo.order_sn AS orderSn,DATE_FORMAT(lr.start_time,'%Y-%m-%d') AS executeDate,lg.`name` AS goodsName,(lg.treatment_num*log.number) AS treatmentNumCount,
-        lg.flag AS goodsFlag,lu.member_id AS memberId,lu.username AS username,la.username AS doctorName,lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice
+    <select id="saleExcuteList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') AS orderDate, lo.order_sn AS
+        orderSn,DATE_FORMAT(lr.start_time,'%Y-%m-%d') AS executeDate,lg.`name` AS
+        goodsName,(lg.treatment_num*log.number) AS treatmentNumCount,
+        lg.flag AS goodsFlag,lu.member_id AS memberId,lu.username AS username,la.username AS doctorName,lo.order_price
+        AS orderPrice,lo.coupon_price AS couponPrice,lo.actual_price AS actualPrice
         FROM litemall_reserve lr
         LEFT JOIN litemall_order_goods log ON log.id=lr.order_goods_id
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
@@ -889,19 +926,50 @@
     </select>
 
 
+    <select id="distributionReportCount" resultType="java.lang.Long"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+        select count(*) from (
+        <include refid="lastClassSelect"/>
+        <if test="lastLastUserIds != null">
+            union all
 
+            (<include refid="lastClassOfLastClassSelect"/>)
+        </if>
+        ) t
+    </select>
 
-    <select id="distributionReportCount" resultType="java.lang.Long" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT count(*) FROM(
-        SELECT t.*,<!--2018/12/11-->llu.label_id as labelId FROM(
-        SELECT a.* ,lu.p_id as
-        distributionId,ear.operation as operationType,ear.profit_money as profitMoney FROM (
-        SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username FROM(
-        SELECT c.* FROM(
+    <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO"
+            parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+      select * from (
+        <include refid="lastClassSelect"/>
+        <if test="lastLastUserIds != null">
+            union all
+            (<include refid="lastClassOfLastClassSelect"/>)
+        </if>
+        )  t
+        <if test="offset != null and limit !=null ">
+            limit #{offset},#{limit}
+        </if>
+    </select>
+
+    <sql id="lastClassSelect">
+        SELECT l.storeName,l.orderDate,l.orderSn,l.orderStatus,l.goodsName,l.goodsNumber,l.unitPrice,
+        l.totalPrices,l.residueTreatmentNum,l.goodsFlag,l.treatmentNumCount,l.memberId,l.username,
+        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,CONCAT(ifnull(ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1),0.0),'%')
+        as distributionRate,'1级' as distributeClass
+        FROM(
+        SELECT t.*,<!--2018/12/11-->llu.label_id as labelId
+        FROM(
+        SELECT a.* ,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney
+        FROM (
+        SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username
+        FROM(
+        SELECT c.*
+        FROM(
         SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
-        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
         unitPrice,lo.user_id,log.id,
-        (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
         goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
         lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
         FROM litemall_order_goods log
@@ -911,7 +979,7 @@
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         <where>
             1=1
-            and lo.deleted = 0
+            and lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -942,10 +1010,10 @@
         </choose>
         ) c
         <where>
-            <if test="orderUserIds != null">
+            <if test="lastUserIds != null">
                 c.user_id in
-                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
-                    #{orderUserId}
+                <foreach collection="lastUserIds" item="lastUserId" separator="," open="(" close=")">
+                    #{lastUserId}
                 </foreach>
             </if>
         </where>
@@ -962,7 +1030,7 @@
         </where>
         ) a
         LEFT JOIN litemall_user lu ON lu.id=a.user_id
-        LEFT JOIN litemall_earnings ear ON ear.order_goods_info_id=a.id
+        LEFT JOIN litemall_earnings ear ON ear.order_goods_info_id=a.id and ear.profit_user_id = lu.p_id
         <where>
             <!--2018/12/11-->
             <if test="distributionIds != null">
@@ -986,36 +1054,36 @@
                 </foreach>
             </if>
         </where>
-    </select>
+    </sql>
 
-    <select id="distributionReportList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
+    <sql id="lastClassOfLastClassSelect">
         SELECT l.storeName,l.orderDate,l.orderSn,l.orderStatus,l.goodsName,l.goodsNumber,l.unitPrice,
         l.totalPrices,l.residueTreatmentNum,l.goodsFlag,l.treatmentNumCount,l.memberId,l.username,
-        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,CONCAT(ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1),'%') as distributionRate,
-       (select if(classUser.p_id is null,'1级','2级') from litemall_user classUser where classUser.id=l.distributionId) as distributeClass
+        l.orderPrice,l.couponPrice,l.actualPrice,l.distributionId,l.operationType,l.profitMoney,l.labelId,CONCAT(ifnull(ROUND((ifnull(l.profitMoney,0)/l.actualPrice)*100,1),0.0),'%')
+        as distributionRate,'2级' as distributeClass
         FROM(
-            SELECT t.*,<!--2018/12/11-->llu.label_id as labelId
-            FROM(
-              SELECT a.* ,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney
-                FROM (
-                  SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username
-                    FROM(
-                      SELECT c.*
-                        FROM(
-                          SELECT  ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
-                            orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,lp.retail_price AS
-                            unitPrice,lo.user_id,log.id,
-                            (log.number*lp.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
-                            goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
-                           lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
-                          FROM litemall_order_goods log
+        SELECT t.*,<!--2018/12/11-->llu.label_id as labelId
+        FROM(
+        SELECT a.* ,lu.p_id as distributionId,ear.operation as operationType,ear.profit_money as profitMoney
+        FROM (
+        SELECT b.* ,liteu.member_id AS memberId,liteu.username AS username
+        FROM(
+        SELECT c.*
+        FROM(
+        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
+        orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
+        unitPrice,lo.user_id,log.id,
+        (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
+        goodsFlag,(lg.treatment_num*log.number) AS treatmentNumCount,
+        lo.order_price AS orderPrice,lo.coupon_price AS couponPrice,log.actual_price AS actualPrice
+        FROM litemall_order_goods log
         LEFT JOIN litemall_store ls ON ls.id=log.store_id
         LEFT JOIN litemall_order lo ON lo.id=log.order_id
         LEFT JOIN litemall_goods lg ON lg.id=log.goods_id
         LEFT JOIN litemall_product lp ON lp.id=log.product_id
         <where>
             1=1
-            and lo.deleted = 0
+            and lo.deleted = 0  and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
                 and ls.id=#{storeId}
             </if>
@@ -1046,53 +1114,50 @@
         </choose>
         ) c
         <where>
-            <if test="orderUserIds != null">
+            <if test="lastLastUserIds != null">
                 c.user_id in
-                <foreach collection="orderUserIds" item="orderUserId" separator="," open="(" close=")">
-                    #{orderUserId}
+                <foreach collection="lastLastUserIds" item="lastLastUserId" separator="," open="(" close=")">
+                    #{lastLastUserId}
                 </foreach>
             </if>
         </where>
         ) b
-          LEFT JOIN litemall_user liteu on liteu.id = b.user_id
-          <where>
-              1=1
-              <if test="memberId != null and memberId.trim() != ''">
-                 and liteu.member_id like concat (concat ('%',#{memberId}),'%')
-              </if>
-              <if test="username != null and username.trim() != ''">
-                 and liteu.username like concat (concat ('%',#{username}),'%')
-              </if>
-          </where>
+        LEFT JOIN litemall_user liteu on liteu.id = b.user_id
+        <where>
+            1=1
+            <if test="memberId != null and memberId.trim() != ''">
+                and liteu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and liteu.username like concat (concat ('%',#{username}),'%')
+            </if>
+        </where>
         ) a
-          LEFT JOIN litemall_user lu ON lu.id=a.user_id
-          LEFT JOIN litemall_earnings ear ON ear.order_goods_info_id=a.id
-          <where>
-              <!--2018/12/11-->
-              <if test="distributionIds != null">
-                   lu.p_id in
-                  <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
-                      #{distributionId}
-                  </foreach>
-              </if>
-              <if test="optType != null">
-                  ear.operation=#{optType}
-              </if>
-              <!--2018/12/11-->
-          </where>
+        LEFT JOIN litemall_user lu ON lu.id= (select lluser.p_id from litemall_user lluser where lluser.id=a.user_id)
+        LEFT JOIN litemall_earnings ear ON ear.order_goods_info_id=a.id and ear.profit_user_id = lu.p_id
+        <where>
+            <!--2018/12/11-->
+            <if test="distributionIds != null">
+                lu.p_id in
+                <foreach collection="distributionIds" item="distributionId" separator="," open="(" close=")">
+                    #{distributionId}
+                </foreach>
+            </if>
+            <if test="optType != null">
+                ear.operation=#{optType}
+            </if>
+            <!--2018/12/11-->
+        </where>
         ) t  <!--2018/12/11修改-->
         LEFT JOIN litemall_label_user llu ON llu.user_id = t.distributionId) l
         <where>
             <if test="labelIds != null">
-                 l.labelId in
+                l.labelId in
                 <foreach collection="labelIds" item="labelId" separator="," open="(" close=")">
                     #{labelId}
                 </foreach>
             </if>
         </where>
-        <if test="offset != null and limit !=null ">
-            limit #{offset},#{limit}
-        </if>
-    </select>
+    </sql>
 
 </mapper>

@@ -141,8 +141,6 @@
         listLoading: true,
         storeList: [],
         orderStatusList: [
-          { label: '未付款', value: 101 },
-          { label: '已取消', value: 102 },
           { label: '已付款', value: 201 },
           { label: '已退款', value: 202 },
           { label: '已发货', value: 301 },

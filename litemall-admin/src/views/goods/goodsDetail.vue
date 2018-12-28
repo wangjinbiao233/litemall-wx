@@ -18,7 +18,7 @@
             </el-form-item>
 
             <el-form-item label="当前价格" prop="retailPrice">
-              <el-input v-model="dataForm.retailPrice"></el-input>
+              <el-input v-model="dataForm.retailPrice" disabled></el-input>
             </el-form-item>
 
             <el-form-item label="是否新品" prop="isNew">
