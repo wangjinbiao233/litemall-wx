@@ -352,7 +352,10 @@ public class WxDistributionProfitController {
 				user.setFormId(litemallDistributionApply.getFormId());
 				litemallUserService.update(user);
 			}
-			/*AccessToken token = weixinUtil.getAccessToken();
+			/*
+
+			生成推广二维码
+			AccessToken token = weixinUtil.getAccessToken();
 			if(token != null){
 				String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
 				if (StringUtils.isNotBlank(qrcodeUrl)) {

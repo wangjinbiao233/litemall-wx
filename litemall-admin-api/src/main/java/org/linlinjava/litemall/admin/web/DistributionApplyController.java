@@ -69,20 +69,33 @@ public class DistributionApplyController {
 	        if(adminId == null){
 	            return ResponseUtil.unlogin();
 	        }
-	        Boolean flag = false;
-	        litemallDistributionApplyService.update(litemallDistributionApply);
-	        
-	        LitemallUser user = userService.findById(litemallDistributionApply.getCreateUserId());
-	        if(litemallDistributionApply.getAuditStatus() == 1 && user != null) {
+	        if(litemallDistributionApply == null){
+	        	return ResponseUtil.fail("提交参数缺失");
+			}
+			LitemallUser user = userService.findById(litemallDistributionApply.getCreateUserId());
+			if(user == null){
+				return ResponseUtil.fail("用户不存在");
+			}
+			litemallDistributionApplyService.update(litemallDistributionApply);
+
+			Boolean flag = true;
+			//如果状态为 通过，则生成推广二维码
+			//生成二维码验证是否成功，失败则提示用户重新审核
+	        if(litemallDistributionApply.getAuditStatus() == 1) {
+
 				AccessToken token = weixinUtil.getAccessToken();
 				if(token != null){
+					//获取用户推广二维码
 					String qrcodeUrl = weixinUtil.getQRcode(token.getToken(), user.getId()+"");
 					if (StringUtils.isNotBlank(qrcodeUrl)) {
 						user.setQrcodeUrl(qrcodeUrl);
 						user.setDistributionPartner(true);
 						userService.update(user);
-						flag = true;
+					} else {
+						flag = false;
 					}
+				}else {
+					flag = false;
 				}
 	        }
 
@@ -114,7 +127,10 @@ public class DistributionApplyController {
 				}
 				return ResponseUtil.ok(litemallDistributionApply);
 			} else {
-				return ResponseUtil.fail(-1,"推广二维码生成失败,稍后再试");
+	        	//二维码生成失败
+				litemallDistributionApply.setAuditStatus(0);
+				litemallDistributionApplyService.update(litemallDistributionApply);
+				return ResponseUtil.fail(-1,"二维码生成失败,稍后再试");
 			}
 
 

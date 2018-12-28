@@ -94,20 +94,21 @@ public class WeixinUtil {
 				outputStream.close();    
 			}    
 
-			// 将返回的输入流转换成字符串
-			InputStream inputStream = httpUrlConn.getInputStream();  
+			InputStream inputStream = httpUrlConn.getInputStream();
+			//获取数据流里有多少个字节
 			int size=inputStream.available();
-			System.out.println("--------size = -----------"+size);
-			if( size < 5000 && tryCount < 3){
+			if( size < 2048 && tryCount < 3){
 				return getwxacode( requestUrl, requestMethod, outputStr, ++tryCount);
 			} else {
-				if(size > 5000){
-					String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
-					LitemallStorage storage = storageService.store(inputStream, realName, "image");
-					urlPath = storage.getUrl();
-					//saveToImgByInputStream(inputStream,"D:\\",realName);  //保存图片到本地
-				} else {
+			    if(size < 2048){
+                    log.info("用户推广二维码生成失败");
+                    log.info("二维码文件大小="+size);
                     urlPath = null;
+                } else {
+                    String realName = "_"+getSystemDateStrDetail()+"_"+buildRandomFileName(8)+".jpg";
+                    LitemallStorage storage = storageService.store(inputStream, realName, "image");
+                    urlPath = storage.getUrl();
+                    //saveToImgByInputStream(inputStream,"D:\\image",realName);  //保存图片到本地
                 }
 
 			}
@@ -329,7 +330,6 @@ public class WeixinUtil {
 	 * @return
 	 */
 	public String getQRcode(String accessToken, String scene) {
-		String filePath = "";
 		String userDetail_url ="https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN";
 		String request_url = userDetail_url.replace("ACCESS_TOKEN", accessToken);
 		JSONObject param =  new JSONObject();
@@ -344,8 +344,7 @@ public class WeixinUtil {
 		param.put("line_color", line_color);
 		param.put("is_hyaline", false);
 
-		filePath = getwxacode(request_url, "POST", param.toString(),0);
-		return filePath;
+		return getwxacode(request_url, "POST", param.toString(),0);
 
 	}
 
