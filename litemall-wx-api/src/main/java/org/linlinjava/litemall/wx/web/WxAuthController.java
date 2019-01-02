@@ -191,7 +191,6 @@ public class WxAuthController {
     	    				user.setMemberId(getSerialNumber());
     	    			}
     	    			user.setAvatar(userInfo.getAvatarUrl());
-    	    			user.setUsername(userName);
     	    			user.setNickname(userName);
     	    			user.setUnionid(unionid);
     	    			user.setLastLoginTime(LocalDateTime.now());
