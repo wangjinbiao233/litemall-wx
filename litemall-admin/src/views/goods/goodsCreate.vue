@@ -55,7 +55,9 @@
             </el-form-item>
 
             <el-form-item label="疗程数" v-show="treatmentNumVisible">
-              <el-input v-model="dataForm.treatmentNum"></el-input>
+
+              <el-input  v-model="dataForm.treatmentNum" placeholder="输入大于0的整数"></el-input>
+
             </el-form-item>
 
             <el-form-item label="商品单位">
@@ -375,7 +377,8 @@
           fileList:[]
         },
         rules: {
-          name: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }]
+          name: [{ required: true, message: '商品名称不能为空', trigger: 'blur' }],
+          treatmentNum: [{ required: true, message: '疗程数不能为空', trigger: 'blur' }]
         },
         imageUrl: '',
         goodsAttributes: [{
@@ -462,7 +465,6 @@
       }
     },
     methods: {
-
       getGoodsSpecOptions(goodsId) {
         // 获取规格列表
         this.goodsSpecOptions = []

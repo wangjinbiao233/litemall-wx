@@ -58,7 +58,7 @@
             </el-form-item>
 
             <el-form-item label="疗程数" v-show="treatmentNumVisible">
-              <el-input v-model="dataForm.treatmentNum"></el-input>
+              <el-input  v-model="dataForm.treatmentNum" placeholder="输入大于0的整数"></el-input>
             </el-form-item>
 
             <el-form-item label="商品单位">
