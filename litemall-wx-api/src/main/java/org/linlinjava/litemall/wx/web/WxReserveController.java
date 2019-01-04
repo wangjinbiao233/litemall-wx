@@ -118,6 +118,22 @@ public class WxReserveController {
 
 		// 获取reserveDate 格式化
 
+		// 更新order_goods里面的状态
+		LitemallOrderGoods litemallOrderGoods = litemallOrderGoodsService.queryById(litemallReserve.getOrderGoodsId());
+		litemallOrderGoods.setTreatmentNum(litemallOrderGoods.getTreatmentNum() - 1);
+
+		if (litemallOrderGoods.getTreatmentNum() < 0) {
+			return ResponseUtil.fail(403, "预约次数剩余0次");
+		}
+
+		if (litemallOrderGoods.getTreatmentNum() == 0) {
+			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_SHIP);
+		}else {
+			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
+		}
+		litemallOrderGoodsService.update(litemallOrderGoods);
+
+		//插入预约记录
 		String dateStr = litemallReserve.getReserveDate().replaceAll("-", "/");
 		String[] dateStrArr = dateStr.split("/");
 		if (dateStrArr[1].length() == 1) {
@@ -127,24 +143,7 @@ public class WxReserveController {
 			dateStrArr[2] = "0" + dateStrArr[2];
 		}
 		litemallReserve.setReserveDate(dateStrArr[0] + "/" + dateStrArr[1] + "/" + dateStrArr[2]);
-		// 插入数据到
 		litemallOrderGoodsService.reserveDetail(litemallReserve);
-
-		// 更新order_goods里面的状态
-		LitemallOrderGoods litemallOrderGoods = litemallOrderGoodsService.queryById(litemallReserve.getOrderGoodsId());
-		litemallOrderGoods.setTreatmentNum(litemallOrderGoods.getTreatmentNum() - 1);
-		
-		if (litemallOrderGoods.getTreatmentNum() < 0) {
-			return ResponseUtil.fail(403, "预约失败");
-		}
-		
-		if (litemallOrderGoods.getTreatmentNum() == 0) {
-			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_SHIP);
-		}else {
-			litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PART_SHIP);
-		}
-		
-		litemallOrderGoodsService.update(litemallOrderGoods);
 
 		// 可能需要更新订单总状态
 		LitemallOrder litemallOrder = litemallOrderService.findById(litemallOrderGoods.getOrderId());
