@@ -3,7 +3,7 @@
 
     <!-- 查询和其他操作 -->
     <div class="filter-container">
-      <el-select v-model="listQuery.storeId" clearable placeholder="请选择门店" style="top: -4px;">
+      <el-select v-model="listQuery.storeId" clearable placeholder="请选择自取门店" style="top: -4px;">
         <el-option
           v-for="item in storeList"
           :key="item.id"
@@ -57,7 +57,7 @@
       <el-table-column align="center" width="120" label="订单状态" prop="orderStatusName">
       </el-table-column>
 
-      <el-table-column align="center" width="200" label="门店名称" prop="storeName">
+      <el-table-column align="center" width="200" label="自取门店" prop="storeName">
       </el-table-column>
 
       <el-table-column align="center" width="200" label="商品名称" prop="goodsName">

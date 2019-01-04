@@ -752,7 +752,7 @@
         <where>
             lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
-                and ls.id=#{storeId}
+                and lo.get_store_id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
@@ -780,7 +780,7 @@
 
     <select id="saleOrderList" resultType="org.linlinjava.litemall.db.dto.SaleOrderReportDTO"
             parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
-        SELECT ls.store_name AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
+        SELECT (select lits.store_name from litemall_store lits where lits.id=lo.get_store_id) AS storeName, DATE_FORMAT(lo.add_time,'%Y-%m-%d') as orderDate, lo.order_sn AS
         orderSn,lo.order_status AS orderStatus,lg.`name` AS goodsName,log.number AS goodsNumber,log.retail_price AS
         unitPrice,
         (log.number*log.retail_price) AS totalPrices,log.treatment_num AS residueTreatmentNum, lg.flag AS
@@ -795,7 +795,7 @@
         <where>
             lo.deleted = 0 and lo.order_status !=101 and lo.order_status !=102
             <if test="storeId != null">
-                and ls.id=#{storeId}
+                and lo.get_store_id=#{storeId}
             </if>
             <if test="memberId != null and memberId.trim() != ''">
                 and lu.member_id like concat (concat ('%',#{memberId}),'%')
