@@ -813,10 +813,10 @@
                 and lo.order_status =#{orderStatus}
             </if>
             <if test="beginDate != null and beginDate.trim() != ''">
-                and lo.add_time &gt;=#{beginDate}
+                and date(lo.add_time) &gt;=#{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
-                and lo.add_time &lt;=#{endDate}
+                and date(lo.add_time) &lt;=#{endDate}
             </if>
         </where>
         <choose>
