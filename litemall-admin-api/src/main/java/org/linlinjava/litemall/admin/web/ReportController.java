@@ -7,14 +7,14 @@ import org.linlinjava.litemall.db.domain.LitemallReportParam;
 import org.linlinjava.litemall.db.dto.AccountBalanceDTO;
 import org.linlinjava.litemall.db.dto.SaleOrderReportDTO;
 import org.linlinjava.litemall.db.service.LitemallReportService;
+import org.linlinjava.litemall.db.util.DateUtils;
 import org.linlinjava.litemall.db.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * 报表统计
@@ -44,6 +44,21 @@ public class ReportController {
         if (adminId == null) {
             return ResponseUtil.unlogin();
         }
+        //结束时间加一天
+        if(param != null && param.getEndDate() != null){
+            String endDate = param.getEndDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = sdf.parse(endDate);
+                System.out.println("加之前 = "+date);
+                date = DateUtils.dayAddNum(date,1);
+                System.out.println("加之后 = "+date);
+                endDate = sdf.format(date);
+                param.setEndDate(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         Map<String, Object> data = new HashMap<>();
         int total = (int) reportService.saleOrderCount(param);
         if (total == 0) {
@@ -68,6 +83,21 @@ public class ReportController {
                                 LitemallReportParam param) {
         if (adminId == null) {
             return ResponseUtil.unlogin();
+        }
+        //结束时间加一天
+        if(param != null && param.getEndDate() != null){
+            String endDate = param.getEndDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = sdf.parse(endDate);
+                System.out.println("加之前 = "+date);
+                date = DateUtils.dayAddNum(date,1);
+                System.out.println("加之后 = "+date);
+                endDate = sdf.format(date);
+                param.setEndDate(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         Map<String, Object> data = new HashMap<>();
         int total = (int) reportService.saleExcuteCount(param);
@@ -118,6 +148,21 @@ public class ReportController {
                                       LitemallReportParam param) {
         if (adminId == null) {
             return ResponseUtil.unlogin();
+        }
+        //结束时间加一天
+        if(param != null && param.getEndDate() != null){
+            String endDate = param.getEndDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = sdf.parse(endDate);
+                System.out.println("加之前 = "+date);
+                date = DateUtils.dayAddNum(date,1);
+                System.out.println("加之后 = "+date);
+                endDate = sdf.format(date);
+                param.setEndDate(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         Map<String, Object> data = new HashMap<>();
         int total = (int) reportService.accountCheckCount(param);

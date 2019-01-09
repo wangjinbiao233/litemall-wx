@@ -26,11 +26,15 @@
       <el-date-picker
         v-model="listQuery.beginDate"
         type="date"
+        value-format="yyyy-MM-dd"
+        format="yyyy-MM-dd"
         placeholder="开始日期" style="width: 200px;top: -4px;">
       </el-date-picker>
       <el-date-picker
         v-model="listQuery.endDate"
         type="date"
+        value-format="yyyy-MM-dd"
+        format="yyyy-MM-dd"
         placeholder="结束日期" style="width: 200px;">
       </el-date-picker>
       <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter" style="margin-top: 7px;">查找</el-button>

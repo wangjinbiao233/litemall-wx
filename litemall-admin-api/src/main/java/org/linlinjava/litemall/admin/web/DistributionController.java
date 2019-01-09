@@ -1,9 +1,8 @@
 package org.linlinjava.litemall.admin.web;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +15,7 @@ import org.linlinjava.litemall.db.service.LitemallDistributionProfitService;
 import org.linlinjava.litemall.db.service.LitemallRechargeService;
 import org.linlinjava.litemall.db.service.LitemallReportService;
 import org.linlinjava.litemall.db.service.LitemallUserService;
+import org.linlinjava.litemall.db.util.DateUtils;
 import org.linlinjava.litemall.db.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -159,6 +159,21 @@ public class DistributionController {
                 param.setDistributionIds(distributionIds);
             }else{
                 flag =true;
+            }
+        }
+        //结束时间加一天
+        if(param.getEndDate() != null && param.getEndDate() != ""){
+            String endDate = param.getEndDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = sdf.parse(endDate);
+                System.out.println("加之前 = "+date);
+                date = DateUtils.dayAddNum(date,1);
+                System.out.println("加之后 = "+date);
+                endDate = sdf.format(date);
+                param.setEndDate(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         if(param.getDistributionLabelNames()!=null && param.getDistributionLabelNames()!="" ){

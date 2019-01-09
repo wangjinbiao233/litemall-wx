@@ -845,10 +845,10 @@
                 and lr.recharge_type=#{rechargeType}
             </if>
             <if test="beginDate != null and beginDate.trim() != ''">
-                and lr.operation_time &gt;=#{beginDate}
+                and date(lr.operation_time) <![CDATA[ >= ]]> #{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
-                and lr.operation_time &lt;=#{endDate}
+                and lr.operation_time <![CDATA[ <= ]]> #{endDate}
             </if>
         </where>
     </select>
@@ -872,10 +872,10 @@
                 and lr.recharge_type=#{rechargeType}
             </if>
             <if test="beginDate != null and beginDate.trim() != ''">
-                and lr.operation_time &gt;=#{beginDate}
+                and date(lr.operation_time) <![CDATA[ >= ]]> #{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
-                and lr.operation_time &lt;=#{endDate}
+                and lr.operation_time <![CDATA[ <= ]]> #{endDate}
             </if>
         </where>
         <choose>

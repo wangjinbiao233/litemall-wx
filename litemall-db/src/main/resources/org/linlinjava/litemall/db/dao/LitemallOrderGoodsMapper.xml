@@ -770,10 +770,10 @@
                 and lo.order_status =#{orderStatus}
             </if>
             <if test="beginDate != null">
-                and lo.add_time &gt;=#{beginDate}
+                and date(lo.add_time)  <![CDATA[ >= ]]> #{beginDate}
             </if>
             <if test="endDate != null">
-                and lo.add_time &lt;=#{endDate}
+                and lo.add_time <![CDATA[ <= ]]> #{endDate}
             </if>
         </where>
     </select>
@@ -813,10 +813,10 @@
                 and lo.order_status =#{orderStatus}
             </if>
             <if test="beginDate != null and beginDate.trim() != ''">
-                and date(lo.add_time) &gt;=#{beginDate}
+                and date(lo.add_time)  <![CDATA[ >= ]]> #{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
-                and date(lo.add_time) &lt;=#{endDate}
+                and lo.add_time <![CDATA[ <= ]]> #{endDate}
             </if>
         </where>
         <choose>
@@ -864,10 +864,10 @@
             and la.username like concat (concat ('%',#{doctorName}),'%')
         </if>
         <if test="beginDate != null and beginDate.trim() != ''">
-            and lo.add_time &gt;=#{beginDate}
+            and date(lo.add_time)  <![CDATA[ >= ]]> #{beginDate}
         </if>
         <if test="endDate != null and endDate.trim() != ''">
-            and lo.add_time &lt;=#{endDate}
+            and lo.add_time <![CDATA[ <= ]]> #{endDate}
         </if>
     </select>
 
@@ -907,10 +907,10 @@
             and la.username like concat (concat ('%',#{doctorName}),'%')
         </if>
         <if test="beginDate != null and beginDate.trim() != ''">
-            and lo.add_time &gt;=#{beginDate}
+            and date(lo.add_time)  <![CDATA[ >= ]]> #{beginDate}
         </if>
         <if test="endDate != null and endDate.trim() != ''">
-            and lo.add_time &lt;=#{endDate}
+            and lo.add_time <![CDATA[ <= ]]> #{endDate}
         </if>
         <choose>
             <when test="sort != null and sort.trim() != ''">
@@ -994,7 +994,7 @@
             </if>
 
             <if test="beginDate != null and beginDate.trim() != ''">
-                and lo.add_time &gt;=#{beginDate}
+                and date(lo.add_time) &gt;=#{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
                 and lo.add_time &lt;=#{endDate}
@@ -1098,10 +1098,10 @@
             </if>
 
             <if test="beginDate != null and beginDate.trim() != ''">
-                and lo.add_time &gt;=#{beginDate}
+                and date(lo.add_time) <![CDATA[ >= ]]>  #{beginDate}
             </if>
             <if test="endDate != null and endDate.trim() != ''">
-                and lo.add_time &lt;=#{endDate}
+                and lo.add_time <![CDATA[ <= ]]> #{endDate}
             </if>
         </where>
         <choose>
