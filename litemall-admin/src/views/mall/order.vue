@@ -327,6 +327,7 @@ export default {
       recvDialogFormVisible: false,
       reserveDetailDialogFormVisible: false,
       downloadLoading: false,
+      reserveList: undefined,
       rules: {
         shipChannel: [{required: true, message: '快递公司不能为空', trigger: 'blur'}],
         shipSn: [{required: true, message: '快递单号不能为空', trigger: 'blur'}],
