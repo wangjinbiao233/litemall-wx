@@ -141,7 +141,6 @@ public class WxPayController {
     @RequestMapping(value = "/notify")
     public Object notify(HttpServletRequest request, HttpServletResponse response) {
         logger.info("----微信支付回调成功：---");
-        System.out.println("微信支付回调成功：");
     		BufferedReader reader = null;
 
         try {
@@ -156,41 +155,54 @@ public class WxPayController {
 	        xmlString = inputString.toString();
 	        request.getReader().close();
 	        logger.info("----接收到的数据如下：---" + xmlString);
-	        System.out.println("接收到的数据如下：" + xmlString);
 	        Map<String, String> result = WXPayUtil.xmlToMap(xmlString);
 	        if("SUCCESS".equals(result.get("result_code"))) {
+                logger.info("----支付状态：---" +result.get("result_code"));
 	        		//校验成功时，修改订单状态
+				logger.info("----checkSign(result)：---" +checkSign(result));
 		        if(checkSign(result)) {
-		        		String outTradeNo = result.get("out_trade_no");
-		        		LitemallUser user = userService.queryByOid(result.get("openid"));
-		        		LitemallOrder order = orderService.queryByOrderSn(user.getId(), outTradeNo);
-		        		/**
-		        		 * 微信接口返回的金额单位为 分
-		        		 */
-		        		String totalFee = result.get("total_fee");
-		        		Double orderPrice = order.getOrderPrice().doubleValue() * 100;
-		        		String priceStr = orderPrice.intValue() + "";
-		        		if(priceStr.equals(totalFee) && "101".equals(order.getOrderStatus().toString())) {
-		        			LitemallOrder updateOrder = new LitemallOrder();
-		        			updateOrder.setId(order.getId());
-		        			List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(order.getId());   
-		        			for(LitemallOrderGoods litemallOrderGoods :litemallOrderGoodsList) {  
-		        				litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
-		        				orderGoodsService.update(litemallOrderGoods);
-		        			}	
-		        			updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);
-		        			//微信的订单号
-		        			updateOrder.setPayId(result.get("transaction_id"));
-		        			
-		        			orderService.update(updateOrder);
-		        			/**
-		        			 * 返回微信接口状态码
-		        			 */
-		        			Map<String, Object> obj = new HashMap<String, Object>();
-		        			obj.put("return_code", "SUCCESS");
-		        			obj.put("return_msg", "OK");
-		        			return obj;
-		        		}
+					String outTradeNo = result.get("out_trade_no");
+					LitemallUser user = userService.queryByOid(result.get("openid"));
+					LitemallOrder order = orderService.queryByOrderSn(user.getId(), outTradeNo);
+					if(user != null && order != null){
+						logger.info("----userId：---" +user.getId());
+						logger.info("----orderId：---" +order.getId());
+						/**
+						 * 微信接口返回的金额单位为 分
+						 */
+						String totalFee = result.get("total_fee");
+						Double orderPrice = order.getOrderPrice().doubleValue() * 100;
+						String priceStr = orderPrice.intValue() + "";
+						if(priceStr.equals(totalFee) && "101".equals(order.getOrderStatus().toString())) {
+							LitemallOrder updateOrder = new LitemallOrder();
+							updateOrder.setId(order.getId());
+							List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(order.getId());
+							for(LitemallOrderGoods litemallOrderGoods :litemallOrderGoodsList) {
+								litemallOrderGoods.setOrderStatus(OrderUtil.STATUS_PAY);
+								orderGoodsService.update(litemallOrderGoods);
+							}
+							updateOrder.setOrderStatus(OrderUtil.STATUS_PAY);
+							//微信的订单号
+							updateOrder.setPayId(result.get("transaction_id"));
+
+							orderService.update(updateOrder);
+							logger.info("----订单更新成功成功成功！---");
+							/**
+							 * 返回微信接口状态码
+							 */
+							Map<String, Object> obj = new HashMap<String, Object>();
+							obj.put("return_code", "SUCCESS");
+							obj.put("return_msg", "OK");
+							return obj;
+						} else {
+							logger.info("----订单更新失败---");
+							logger.info("----订priceStr.equals(totalFee)---" + priceStr.equals(totalFee));
+							logger.info("101".equals(order.getOrderStatus().toString()));
+
+						}
+					} else {
+						logger.info("----订单或用户不存在---");
+					}
 		        }
 	        }
 	        
@@ -249,7 +261,7 @@ public class WxPayController {
     
     /**
      * 支付回调 检查 sign
-     * @param data
+     * @param result
      * @return
      */
     private boolean checkSign(Map<String, String> result) {
