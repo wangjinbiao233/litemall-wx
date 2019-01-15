@@ -107,7 +107,7 @@ public class WxPayController {
         Double totalFee = order.getActualPrice().doubleValue() * 100 ;
         wxPayUnifiedOrderRequest.setTotalFee(totalFee.intValue());
         wxPayUnifiedOrderRequest.setSpbillCreateIp(request.getRemoteAddr());
-        wxPayUnifiedOrderRequest.setNotifyURL("http://mall.philab.net/wx/pay/notify");
+        wxPayUnifiedOrderRequest.setNotifyURL("http://mall-wx.philab.net/wx/pay/notify");
         wxPayUnifiedOrderRequest.setTradeType("JSAPI");
         wxPayUnifiedOrderRequest.setOpenid(user.getWeixinOpenid());
         
@@ -138,8 +138,10 @@ public class WxPayController {
     /**
      * 微信订单回调接口
      */
-    @RequestMapping(value = "/notify", method = RequestMethod.POST)
+    @RequestMapping(value = "/notify")
     public Object notify(HttpServletRequest request, HttpServletResponse response) {
+        logger.info("----微信支付回调成功：---");
+        System.out.println("微信支付回调成功：");
     		BufferedReader reader = null;
 
         try {
