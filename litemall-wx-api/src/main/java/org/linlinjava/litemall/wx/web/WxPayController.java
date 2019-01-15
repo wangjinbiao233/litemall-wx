@@ -179,7 +179,9 @@ public class WxPayController {
 						String priceStr = orderPrice.intValue() + "";
 						logger.info("----priceStr：---" +priceStr);
 						logger.info("----totalFee：---" +totalFee);
-						if(priceStr.equals(totalFee) && "101".equals(order.getOrderStatus().toString())) {
+						String orderStatus = order.getOrderStatus().toString();
+						logger.info("----orderStatus：---" +orderStatus);
+						if(priceStr.equals(totalFee) && "101".equals(orderStatus)) {
 							LitemallOrder updateOrder = new LitemallOrder();
 							updateOrder.setId(order.getId());
 							List<LitemallOrderGoods> litemallOrderGoodsList = orderGoodsService.queryByOid(order.getId());
