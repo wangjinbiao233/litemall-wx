@@ -230,7 +230,8 @@ public class OrderUtil {
     	}
     	else if (status == 201) {
     		// 如果订单已付款，没有发货或者部分发货，则可退款操作
-    		handleOption.setRefund(true); 
+            //TODO 订单已支付，不允许退款
+    		handleOption.setRefund(false);
     	}
     	else if (status == 202 || status == 304) {
     		// 如果订单已经取消或是已完成，则可删除

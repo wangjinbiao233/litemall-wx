@@ -107,7 +107,7 @@ public class WxPayController {
         Double totalFee = order.getActualPrice().doubleValue() * 100 ;
         wxPayUnifiedOrderRequest.setTotalFee(totalFee.intValue());
         wxPayUnifiedOrderRequest.setSpbillCreateIp(request.getRemoteAddr());
-        wxPayUnifiedOrderRequest.setNotifyURL("http://mall-wx.dgtis.com/wx/pay/notify");
+        wxPayUnifiedOrderRequest.setNotifyURL("http://mall.philab.net/wx/pay/notify");
         wxPayUnifiedOrderRequest.setTradeType("JSAPI");
         wxPayUnifiedOrderRequest.setOpenid(user.getWeixinOpenid());
         
@@ -154,6 +154,7 @@ public class WxPayController {
 	        xmlString = inputString.toString();
 	        request.getReader().close();
 	        logger.info("----接收到的数据如下：---" + xmlString);
+	        System.out.println("接收到的数据如下：" + xmlString);
 	        Map<String, String> result = WXPayUtil.xmlToMap(xmlString);
 	        if("SUCCESS".equals(result.get("result_code"))) {
 	        		//校验成功时，修改订单状态
