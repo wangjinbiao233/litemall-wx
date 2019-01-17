@@ -46,7 +46,7 @@
             </el-form-item>
 
             <el-form-item label="商品归属" prop="flag">
-              <el-select v-model="dataForm.flag" placeholder="请选择" @change="onSelectedFlag($event, item)">
+              <el-select v-model="dataForm.flag" placeholder="请选择" @change="onSelectedFlag($event)">
                 <el-option label="实物商品" :key="'1'" :value="'1'">
                 </el-option>
                 <el-option label="服务类商品" :key="'2'" :value="'2'">
@@ -54,9 +54,9 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item label="疗程数" v-show="treatmentNumVisible">
+            <el-form-item label="疗程数" prop="treatmentNum" v-show="treatmentNumVisible">
 
-              <el-input  v-model="dataForm.treatmentNum" placeholder="输入大于0的整数"></el-input>
+              <el-input  v-model="dataForm.treatmentNum" @keyup.native="proving1" placeholder="输入大于0的整数"></el-input>
 
             </el-form-item>
 
@@ -110,7 +110,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="商品图片" name="1" >
-          <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='margin-left:50px;'>
+          <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='margin-left:50px;'>
 
             <el-form-item label="首页主图">
               <el-upload
@@ -162,7 +162,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="商品介绍" name="2" >
-          <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
+          <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='width: 400px; margin-left:50px;'>
             <el-form-item label="商品介绍">
               <el-input v-model="dataForm.goodsBrief" style="width: 800px;"></el-input>
             </el-form-item>
@@ -174,7 +174,7 @@
         </el-tab-pane>
 
         <el-tab-pane label="商品参数" name="3" >
-          <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style=' margin-left:50px;'>
+          <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style=' margin-left:50px;'>
 
             <el-row :gutter="20" v-for="(item, index) in goodsAttributes">
               <el-col :span="10">
@@ -198,7 +198,7 @@
 
         <el-tab-pane label="商品规格" name="4" >
 
-          <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='margin-left:50px;'>
+          <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="100px" style='margin-left:50px;'>
 
             <el-row :gutter="20" v-for="(item, index) in goodsSpecifications">
               <el-col :span="10">
@@ -271,7 +271,7 @@
       </el-tabs>
 
       <el-dialog title="添加货品" width="80%" :visible.sync="createProductDialogFormVisible" @close="closeCurrentTag()">
-        <el-form :rules="rules" ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="80px" style=' margin-left:50px;'>
+        <el-form ref="dataForm" :model="dataForm" status-icon label-position="left" label-width="80px" style=' margin-left:50px;'>
 
           <el-row :gutter="5" v-for="(item, index) in goodsProducts">
             <el-col :span="9">
@@ -314,7 +314,7 @@
 
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="editDialogFormVisible = false">取消,在编辑中添加</el-button>
+          <el-button @click="createProductDialogFormVisible = false">取消,在编辑中添加</el-button>
           <el-button type="primary" @click="createProductData">确定</el-button>
         </div>
       </el-dialog>
@@ -368,6 +368,7 @@
           brandId: undefined,
           goodsUnit: undefined,
           flag: '1',
+          treatmentNum:undefined,
           firstProfit: undefined,
           secondProfit: undefined,
           storeIds:[]
@@ -493,10 +494,31 @@
 
         })
       },
+      proving1(){
+        this.dataForm.treatmentNum=this.dataForm.treatmentNum.replace(/[^\.\d]/g,'');
+        this.dataForm.treatmentNum=this.dataForm.treatmentNum.replace('.','');
+      },
 
       handleSave() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
+            if(!this.dataForm.name){
+              this.$message({
+                message: '商品名称不能为空',
+                type: 'warning'
+              });
+              return false;
+            }
+
+            if(this.dataForm.flag == 2){
+              if(!this.dataForm.treatmentNum || this.dataForm.treatmentNum < 1){
+                this.$message({
+                  message: '疗程数不能为空，且必须为大于0的整数',
+                  type: 'warning'
+                });
+                return false;
+              }
+            }
             createGoods(this.dataForm).then(response => {
 
               this.dataForm = response.data.data

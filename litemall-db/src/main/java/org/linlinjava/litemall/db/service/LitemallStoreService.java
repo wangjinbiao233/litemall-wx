@@ -6,16 +6,16 @@ import org.linlinjava.litemall.db.dao.LitemallStoreMapper;
 import org.linlinjava.litemall.db.domain.LitemallGoods;
 import org.linlinjava.litemall.db.domain.LitemallOptions;
 import org.linlinjava.litemall.db.domain.LitemallStore;
-import org.linlinjava.litemall.db.domain.LitemallStoreGoods;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 
+import javax.annotation.Resource;
+
 @Service
 public class LitemallStoreService {
-	
-	@Autowired
+
+	@Resource
 	private LitemallStoreMapper storeAdMapper;
 
 	public List<LitemallStore> querySelective(LitemallStore store, Integer page, Integer limit, String sort,

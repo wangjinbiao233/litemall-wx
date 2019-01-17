@@ -681,7 +681,7 @@
       <if test="flag != null">
         flag = #{flag,jdbcType=VARCHAR},
       </if>
-      <if test="treatmentNum != null">
+      <if test="treatmentNum != null and treatmentNum != 0">
          treatment_num = #{treatmentNum, jdbcType=INTEGER},
       </if>
       

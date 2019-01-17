@@ -357,7 +357,8 @@
             label: 'admin'
           }
         ],
-        dialogFlag: false
+        dialogFlag: false,
+        show: false
       }
     },
     created() {
@@ -429,6 +430,7 @@
       },
       handleCreate() {
         this.resetForm()
+        this.dialogFlag = false
         this.dialogStatus = 'create'
         this.dialogFormVisible = true
         this.$nextTick(() => {
@@ -528,7 +530,6 @@
       })
       },
       handleAvatarSuccess(res, file){
-        debugger;
         //this.imageUrl = URL.createObjectURL(file.raw.url);
         this.dataForm.avatar = res.data.url;
         this.imageUrl = res.data.url;

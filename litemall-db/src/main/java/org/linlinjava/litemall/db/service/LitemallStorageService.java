@@ -6,10 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.linlinjava.litemall.db.dao.LitemallStorageMapper;
 import org.linlinjava.litemall.db.domain.LitemallStorage;
 import org.linlinjava.litemall.db.domain.LitemallStorageExample;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.Map;
 @Service
 public class LitemallStorageService {
 
-    @Autowired
+    @Resource
     private LitemallStorageMapper litemallStorageMapper;
 
 
