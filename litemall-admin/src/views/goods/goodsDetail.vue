@@ -662,10 +662,6 @@
                 })
               })
 
-
-
-
-
               this.$notify({
                 title: '成功',
                 message: '更新成功',
@@ -680,6 +676,23 @@
       },
 
       handleDialog(){
+        if(!this.dataForm.name){
+          this.$message({
+            message: '商品名称不能为空',
+            type: 'warning'
+          });
+          return false;
+        }
+        if(this.dataForm.flag == 2){
+
+          if(!this.dataForm.treatmentNum || this.dataForm.treatmentNum < 1){
+            this.$message({
+              message: '疗程数不能为空，且必须为大于0的整数',
+              type: 'warning'
+            });
+            return false;
+          }
+        }
         this.reserveTimeUpdateDialog = true
       },
 
