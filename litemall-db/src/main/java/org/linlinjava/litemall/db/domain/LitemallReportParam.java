@@ -69,7 +69,7 @@ public class LitemallReportParam {
     /**
      * 每页显示个数
      */
-    private Integer limit = 20;
+    private Integer limit;
     /**
      * 排序字段
      */

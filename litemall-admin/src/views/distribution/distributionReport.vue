@@ -242,13 +242,22 @@
       },
       handleDownload() {
         this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['订单号', '分销商', '分销商标签', '佣金状态', '佣金','分销比例(百分比)','分销等级', '日期', '订单状态', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
-          const filterVal = ['orderSn', 'distributionName', 'distributionLabelNames', 'operationTypeName', 'profitMoney','distributionRate','distributeClass', 'orderDate', 'orderStatusName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice',
-            'couponPrice', 'actualPrice']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '分销报表')
-          this.downloadLoading = false
-        })
+        var list = Object.assign({}, this.listQuery)
+        list.page = undefined;
+        list.limit = undefined;
+        distributionReportList(list).then(response => {
+                  let listData = response.data.data.items
+                  import('@/vendor/Export2Excel').then(excel => {
+                            const tHeader = ['订单号', '分销商', '分销商标签', '佣金状态', '佣金','分销比例(百分比)','分销等级', '日期', '订单状态', '商品名称', '数量', '单价', '金额', '疗程数', '商品归属', '疗程总数', '会员编号', '会员名称', '订单金额', '券抵扣', '实付金额']
+                            const filterVal = ['orderSn', 'distributionName', 'distributionLabelNames', 'operationTypeName', 'profitMoney','distributionRate','distributeClass', 'orderDate', 'orderStatusName', 'goodsName', 'goodsNumber', 'unitPrice', 'totalPrices', 'treatmentNum', 'goodsFlagName', 'treatmentNumCount', 'memberId', 'username', 'orderPrice',
+                             'couponPrice', 'actualPrice']
+                            excel.export_json_to_excel2(tHeader,listData, filterVal, '分销报表')
+                             this.downloadLoading = false;
+                          })
+                }).catch(() => {
+                })
+
+
       }
     }
   }

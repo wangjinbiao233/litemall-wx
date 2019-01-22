@@ -57,7 +57,7 @@
 
       <el-table-column align="center" width="200" label="门店名称" prop="storeName">
       </el-table-column>
-      
+
       <el-table-column align="center" width="200" label="商品名称" prop="goodsName">
       </el-table-column>
 
@@ -184,12 +184,20 @@
       },
       handleDownload() {
         this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['门店名称', '订单日期', '订单号', '执行日期', '商品名称', '疗程总数', '商品归属', '会员编号', '会员名称', '服务顾问', '订单金额', '券抵扣', '实付金额']
-          const filterVal = ['storeName', 'orderDate', 'orderSn', 'executeDate', 'goodsName', 'treatmentNumCount', 'goodsFlagName', 'memberId', 'username', 'doctorName', 'orderPrice', 'couponPrice', 'actualPrice']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '销售执行统计')
-          this.downloadLoading = false
-        })
+        var list = Object.assign({}, this.listQuery)
+        list.page = undefined;
+        list.limit = undefined;
+        listSaleExecute(list).then(response => {
+                  let listData = response.data.data.items
+                  import('@/vendor/Export2Excel').then(excel => {
+                    const tHeader = ['门店名称', '订单日期', '订单号', '执行日期', '商品名称', '疗程总数', '商品归属', '会员编号', '会员名称', '服务顾问', '订单金额', '券抵扣', '实付金额']
+                    const filterVal = ['storeName', 'orderDate', 'orderSn', 'executeDate', 'goodsName', 'treatmentNumCount', 'goodsFlagName', 'memberId', 'username', 'doctorName', 'orderPrice', 'couponPrice', 'actualPrice']
+                    excel.export_json_to_excel2(tHeader, listData, filterVal, '销售执行统计')
+                    this.downloadLoading = false
+                  })
+                }).catch(() => {
+                })
+
       }
     }
   }
