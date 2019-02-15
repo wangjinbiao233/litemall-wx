@@ -204,10 +204,10 @@ public class OrderController {
             newOrder.setShipChannel(order.getShipChannel());
             newOrder.setShipSn(order.getShipSn());
             
-            int orderCnt = orderService.countByShipSn(newOrder);
+            /*int orderCnt = orderService.countByShipSn(newOrder);
             if(orderCnt > 0) {
             	return ResponseUtil.ok("快递单号不能重复", null);
-            }
+            }*/
             
             boolean isShip = true;
             List<LitemallOrderGoods> litemallOrderGoodsList = litemallOrderGoodsService.queryByOid(orderId);    	
