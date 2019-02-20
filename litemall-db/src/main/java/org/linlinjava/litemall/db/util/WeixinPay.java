@@ -135,6 +135,7 @@ public class WeixinPay{
 			HttpEntity entity = response.getEntity();
 
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+			System.out.println("提现返回值："+jsonStr);
 			log.error("提现返回值："+jsonStr);
 			EntityUtils.consume(entity);
 			// 把返回的字符串解释成DOM节点
