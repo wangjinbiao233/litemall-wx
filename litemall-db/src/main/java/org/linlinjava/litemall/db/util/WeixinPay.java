@@ -25,6 +25,8 @@ import java.util.UUID;
 import javax.net.ssl.SSLContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -46,6 +48,7 @@ import org.dom4j.Element;
  * Date: 2018年1月10日
  */
 public class WeixinPay{
+	private static Log log = LogFactory.getLog(WeixinPay.class);
 	/**
 	 * @author YangTao
 	 * @date 2018年1月11日
@@ -132,6 +135,7 @@ public class WeixinPay{
 			HttpEntity entity = response.getEntity();
 
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
+			log.error("提现返回值："+jsonStr);
 			EntityUtils.consume(entity);
 			// 把返回的字符串解释成DOM节点
 			Document dom = DocumentHelper.parseText(jsonStr);
