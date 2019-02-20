@@ -82,6 +82,7 @@ public class WeixinPay{
 			InetAddress ia = InetAddress.getLocalHost();
 			String ip = ia.getHostAddress(); // 获取本机IP地址
 			logger.info("本机IP地址："+ip);
+			System.out.println("本机IP地址："+ip);
 			String uuid = UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");// 随机获取UUID
 			String appid = WeixinConfig.WX_AppId;// 微信分配的公众账号ID（企业号corpid即为此appId）
 			String mchid = WeixinConfig.WX_MchId;// 微信支付分配的商户号
@@ -104,7 +105,7 @@ public class WeixinPay{
 
 			String sign = "";
 			sign = createSign("UTF-8", signParams,WeixinConfig.WX_MchKey);
-			// System.out.println(sign);
+			System.out.println("sign:"+sign);
 			String data = "<xml><mch_appid>";
 			data += appid + "</mch_appid><mchid>"; // APPID
 			data += mchid + "</mchid><nonce_str>"; // 商户ID
@@ -116,7 +117,7 @@ public class WeixinPay{
 			data += ip + "</spbill_create_ip><sign>";// 调用接口的机器Ip地址
 			data += sign + "</sign></xml>";// 签名
 			logger.info("data："+data);
-			//System.out.println(data);
+			System.out.println("data："+data);
 			// 获取证书，发送POST请求；
 			KeyStore keyStore = KeyStore.getInstance("PKCS12");
 			FileInputStream instream = new FileInputStream(new File(WeixinConfig.CERT_PATH)); // 从配置文件里读取证书的路径信息
@@ -139,6 +140,7 @@ public class WeixinPay{
 
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
 			logger.info("提现返回值："+jsonStr);
+			System.out.println("提现返回值："+jsonStr);
 			EntityUtils.consume(entity);
 			// 把返回的字符串解释成DOM节点
 			Document dom = DocumentHelper.parseText(jsonStr);
@@ -147,6 +149,8 @@ public class WeixinPay{
             String returnMsg = root.element("return_msg").getText(); // 返回信息，如非空，为错误原因
             logger.info("returnCode："+returnCode);
             logger.info("returnMsg："+returnMsg);
+			System.out.println("returnCode："+returnCode);
+			System.out.println("returnMsg："+returnMsg);
             if (StringUtils.equals(returnCode, "SUCCESS")) { // 判断返回码为成功还是失败
 				String partner_trade_no1 = root.element("partner_trade_no").getText();
 				String payment_no = root.element("payment_no").getText(); // 获取支付流水号
