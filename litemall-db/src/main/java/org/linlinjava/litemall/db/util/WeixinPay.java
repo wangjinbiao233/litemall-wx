@@ -36,6 +36,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
@@ -48,7 +49,7 @@ import org.dom4j.Element;
  * Date: 2018年1月10日
  */
 public class WeixinPay{
-	private static Log log = LogFactory.getLog(WeixinPay.class);
+	private static Logger logger = Logger.getLogger(WeixinPay.class);
 	/**
 	 * @author YangTao
 	 * @date 2018年1月11日
@@ -80,6 +81,7 @@ public class WeixinPay{
 			String url = "https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
 			InetAddress ia = InetAddress.getLocalHost();
 			String ip = ia.getHostAddress(); // 获取本机IP地址
+			logger.info("本机IP地址："+ip);
 			String uuid = UUID.randomUUID().toString().toUpperCase().replaceAll("-", "");// 随机获取UUID
 			String appid = WeixinConfig.WX_AppId;// 微信分配的公众账号ID（企业号corpid即为此appId）
 			String mchid = WeixinConfig.WX_MchId;// 微信支付分配的商户号
@@ -113,7 +115,8 @@ public class WeixinPay{
 			data += desc + "</desc><spbill_create_ip>"; // 企业付款操作说明信息。必填。
 			data += ip + "</spbill_create_ip><sign>";// 调用接口的机器Ip地址
 			data += sign + "</sign></xml>";// 签名
-			System.out.println(data);
+			logger.info("data："+data);
+			//System.out.println(data);
 			// 获取证书，发送POST请求；
 			KeyStore keyStore = KeyStore.getInstance("PKCS12");
 			FileInputStream instream = new FileInputStream(new File(WeixinConfig.CERT_PATH)); // 从配置文件里读取证书的路径信息
@@ -135,14 +138,16 @@ public class WeixinPay{
 			HttpEntity entity = response.getEntity();
 
 			String jsonStr = EntityUtils.toString(response.getEntity(), "UTF-8");
-			System.out.println("提现返回值："+jsonStr);
-			log.error("提现返回值："+jsonStr);
+			logger.info("提现返回值："+jsonStr);
 			EntityUtils.consume(entity);
 			// 把返回的字符串解释成DOM节点
 			Document dom = DocumentHelper.parseText(jsonStr);
 			Element root = dom.getRootElement();
 			String returnCode = root.element("result_code").getText(); // 获取返回代码
-			if (StringUtils.equals(returnCode, "SUCCESS")) { // 判断返回码为成功还是失败
+            String returnMsg = root.element("return_msg").getText(); // 返回信息，如非空，为错误原因
+            logger.info("returnCode："+returnCode);
+            logger.info("returnMsg："+returnMsg);
+            if (StringUtils.equals(returnCode, "SUCCESS")) { // 判断返回码为成功还是失败
 				String partner_trade_no1 = root.element("partner_trade_no").getText();
 				String payment_no = root.element("payment_no").getText(); // 获取支付流水号
 				String payment_time = root.element("payment_time").getText(); // 获取支付时间
