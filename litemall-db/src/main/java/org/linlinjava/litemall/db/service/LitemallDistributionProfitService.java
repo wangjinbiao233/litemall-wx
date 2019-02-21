@@ -10,6 +10,7 @@ import org.linlinjava.litemall.db.util.WeixinPay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,10 +26,10 @@ import java.util.Map;
 @Service
 public class LitemallDistributionProfitService {
 
-    @Autowired
+    @Resource
     private LitemallDistributionProfitMapper litemallDistributionProfitMapper;
 
-    @Autowired
+    @Resource
     private LitemallEarningsMapper litemallEarningsMapper;
 
     @Autowired
@@ -321,7 +322,10 @@ public class LitemallDistributionProfitService {
         int amount = wxMoney.intValue();
         LitemallUser litemallUser = litemallUserService.findById(user_id);
         String openid = litemallUser.getWeixinOpenid();
-        Map<String, String>  map = WeixinPay.transfer(openid, amount, "提现", litemallEarnings.getId().toString());
+        String username = litemallUser.getUsername() != null ? litemallUser.getUsername() : "";
+        /*
+        Map<String, String>  map = WeixinPay.transfer(openid, amount, "提现", litemallEarnings.getId().toString());*/
+        Map<String, String>  map = WeixinPay.transferWithdraw(openid, username, amount, "提现", litemallEarnings.getId().toString());
         String state = map.get("state");
 
         if("SUCCESS".equals(state)) {

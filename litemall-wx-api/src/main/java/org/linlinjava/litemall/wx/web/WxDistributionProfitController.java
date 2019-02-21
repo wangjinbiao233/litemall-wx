@@ -291,9 +291,11 @@ public class WxDistributionProfitController {
 
 		LitemallUser user = litemallUserService.findById(userId);
 
-		if (user.getMoney() <= 0) {
-			return ResponseUtil.fail(-1, "余额为零！");
-		} else if (money > user.getMoney()) {
+		if (user == null) {
+            return ResponseUtil.fail(-1, "用户信息查询失败");
+		} else if (user.getMoney() <= 0) {
+            return ResponseUtil.fail(-1, "余额为零！");
+        } else if (money > user.getMoney()) {
 			return ResponseUtil.fail(-1, "提现金额大余额！");
 		}
 
