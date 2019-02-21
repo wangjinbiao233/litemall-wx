@@ -289,7 +289,7 @@ public class WeixinPay{
 			signParams.put("nonce_str", uuid); // 随机字符串，不长于32位
 			signParams.put("partner_trade_no", partner_trade_no); // 商户订单号，需保持唯一性
 			signParams.put("openid", openid); // 商户appid下，某用户的openid
-			signParams.put("check_name", "NO_CHECK"); // NO_CHECK：不校验真实姓名
+			signParams.put("check_name", "FORCE_CHECK"); // NO_CHECK：不校验真实姓名
 			// FORCE_CHECK：强校验真实姓名（未实名认证的用户会校验失败，无法转账）
 			// OPTION_CHECK：针对已实名认证的用户才校验真实姓名（未实名认证用户不校验，可以转账成功）
 			signParams.put("re_user_name", username);
@@ -307,7 +307,7 @@ public class WeixinPay{
 			data += mchid + "</mchid><nonce_str>"; // 商户ID
 			data += uuid + "</nonce_str><partner_trade_no>"; // 随机字符串
 			data += partner_trade_no + "</partner_trade_no><openid>"; // 订单号
-			data += openid + "</openid><check_name>NO_CHECK</check_name><re_user_name>"; // 是否强制实名验证
+			data += openid + "</openid><check_name>FORCE_CHECK</check_name><re_user_name>"; // 是否强制实名验证
 			data += username + "</re_user_name><amount>"; // 收款用户真实姓名
 			data += amount + "</amount><desc>"; // 企业付款金额，单位为分
 			data += desc + "</desc><spbill_create_ip>"; // 企业付款操作说明信息。必填。
