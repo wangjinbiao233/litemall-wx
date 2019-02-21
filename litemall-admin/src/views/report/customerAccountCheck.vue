@@ -152,11 +152,18 @@
       },
       handleDownload() {
         this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['会员编号', '会员名称', '日期', '交易类型', '支付方式', '订单号', '金额']
-          const filterVal = ['memberId', 'username', 'operationTime', 'operationType', 'rechargeTypeName', 'orderSn', 'chargeMoney']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户对账明细')
-          this.downloadLoading = false
+        var list = Object.assign({}, this.listQuery)
+        list.page = undefined;
+        list.limit = undefined;
+        listAccountCheck(list).then(response => {
+          let listData = response.data.data.items
+          import('@/vendor/Export2Excel').then(excel => {
+            const tHeader = ['会员编号', '会员名称', '日期', '交易类型', '支付方式', '订单号', '金额']
+            const filterVal = ['memberId', 'username', 'operationTime', 'operationType', 'rechargeTypeName', 'orderSn', 'chargeMoney']
+            excel.export_json_to_excel2(tHeader, listData, filterVal, '用户对账明细')
+            this.downloadLoading = false
+          })
+        }).catch(() => {
         })
       }
     }

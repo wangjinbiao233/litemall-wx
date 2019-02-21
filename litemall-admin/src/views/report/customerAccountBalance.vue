@@ -108,11 +108,18 @@
       },
       handleDownload() {
         this.downloadLoading = true
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['会员编号', '会员名称', '存储金', '分销金']
-          const filterVal = ['memberId', 'username', 'rechargeMoney', 'money']
-          excel.export_json_to_excel2(tHeader, this.list, filterVal, '用户账户余额')
-          this.downloadLoading = false
+        var list = Object.assign({}, this.listQuery)
+        list.page = undefined;
+        list.limit = undefined;
+        listAccountBanlance(list).then(response => {
+          let listData = response.data.data.items
+          import('@/vendor/Export2Excel').then(excel => {
+            const tHeader = ['会员编号', '会员名称', '存储金', '分销金']
+            const filterVal = ['memberId', 'username', 'rechargeMoney', 'money']
+            excel.export_json_to_excel2(tHeader, listData, filterVal, '用户账户余额')
+            this.downloadLoading = false
+          })
+        }).catch(() => {
         })
       }
     }
