@@ -113,6 +113,10 @@ Page({
    * 提交申请
    */
   submit: function (e){
+    var that = this;
+    this.setData({
+      disabled: true
+    });
     console.log("申请提现")
     var data = {
       userId: this.data.userId,
@@ -141,6 +145,10 @@ Page({
           duration: 2000,
           success: function () {
             console.log("提现失败")
+            that.setData({
+              hint: "提现失败，请稍后再试",
+              isShow: 'none',
+            });
           }
         })
         
