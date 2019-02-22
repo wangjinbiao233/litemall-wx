@@ -7,20 +7,10 @@
       </el-input>
       <el-input clearable class="filter-item" style="width: 200px;" placeholder="请输入会员名称" v-model="listQuery.username">
       </el-input>
-      <el-select v-model="listQuery.operationType" clearable placeholder="交易类型" style="top: -4px;">
-        <el-option label="充值" :key="1" :value="1">
+      <el-select v-model="listQuery.operationType" clearable placeholder="状态" style="width: 200px;top: -4px;">
+        <el-option label="提现成功" :key="2" :value="2">
         </el-option>
-        <el-option label="消费" :key="2" :value="2">
-        </el-option>
-        <el-option label="退款" :key="3" :value="3">
-        </el-option>
-      </el-select>
-      <el-select v-model="listQuery.rechargeType" clearable placeholder="支付方式" style="top: -4px;">
-        <el-option label="银联" :key="1" :value="1">
-        </el-option>
-        <el-option label="支付宝" :key="2" :value="2">
-        </el-option>
-        <el-option label="微信" :key="3" :value="3">
+        <el-option label="提现失败" :key="6" :value="6">
         </el-option>
       </el-select>
       <el-date-picker
@@ -44,25 +34,23 @@
     <!-- 查询结果 -->
     <el-table size="small" :data="list" v-loading="listLoading" element-loading-text="正在查询中。。。" border fit highlight-current-row style="width: 100%">
 
-      <el-table-column align="center" width="150" label="会员编号" prop="memberId">
+      <el-table-column align="center" width="200" label="会员编号" prop="memberId">
       </el-table-column>
 
-      <el-table-column align="center" min-width="150" label="会员名称" prop="username">
+      <el-table-column align="center" min-width="200" label="会员名称" prop="username">
       </el-table-column>
 
-      <el-table-column align="center" width="150" label="日期" prop="operationTime">
+      <el-table-column align="center" width="200" label="提现金额(元)" prop="chargeMoney">
       </el-table-column>
 
-      <el-table-column align="center" width="150" label="交易类型" prop="operationType">
+      <el-table-column align="center" width="200" label="提现状态" prop="operationType">
+        <template scope="scope">
+          <div v-if="scope.row.operationType==2" style="color: blue">成功</div>
+          <div v-if="scope.row.operationType==6" style="color: red">失败</div>
+        </template>
       </el-table-column>
 
-      <el-table-column align="center" width="150" label="支付方式" prop="rechargeTypeName">
-      </el-table-column>
-
-      <el-table-column align="center" width="150" label="订单号" prop="orderSn">
-      </el-table-column>
-
-      <el-table-column align="center" width="80" label="金额" prop="chargeMoney">
+      <el-table-column align="center" width="220" label="提现日期" prop="operationTime">
       </el-table-column>
 
     </el-table>
@@ -76,29 +64,12 @@
   </div>
 </template>
 
-<style>
-  .demo-table-expand {
-    font-size: 0;
-  }
-
-  .demo-table-expand label {
-    width: 200px;
-    color: #99a9bf;
-  }
-
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
-  }
-
-</style>
-
 <script>
-  import {listAccountCheck} from '@/api/report'
+  import {listAccountWithdraw} from '@/api/report'
   import waves from '@/directive/waves' // 水波纹指令
 
   export default {
-    name: 'saleExcute',
+    name: 'withdrawDetail',
     directives: {
       waves
     },
@@ -107,14 +78,12 @@
         list: [],
         total: 0,
         listLoading: true,
-        storeList: [],
         listQuery: {
           page: 1,
           limit: 20,
           memberId: '',
           username: '',
           operationType: '',
-          rechargeType: '',
           beginDate: '',
           endDate: ''
         },
@@ -127,7 +96,7 @@
     methods: {
       getList() {
         this.listLoading = true
-        listAccountCheck(this.listQuery).then(response => {
+        listAccountWithdraw(this.listQuery).then(response => {
           this.list = response.data.data.items
           this.total = response.data.data.total
           this.listLoading = false
@@ -155,12 +124,12 @@
         var list = Object.assign({}, this.listQuery)
         list.page = undefined;
         list.limit = undefined;
-        listAccountCheck(list).then(response => {
+        listAccountWithdraw(list).then(response => {
           let listData = response.data.data.items
           import('@/vendor/Export2Excel').then(excel => {
-            const tHeader = ['会员编号', '会员名称', '日期', '交易类型', '支付方式', '订单号', '金额']
-            const filterVal = ['memberId', 'username', 'operationTime', 'operationType', 'rechargeTypeName', 'orderSn', 'chargeMoney']
-            excel.export_json_to_excel2(tHeader, listData, filterVal, '用户存储金对账明细')
+            const tHeader = ['会员编号', '会员名称', '提现金额', '提现日期', '提现状态']
+            const filterVal = ['memberId', 'username', 'chargeMoney', 'operationTime', 'operationTypeName']
+            excel.export_json_to_excel2(tHeader, listData, filterVal, '用户提现明细')
             this.downloadLoading = false
           })
         }).catch(() => {
@@ -170,6 +139,16 @@
   }
 </script>
 <style>
+
+  .demo-table-expand label {
+    width: 200px;
+    color: #99a9bf;
+  }
+
+  .demo-table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+  }
   .ad-avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;

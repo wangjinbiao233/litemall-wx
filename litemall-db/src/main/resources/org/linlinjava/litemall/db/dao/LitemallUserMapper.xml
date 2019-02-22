@@ -891,6 +891,68 @@
         </if>
     </select>
 
+    <select id="accountWithdrawCount" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam" resultType="java.lang.Integer">
+        SELECT count(le.id)
+        FROM litemall_earnings le
+        LEFT JOIN litemall_user lu ON lu.id=le.profit_user_id
+        <where>
+            and  le.operation in (2,6)
+            <if test="memberId != null and memberId.trim() != ''">
+                and lu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and lu.username like concat (concat ('%',#{username}),'%')
+            </if>
+            <if test="operationType != null and operationType != '' ">
+                and le.operation=#{operationType}
+            </if>
+            <if test="beginDate != null and beginDate.trim() != ''">
+                and date(le.operation_time) <![CDATA[ >= ]]> #{beginDate}
+            </if>
+            <if test="endDate != null and endDate.trim() != ''">
+                and le.operation_time <![CDATA[ <= ]]> #{endDate}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="accountWithdrawList" parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam" resultType="org.linlinjava.litemall.db.dto.AccountBalanceDTO">
+        SELECT lu.member_id AS memberId, lu.username AS username, le.operation_time AS operationTime,
+        le.operation AS operationType, le.profit_money AS chargeMoney, le.remark as operationTypeName
+        FROM litemall_earnings le
+        LEFT JOIN litemall_user lu ON lu.id=le.profit_user_id
+        <where>
+            and le.operation in (2,6)
+            <if test="memberId != null and memberId.trim() != ''">
+                and lu.member_id like concat (concat ('%',#{memberId}),'%')
+            </if>
+            <if test="username != null and username.trim() != ''">
+                and lu.username like concat (concat ('%',#{username}),'%')
+            </if>
+            <if test="operationType != null and operationType != '' ">
+                and le.operation=#{operationType}
+            </if>
+            <if test="beginDate != null and beginDate.trim() != ''">
+                and date(le.operation_time) <![CDATA[ >= ]]> #{beginDate}
+            </if>
+            <if test="endDate != null and endDate.trim() != ''">
+                and le.operation_time <![CDATA[ <= ]]> #{endDate}
+            </if>
+        </where>
+        <choose>
+            <when test="sort != null and sort.trim() != ''">
+                ORDER BY ${sort} ${order}
+            </when>
+            <otherwise>
+                ORDER BY le.operation_time DESC
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit !=null ">
+            limit #{offset},#{limit}
+        </if>
+
+    </select>
+
     <select id="listDistributionUserIds" resultType="java.lang.Integer">
         select id from litemall_user
         where distribution_partner=1 and deleted=0

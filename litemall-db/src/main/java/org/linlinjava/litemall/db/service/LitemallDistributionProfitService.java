@@ -310,7 +310,7 @@ public class LitemallDistributionProfitService {
         litemallEarnings.setOperationTime(LocalDateTime.now());
         litemallEarnings.setProfitUserId(user_id);
         litemallEarnings.setProfitMoney(BigDecimal.valueOf(money));
-        litemallEarnings.setRemark("提现");
+        litemallEarnings.setRemark("提现成功");
         litemallEarnings.setCreateUserId(user_id);
         litemallEarnings.setCreateTime(LocalDateTime.now());
 

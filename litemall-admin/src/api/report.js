@@ -26,10 +26,19 @@ export function listAccountBanlance(query) {
     params: query
   })
 }
-// 销售统计（时间段）列表
+// 用户存储金对账明细（时间段）列表
 export function listAccountCheck(query) {
   return request({
     url: '/report/accountCheckList',
+    method: 'post',
+    params: query
+  })
+}
+
+// 提现明细（时间段）列表
+export function listAccountWithdraw(query) {
+  return request({
+    url: '/report/accountWithdraw',
     method: 'post',
     params: query
   })

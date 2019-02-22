@@ -138,7 +138,7 @@ public class ReportController {
     }
 
     /**
-     * 方法描述  用户对账明细统计
+     * 方法描述  存储金对账明细统计
      *
      * @author huanghaoqi
      * @date 2018年09月27日 13:49:44
@@ -172,6 +172,43 @@ public class ReportController {
             return ResponseUtil.ok(data);
         }
         List<AccountBalanceDTO> result = reportService.accountCheckList(param);
+        data.put("total", total);
+        data.put("items", result);
+        return ResponseUtil.ok(data);
+    }
+
+    /**
+     * 方法描述  用户提现明细
+     *
+     * @author 宁世洋
+     * @date 2018年09月27日 13:49:44
+     */
+    @PostMapping("/accountWithdraw")
+    public Object accountWithdraw(@LoginAdmin Integer adminId, LitemallReportParam param){
+        if (adminId == null) {
+            return ResponseUtil.unlogin();
+        }
+        //结束时间加一天
+        if(param != null && param.getEndDate() != null){
+            String endDate = param.getEndDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date date = sdf.parse(endDate);
+                date = DateUtils.dayAddNum(date,1);
+                endDate = sdf.format(date);
+                param.setEndDate(endDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        Map<String, Object> data = new HashMap<>();
+        int total = reportService.accountWithdrawCount(param);
+        if (total == 0) {
+            data.put("total", total);
+            data.put("items", new ArrayList<>(0));
+            return ResponseUtil.ok(data);
+        }
+        List<AccountBalanceDTO> result = reportService.accountWithdrawList(param);
         data.put("total", total);
         data.put("items", result);
         return ResponseUtil.ok(data);

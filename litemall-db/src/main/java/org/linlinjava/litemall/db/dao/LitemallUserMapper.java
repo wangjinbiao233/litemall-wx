@@ -206,4 +206,17 @@ public interface LitemallUserMapper {
      */
     List<LitemallUser> selectUsersByName(String username);
 
+    /**
+     * 提现明细 - 总数
+     * @param param
+     * @return
+     */
+    int accountWithdrawCount(LitemallReportParam param);
+
+    /**
+     * 提现明细
+     * @param param
+     * @return
+     */
+    List<AccountBalanceDTO> accountWithdrawList(LitemallReportParam param);
 }

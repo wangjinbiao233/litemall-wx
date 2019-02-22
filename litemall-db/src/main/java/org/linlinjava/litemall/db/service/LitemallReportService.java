@@ -307,4 +307,25 @@ public class LitemallReportService {
     public List<LitemallLabel> selectSelective(String name){
         return litemallLabelMapper.selectLabelByName(name);
     }
+
+    /**
+     * 方法描述  用户提现明细统计 -- 总数
+     *
+     * @author 宁世洋
+     * @date 2019年02月22日 17:25:08
+     */
+    public int accountWithdrawCount(LitemallReportParam param) {
+        return litemallUserMapper.accountWithdrawCount(param);
+    }
+
+    /**
+     * 方法描述  用户提现明细统计
+     *
+     * @author 宁世洋
+     * @date 2019年02月22日 17:25:08
+     */
+    public List<AccountBalanceDTO> accountWithdrawList(LitemallReportParam param) {
+        List<AccountBalanceDTO> result = litemallUserMapper.accountWithdrawList(param);
+        return result;
+    }
 }

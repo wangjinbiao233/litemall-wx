@@ -37,6 +37,10 @@ public class AccountBalanceDTO {
      */
     private String operationType;
     /**
+     * 状态名称
+     */
+    private String operationTypeName;
+    /**
      * 支付方式
      */
     private Integer rechargeType;
@@ -99,6 +103,14 @@ public class AccountBalanceDTO {
 
     public void setOperationType(String operationType) {
         this.operationType = operationType;
+    }
+
+    public String getOperationTypeName() {
+        return operationTypeName;
+    }
+
+    public void setOperationTypeName(String operationTypeName) {
+        this.operationTypeName = operationTypeName;
     }
 
     public Integer getRechargeType() {
