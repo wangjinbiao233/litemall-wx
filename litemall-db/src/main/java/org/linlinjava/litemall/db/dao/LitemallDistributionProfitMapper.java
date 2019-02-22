@@ -32,6 +32,8 @@ public interface LitemallDistributionProfitMapper {
 
     int getMoneyByUserId(@Param("user_id") Integer user_id,@Param("money") Double money);
 
+    int updatePlusMoneyByUserId(@Param("user_id") Integer user_id,@Param("money") Double money);
+
     int topUpMoneyByUserId(@Param("user_id") Integer user_id,@Param("money") Double money);
 
     List<Map> selectTransactionRecord(@Param("userId") Integer userId);

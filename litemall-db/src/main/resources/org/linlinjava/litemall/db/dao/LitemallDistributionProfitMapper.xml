@@ -286,6 +286,12 @@
         WHERE `id` = #{user_id,jdbcType=INTEGER}
     </update>
 
+    <update id="updatePlusMoneyByUserId" parameterType="java.lang.Object" >
+        UPDATE `litemall_user`
+        SET `money` = `money` + #{money,jdbcType=DOUBLE}
+        WHERE `id` = #{user_id,jdbcType=INTEGER}
+    </update>
+
     <update id="topUpMoneyByUserId" parameterType="java.lang.Object" >
         UPDATE `litemall_user`
         SET `money` = `money` + #{money,jdbcType=DOUBLE}

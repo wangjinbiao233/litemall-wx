@@ -315,6 +315,8 @@ public class LitemallDistributionProfitService {
         litemallEarnings.setCreateTime(LocalDateTime.now());
 
         litemallEarningsMapper.insertSelective(litemallEarnings);
+
+        int res = litemallDistributionProfitMapper.getMoneyByUserId(user_id, money);
         
         
         /*向微信API发起提现请求*/
@@ -329,8 +331,9 @@ public class LitemallDistributionProfitService {
         String state = map.get("state");
 
         if("SUCCESS".equals(state)) {
-            return litemallDistributionProfitMapper.getMoneyByUserId(user_id, money);
+            return res;
         } else {
+            litemallDistributionProfitMapper.updatePlusMoneyByUserId(user_id, money);
             litemallEarnings.setOperation(6);
             litemallEarnings.setRemark("提现失败");
             litemallEarningsMapper.updateByPrimaryKeySelective(litemallEarnings);
