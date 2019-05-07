@@ -152,5 +152,12 @@ public class LitemallOrderService {
 		}
 		return null;
 	}
-	
+
+    /**
+     * 查询7天后待收货的订单列表
+     * @return
+     */
+    public List<LitemallOrder> queryOrderByStatusShip(Short orderStatus) {
+	    return orderMapper.selectOrderByStatusShip(orderStatus);
+    }
 }

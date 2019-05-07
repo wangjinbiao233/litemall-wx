@@ -145,4 +145,5 @@ public interface LitemallOrderMapper {
 	
 	public int countByShipSn(LitemallOrder order);
 
+	List<LitemallOrder> selectOrderByStatusShip(@Param("orderStatus") Short orderStatus);
 }

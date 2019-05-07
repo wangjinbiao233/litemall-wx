@@ -1,5 +1,6 @@
 package org.linlinjava.litemall.wx.web;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +165,7 @@ public class WxReserveController {
 				litemallOrder.setOrderStatus(OrderUtil.STATUS_PART_CONFIRM);
 			}else {
 				litemallOrder.setOrderStatus(OrderUtil.STATUS_SHIP);
+				litemallOrder.setShipStartTime(LocalDateTime.now());
 			}
 			litemallOrderService.update(litemallOrder);
 		}

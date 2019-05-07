@@ -768,4 +768,14 @@
     limit 1
   </select>
 
+  <select id="selectOrderByStatusShip" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM litemall_order
+	WHERE `deleted` = 0
+    AND order_status = #{orderStatus,jdbcType=SMALLINT}
+    AND TIMESTAMPDIFF(HOUR,ship_start_time,NOW()) > (7 * 24)
+    ORDER BY ship_start_time ASC
+  </select>
+
 </mapper>
