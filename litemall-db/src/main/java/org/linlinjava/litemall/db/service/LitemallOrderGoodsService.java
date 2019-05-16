@@ -68,7 +68,19 @@ public class LitemallOrderGoodsService {
 		orderGoodsMapper.updateOrderGoods(litemallReserve);
 	}
 
+    /**
+     * 查询订单已收货七日后，未结算的订单
+     * @return
+     */
+    public List<Integer> findForTheOrder() {
+        return orderGoodsMapper.selectForTheOrder();
+    }
 
-   
+    /**
+     * 已收货七日后的订单，将订单状态改为可提现
+     */
+    public int autoSettlementCommission() {
+        return orderGoodsMapper.autoSettlementCommission();
+    }
 
 }

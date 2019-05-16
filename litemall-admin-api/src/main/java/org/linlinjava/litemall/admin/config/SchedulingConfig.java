@@ -1,6 +1,8 @@
 package org.linlinjava.litemall.admin.config;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.linlinjava.litemall.db.domain.LitemallOrder;
 import org.linlinjava.litemall.db.domain.LitemallOrderGoods;
 import org.linlinjava.litemall.db.service.LitemallOrderGoodsService;
@@ -19,20 +21,24 @@ import java.util.List;
 @Configuration
 @EnableScheduling
 public class SchedulingConfig {
+    private final Log logger = LogFactory.getLog(SchedulingConfig.class);
     @Autowired
     private LitemallOrderService orderService;
     @Autowired
     private LitemallOrderGoodsService orderGoodsService;
 
-    //每周一到周五早上5点执行，自动收货
-    @Scheduled(cron = "0 0 5 * * ?")
+    //每周一至周五早上5点执行，自动收货
+    @Scheduled(cron = "0 0 5 ? * MON-FRI")
     public void execute() {
+        logger.info("batch Automatic receiving started");
         System.out.print(LocalDateTime.now() + " -- execute自动收货定时任务 \n");
-        //查询所有7天前的待收货订单（包括实物商品与服务商品）
+        //查询超过7天，用户未确认收货的订单列表（包括实物商品与服务商品）
+        //订单状态为商家发货，用户未确认收货的实物商品；或已预约完的服务商品
         List<LitemallOrder> orderlist = orderService.queryOrderByStatusShip(OrderUtil.STATUS_SHIP);
         if(orderlist != null && orderlist.size() > 0){
             for (LitemallOrder order: orderlist) {
 
+                //判断订单状态是否可自动收货
                 OrderHandleOption handleOption = OrderUtil.build(order);
                 if (!handleOption.isConfirm()) {
                     continue;
@@ -76,10 +82,22 @@ public class SchedulingConfig {
                 }
             }
         }
+        logger.info("batch Automatic receiving end");
+    }
 
+    //每周一至周五上午4点执行，计算佣金
+    @Scheduled(cron = "0 0 4 ? * MON-FRI")
+    public void AutoSettlementCommission() {
+        logger.info("batch Automatic compute order started");
+        System.out.print(LocalDateTime.now() + " -- execute自动计算订单佣金定时任务 \n");
 
-
-
+        //查询是否有待结算订单
+        List<Integer> list = orderGoodsService.findForTheOrder();
+        if(list != null && list.size() > 0){
+            list.forEach((id)-> System.out.println("订单id ---->  "+id));
+            orderGoodsService.autoSettlementCommission();
+        }
+        logger.info("batch Automatic compute order end");
 
     }
 }

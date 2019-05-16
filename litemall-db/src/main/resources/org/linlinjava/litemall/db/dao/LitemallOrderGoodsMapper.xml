@@ -740,6 +740,72 @@
     </update>
 
 
+    <select id="selectForTheOrder" resultType="java.lang.Integer">
+        SELECT order_goods_id
+        FROM
+            (SELECT
+                `og`.`id` AS `order_goods_id`,
+                `og`.`order_id` AS `order_id`,
+                `og`.`goods_id` AS `goods_id`,
+                `og`.`goods_name` AS `goods_name`,
+                `og`.`order_status` AS `order_goods_status`,
+                `og`.`actual_price` AS `order_goods_actual_price`,
+                `og`.`is_extract` AS `is_extract`,
+                `o`.`user_id` AS `user_id`,
+                `o`.`order_status` AS `order_status`,
+                `o`.`ship_start_time` AS `ship_start_time`,
+                `o`.`ship_end_time` AS `ship_end_time`,
+                `o`.`confirm_time` AS `confirm_time`,
+                `o`.`end_time` AS `end_time`,
+                `o`.`add_time` AS `add_time`
+            FROM
+                `litemall_order_goods` `og`
+            LEFT JOIN `litemall_order` `o`
+            ON `og`.`order_id` = `o`.`id`
+            WHERE `og`.`deleted` = 0
+            AND `o`.`deleted` = 0) info
+        WHERE 1 = 1
+            AND info.is_extract = 0
+            AND info.order_goods_status IN ('401','402','501')
+            AND TIMESTAMPDIFF(HOUR,info.confirm_time,NOW()) > (7 * 24)
+    </select>
+
+    <!-- 已收货七日后的订单，将订单状态改为可提现 -->
+    <update id="autoSettlementCommission">
+      UPDATE litemall_order_goods
+        SET
+            is_extract = 1
+        WHERE
+            id IN (
+            SELECT
+                order_goods_id
+            FROM
+                (SELECT
+                    `og`.`id` AS `order_goods_id`,
+                        `og`.`order_id` AS `order_id`,
+                        `og`.`goods_id` AS `goods_id`,
+                        `og`.`goods_name` AS `goods_name`,
+                        `og`.`order_status` AS `order_goods_status`,
+                        `og`.`actual_price` AS `order_goods_actual_price`,
+                        `og`.`is_extract` AS `is_extract`,
+                        `o`.`user_id` AS `user_id`,
+                        `o`.`order_status` AS `order_status`,
+                        `o`.`ship_start_time` AS `ship_start_time`,
+                        `o`.`ship_end_time` AS `ship_end_time`,
+                        `o`.`confirm_time` AS `confirm_time`,
+                        `o`.`end_time` AS `end_time`,
+                        `o`.`add_time` AS `add_time`
+                FROM
+                    `litemall_order_goods` `og`
+                LEFT JOIN `litemall_order` `o` ON `og`.`order_id` = `o`.`id`) info
+            WHERE
+                1 = 1 AND info.is_extract = 0
+                    AND info.order_goods_status IN ('401','402','501')
+                    AND TIMESTAMPDIFF(HOUR,info.confirm_time,NOW()) > (7 * 24)
+            );
+    </update>
+
+
     <select id="saleOrderCount" resultType="java.lang.Long"
             parameterType="org.linlinjava.litemall.db.domain.LitemallReportParam">
         SELECT count(log.id)

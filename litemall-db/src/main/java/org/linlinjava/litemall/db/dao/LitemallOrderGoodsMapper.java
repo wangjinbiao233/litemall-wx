@@ -195,5 +195,17 @@ public interface LitemallOrderGoodsMapper {
      * @date 2018年09月27日 14:27:08
      */
     List<SaleOrderReportDTO> distributionReportList(LitemallReportParam param);
+
+    /**
+     * 方法描述  查询订单已收货七日后，未结算的订单
+     * @return
+     */
+    List<Integer> selectForTheOrder();
+
+    /**
+     * 方法描述  已收货七日后的订单，将订单状态改为可提现
+     */
+    int autoSettlementCommission();
+
 }
 
