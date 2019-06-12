@@ -32,7 +32,7 @@ public class WeixinConfig {
     
     
     /*********梵郎微商配置参数*********/
-    public static final String WX_AppId = "wxb03c02baabf1e2d3";
+    /*public static final String WX_AppId = "wxb03c02baabf1e2d3";
     public static final String WX_Secret = "59b5318377b7466f97c9f9bc3099b58e";
     public static final String WX_Token = "";
     public static final String WX_AesKey = "";
@@ -43,8 +43,25 @@ public class WeixinConfig {
     public static final String WX_KeyPath = "";
     //微信消息管理模板ID
     public static final String TEMPLATE_ID = "b30tbk-p2ie3mAoT9JmGbykODT5K4Iwrj48jpFxvAh0";
-    public static final String CERT_PATH = "/home/steve/cert/apiclient_cert.p12";
-    
+    public static final String CERT_PATH = "/home/steve/cert/apiclient_cert.p12";*/
+
+
+    /*********微商城改版 开发环境参数配置*********/
+    public static final String WX_AppId = "wx4dd455d3e7d5db7b";
+    public static final String WX_Secret = "9fb97fce508dacb5ec94171b6cfdd3b4";
+    public static final String WX_Token = "";
+    public static final String WX_AesKey = "";
+    public static final String WX_MsgDataFormat = "JSON";
+
+
+    public static final String WX_MchId = "1408172302";
+    public static final String WX_MchKey = "r4re3redsw3e5tg9oi87hy65tbvgt5ws";
+    public static final String WX_KeyPath = "";
+
+    //微信消息管理模板ID
+    public static final String TEMPLATE_ID = "7yS3m3omR1vz1CeSj1P8hLNZ1phpPSjC3pHv4efnYIE";
+
+    public static final String CERT_PATH = "";
     
     @Bean
     public WxPayConfig config() {

@@ -2,14 +2,11 @@
 // 本机开发时使用
 // var WxApiRoot = 'http://127.0.0.1:8082/wx/';
 // 局域网测试使用
-// var WxApiRoot = 'http://192.168.0.27:8082/wx/';
+// var WxApiRoot = 'http://10.32.2.25:9090/wx/';
 
-//production must be in SSL
-//var WxApiRoot = 'https://mall-wx.dgtis.com/wx/';
 //production must be in SSL philab
-var WxApiRoot = 'https://mall-wx.philab.net/wx/';
+var WxApiRoot = 'https://hearskin.dgtis.com/wx/';
 
-// var WxApiRoot = 'http://192.168.0.23:8082/wx/';
 
 // 以下是图片存储服务器API地址
 var StorageApi = 'https://mall-wx.philab.net/wx/storage/create';

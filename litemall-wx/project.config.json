@@ -9,8 +9,10 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.93",
-	"appid": "wxb03c02baabf1e2d3",
-	"projectname": "litemall-wx-philab",
+	"appid": "wx4dd455d3e7d5db7b",
+	"projectname": "litemall-wx",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
